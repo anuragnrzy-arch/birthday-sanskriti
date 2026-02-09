@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Love</title>
+<title>For My Behena 💖</title>
 
 <style>
 body{
@@ -11,34 +11,73 @@ body{
     display:flex;
     justify-content:center;
     align-items:center;
-    background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-    overflow:hidden;
+    background:linear-gradient(135deg,#141e30,#243b55);
     font-family:sans-serif;
+    overflow:hidden;
 }
 
-.glow-box{
+/* Glow Box */
+.box{
+    width:320px;
+    padding:35px;
     text-align:center;
-    padding:30px 40px;
     border-radius:20px;
-    background:rgba(255,255,255,0.05);
-    backdrop-filter:blur(10px);
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(12px);
     color:white;
-    box-shadow:0 0 25px #ff4da6;
+    position:relative;
+    animation:glow 2s infinite alternate;
 }
 
+@keyframes glow{
+    from{ box-shadow:0 0 20px #ff4da6; }
+    to{ box-shadow:0 0 45px #ff4da6; }
+}
+
+h2{
+    margin-bottom:25px;
+}
+
+/* Buttons */
 button{
-    padding:10px 20px;
+    padding:12px 20px;
     border:none;
-    border-radius:20px;
-    margin:5px;
-    cursor:pointer;
+    border-radius:25px;
+    margin:8px;
     font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
 }
 
-.yes{ background:#ff4da6; color:white; }
-.no{ background:#444; color:white; position:absolute; }
+.correct{
+    background:#ff4da6;
+    color:white;
+}
 
-.letter{
+.wrong{
+    background:#444;
+    color:white;
+    position:absolute;
+}
+
+button:hover{
+    transform:scale(1.1);
+}
+
+/* Celebration Particles */
+.particle{
+    position:fixed;
+    font-size:20px;
+    animation:blast 1.5s ease-out forwards;
+}
+
+@keyframes blast{
+    0%{ opacity:1; transform:translate(0,0) scale(1); }
+    100%{ opacity:0; transform:translate(var(--x), var(--y)) scale(1.6); }
+}
+
+/* Final Message */
+.final{
     position:fixed;
     top:50%;
     left:50%;
@@ -47,68 +86,80 @@ button{
     color:#333;
     padding:25px;
     border-radius:15px;
-    width:280px;
     text-align:center;
-    box-shadow:0 0 30px pink;
+    width:280px;
     transition:0.4s;
+    box-shadow:0 0 40px pink;
 }
 
-.letter.show{
+.final.show{
     transform:translate(-50%,-50%) scale(1);
-}
-
-.particle{
-    position:fixed;
-    font-size:18px;
-    animation:blast 1.5s ease-out forwards;
-}
-
-@keyframes blast{
-    0%{ opacity:1; transform:translate(0,0) scale(1); }
-    100%{ opacity:0; transform:translate(var(--x), var(--y)) scale(1.5); }
 }
 </style>
 </head>
 
 <body>
 
-<div class="glow-box">
-    <h2>Do you love me? 💌</h2>
-    <button class="yes" onclick="blastEffect()">YES 💞</button>
-    <button class="no" id="noBtn">NO 😅</button>
+<div class="box">
+    <h2>APKA NAME KYA HAI?! 💌</h2>
+    <button class="correct" onclick="correctAnswer()">Butkiiiiii 💖</button>
+    <button class="wrong" id="runBtn">Srinjl 😜</button>
 </div>
 
-<div class="letter" id="letter">
-    <h3>💌 My Love Letter</h3>
-    <p>I love you more than words can say ❤️<br>
-    You make my world beautiful ✨</p>
+<div class="final" id="finalBox">
+    <h3>Yessss 😍💖</h3>
+    <p>Meri pyaari Butkiiiiii 🥰✨<br>
+    Aap hi meri favourite ho 💞</p>
 </div>
 
 <script>
 
-const noBtn = document.getElementById("noBtn");
-const letter = document.getElementById("letter");
+const runBtn = document.getElementById("runBtn");
+const finalBox = document.getElementById("finalBox");
 
-noBtn.addEventListener("mouseover", function(){
-    const x = Math.random() * (window.innerWidth - 100);
-    const y = Math.random() * (window.innerHeight - 50);
-    noBtn.style.position = "fixed";
-    noBtn.style.left = x + "px";
-    noBtn.style.top = y + "px";
-});
+/* Srinjl button bhaagega */
+runBtn.addEventListener("mouseover", moveButton);
+runBtn.addEventListener("click", moveButton);
 
-function blastEffect(){
+function moveButton(){
+    const x = Math.random() * (window.innerWidth - 120);
+    const y = Math.random() * (window.innerHeight - 60);
+    runBtn.style.position = "fixed";
+    runBtn.style.left = x + "px";
+    runBtn.style.top = y + "px";
+}
 
-    letter.classList.add("show");
+/* Correct Answer */
+function correctAnswer(){
 
+    finalBox.classList.add("show");
+
+    // Blast Effect
     for(let i=0;i<40;i++){
         const particle = document.createElement("div");
         particle.classList.add("particle");
-        particle.innerHTML = Math.random()>0.5 ? "💖" : "🎉";
+        particle.innerHTML = Math.random()>0.5 ? "💖" : "✨";
 
         particle.style.left = window.innerWidth/2 + "px";
         particle.style.top = window.innerHeight/2 + "px";
 
+        const x = (Math.random()-0.5)*600 + "px";
+        const y = (Math.random()-0.5)*600 + "px";
+        particle.style.setProperty('--x', x);
+        particle.style.setProperty('--y', y);
+
+        document.body.appendChild(particle);
+
+        setTimeout(()=>{
+            particle.remove();
+        },1500);
+    }
+}
+
+</script>
+
+</body>
+</html>
         const x = (Math.random()-0.5)*600 + "px";
         const y = (Math.random()-0.5)*600 + "px";
         particle.style.setProperty('--x', x);
