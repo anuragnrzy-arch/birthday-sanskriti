@@ -1,219 +1,206 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Butki Dino</title>
+<title>I'm Sorry Sanskriti ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body{
+*{
   margin:0;
-  background:#111;
-  font-family:Arial;
-  color:white;
+  padding:0;
+  box-sizing:border-box;
+  font-family: 'Segoe UI', sans-serif;
 }
 
-/* wrapper to center everything */
-.wrapper{
+body{
+  background:#071428;
   height:100vh;
+  overflow:hidden;
+  color:#f5c7dd;
+}
+
+/* STAR BACKGROUND */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(white 1px, transparent 1px),
+    radial-gradient(white 1px, transparent 1px);
+  background-size: 80px 80px, 120px 120px;
+  opacity:0.3;
+  pointer-events:none;
+}
+
+/* CENTER CARD */
+.screen{
+  display:none;
+  height:100vh;
+  width:100%;
+  padding:20px;
+  text-align:center;
   display:flex;
   flex-direction:column;
   justify-content:center;
   align-items:center;
 }
 
-/* NAME BOX */
-#nameBox{
-  background:#000;
-  padding:30px;
-  border-radius:18px;
-  text-align:center;
-  box-shadow:0 0 25px #00bfff;
+.screen.active{
+  display:flex;
 }
 
-.btn{
-  padding:10px 20px;
-  margin:8px;
-  border:none;
-  border-radius:10px;
+h1{
+  font-size:26px;
+  margin-bottom:15px;
+  color:#f6a6c9;
+}
+
+p{
   font-size:16px;
-  cursor:pointer;
+  line-height:1.6;
+  margin-bottom:20px;
+  color:#f2c2db;
 }
 
-#runBtn{background:#333;color:white;}
-#startBtn{background:#ff1493;color:white;}
-
-/* GAME AREA */
-#game{
-  display:none;
-  width:95%;
-  height:200px;
-  border-bottom:3px solid white;
-  position:relative;
-}
-
-/* dino */
-#dino{
-  position:absolute;
-  bottom:0;
-  left:40px;
-  font-size:42px;
-}
-
-/* cactus */
-#cactus{
-  position:absolute;
-  bottom:0;
-  right:-40px;
-  font-size:38px;
-}
-
-/* score */
-#score{
-  position:absolute;
-  top:-25px;
-  right:5px;
-}
-
-/* jump button JUST BELOW GAME */
-#jumpBtn{
-  display:none;
-  margin-top:10px;
-  padding:10px 22px;
-  background:#ff1493;
+button{
+  padding:14px 28px;
   border:none;
-  border-radius:10px;
+  border-radius:30px;
+  background:linear-gradient(135deg,#7b2ff7,#f107a3);
   color:white;
+  font-size:15px;
+  cursor:pointer;
+  box-shadow:0 0 15px rgba(241,7,163,0.5);
 }
 
-/* game over */
-#overBox{
-  display:none;
+button:hover{
+  transform:scale(1.05);
+}
+
+/* EMOJI BEAR */
+.bear{
+  font-size:90px;
+  margin-bottom:20px;
+}
+
+/* POLAROID */
+.photo{
+  background:#fff;
+  padding:10px;
+  border-radius:8px;
+  margin:10px 0;
+  width:200px;
+}
+
+.photo div{
+  height:120px;
+  background:linear-gradient(#ff9966,#ff5e62);
+  border-radius:5px;
+}
+
+/* HEART FLOAT */
+.heart{
   position:absolute;
-  top:40%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  text-align:center;
+  animation: float 6s infinite;
+  opacity:0.8;
+}
+
+@keyframes float{
+  0%{transform:translateY(0)}
+  50%{transform:translateY(-20px)}
+  100%{transform:translateY(0)}
 }
 </style>
 </head>
 
 <body>
 
-<div class="wrapper">
+<!-- 1 -->
+<div class="screen active">
+  <div class="bear">🐻</div>
+  <p>It’s late night… 🌙<br>I’ve been walking for hours…<br><br>
+  I’m holding something heavy…<br>not in hands, but in heart…</p>
+  <button onclick="next()">Let me talk…</button>
+</div>
 
-  <!-- NAME -->
-  <div id="nameBox">
-    <h3>Apka name kya hai !?</h3>
-    <button id="runBtn" class="btn">Srinjil ✨</button>
-    <button id="startBtn" class="btn">Butkiiiii 😁🤏🏻</button>
-  </div>
+<!-- 2 -->
+<div class="screen">
+  <h1>My Sorry Letter to You…</h1>
+  <div class="bear">🐻‍❄️</div>
+  <p>I’ve been sitting here for hours,<br>trying to find the right words…</p>
+  <button onclick="next()">Continue reading…</button>
+</div>
 
-  <!-- GAME -->
-  <div id="game">
+<!-- 3 -->
+<div class="screen">
+  <div class="bear">🐻🤍</div>
+  <p>You didn’t deserve that…</p>
+  <button onclick="next()">Read my letter…</button>
+</div>
 
-    <div id="score">Score: 0</div>
-    <div id="dino">🦖</div>
-    <div id="cactus">🌵</div>
+<!-- 4 -->
+<div class="screen">
+  <p>I’ve been staring at these all night… 🌙</p>
+  <div class="photo"><div></div></div>
+  <div class="photo"><div></div></div>
+  <div class="photo"><div></div></div>
+  <button onclick="next()">Next…</button>
+</div>
 
-    <div id="overBox">
-      <h2>Butkiiiii har gayi 😭</h2>
-      <button class="btn" onclick="location.reload()">Retry 🔁</button>
-    </div>
+<!-- 5 -->
+<div class="screen">
+  <p>
+    You’re so beautiful, Sanskriti… 💔<br><br>
+    I’m so sorry…<br><br>
+    I know words can’t undo what I did,<br>
+    but you mean everything to me.<br><br>
+    I promise to do better,<br>
+    to be better — for you ✨<br><br>
+    Can you please forgive me…?
+  </p>
+  <button onclick="next()">I need you…</button>
+</div>
 
-  </div>
+<!-- 6 -->
+<div class="screen">
+  <div class="bear">🐻🤍🐻</div>
+  <p>
+    I don’t need anything fancy right now…<br><br>
+    Just your arms around me,<br>
+    that’s all I want 💕
+  </p>
+  <button onclick="next()">Send a hug 🤍</button>
+</div>
 
-  <button id="jumpBtn">Butkiiiii Jump 😁</button>
+<!-- 7 -->
+<div class="screen">
+  <h1>I have something special for you… 🎁</h1>
+  <button onclick="next()">Open gift…</button>
+</div>
 
+<!-- 8 -->
+<div class="screen">
+  <div class="bear">🐻🌹</div>
+  <p>
+    This flower will never wilt… 🌹<br><br>
+    Just like my love for you.<br><br>
+    I promise to cherish you every single day,<br>
+    and never take your beautiful heart for granted again 💖<br><br>
+    You mean everything to me, Sanskriti ✨
+  </p>
 </div>
 
 <script>
-const nameBox=document.getElementById("nameBox");
-const runBtn=document.getElementById("runBtn");
-const startBtn=document.getElementById("startBtn");
+let index = 0;
+const screens = document.querySelectorAll('.screen');
 
-const game=document.getElementById("game");
-const jumpBtn=document.getElementById("jumpBtn");
-
-const dino=document.getElementById("dino");
-const cactus=document.getElementById("cactus");
-const overBox=document.getElementById("overBox");
-const scoreText=document.getElementById("score");
-
-let jumping=false;
-let cactusX=window.innerWidth;
-let score=0;
-let speed=7;
-let loop;
-
-/* run button bhaage */
-runBtn.onclick=()=>{
-  runBtn.style.position="relative";
-  runBtn.style.left=Math.random()*100-50+"px";
-  runBtn.style.top=Math.random()*100-50+"px";
-};
-
-/* start game */
-startBtn.onclick=()=>{
-  nameBox.style.display="none";
-  game.style.display="block";
-  jumpBtn.style.display="block";
-  startGame();
-};
-
-/* jump */
-function jump(){
-  if(jumping) return;
-  jumping=true;
-
-  let y=0;
-
-  let up=setInterval(()=>{
-    if(y>=80){
-      clearInterval(up);
-      let down=setInterval(()=>{
-        if(y<=0){
-          clearInterval(down);
-          jumping=false;
-        }
-        y-=5;
-        dino.style.bottom=y+"px";
-      },15);
-    }
-    y+=5;
-    dino.style.bottom=y+"px";
-  },15);
-}
-
-jumpBtn.onclick=jump;
-document.addEventListener("keydown",jump);
-
-/* game loop */
-function startGame(){
-
-loop=setInterval(()=>{
-
-  cactusX-=speed;
-
-  if(cactusX<-40){
-    cactusX=window.innerWidth;
-    score++;
-    speed+=0.2;
-    scoreText.innerText="Score: "+score;
+function next(){
+  screens[index].classList.remove('active');
+  index++;
+  if(index < screens.length){
+    screens[index].classList.add('active');
   }
-
-  cactus.style.right=(window.innerWidth-cactusX)+"px";
-
-  let d=dino.getBoundingClientRect();
-  let c=cactus.getBoundingClientRect();
-
-  if(d.left < c.right && d.right > c.left && d.bottom > c.top){
-    clearInterval(loop);
-    jumpBtn.style.display="none";
-    overBox.style.display="block";
-  }
-
-},20);
-
 }
 </script>
 
