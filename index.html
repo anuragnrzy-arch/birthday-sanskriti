@@ -1,253 +1,227 @@
+</body>
+</html>
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Butki Love Game 💖</title>
+<meta charset="UTF-8" />
+<title>Dino Butki Game</title>
 
 <style>
 body{
-margin:0;
-overflow:hidden;
-font-family: 'Comic Sans MS', cursive;
-background:linear-gradient(135deg,#ff9ad5,#c77dff);
+  margin:0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(#111,#2c5364);
+  overflow:hidden;
+  color:white;
 }
 
-/* START SCREEN */
-#start{
-position:absolute;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-background:white;
-padding:40px;
-border-radius:20px;
-box-shadow:0 0 40px hotpink;
-text-align:center;
-animation:pulse 2s infinite;
+/* center screens */
+.screen{
+  position:absolute;
+  width:100%;
+  height:100%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
 }
 
-@keyframes pulse{
-0%{box-shadow:0 0 20px hotpink;}
-50%{box-shadow:0 0 50px deeppink;}
-100%{box-shadow:0 0 20px hotpink;}
+/* card */
+.card{
+  background:#000;
+  padding:40px;
+  border-radius:20px;
+  text-align:center;
+  box-shadow:0 0 30px #ff00aa;
 }
 
-h2{
-color:#ff1493;
+button{
+  padding:12px 25px;
+  margin:10px;
+  font-size:18px;
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
 }
 
-.option{
-position:absolute;
-padding:12px 25px;
-font-size:18px;
-border:none;
-border-radius:15px;
-cursor:pointer;
-transition:0.3s;
-}
+/* buttons */
+#runBtn{background:#333;color:white;}
+#startBtn{background:#ff1493;color:white;}
 
-#srinjil{
-left:15%;
-top:60%;
-background:#fff;
-}
-
-#butki{
-right:15%;
-top:60%;
-background:#ff69b4;
-color:white;
-}
-
-/* GAME */
 #game{
-display:none;
-position:absolute;
-width:100%;
-height:100%;
-background:linear-gradient(to top,#87ceeb,#ffffff);
-overflow:hidden;
-}
-
-#score{
-position:absolute;
-top:20px;
-right:20px;
-font-size:20px;
-color:black;
-font-weight:bold;
+  display:none;
+  position:relative;
+  width:100%;
+  height:100%;
 }
 
 #ground{
-position:absolute;
-bottom:60px;
-width:100%;
-height:4px;
-background:black;
+  position:absolute;
+  bottom:80px;
+  width:100%;
+  height:5px;
+  background:white;
 }
 
+/* dino */
 #dino{
-position:absolute;
-bottom:60px;
-left:50px;
-font-size:50px;
+  position:absolute;
+  bottom:85px;
+  left:50px;
+  font-size:45px;
 }
 
+/* cactus */
 #cactus{
-position:absolute;
-bottom:60px;
-right:-50px;
-font-size:50px;
+  position:absolute;
+  bottom:85px;
+  right:-50px;
+  font-size:40px;
 }
 
-.jump{
-animation:jump 0.6s;
+/* score */
+#score{
+  position:absolute;
+  top:20px;
+  right:20px;
+  font-size:22px;
 }
 
-@keyframes jump{
-0%{bottom:60px;}
-50%{bottom:180px;}
-100%{bottom:60px;}
-}
-
-#jumpBtn{
-position:absolute;
-bottom:10px;
-left:50%;
-transform:translateX(-50%);
-padding:15px 40px;
-font-size:20px;
-background:#ff1493;
-color:white;
-border:none;
-border-radius:20px;
-}
-
-/* GAME OVER */
+/* game over */
 #gameOver{
-display:none;
-position:absolute;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-background:white;
-padding:40px;
-border-radius:20px;
-text-align:center;
-box-shadow:0 0 30px red;
-animation:shake 0.5s;
-}
-
-@keyframes shake{
-0%{transform:translate(-50%,-50%) rotate(0);}
-25%{transform:translate(-50%,-50%) rotate(2deg);}
-50%{transform:translate(-50%,-50%) rotate(-2deg);}
-100%{transform:translate(-50%,-50%) rotate(0);}
-}
-
-#retry{
-padding:10px 25px;
-font-size:18px;
-background:#ff1493;
-color:white;
-border:none;
-border-radius:15px;
+  display:none;
 }
 </style>
 </head>
 
 <body>
 
-<!-- START -->
-<div id="start">
-<h2>APKA NAME KYA HAI!? 💕</h2>
+<!-- NAME SCREEN -->
+<div id="nameScreen" class="screen">
+  <div class="card">
+    <h2>Apka name kya hai?</h2>
+
+    <button id="runBtn">Srinjil ✨</button>
+    <button id="startBtn">Butki 😁🤏🏻</button>
+  </div>
 </div>
 
-<button id="srinjil" class="option">Srinjil ✨</button>
-<button id="butki" class="option">Butkiiiiiiii 😁🤏🏻</button>
 
-<!-- GAME -->
+<!-- GAME SCREEN -->
 <div id="game">
-<div id="score">Score: 0</div>
-<div id="ground"></div>
-<div id="dino">🦖</div>
-<div id="cactus">🌵</div>
-<button id="jumpBtn">Butkiiiii Jump 😁</button>
+
+  <div id="score">Score: 0</div>
+
+  <div id="ground"></div>
+  <div id="dino">🦖</div>
+  <div id="cactus">🌵</div>
+
 </div>
 
-<!-- GAME OVER -->
-<div id="gameOver">
-<h1>💀 GAME OVER</h1>
-<h2>Yeahhh 😆<br>Butkiiiiiiii har gayiiiii 😂</h2>
-<button id="retry">Retry 🔄</button>
+
+<!-- GAME OVER SCREEN -->
+<div id="gameOver" class="screen">
+  <div class="card">
+    <h1>💀 GAME OVER</h1>
+    <button onclick="location.reload()">Retry 🔁</button>
+  </div>
 </div>
+
 
 <script>
-let srinjil=document.getElementById("srinjil");
-let butki=document.getElementById("butki");
-let game=document.getElementById("game");
-let start=document.getElementById("start");
-let dino=document.getElementById("dino");
-let cactus=document.getElementById("cactus");
-let jumpBtn=document.getElementById("jumpBtn");
-let gameOver=document.getElementById("gameOver");
-let retry=document.getElementById("retry");
+const runBtn = document.getElementById("runBtn");
+const startBtn = document.getElementById("startBtn");
+const nameScreen = document.getElementById("nameScreen");
+const game = document.getElementById("game");
+const gameOver = document.getElementById("gameOver");
+
+const dino = document.getElementById("dino");
+const cactus = document.getElementById("cactus");
+const scoreText = document.getElementById("score");
+
+let cactusX = window.innerWidth;
+let jumping=false;
 let score=0;
-let speed=5;
-let cactusPos=window.innerWidth;
+let gameLoop;
+let cactusLoop;
 
-/* RUNNING BUTTON */
-srinjil.addEventListener("mouseover",()=>{
-srinjil.style.left=Math.random()*80+"%";
-srinjil.style.top=Math.random()*80+"%";
+/* Srinjil button bhaage 😂 */
+runBtn.onclick = ()=>{
+  runBtn.style.position="absolute";
+  runBtn.style.left=Math.random()*80+"%";
+  runBtn.style.top=Math.random()*80+"%";
+}
+
+/* start game */
+startBtn.onclick = ()=>{
+  nameScreen.style.display="none";
+  game.style.display="block";
+  startGame();
+}
+
+/* jump */
+document.addEventListener("keydown",()=>{
+  if(!jumping) jump();
 });
 
-/* START GAME */
-butki.onclick=()=>{
-start.style.display="none";
-srinjil.style.display="none";
-butki.style.display="none";
-game.style.display="block";
-moveCactus();
-};
-
-/* JUMP */
 function jump(){
-if(!dino.classList.contains("jump")){
-dino.classList.add("jump");
-setTimeout(()=>{dino.classList.remove("jump");},600);
-}
-}
+  jumping=true;
+  let up=0;
 
-jumpBtn.onclick=jump;
-document.addEventListener("keydown",(e)=>{
-if(e.code==="Space") jump();
-});
+  let upInt=setInterval(()=>{
+    if(up>=80){
+      clearInterval(upInt);
 
-/* MOVE CACTUS */
-function moveCactus(){
-let interval=setInterval(()=>{
-cactusPos-=speed;
-cactus.style.right=(window.innerWidth-cactusPos)+"px";
+      let downInt=setInterval(()=>{
+        if(up<=0){
+          clearInterval(downInt);
+          jumping=false;
+        }
+        up-=5;
+        dino.style.bottom=(85+up)+"px";
+      },20);
 
-if(cactusPos<0){
-cactusPos=window.innerWidth;
-score++;
-speed+=0.5;
-document.getElementById("score").innerText="Score: "+score;
+    }
+    up+=5;
+    dino.style.bottom=(85+up)+"px";
+  },20);
 }
 
-let dinoBottom=parseInt(window.getComputedStyle(dino).getPropertyValue("bottom"));
+/* game start */
+function startGame(){
 
-if(cactusPos<120 && cactusPos>60 && dinoBottom<100){
-clearInterval(interval);
-game.style.display="none";
-gameOver.style.display="block";
-}
-},20);
+  /* cactus movement */
+  cactusLoop=setInterval(()=>{
+    cactusX-=8;
+
+    if(cactusX<-50){
+      cactusX=window.innerWidth;
+      score++;
+      scoreText.innerText="Score: "+score;
+    }
+
+    cactus.style.right=(window.innerWidth-cactusX)+"px";
+
+    /* collision */
+    let dinoRect=dino.getBoundingClientRect();
+    let cactusRect=cactus.getBoundingClientRect();
+
+    if(
+      dinoRect.left < cactusRect.right &&
+      dinoRect.right > cactusRect.left &&
+      dinoRect.bottom > cactusRect.top
+    ){
+      endGame();
+    }
+
+  },20);
 }
 
-retry.onclick=()=>location.reload();
+function endGame(){
+  clearInterval(cactusLoop);
+  game.style.display="none";
+  gameOver.style.display="flex";
+}
 </script>
 
 </body>
