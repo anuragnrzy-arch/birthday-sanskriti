@@ -1,39 +1,121 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>For Sanskriti 💖</title>
-  <link rel="stylesheet" href="style.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Love Blast</title>
+
+<style>
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    overflow:hidden;
+    font-family:sans-serif;
+}
+
+.glow-box{
+    text-align:center;
+    padding:30px 40px;
+    border-radius:20px;
+    background:rgba(255,255,255,0.05);
+    backdrop-filter:blur(10px);
+    color:white;
+    box-shadow:0 0 20px #ff4da6;
+    animation:glow 2s infinite alternate;
+}
+
+@keyframes glow{
+    from{ box-shadow:0 0 15px #ff4da6; }
+    to{ box-shadow:0 0 40px #ff4da6; }
+}
+
+button{
+    padding:10px 20px;
+    border:none;
+    border-radius:20px;
+    margin:5px;
+    cursor:pointer;
+    font-weight:bold;
+    transition:0.3s;
+}
+
+.yes{ background:#ff4da6; color:white; }
+.no{ background:#444; color:white; position:absolute; }
+
+button:hover{ transform:scale(1.1); }
+
+/* Particles */
+.particle{
+    position:fixed;
+    font-size:18px;
+    animation:blast 1.5s ease-out forwards;
+}
+
+@keyframes blast{
+    0%{
+        opacity:1;
+        transform:translate(0,0) scale(1);
+    }
+    100%{
+        opacity:0;
+        transform:translate(var(--x), var(--y)) scale(1.5);
+    }
+}
+
+</style>
 </head>
 <body>
 
-<div class="container">
-
-  <!-- QUESTION -->
-  <h1 id="question">Do you love me? 🥺</h1>
-
-  <!-- BUTTONS -->
-  <div class="buttons" id="buttons">
-    <button class="yes" onclick="yesClick()">YES 💖</button>
-    <button class="no" onclick="noClick()">NO 😅</button>
-  </div>
-
-  <!-- LETTER -->
-  <div id="letter" class="hidden">
-    <div class="letter-box">
-      <p>
-        I wanted to take a moment to tell you just how much you mean to me.
-        You are the light of my life, the one who makes everything better.
-        Your love has changed me in ways I never thought possible.
-        <br><br>
-        I love you more with each passing day Sanskriti ☺️💖✨
-      </p>
-      <span>— Anurag ❤️</span>
-    </div>
-  </div>
-
+<div class="glow-box">
+    <h2>Do you love me? 💌</h2>
+    <button class="yes" onclick="blastEffect()">YES 💞</button>
+    <button class="no" id="noBtn">NO 😅</button>
 </div>
 
-<script src="script.js"></script>
+<script>
+const noBtn = document.getElementById("noBtn");
+
+// NO button bhagega
+noBtn.addEventListener("mouseover", () => {
+    const x = Math.random() * (window.innerWidth - 100);
+    const y = Math.random() * (window.innerHeight - 50);
+    noBtn.style.position = "fixed";
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+});
+
+// Blast Effect
+function blastEffect(){
+    for(let i=0;i<40;i++){
+        const particle = document.createElement("div");
+        particle.classList.add("particle");
+
+        // Random heart or confetti
+        particle.innerHTML = Math.random() > 0.5 ? "💖" : "🎉";
+
+        // Center position
+        particle.style.left = window.innerWidth/2 + "px";
+        particle.style.top = window.innerHeight/2 + "px";
+
+        // Random direction
+        const x = (Math.random()-0.5)*600 + "px";
+        const y = (Math.random()-0.5)*600 + "px";
+        particle.style.setProperty('--x', x);
+        particle.style.setProperty('--y', y);
+
+        document.body.appendChild(particle);
+
+        setTimeout(()=>{
+            particle.remove();
+        },1500);
+    }
+
+    alert("Awwww 🥰 I Love You Too 💖");
+}
+</script>
+
 </body>
 </html>
