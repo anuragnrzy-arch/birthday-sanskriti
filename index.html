@@ -1,8 +1,10 @@
+</body>
+</html>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>I'm Sorry Sanskriti ❤️</title>
+<title>Sorry Sanskriti ❤️</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
@@ -14,113 +16,102 @@
 }
 
 body{
-  background:#071428;
+  background:#061326;
   height:100vh;
   overflow:hidden;
   color:#f5c7dd;
 }
 
-/* STAR BACKGROUND */
-body::before{
-  content:"";
+/* ⭐ STAR + SPARKLE BACKGROUND */
+.stars, .stars::after{
   position:fixed;
   inset:0;
   background:
-    radial-gradient(white 1px, transparent 1px),
     radial-gradient(white 1px, transparent 1px);
-  background-size: 80px 80px, 120px 120px;
-  opacity:0.3;
+  background-size:80px 80px;
+  animation: twinkle 6s linear infinite;
+  opacity:.35;
   pointer-events:none;
 }
 
-/* CENTER CARD */
+.stars::after{
+  content:"";
+  background-size:120px 120px;
+  animation-duration:10s;
+}
+
+@keyframes twinkle{
+  from{opacity:.15}
+  50%{opacity:.5}
+  to{opacity:.15}
+}
+
+/* SCREENS */
 .screen{
+  position:absolute;
+  inset:0;
   display:none;
-  height:100vh;
-  width:100%;
   padding:20px;
   text-align:center;
-  display:flex;
-  flex-direction:column;
   justify-content:center;
   align-items:center;
+  flex-direction:column;
 }
 
 .screen.active{
   display:flex;
 }
 
-h1{
-  font-size:26px;
-  margin-bottom:15px;
-  color:#f6a6c9;
-}
-
+/* TEXT */
 p{
   font-size:16px;
-  line-height:1.6;
-  margin-bottom:20px;
-  color:#f2c2db;
+  line-height:1.7;
+  margin:20px 0;
+  color:#f4c1dc;
 }
 
+h1{
+  color:#f6a6c9;
+  margin-bottom:15px;
+}
+
+/* BUTTON */
 button{
-  padding:14px 28px;
+  margin-top:20px;
+  padding:14px 32px;
   border:none;
   border-radius:30px;
   background:linear-gradient(135deg,#7b2ff7,#f107a3);
   color:white;
   font-size:15px;
   cursor:pointer;
-  box-shadow:0 0 15px rgba(241,7,163,0.5);
+  box-shadow:0 0 20px rgba(241,7,163,.6);
 }
 
-button:hover{
-  transform:scale(1.05);
+button:active{
+  transform:scale(.95);
 }
 
-/* EMOJI BEAR */
+/* BEAR */
 .bear{
   font-size:90px;
-  margin-bottom:20px;
-}
-
-/* POLAROID */
-.photo{
-  background:#fff;
-  padding:10px;
-  border-radius:8px;
-  margin:10px 0;
-  width:200px;
-}
-
-.photo div{
-  height:120px;
-  background:linear-gradient(#ff9966,#ff5e62);
-  border-radius:5px;
-}
-
-/* HEART FLOAT */
-.heart{
-  position:absolute;
-  animation: float 6s infinite;
-  opacity:0.8;
-}
-
-@keyframes float{
-  0%{transform:translateY(0)}
-  50%{transform:translateY(-20px)}
-  100%{transform:translateY(0)}
 }
 </style>
 </head>
 
 <body>
 
+<div class="stars"></div>
+
 <!-- 1 -->
 <div class="screen active">
   <div class="bear">🐻</div>
-  <p>It’s late night… 🌙<br>I’ve been walking for hours…<br><br>
-  I’m holding something heavy…<br>not in hands, but in heart…</p>
+  <p>
+    It’s late night… 🌙<br>
+    I’ve been walking for hours…<br><br>
+    I’m holding something heavy…<br>
+    not in hands, but in heart…
+  </p>
   <button onclick="next()">Let me talk…</button>
 </div>
 
@@ -128,7 +119,10 @@ button:hover{
 <div class="screen">
   <h1>My Sorry Letter to You…</h1>
   <div class="bear">🐻‍❄️</div>
-  <p>I’ve been sitting here for hours,<br>trying to find the right words…</p>
+  <p>
+    I’ve been sitting here for hours,<br>
+    trying to find the right words…
+  </p>
   <button onclick="next()">Continue reading…</button>
 </div>
 
@@ -142,9 +136,7 @@ button:hover{
 <!-- 4 -->
 <div class="screen">
   <p>I’ve been staring at these all night… 🌙</p>
-  <div class="photo"><div></div></div>
-  <div class="photo"><div></div></div>
-  <div class="photo"><div></div></div>
+  <div class="bear">📸📸📸</div>
   <button onclick="next()">Next…</button>
 </div>
 
@@ -153,11 +145,9 @@ button:hover{
   <p>
     You’re so beautiful, Sanskriti… 💔<br><br>
     I’m so sorry…<br><br>
-    I know words can’t undo what I did,<br>
-    but you mean everything to me.<br><br>
-    I promise to do better,<br>
-    to be better — for you ✨<br><br>
-    Can you please forgive me…?
+    I promise to be better,<br>
+    for you ✨<br><br>
+    Can you forgive me…?
   </p>
   <button onclick="next()">I need you…</button>
 </div>
@@ -166,9 +156,8 @@ button:hover{
 <div class="screen">
   <div class="bear">🐻🤍🐻</div>
   <p>
-    I don’t need anything fancy right now…<br><br>
-    Just your arms around me,<br>
-    that’s all I want 💕
+    I don’t need anything fancy…<br><br>
+    Just your arms around me 💕
   </p>
   <button onclick="next()">Send a hug 🤍</button>
 </div>
@@ -185,21 +174,19 @@ button:hover{
   <p>
     This flower will never wilt… 🌹<br><br>
     Just like my love for you.<br><br>
-    I promise to cherish you every single day,<br>
-    and never take your beautiful heart for granted again 💖<br><br>
     You mean everything to me, Sanskriti ✨
   </p>
 </div>
 
 <script>
-let index = 0;
+let i = 0;
 const screens = document.querySelectorAll('.screen');
 
 function next(){
-  screens[index].classList.remove('active');
-  index++;
-  if(index < screens.length){
-    screens[index].classList.add('active');
+  screens[i].classList.remove('active');
+  i++;
+  if(i < screens.length){
+    screens[i].classList.add('active');
   }
 }
 </script>
