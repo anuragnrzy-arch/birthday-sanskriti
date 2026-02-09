@@ -1,70 +1,136 @@
-body {
+/* RESET */
+* {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* BODY BACKGROUND */
+body {
   height: 100vh;
-  background: linear-gradient(180deg, #050b2e, #000);
+  background:
+    radial-gradient(circle at top, #1b2a6d, #040715 70%),
+    linear-gradient(180deg, #050b2e, #000);
+  font-family: 'Segoe UI', sans-serif;
   color: white;
-  font-family: Arial, sans-serif;
+
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
 }
 
+/* MAIN CONTAINER */
 .container {
   text-align: center;
+  z-index: 2;
+}
+
+/* QUESTION */
+#question {
+  font-size: 26px;
+  margin-bottom: 20px;
+}
+
+/* BUTTONS */
+.buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-bottom: 15px;
 }
 
 .buttons button {
   padding: 10px 22px;
-  margin: 10px;
-  border: none;
-  border-radius: 20px;
-  cursor: pointer;
   font-size: 16px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.yes {
+.buttons button:hover {
+  transform: scale(1.05);
+}
+
+.buttons button:first-child {
   background: #ff4d6d;
   color: white;
+  box-shadow: 0 0 10px rgba(255, 77, 109, 0.6);
 }
 
-.no {
+.buttons button:last-child {
   background: #555;
   color: white;
 }
 
-/* LETTER */
+/* ERROR TEXT */
+#error {
+  color: #ffcc00;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+/* HIDDEN CLASS */
 .hidden {
   display: none;
 }
 
+/* LETTER BOX (PREMIUM DESIGN) */
 .letter-box {
-  background: rgba(0,0,0,0.6);
-  padding: 25px;
-  border-radius: 15px;
-  width: 300px;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  padding: 30px;
+  border-radius: 20px;
+  width: 320px;
+
   font-style: italic;
-  animation: fadeUp 1s ease;
+  color: #fff;
+
+  box-shadow:
+    0 0 25px rgba(255, 77, 109, 0.45),
+    inset 0 0 15px rgba(255, 255, 255, 0.1);
+
+  border: 1px solid rgba(255, 255, 255, 0.15);
+
+  animation: fadeUp 1.2s ease;
 }
 
+/* LETTER TEXT */
+.letter-box p {
+  line-height: 1.6;
+  letter-spacing: 0.4px;
+}
+
+/* SIGN */
+.letter-box span {
+  display: block;
+  margin-top: 15px;
+  opacity: 0.9;
+}
+
+/* FADE ANIMATION */
 @keyframes fadeUp {
   from {
-    transform: translateY(40px);
     opacity: 0;
+    transform: translateY(30px);
   }
   to {
-    transform: translateY(0);
     opacity: 1;
+    transform: translateY(0);
   }
 }
 
-/* LOVE RAIN */
+/* LOVE RAIN HEARTS */
 .heart {
   position: fixed;
   top: -10px;
-  color: pink;
-  font-size: 20px;
+  font-size: 18px;
+  color: #ff4d6d;
   animation: fall linear infinite;
+  pointer-events: none;
 }
 
 @keyframes fall {
