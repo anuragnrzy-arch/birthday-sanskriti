@@ -3,11 +3,10 @@ body {
   height: 100vh;
   background: linear-gradient(180deg, #050b2e, #000);
   color: white;
-  font-family: 'Arial', sans-serif;
+  font-family: Arial, sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
 }
 
 .container {
@@ -37,6 +36,10 @@ button:last-child {
   color: white;
 }
 
+.hidden {
+  display: none;
+}
+
 #error {
   color: #ffcc00;
   margin-top: 10px;
@@ -62,10 +65,6 @@ button:last-child {
   animation: slideUp 1s ease;
 }
 
-.hidden {
-  display: none;
-}
-
 @keyframes pulse {
   0% { transform: scale(1); }
   50% { transform: scale(1.1); }
@@ -75,34 +74,4 @@ button:last-child {
 @keyframes slideUp {
   from { transform: translateY(100px); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
-}
-
-/* Love rain */
-.heart {
-  position: fixed;
-  top: -10px;
-  color: pink;
-  animation: fall linear infinite;
-}
-
-@keyframes fall {
-  to {
-    transform: translateY(110vh);
-    opacity: 0;
-  }
-}
-
-/* Cute GIF */
-#gif {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 120px;
-  animation: float 3s ease-in-out infinite;
-}
-
-@keyframes float {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-15px); }
-  100% { transform: translateY(0); }
 }
