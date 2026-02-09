@@ -7,71 +7,69 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 }
 
 .container {
   text-align: center;
 }
 
-h1 {
-  font-size: 28px;
-}
-
 .buttons button {
-  padding: 10px 20px;
+  padding: 10px 22px;
   margin: 10px;
-  font-size: 16px;
-  border-radius: 20px;
   border: none;
+  border-radius: 20px;
   cursor: pointer;
+  font-size: 16px;
 }
 
-button:first-child {
+.yes {
   background: #ff4d6d;
   color: white;
 }
 
-button:last-child {
+.no {
   background: #555;
   color: white;
 }
 
+/* LETTER */
 .hidden {
   display: none;
 }
 
-#error {
-  color: #ffcc00;
-  margin-top: 10px;
-}
-
-#envelope {
-  font-size: 70px;
-  cursor: pointer;
-  animation: pulse 1.5s infinite;
-}
-
-.tap {
-  font-size: 12px;
-  opacity: 0.8;
-}
-
 .letter-box {
-  background: white;
-  color: black;
-  padding: 20px;
-  border-radius: 12px;
+  background: rgba(0,0,0,0.6);
+  padding: 25px;
+  border-radius: 15px;
   width: 300px;
-  animation: slideUp 1s ease;
+  font-style: italic;
+  animation: fadeUp 1s ease;
 }
 
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.1); }
-  100% { transform: scale(1); }
+@keyframes fadeUp {
+  from {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
-@keyframes slideUp {
-  from { transform: translateY(100px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+/* LOVE RAIN */
+.heart {
+  position: fixed;
+  top: -10px;
+  color: pink;
+  font-size: 20px;
+  animation: fall linear infinite;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(110vh);
+    opacity: 0;
+  }
 }
