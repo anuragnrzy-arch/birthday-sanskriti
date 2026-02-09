@@ -1,4 +1,3 @@
-</body>
 </html>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,31 +21,40 @@ body{
   color:#f5c7dd;
 }
 
-/* ⭐ STAR + SPARKLE BACKGROUND */
+/* 🌌 TWINKLING STAR BACKGROUND */
 .stars, .stars::after{
   position:fixed;
   inset:0;
-  background:
-    radial-gradient(white 1px, transparent 1px);
+  background:radial-gradient(white 1px, transparent 1px);
   background-size:80px 80px;
-  animation: twinkle 6s linear infinite;
   opacity:.35;
+  animation: twinkle 6s infinite;
   pointer-events:none;
 }
-
 .stars::after{
   content:"";
   background-size:120px 120px;
   animation-duration:10s;
 }
-
 @keyframes twinkle{
-  from{opacity:.15}
-  50%{opacity:.5}
-  to{opacity:.15}
+  0%{opacity:.2}
+  50%{opacity:.6}
+  100%{opacity:.2}
 }
 
-/* SCREENS */
+/* ✨ FALLING SPARKLES */
+.sparkle{
+  position:fixed;
+  top:-20px;
+  font-size:14px;
+  animation: fall linear infinite;
+  pointer-events:none;
+}
+@keyframes fall{
+  to{transform:translateY(110vh);}
+}
+
+/* 📱 SCREENS */
 .screen{
   position:absolute;
   inset:0;
@@ -57,9 +65,19 @@ body{
   align-items:center;
   flex-direction:column;
 }
-
 .screen.active{
   display:flex;
+}
+
+/* 🧸 ANIMATED BEAR */
+.bear{
+  font-size:90px;
+  animation: bounce 2.5s ease-in-out infinite;
+}
+@keyframes bounce{
+  0%{transform:translateY(0)}
+  50%{transform:translateY(-12px)}
+  100%{transform:translateY(0)}
 }
 
 /* TEXT */
@@ -69,7 +87,6 @@ p{
   margin:20px 0;
   color:#f4c1dc;
 }
-
 h1{
   color:#f6a6c9;
   margin-bottom:15px;
@@ -78,7 +95,7 @@ h1{
 /* BUTTON */
 button{
   margin-top:20px;
-  padding:14px 32px;
+  padding:14px 34px;
   border:none;
   border-radius:30px;
   background:linear-gradient(135deg,#7b2ff7,#f107a3);
@@ -87,15 +104,7 @@ button{
   cursor:pointer;
   box-shadow:0 0 20px rgba(241,7,163,.6);
 }
-
-button:active{
-  transform:scale(.95);
-}
-
-/* BEAR */
-.bear{
-  font-size:90px;
-}
+button:active{transform:scale(.95);}
 </style>
 </head>
 
@@ -136,7 +145,7 @@ button:active{
 <!-- 4 -->
 <div class="screen">
   <p>I’ve been staring at these all night… 🌙</p>
-  <div class="bear">📸📸📸</div>
+  <div class="bear">📸 📸 📸</div>
   <button onclick="next()">Next…</button>
 </div>
 
@@ -145,19 +154,19 @@ button:active{
   <p>
     You’re so beautiful, Sanskriti… 💔<br><br>
     I’m so sorry…<br><br>
-    I promise to be better,<br>
-    for you ✨<br><br>
-    Can you forgive me…?
+    I promise to do better,<br>
+    to be better — for you ✨<br><br>
+    Can you please forgive me…?
   </p>
   <button onclick="next()">I need you…</button>
 </div>
 
 <!-- 6 -->
 <div class="screen">
-  <div class="bear">🐻🤍🐻</div>
+  <div class="bear">🐻💞🐻</div>
   <p>
-    I don’t need anything fancy…<br><br>
-    Just your arms around me 💕
+    I don’t need anything fancy right now…<br><br>
+    Just you and me together 💕
   </p>
   <button onclick="next()">Send a hug 🤍</button>
 </div>
@@ -179,9 +188,9 @@ button:active{
 </div>
 
 <script>
+/* SCREEN FLOW */
 let i = 0;
 const screens = document.querySelectorAll('.screen');
-
 function next(){
   screens[i].classList.remove('active');
   i++;
@@ -189,6 +198,18 @@ function next(){
     screens[i].classList.add('active');
   }
 }
+
+/* FALLING SPARKLES */
+function sparkle(){
+  const s = document.createElement("div");
+  s.className = "sparkle";
+  s.innerHTML = ["✨","💖","🌸","⭐"][Math.floor(Math.random()*4)];
+  s.style.left = Math.random()*100 + "vw";
+  s.style.animationDuration = (3 + Math.random()*4) + "s";
+  document.body.appendChild(s);
+  setTimeout(()=>s.remove(),7000);
+}
+setInterval(sparkle,300);
 </script>
 
 </body>
