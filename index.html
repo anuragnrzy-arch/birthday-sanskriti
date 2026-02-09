@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Love Letter</title>
+<title>Love</title>
 
 <style>
 body{
@@ -23,13 +23,7 @@ body{
     background:rgba(255,255,255,0.05);
     backdrop-filter:blur(10px);
     color:white;
-    box-shadow:0 0 20px #ff4da6;
-    animation:glow 2s infinite alternate;
-}
-
-@keyframes glow{
-    from{ box-shadow:0 0 15px #ff4da6; }
-    to{ box-shadow:0 0 40px #ff4da6; }
+    box-shadow:0 0 25px #ff4da6;
 }
 
 button{
@@ -39,15 +33,11 @@ button{
     margin:5px;
     cursor:pointer;
     font-weight:bold;
-    transition:0.3s;
 }
 
 .yes{ background:#ff4da6; color:white; }
 .no{ background:#444; color:white; position:absolute; }
 
-button:hover{ transform:scale(1.1); }
-
-/* Letter Box */
 .letter{
     position:fixed;
     top:50%;
@@ -60,15 +50,13 @@ button:hover{ transform:scale(1.1); }
     width:280px;
     text-align:center;
     box-shadow:0 0 30px pink;
-    transition:0.5s;
-    z-index:10;
+    transition:0.4s;
 }
 
 .letter.show{
     transform:translate(-50%,-50%) scale(1);
 }
 
-/* Particles */
 .particle{
     position:fixed;
     font-size:18px;
@@ -77,11 +65,11 @@ button:hover{ transform:scale(1.1); }
 
 @keyframes blast{
     0%{ opacity:1; transform:translate(0,0) scale(1); }
-    100%{ opacity:0; transform learn(var(--x), var(--y)) scale(1.5); }
+    100%{ opacity:0; transform:translate(var(--x), var(--y)) scale(1.5); }
 }
-
 </style>
 </head>
+
 <body>
 
 <div class="glow-box">
@@ -93,15 +81,15 @@ button:hover{ transform:scale(1.1); }
 <div class="letter" id="letter">
     <h3>💌 My Love Letter</h3>
     <p>I love you more than words can say ❤️<br>
-    You make my world beautiful 🌎✨</p>
+    You make my world beautiful ✨</p>
 </div>
 
 <script>
+
 const noBtn = document.getElementById("noBtn");
 const letter = document.getElementById("letter");
 
-// NO button bhagega
-noBtn.addEventListener("mouseover", () => {
+noBtn.addEventListener("mouseover", function(){
     const x = Math.random() * (window.innerWidth - 100);
     const y = Math.random() * (window.innerHeight - 50);
     noBtn.style.position = "fixed";
@@ -109,13 +97,10 @@ noBtn.addEventListener("mouseover", () => {
     noBtn.style.top = y + "px";
 });
 
-// Blast + Letter show
 function blastEffect(){
 
-    // Letter show
     letter.classList.add("show");
 
-    // Particles
     for(let i=0;i<40;i++){
         const particle = document.createElement("div");
         particle.classList.add("particle");
@@ -131,19 +116,12 @@ function blastEffect(){
 
         document.body.appendChild(particle);
 
-        setTimeout(()=>{ particle.remove(); },1500);
-    }
-}
-</script>
-
-</body>
-</html>        setTimeout(()=>{
+        setTimeout(function(){
             particle.remove();
         },1500);
     }
-
-    alert("Awwww 🥰 I Love You Too 💖");
 }
+
 </script>
 
 </body>
