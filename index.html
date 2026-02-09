@@ -8,20 +8,17 @@
 <body>
 
 <div class="container">
+
+  <!-- QUESTION -->
   <h1 id="question">Do you love me? 🥺</h1>
 
-  <div class="buttons">
-    <button onclick="yesClick()">YES 💖</button>
-    <button onclick="noClick()">NO 😅</button>
+  <!-- BUTTONS -->
+  <div class="buttons" id="buttons">
+    <button class="yes" onclick="yesClick()">YES 💖</button>
+    <button class="no" onclick="noClick()">NO 😅</button>
   </div>
 
-  <p id="error" class="hidden">⚠️ Error! Click on YES 😌</p>
-
-  <div id="envelope" class="hidden" onclick="openLetter()">
-    💌
-    <p class="tap">TAP TO OPEN</p>
-  </div>
-
+  <!-- LETTER -->
   <div id="letter" class="hidden">
     <div class="letter-box">
       <p>
@@ -34,6 +31,7 @@
       <span>— Anurag ❤️</span>
     </div>
   </div>
+
 </div>
 
 <script src="script.js"></script>
