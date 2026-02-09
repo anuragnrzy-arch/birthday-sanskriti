@@ -2,77 +2,102 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Butki Game 😈</title>
+<title>Butki Love Game 💖</title>
 
 <style>
 body{
 margin:0;
-background:black;
-color:white;
-font-family:monospace;
 overflow:hidden;
-text-align:center;
+font-family: 'Comic Sans MS', cursive;
+background:linear-gradient(135deg,#ff9ad5,#c77dff);
 }
 
-/* CENTER EVERYTHING */
-.center{
+/* START SCREEN */
+#start{
 position:absolute;
 top:50%;
 left:50%;
 transform:translate(-50%,-50%);
+background:white;
+padding:40px;
+border-radius:20px;
+box-shadow:0 0 40px hotpink;
+text-align:center;
+animation:pulse 2s infinite;
 }
 
-/* GLOW BOX */
-.box{
-padding:30px;
-border:3px solid white;
-border-radius:10px;
-box-shadow:0 0 20px hotpink;
-animation:glow 1s infinite alternate;
+@keyframes pulse{
+0%{box-shadow:0 0 20px hotpink;}
+50%{box-shadow:0 0 50px deeppink;}
+100%{box-shadow:0 0 20px hotpink;}
 }
 
-@keyframes glow{
-from{box-shadow:0 0 10px hotpink;}
-to{box-shadow:0 0 30px deeppink;}
+h2{
+color:#ff1493;
 }
 
-button{
-padding:10px 20px;
-margin:10px;
+.option{
+position:absolute;
+padding:12px 25px;
 font-size:18px;
 border:none;
-border-radius:8px;
+border-radius:15px;
 cursor:pointer;
+transition:0.3s;
 }
 
-/* RUNNING BUTTON */
-#runBtn{
-position:absolute;
+#srinjil{
+left:15%;
+top:60%;
+background:#fff;
 }
 
-/* GAME AREA */
+#butki{
+right:15%;
+top:60%;
+background:#ff69b4;
+color:white;
+}
+
+/* GAME */
 #game{
 display:none;
+position:absolute;
+width:100%;
+height:100%;
+background:linear-gradient(to top,#87ceeb,#ffffff);
+overflow:hidden;
+}
+
+#score{
+position:absolute;
+top:20px;
+right:20px;
+font-size:20px;
+color:black;
+font-weight:bold;
+}
+
+#ground{
+position:absolute;
+bottom:60px;
+width:100%;
+height:4px;
+background:black;
 }
 
 #dino{
-font-size:40px;
 position:absolute;
 bottom:60px;
 left:50px;
+font-size:50px;
 }
 
 #cactus{
-font-size:40px;
 position:absolute;
 bottom:60px;
 right:-50px;
-animation:move 2s linear infinite;
-}
-
-@keyframes move{
-from{right:-50px;}
-to{right:110%;}
+font-size:50px;
 }
 
 .jump{
@@ -81,80 +106,148 @@ animation:jump 0.6s;
 
 @keyframes jump{
 0%{bottom:60px;}
-50%{bottom:150px;}
+50%{bottom:180px;}
 100%{bottom:60px;}
 }
 
+#jumpBtn{
+position:absolute;
+bottom:10px;
+left:50%;
+transform:translateX(-50%);
+padding:15px 40px;
+font-size:20px;
+background:#ff1493;
+color:white;
+border:none;
+border-radius:20px;
+}
+
+/* GAME OVER */
 #gameOver{
 display:none;
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:white;
+padding:40px;
+border-radius:20px;
+text-align:center;
+box-shadow:0 0 30px red;
+animation:shake 0.5s;
+}
+
+@keyframes shake{
+0%{transform:translate(-50%,-50%) rotate(0);}
+25%{transform:translate(-50%,-50%) rotate(2deg);}
+50%{transform:translate(-50%,-50%) rotate(-2deg);}
+100%{transform:translate(-50%,-50%) rotate(0);}
+}
+
+#retry{
+padding:10px 25px;
+font-size:18px;
+background:#ff1493;
+color:white;
+border:none;
+border-radius:15px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- START SCREEN -->
-<div id="start" class="center box">
-<h2>APKA NAME KYA HAI!?</h2>
-<button id="runBtn">Srinjil 😏</button>
-<button onclick="startGame()">Butkiiiiii 😈</button>
+<!-- START -->
+<div id="start">
+<h2>APKA NAME KYA HAI!? 💕</h2>
 </div>
 
+<button id="srinjil" class="option">Srinjil ✨</button>
+<button id="butki" class="option">Butkiiiiiiii 😁🤏🏻</button>
+
 <!-- GAME -->
-<div id="game" class="center">
+<div id="game">
+<div id="score">Score: 0</div>
+<div id="ground"></div>
 <div id="dino">🦖</div>
 <div id="cactus">🌵</div>
-
-<br><br><br><br>
-<button onclick="jump()">Butkiiiiii Jump 😂</button>
+<button id="jumpBtn">Butkiiiii Jump 😁</button>
 </div>
 
 <!-- GAME OVER -->
-<div id="gameOver" class="center">
-<h1>GAME OVER 💀</h1>
-<h2>Yeahhh 😆<br>Butkiiiiii har gayiiiii 😂</h2>
-<button onclick="location.reload()">Retry 🔄</button>
+<div id="gameOver">
+<h1>💀 GAME OVER</h1>
+<h2>Yeahhh 😆<br>Butkiiiiiiii har gayiiiii 😂</h2>
+<button id="retry">Retry 🔄</button>
 </div>
 
 <script>
-let runBtn=document.getElementById("runBtn");
+let srinjil=document.getElementById("srinjil");
+let butki=document.getElementById("butki");
+let game=document.getElementById("game");
+let start=document.getElementById("start");
+let dino=document.getElementById("dino");
+let cactus=document.getElementById("cactus");
+let jumpBtn=document.getElementById("jumpBtn");
+let gameOver=document.getElementById("gameOver");
+let retry=document.getElementById("retry");
+let score=0;
+let speed=5;
+let cactusPos=window.innerWidth;
 
-/* RUN AWAY BUTTON */
-runBtn.addEventListener("click",()=>{
-let x=Math.random()*window.innerWidth-100;
-let y=Math.random()*window.innerHeight-100;
-runBtn.style.left=x+"px";
-runBtn.style.top=y+"px";
+/* RUNNING BUTTON */
+srinjil.addEventListener("mouseover",()=>{
+srinjil.style.left=Math.random()*80+"%";
+srinjil.style.top=Math.random()*80+"%";
 });
 
 /* START GAME */
-function startGame(){
-document.getElementById("start").style.display="none";
-document.getElementById("game").style.display="block";
-}
+butki.onclick=()=>{
+start.style.display="none";
+srinjil.style.display="none";
+butki.style.display="none";
+game.style.display="block";
+moveCactus();
+};
 
 /* JUMP */
 function jump(){
-let dino=document.getElementById("dino");
 if(!dino.classList.contains("jump")){
 dino.classList.add("jump");
 setTimeout(()=>{dino.classList.remove("jump");},600);
 }
 }
 
-/* COLLISION CHECK */
-setInterval(()=>{
-let dino=document.getElementById("dino");
-let cactus=document.getElementById("cactus");
+jumpBtn.onclick=jump;
+document.addEventListener("keydown",(e)=>{
+if(e.code==="Space") jump();
+});
+
+/* MOVE CACTUS */
+function moveCactus(){
+let interval=setInterval(()=>{
+cactusPos-=speed;
+cactus.style.right=(window.innerWidth-cactusPos)+"px";
+
+if(cactusPos<0){
+cactusPos=window.innerWidth;
+score++;
+speed+=0.5;
+document.getElementById("score").innerText="Score: "+score;
+}
 
 let dinoBottom=parseInt(window.getComputedStyle(dino).getPropertyValue("bottom"));
-let cactusRight=parseInt(window.getComputedStyle(cactus).getPropertyValue("right"));
 
-if(cactusRight>window.innerWidth-120 && cactusRight<window.innerWidth-80 && dinoBottom<80){
-document.getElementById("game").style.display="none";
-document.getElementById("gameOver").style.display="block";
+if(cactusPos<120 && cactusPos>60 && dinoBottom<100){
+clearInterval(interval);
+game.style.display="none";
+gameOver.style.display="block";
 }
-},10);
+},20);
+}
+
+retry.onclick=()=>location.reload();
 </script>
 
 </body>
