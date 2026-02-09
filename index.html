@@ -1,30 +1,42 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Anurag 💖 Sanskriti</title>
+  <meta charset="UTF-8">
+  <title>For Sanskriti 💖</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <div class="card">
-    <h1>🎉 Happy Birthday Sanskriti 🎉</h1>
-    <p>Ek chhota sa surprise tumhare liye 💌</p>
+<div class="container">
+  <h1 id="question">Do you love me? 🥺</h1>
 
-    <h2>Do you love me? 😌</h2>
+  <div class="buttons">
+    <button onclick="yesClick()">YES 💖</button>
+    <button onclick="noClick()">NO 😅</button>
+  </div>
 
-    <button onclick="sayYes()">YES 💖</button>
-    <button onclick="sayNo()">NO 😤</button>
+  <p id="error" class="hidden">⚠️ Error! Click on YES 😌</p>
 
-    <div id="letter" style="display:none;">
-      <h3>💌 Dear Sanskriti</h3>
+  <div id="envelope" class="hidden" onclick="openLetter()">
+    💌
+    <p class="tap">TAP TO OPEN</p>
+  </div>
+
+  <div id="letter" class="hidden">
+    <div class="letter-box">
       <p>
-        Tum meri life ka sabse pyara hissa ho.  
-        Hamesha khush raho 💖  
-        – Anurag
+        I wanted to take a moment to tell you just how much you mean to me.
+        You are the light of my life, the one who makes everything better.
+        Your love has changed me in ways I never thought possible, and I am so grateful
+        to have you as my significant other.
+        <br><br>
+        I love you more with each passing day Sanskriti ☺️💖✨
       </p>
+      <span>— Anurag ❤️</span>
     </div>
   </div>
-  <script src="script.js"></script>
+</div>
 
+<script src="script.js"></script>
 </body>
 </html>
