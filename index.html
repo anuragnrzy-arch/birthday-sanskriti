@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Love Blast</title>
+<title>Love Letter</title>
 
 <style>
 body{
@@ -47,6 +47,27 @@ button{
 
 button:hover{ transform:scale(1.1); }
 
+/* Letter Box */
+.letter{
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%) scale(0);
+    background:white;
+    color:#333;
+    padding:25px;
+    border-radius:15px;
+    width:280px;
+    text-align:center;
+    box-shadow:0 0 30px pink;
+    transition:0.5s;
+    z-index:10;
+}
+
+.letter.show{
+    transform:translate(-50%,-50%) scale(1);
+}
+
 /* Particles */
 .particle{
     position:fixed;
@@ -55,14 +76,8 @@ button:hover{ transform:scale(1.1); }
 }
 
 @keyframes blast{
-    0%{
-        opacity:1;
-        transform:translate(0,0) scale(1);
-    }
-    100%{
-        opacity:0;
-        transform:translate(var(--x), var(--y)) scale(1.5);
-    }
+    0%{ opacity:1; transform:translate(0,0) scale(1); }
+    100%{ opacity:0; transform learn(var(--x), var(--y)) scale(1.5); }
 }
 
 </style>
@@ -75,8 +90,15 @@ button:hover{ transform:scale(1.1); }
     <button class="no" id="noBtn">NO 😅</button>
 </div>
 
+<div class="letter" id="letter">
+    <h3>💌 My Love Letter</h3>
+    <p>I love you more than words can say ❤️<br>
+    You make my world beautiful 🌎✨</p>
+</div>
+
 <script>
 const noBtn = document.getElementById("noBtn");
+const letter = document.getElementById("letter");
 
 // NO button bhagega
 noBtn.addEventListener("mouseover", () => {
@@ -87,20 +109,21 @@ noBtn.addEventListener("mouseover", () => {
     noBtn.style.top = y + "px";
 });
 
-// Blast Effect
+// Blast + Letter show
 function blastEffect(){
+
+    // Letter show
+    letter.classList.add("show");
+
+    // Particles
     for(let i=0;i<40;i++){
         const particle = document.createElement("div");
         particle.classList.add("particle");
+        particle.innerHTML = Math.random()>0.5 ? "💖" : "🎉";
 
-        // Random heart or confetti
-        particle.innerHTML = Math.random() > 0.5 ? "💖" : "🎉";
-
-        // Center position
         particle.style.left = window.innerWidth/2 + "px";
         particle.style.top = window.innerHeight/2 + "px";
 
-        // Random direction
         const x = (Math.random()-0.5)*600 + "px";
         const y = (Math.random()-0.5)*600 + "px";
         particle.style.setProperty('--x', x);
@@ -108,7 +131,13 @@ function blastEffect(){
 
         document.body.appendChild(particle);
 
-        setTimeout(()=>{
+        setTimeout(()=>{ particle.remove(); },1500);
+    }
+}
+</script>
+
+</body>
+</html>        setTimeout(()=>{
             particle.remove();
         },1500);
     }
