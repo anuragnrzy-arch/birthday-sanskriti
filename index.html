@@ -2,158 +2,202 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For My Behena 💖</title>
+<title>Butki Game 💙</title>
 
 <style>
 body{
     margin:0;
+    font-family:sans-serif;
+    overflow:hidden;
+}
+
+/* FIRST PAGE */
+.startBox{
     height:100vh;
     display:flex;
     justify-content:center;
     align-items:center;
     background:linear-gradient(135deg,#141e30,#243b55);
-    font-family:sans-serif;
-    overflow:hidden;
 }
 
-/* Glow Box */
 .box{
-    width:320px;
-    padding:35px;
-    text-align:center;
-    border-radius:20px;
-    background:rgba(255,255,255,0.08);
-    backdrop-filter:blur(12px);
+    background:black;
     color:white;
-    position:relative;
-    animation:glow 2s infinite alternate;
+    padding:30px;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 0 40px #ff4da6;
 }
 
-@keyframes glow{
-    from{ box-shadow:0 0 20px #ff4da6; }
-    to{ box-shadow:0 0 45px #ff4da6; }
-}
-
-h2{
-    margin-bottom:25px;
-}
-
-/* Buttons */
 button{
     padding:12px 20px;
     border:none;
-    border-radius:25px;
-    margin:8px;
-    font-weight:bold;
+    border-radius:20px;
+    margin:10px;
     cursor:pointer;
-    transition:0.3s;
+    font-weight:bold;
 }
 
-.correct{
-    background:#ff4da6;
-    color:white;
+.correct{ background:#ff4da6; color:white; }
+.wrong{ background:#444; color:white; }
+
+/* GAME PAGE */
+.gamePage{
+    display:none;
+    height:100vh;
+    background:#0077ff;
+    position:relative;
+    overflow:hidden;
 }
 
-.wrong{
-    background:#444;
-    color:white;
-    position:absolute;
-}
-
-button:hover{
-    transform:scale(1.1);
-}
-
-/* Celebration Particles */
-.particle{
-    position:fixed;
-    font-size:20px;
-    animation:blast 1.5s ease-out forwards;
-}
-
-@keyframes blast{
-    0%{ opacity:1; transform:translate(0,0) scale(1); }
-    100%{ opacity:0; transform:translate(var(--x), var(--y)) scale(1.6); }
-}
-
-/* Final Message */
-.final{
-    position:fixed;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%) scale(0);
+.player{
+    width:50px;
+    height:50px;
     background:white;
-    color:#333;
-    padding:25px;
-    border-radius:15px;
-    text-align:center;
-    width:280px;
-    transition:0.4s;
-    box-shadow:0 0 40px pink;
+    position:absolute;
+    bottom:50px;
+    left:50px;
+    border-radius:10px;
 }
 
-.final.show{
-    transform:translate(-50%,-50%) scale(1);
+.cactus{
+    width:30px;
+    height:60px;
+    background:darkgreen;
+    position:absolute;
+    bottom:50px;
+    right:-40px;
+}
+
+.jumpBtn{
+    position:absolute;
+    bottom:10px;
+    left:50%;
+    transform:translateX(-50%);
+    background:white;
+    color:#0077ff;
+}
+
+.gameOver{
+    position:absolute;
+    top:40%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    text-align:center;
+    display:none;
+    color:white;
 }
 </style>
 </head>
 
 <body>
 
-<div class="box">
-    <h2>APKA NAME KYA HAI?! 💌</h2>
-    <button class="correct" onclick="correctAnswer()">Butkiiiiii 💖</button>
-    <button class="wrong" id="runBtn">Srinjl 😜</button>
+<!-- FIRST PAGE -->
+<div class="startBox" id="startPage">
+    <div class="box">
+        <h2>APKA NAME KYA HAI?! 💌</h2>
+        <button class="correct" onclick="startGame()">Butkiiiiii 💖</button>
+        <button class="wrong" onclick="moveBtn(this)">Srinjl 😜</button>
+    </div>
 </div>
 
-<div class="final" id="finalBox">
-    <h3>Yessss 😍💖</h3>
-    <p>Meri pyaari Butkiiiiii 🥰✨<br>
-    Aap hi meri favourite ho 💞</p>
+<!-- GAME PAGE -->
+<div class="gamePage" id="gamePage">
+
+    <div class="player" id="player"></div>
+    <div class="cactus" id="cactus"></div>
+
+    <button class="jumpBtn" onclick="jump()">JUMP BUTKIIIII</button>
+
+    <div class="gameOver" id="gameOverBox">
+        <h1>Game Over 💀</h1>
+        <h2>Butkiiiiiiii har gayiii yeahhhhhh 😂</h2>
+        <button onclick="retry()">Retry 🔁</button>
+    </div>
+
 </div>
 
 <script>
 
-const runBtn = document.getElementById("runBtn");
-const finalBox = document.getElementById("finalBox");
+const startPage = document.getElementById("startPage");
+const gamePage = document.getElementById("gamePage");
+const player = document.getElementById("player");
+const cactus = document.getElementById("cactus");
+const gameOverBox = document.getElementById("gameOverBox");
 
-/* Srinjl button bhaagega */
-runBtn.addEventListener("mouseover", moveButton);
-runBtn.addEventListener("click", moveButton);
+let isJumping = false;
+let cactusSpeed;
+let gameInterval;
 
-function moveButton(){
-    const x = Math.random() * (window.innerWidth - 120);
-    const y = Math.random() * (window.innerHeight - 60);
-    runBtn.style.position = "fixed";
-    runBtn.style.left = x + "px";
-    runBtn.style.top = y + "px";
+/* Wrong button bhaage */
+function moveBtn(btn){
+    btn.style.position="absolute";
+    btn.style.left=Math.random()*300+"px";
+    btn.style.top=Math.random()*300+"px";
 }
 
-/* Correct Answer */
-function correctAnswer(){
+/* Start Game */
+function startGame(){
+    startPage.style.display="none";
+    gamePage.style.display="block";
+    startCactus();
+}
 
-    finalBox.classList.add("show");
+/* Jump */
+function jump(){
+    if(isJumping) return;
+    isJumping=true;
 
-    // Blast Effect
-    for(let i=0;i<40;i++){
-        const particle = document.createElement("div");
-        particle.classList.add("particle");
-        particle.innerHTML = Math.random()>0.5 ? "💖" : "✨";
+    let jumpHeight=0;
+    let upInterval=setInterval(()=>{
+        if(jumpHeight>=120){
+            clearInterval(upInterval);
 
-        particle.style.left = window.innerWidth/2 + "px";
-        particle.style.top = window.innerHeight/2 + "px";
+            let downInterval=setInterval(()=>{
+                if(jumpHeight<=0){
+                    clearInterval(downInterval);
+                    isJumping=false;
+                }
+                jumpHeight-=10;
+                player.style.bottom=50+jumpHeight+"px";
+            },20);
+        }
+        jumpHeight+=10;
+        player.style.bottom=50+jumpHeight+"px";
+    },20);
+}
 
-        const x = (Math.random()-0.5)*600 + "px";
-        const y = (Math.random()-0.5)*600 + "px";
-        particle.style.setProperty('--x', x);
-        particle.style.setProperty('--y', y);
+/* Cactus movement */
+function startCactus(){
+    let cactusPos=window.innerWidth;
+    cactusSpeed=5;
 
-        document.body.appendChild(particle);
+    gameInterval=setInterval(()=>{
+        cactusPos-=cactusSpeed;
+        cactus.style.left=cactusPos+"px";
 
-        setTimeout(()=>{
-            particle.remove();
-        },1500);
-    }
+        // Collision detection
+        let playerBottom=parseInt(window.getComputedStyle(player).getPropertyValue("bottom"));
+        if(cactusPos<100 && cactusPos>50 && playerBottom<100){
+            gameOver();
+        }
+
+        if(cactusPos<-40){
+            cactusPos=window.innerWidth;
+        }
+
+    },20);
+}
+
+/* Game Over */
+function gameOver(){
+    clearInterval(gameInterval);
+    gameOverBox.style.display="block";
+}
+
+/* Retry */
+function retry(){
+    location.reload();
 }
 
 </script>
