@@ -10,30 +10,29 @@ body{
   background:#111;
   font-family:Arial;
   color:white;
-  overflow:hidden;
 }
 
-/* CENTER AREA */
-.center{
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
+/* wrapper to center everything */
+.wrapper{
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
 }
 
 /* NAME BOX */
 #nameBox{
-  padding:35px;
   background:#000;
-  border-radius:20px;
+  padding:30px;
+  border-radius:18px;
   text-align:center;
-  box-shadow:0 0 30px #00bfff; /* blue glow */
+  box-shadow:0 0 25px #00bfff;
 }
 
-/* buttons */
 .btn{
-  padding:10px 22px;
-  margin:10px;
+  padding:10px 20px;
+  margin:8px;
   border:none;
   border-radius:10px;
   font-size:16px;
@@ -46,8 +45,8 @@ body{
 /* GAME AREA */
 #game{
   display:none;
-  width:95vw;
-  height:250px;
+  width:95%;
+  height:200px;
   border-bottom:3px solid white;
   position:relative;
 }
@@ -57,7 +56,7 @@ body{
   position:absolute;
   bottom:0;
   left:40px;
-  font-size:45px;
+  font-size:42px;
 }
 
 /* cactus */
@@ -65,28 +64,25 @@ body{
   position:absolute;
   bottom:0;
   right:-40px;
-  font-size:40px;
+  font-size:38px;
 }
 
 /* score */
 #score{
   position:absolute;
-  top:-30px;
+  top:-25px;
   right:5px;
 }
 
-/* jump button */
+/* jump button JUST BELOW GAME */
 #jumpBtn{
-  position:absolute;
-  bottom:35px;
-  left:50%;
-  transform:translateX(-50%);
+  display:none;
+  margin-top:10px;
   padding:10px 22px;
   background:#ff1493;
   border:none;
-  border-radius:12px;
+  border-radius:10px;
   color:white;
-  display:none;
 }
 
 /* game over */
@@ -103,31 +99,32 @@ body{
 
 <body>
 
-<!-- NAME SCREEN -->
-<div id="nameBox" class="center">
-  <h3>Apka name kya hai !?</h3>
-  <button id="runBtn" class="btn">Srinjil ✨</button>
-  <button id="startBtn" class="btn">Butkiiiii 😁🤏🏻</button>
-</div>
+<div class="wrapper">
 
-
-<!-- GAME -->
-<div id="game" class="center">
-
-  <div id="score">Score: 0</div>
-
-  <div id="dino">🦖</div>
-  <div id="cactus">🌵</div>
-
-  <div id="overBox">
-    <h2>Butkiiiii har gayi 😭</h2>
-    <button class="btn" onclick="location.reload()">Retry 🔁</button>
+  <!-- NAME -->
+  <div id="nameBox">
+    <h3>Apka name kya hai !?</h3>
+    <button id="runBtn" class="btn">Srinjil ✨</button>
+    <button id="startBtn" class="btn">Butkiiiii 😁🤏🏻</button>
   </div>
 
+  <!-- GAME -->
+  <div id="game">
+
+    <div id="score">Score: 0</div>
+    <div id="dino">🦖</div>
+    <div id="cactus">🌵</div>
+
+    <div id="overBox">
+      <h2>Butkiiiii har gayi 😭</h2>
+      <button class="btn" onclick="location.reload()">Retry 🔁</button>
+    </div>
+
+  </div>
+
+  <button id="jumpBtn">Butkiiiii Jump 😁</button>
+
 </div>
-
-<button id="jumpBtn">Butkiiiii Jump 😁</button>
-
 
 <script>
 const nameBox=document.getElementById("nameBox");
@@ -135,9 +132,10 @@ const runBtn=document.getElementById("runBtn");
 const startBtn=document.getElementById("startBtn");
 
 const game=document.getElementById("game");
+const jumpBtn=document.getElementById("jumpBtn");
+
 const dino=document.getElementById("dino");
 const cactus=document.getElementById("cactus");
-const jumpBtn=document.getElementById("jumpBtn");
 const overBox=document.getElementById("overBox");
 const scoreText=document.getElementById("score");
 
@@ -147,14 +145,14 @@ let score=0;
 let speed=7;
 let loop;
 
-/* RUN AWAY BUTTON 😂 */
+/* run button bhaage */
 runBtn.onclick=()=>{
-  runBtn.style.position="absolute";
-  runBtn.style.left=Math.random()*80+"%";
-  runBtn.style.top=Math.random()*80+"%";
+  runBtn.style.position="relative";
+  runBtn.style.left=Math.random()*100-50+"px";
+  runBtn.style.top=Math.random()*100-50+"px";
 };
 
-/* START GAME */
+/* start game */
 startBtn.onclick=()=>{
   nameBox.style.display="none";
   game.style.display="block";
@@ -162,7 +160,7 @@ startBtn.onclick=()=>{
   startGame();
 };
 
-/* JUMP */
+/* jump */
 function jump(){
   if(jumping) return;
   jumping=true;
@@ -170,7 +168,7 @@ function jump(){
   let y=0;
 
   let up=setInterval(()=>{
-    if(y>=90){
+    if(y>=80){
       clearInterval(up);
       let down=setInterval(()=>{
         if(y<=0){
@@ -189,7 +187,7 @@ function jump(){
 jumpBtn.onclick=jump;
 document.addEventListener("keydown",jump);
 
-/* GAME LOOP */
+/* game loop */
 function startGame(){
 
 loop=setInterval(()=>{
@@ -199,7 +197,7 @@ loop=setInterval(()=>{
   if(cactusX<-40){
     cactusX=window.innerWidth;
     score++;
-    speed+=0.2; /* speed increase like chrome */
+    speed+=0.2;
     scoreText.innerText="Score: "+score;
   }
 
@@ -208,22 +206,14 @@ loop=setInterval(()=>{
   let d=dino.getBoundingClientRect();
   let c=cactus.getBoundingClientRect();
 
-  if(
-    d.left < c.right &&
-    d.right > c.left &&
-    d.bottom > c.top
-  ){
-    endGame();
+  if(d.left < c.right && d.right > c.left && d.bottom > c.top){
+    clearInterval(loop);
+    jumpBtn.style.display="none";
+    overBox.style.display="block";
   }
 
 },20);
 
-}
-
-function endGame(){
-  clearInterval(loop);
-  jumpBtn.style.display="none";
-  overBox.style.display="block";
 }
 </script>
 
