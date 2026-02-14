@@ -1,215 +1,209 @@
-</html>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Sorry Sanskriti ❤️</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<title>Ultra Pro Flow</title>
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family: 'Segoe UI', sans-serif;
-}
+    * {
+        box-sizing: border-box;
+        font-family: 'Segoe UI', sans-serif;
+    }
 
-body{
-  background:#061326;
-  height:100vh;
-  overflow:hidden;
-  color:#f5c7dd;
-}
+    body {
+        margin: 0;
+        height: 100vh;
+        background: radial-gradient(circle at top, #0f2027, #000);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        overflow: hidden;
+    }
 
-/* 🌌 TWINKLING STAR BACKGROUND */
-.stars, .stars::after{
-  position:fixed;
-  inset:0;
-  background:radial-gradient(white 1px, transparent 1px);
-  background-size:80px 80px;
-  opacity:.35;
-  animation: twinkle 6s infinite;
-  pointer-events:none;
-}
-.stars::after{
-  content:"";
-  background-size:120px 120px;
-  animation-duration:10s;
-}
-@keyframes twinkle{
-  0%{opacity:.2}
-  50%{opacity:.6}
-  100%{opacity:.2}
-}
+    .box {
+        background: rgba(0,0,0,0.75);
+        padding: 30px;
+        border-radius: 15px;
+        width: 340px;
+        text-align: center;
+        box-shadow: 0 0 25px #00fff7;
+        animation: glow 2s infinite alternate;
+    }
 
-/* ✨ FALLING SPARKLES */
-.sparkle{
-  position:fixed;
-  top:-20px;
-  font-size:14px;
-  animation: fall linear infinite;
-  pointer-events:none;
-}
-@keyframes fall{
-  to{transform:translateY(110vh);}
-}
+    @keyframes glow {
+        from { box-shadow: 0 0 20px #00fff7; }
+        to { box-shadow: 0 0 40px #00fff7; }
+    }
 
-/* 📱 SCREENS */
-.screen{
-  position:absolute;
-  inset:0;
-  display:none;
-  padding:20px;
-  text-align:center;
-  justify-content:center;
-  align-items:center;
-  flex-direction:column;
-}
-.screen.active{
-  display:flex;
-}
+    h2 {
+        margin-bottom: 20px;
+    }
 
-/* 🧸 ANIMATED BEAR */
-.bear{
-  font-size:90px;
-  animation: bounce 2.5s ease-in-out infinite;
-}
-@keyframes bounce{
-  0%{transform:translateY(0)}
-  50%{transform:translateY(-12px)}
-  100%{transform:translateY(0)}
-}
+    button {
+        width: 100%;
+        padding: 14px;
+        margin: 10px 0;
+        border-radius: 10px;
+        border: none;
+        font-size: 16px;
+        cursor: pointer;
+        background: linear-gradient(135deg, #00fff7, #0077ff);
+        color: black;
+        font-weight: bold;
+        box-shadow: 0 0 15px #00fff7;
+        transition: 0.3s;
+    }
 
-/* TEXT */
-p{
-  font-size:16px;
-  line-height:1.7;
-  margin:20px 0;
-  color:#f4c1dc;
-}
-h1{
-  color:#f6a6c9;
-  margin-bottom:15px;
-}
+    button:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 25px #00fff7;
+    }
 
-/* BUTTON */
-button{
-  margin-top:20px;
-  padding:14px 34px;
-  border:none;
-  border-radius:30px;
-  background:linear-gradient(135deg,#7b2ff7,#f107a3);
-  color:white;
-  font-size:15px;
-  cursor:pointer;
-  box-shadow:0 0 20px rgba(241,7,163,.6);
-}
-button:active{transform:scale(.95);}
+    .hidden {
+        display: none;
+    }
+
+    .error {
+        color: red;
+        margin-top: 10px;
+        animation: shake 0.3s;
+    }
+
+    @keyframes shake {
+        0% { transform: translateX(0); }
+        25% { transform: translateX(-5px); }
+        50% { transform: translateX(5px); }
+        75% { transform: translateX(-5px); }
+        100% { transform: translateX(0); }
+    }
+
+    canvas {
+        background: #fff;
+        border-radius: 8px;
+        display: block;
+        margin: auto;
+    }
+
+    .game-ui {
+        text-align: center;
+        margin-top: 10px;
+    }
 </style>
 </head>
-
 <body>
 
-<div class="stars"></div>
-
-<!-- 1 -->
-<div class="screen active">
-  <div class="bear">🐻</div>
-  <p>
-    It’s late night… 🌙<br>
-    I’ve been walking for hours…<br><br>
-    I’m holding something heavy…<br>
-    not in hands, but in heart…
-  </p>
-  <button onclick="next()">Let me talk…</button>
+<div class="box" id="step1">
+    <h2>Hello, tumhara naam?</h2>
+    <button onclick="openName()">Open</button>
 </div>
 
-<!-- 2 -->
-<div class="screen">
-  <h1>My Sorry Letter to You…</h1>
-  <div class="bear">🐻‍❄️</div>
-  <p>
-    I’ve been sitting here for hours,<br>
-    trying to find the right words…
-  </p>
-  <button onclick="next()">Continue reading…</button>
+<div class="box hidden" id="step2">
+    <h2>Hello tumhara naam kya hai!?</h2>
+    <button onclick="neymar()">Neymar Jr</button>
+    <button onclick="anurag()">Anurag Nrzy</button>
+    <div id="error" class="error"></div>
 </div>
 
-<!-- 3 -->
-<div class="screen">
-  <div class="bear">🐻🤍</div>
-  <p>You didn’t deserve that…</p>
-  <button onclick="next()">Read my letter…</button>
+<div class="box hidden" id="step3">
+    <h2>Welcome Anurag 🔥</h2>
+    <button onclick="startGame()">Play Game</button>
 </div>
 
-<!-- 4 -->
-<div class="screen">
-  <p>I’ve been staring at these all night… 🌙</p>
-  <div class="bear">📸 📸 📸</div>
-  <button onclick="next()">Next…</button>
-</div>
-
-<!-- 5 -->
-<div class="screen">
-  <p>
-    You’re so beautiful, Sanskriti… 💔<br><br>
-    I’m so sorry…<br><br>
-    I promise to do better,<br>
-    to be better — for you ✨<br><br>
-    Can you please forgive me…?
-  </p>
-  <button onclick="next()">I need you…</button>
-</div>
-
-<!-- 6 -->
-<div class="screen">
-  <div class="bear">🐻💞🐻</div>
-  <p>
-    I don’t need anything fancy right now…<br><br>
-    Just you and me together 💕
-  </p>
-  <button onclick="next()">Send a hug 🤍</button>
-</div>
-
-<!-- 7 -->
-<div class="screen">
-  <h1>I have something special for you… 🎁</h1>
-  <button onclick="next()">Open gift…</button>
-</div>
-
-<!-- 8 -->
-<div class="screen">
-  <div class="bear">🐻🌹</div>
-  <p>
-    This flower will never wilt… 🌹<br><br>
-    Just like my love for you.<br><br>
-    You mean everything to me, Sanskriti ✨
-  </p>
+<div class="hidden" id="game">
+    <canvas id="canvas" width="600" height="200"></canvas>
+    <div class="game-ui">
+        <button onclick="jump()">Jump</button>
+        <p id="score">Score: 0</p>
+    </div>
 </div>
 
 <script>
-/* SCREEN FLOW */
-let i = 0;
-const screens = document.querySelectorAll('.screen');
-function next(){
-  screens[i].classList.remove('active');
-  i++;
-  if(i < screens.length){
-    screens[i].classList.add('active');
-  }
+/* FLOW CONTROL */
+function openName() {
+    step1.classList.add("hidden");
+    step2.classList.remove("hidden");
 }
 
-/* FALLING SPARKLES */
-function sparkle(){
-  const s = document.createElement("div");
-  s.className = "sparkle";
-  s.innerHTML = ["✨","💖","🌸","⭐"][Math.floor(Math.random()*4)];
-  s.style.left = Math.random()*100 + "vw";
-  s.style.animationDuration = (3 + Math.random()*4) + "s";
-  document.body.appendChild(s);
-  setTimeout(()=>s.remove(),7000);
+function neymar() {
+    error.innerText = "❌ ERROR: Access Denied!";
 }
-setInterval(sparkle,300);
+
+function anurag() {
+    step2.classList.add("hidden");
+    step3.classList.remove("hidden");
+}
+
+function startGame() {
+    step3.classList.add("hidden");
+    game.classList.remove("hidden");
+    initGame();
+}
+
+/* DINO GAME (CHROME STYLE LOGIC) */
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+let dino = { x: 50, y: 150, w: 40, h: 40, vy: 0, jumping: false };
+let obstacle = { x: 600, y: 160, w: 20, h: 40 };
+let gravity = 0.8;
+let scoreVal = 0;
+let gameRunning = false;
+
+function initGame() {
+    gameRunning = true;
+    scoreVal = 0;
+    requestAnimationFrame(loop);
+}
+
+function jump() {
+    if (!dino.jumping) {
+        dino.vy = -14;
+        dino.jumping = true;
+    }
+}
+
+function loop() {
+    if (!gameRunning) return;
+
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    // Dino
+    dino.y += dino.vy;
+    dino.vy += gravity;
+
+    if (dino.y >= 150) {
+        dino.y = 150;
+        dino.vy = 0;
+        dino.jumping = false;
+    }
+
+    ctx.fillStyle = "black";
+    ctx.fillRect(dino.x, dino.y, dino.w, dino.h);
+
+    // Obstacle
+    obstacle.x -= 6;
+    if (obstacle.x < -20) {
+        obstacle.x = 600;
+        scoreVal++;
+        score.innerText = "Score: " + scoreVal;
+    }
+
+    ctx.fillRect(obstacle.x, obstacle.y, obstacle.w, obstacle.h);
+
+    // Collision
+    if (
+        dino.x < obstacle.x + obstacle.w &&
+        dino.x + dino.w > obstacle.x &&
+        dino.y < obstacle.y + obstacle.h &&
+        dino.y + dino.h > obstacle.y
+    ) {
+        gameRunning = false;
+        alert("💀 GAME OVER | Score: " + scoreVal);
+        location.reload();
+    }
+
+    requestAnimationFrame(loop);
+}
 </script>
 
 </body>
