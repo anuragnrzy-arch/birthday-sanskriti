@@ -1,111 +1,84 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>Ultra Pro Flow</title>
-<style>
-    * {
-        box-sizing: border-box;
-        font-family: 'Segoe UI', sans-serif;
-    }
+  <title>Special Question 💖</title>
 
+  <style>
     body {
-        margin: 0;
-        height: 100vh;
-        background: radial-gradient(circle at top, #0f2027, #000);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: white;
-        overflow: hidden;
+      margin: 0;
+      font-family: Arial;
+      background: linear-gradient(pink, lightblue);
+      text-align: center;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .box {
-        background: rgba(0,0,0,0.75);
-        padding: 30px;
-        border-radius: 15px;
-        width: 340px;
-        text-align: center;
-        box-shadow: 0 0 25px #00fff7;
-        animation: glow 2s infinite alternate;
-    }
-
-    @keyframes glow {
-        from { box-shadow: 0 0 20px #00fff7; }
-        to { box-shadow: 0 0 40px #00fff7; }
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
     }
 
     h2 {
-        margin-bottom: 20px;
+      margin-bottom: 20px;
     }
 
     button {
-        width: 100%;
-        padding: 14px;
-        margin: 10px 0;
-        border-radius: 10px;
-        border: none;
-        font-size: 16px;
-        cursor: pointer;
-        background: linear-gradient(135deg, #00fff7, #0077ff);
-        color: black;
-        font-weight: bold;
-        box-shadow: 0 0 15px #00fff7;
-        transition: 0.3s;
+      padding: 10px 20px;
+      margin: 10px;
+      font-size: 18px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
     }
 
-    button:hover {
-        transform: scale(1.05);
-        box-shadow: 0 0 25px #00fff7;
+    #yes {
+      background: green;
+      color: white;
     }
 
-    .hidden {
-        display: none;
+    #no {
+      background: red;
+      color: white;
+      position: relative;
     }
 
-    .error {
-        color: red;
-        margin-top: 10px;
-        animation: shake 0.3s;
-    }
-
-    @keyframes shake {
-        0% { transform: translateX(0); }
-        25% { transform: translateX(-5px); }
-        50% { transform: translateX(5px); }
-        75% { transform: translateX(-5px); }
-        100% { transform: translateX(0); }
-    }
-
-    canvas {
-        background: #fff;
-        border-radius: 8px;
-        display: block;
-        margin: auto;
-    }
-
-    .game-ui {
-        text-align: center;
-        margin-top: 10px;
-    }
-</style>
+  </style>
 </head>
+
 <body>
 
-<div class="box" id="step1">
-    <h2>Hello, tumhara naam?</h2>
-    <button onclick="openName()">Open</button>
-</div>
+  <div class="box">
+    <h2>Do you love me? 💖</h2>
 
-<div class="box hidden" id="step2">
-    <h2>Hello tumhara naam kya hai!?</h2>
-    <button onclick="neymar()">Neymar Jr</button>
-    <button onclick="anurag()">Anurag Nrzy</button>
-    <div id="error" class="error"></div>
-</div>
+    <button id="yes" onclick="yesClick()">Yes</button>
+    <button id="no" onmouseover="moveNo()">No</button>
 
-<div class="box hidden" id="step3">
-    <h2>Welcome Anurag 🔥</h2>
+    <p id="msg"></p>
+  </div>
+
+  <script>
+    function yesClick() {
+      document.getElementById("msg").innerHTML = "Yay! 💕 I knew it!";
+    }
+
+    function moveNo() {
+      let btn = document.getElementById("no");
+
+      let x = Math.random() * 200;
+      let y = Math.random() * 200;
+
+      btn.style.position = "relative";
+      btn.style.left = x + "px";
+      btn.style.top = y + "px";
+    }
+  </script>
+
+</body>
+</html>    <h2>Welcome Anurag 🔥</h2>
     <button onclick="startGame()">Play Game</button>
 </div>
 
