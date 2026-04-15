@@ -11,23 +11,15 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(135deg,#f8d7da,#eac1c1);
+    background: #e8cfc8;
     font-family: Arial;
     text-align: center;
 }
 
-.container {
-    animation: fadeIn 1s ease;
-}
-
-@keyframes fadeIn {
-    from {opacity:0; transform:scale(0.8);}
-    to {opacity:1; transform:scale(1);}
-}
-
-img {
-    width: 140px;
-    margin-bottom: 10px;
+iframe {
+    width: 180px;
+    height: 180px;
+    border: none;
 }
 
 button {
@@ -37,7 +29,6 @@ button {
     border-radius: 10px;
     background: white;
     cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
 #noBtn {
@@ -48,10 +39,10 @@ button {
 
 <body>
 
-<div class="container">
-    <img id="gif" src="https://i.imgur.com/1Q9Z1Zm.gif">
+<div>
+    <iframe id="gif" src="https://giphy.com/embed/JIX9t2j0ZTN9S"></iframe>
     <h2 id="text">Do you love me? 🥺</h2>
-    <p id="sub">Chiku is all yours</p>
+    <p>Chiku is all yours</p>
 
     <button onclick="yes()">Yes</button>
     <button id="noBtn" onclick="no()">No</button>
@@ -63,12 +54,10 @@ let step = 0;
 
 function yes(){
     document.getElementById("gif").src =
-    "https://i.imgur.com/4M7IWwP.gif";
+    "https://giphy.com/embed/MDJ9IbxxvDUQM";
 
     document.getElementById("text").innerText =
     "I knew it! You Love me 😘";
-
-    document.getElementById("sub").innerText = "";
 }
 
 function no(){
@@ -76,7 +65,7 @@ function no(){
 
     if(step == 1){
         document.getElementById("gif").src =
-        "https://i.imgur.com/oXgFQ4B.gif";
+        "https://giphy.com/embed/3oriO0OEd9QIDdllqo";
 
         document.getElementById("text").innerText =
         "Please think again 🥺";
@@ -84,7 +73,7 @@ function no(){
 
     else if(step == 2){
         document.getElementById("gif").src =
-        "https://i.imgur.com/8Km9tLL.gif";
+        "https://giphy.com/embed/l378giAZgxPw3eO52";
 
         document.getElementById("text").innerText =
         "Baby maan jao na 😭";
