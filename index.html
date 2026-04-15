@@ -1,114 +1,99 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
-<title>Do you love me?</title>
+<title>Love Page</title>
 
 <style>
-    body {
-        margin: 0;
-        padding: 0;
-        font-family: Arial, sans-serif;
-        background: #e8cfc8;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        text-align: center;
-    }
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg,#f8d7da,#eac1c1);
+    font-family: Arial;
+    text-align: center;
+}
 
-    .container {
-        background: transparent;
-    }
+.container {
+    animation: fadeIn 1s ease;
+}
 
-    img {
-        width: 120px;
-        margin-bottom: 15px;
-    }
+@keyframes fadeIn {
+    from {opacity:0; transform:scale(0.8);}
+    to {opacity:1; transform:scale(1);}
+}
 
-    h1 {
-        font-size: 24px;
-        margin: 10px 0;
-    }
+img {
+    width: 140px;
+    margin-bottom: 10px;
+}
 
-    p {
-        font-size: 14px;
-        color: #555;
-    }
+button {
+    padding: 10px 18px;
+    margin: 10px;
+    border: none;
+    border-radius: 10px;
+    background: white;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
 
-    .btn {
-        padding: 10px 18px;
-        margin: 10px;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        font-size: 16px;
-        background: white;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-
-    #noBtn {
-        position: absolute;
-    }
+#noBtn {
+    position: absolute;
+}
 </style>
 </head>
 
 <body>
 
-<div class="container" id="main">
-    <img id="gif" src="https://media.tenor.com/qjX6dC4qKpUAAAAi/cute-cat.gif">
-    <h1 id="text">Do you love me? 🥺</h1>
+<div class="container">
+    <img id="gif" src="https://i.imgur.com/1Q9Z1Zm.gif">
+    <h2 id="text">Do you love me? 🥺</h2>
     <p id="sub">Chiku is all yours</p>
 
-    <button class="btn" onclick="yesClicked()">Yes</button>
-    <button class="btn" id="noBtn" onclick="noClicked()">No</button>
+    <button onclick="yes()">Yes</button>
+    <button id="noBtn" onclick="no()">No</button>
 </div>
 
 <script>
 
-let stage = 0;
+let step = 0;
 
-function yesClicked() {
+function yes(){
     document.getElementById("gif").src =
-    "https://media.tenor.com/2roX3uxz_68AAAAi/cat-love.gif";
+    "https://i.imgur.com/4M7IWwP.gif";
 
     document.getElementById("text").innerText =
-    "I knew it! You Love me a lot 😘";
+    "I knew it! You Love me 😘";
 
     document.getElementById("sub").innerText = "";
-
-    document.getElementById("noBtn").style.display = "none";
 }
 
-function noClicked() {
-    stage++;
+function no(){
+    step++;
 
-    if(stage == 1){
+    if(step == 1){
         document.getElementById("gif").src =
-        "https://media.tenor.com/tw4eQy6cGvMAAAAi/cute-cry.gif";
+        "https://i.imgur.com/oXgFQ4B.gif";
 
         document.getElementById("text").innerText =
-        "Please think again! 🥺";
-
-        document.getElementById("sub").innerText =
-        "itni jaldi na matt bolo 😢";
+        "Please think again 🥺";
     }
 
-    else if(stage == 2){
+    else if(step == 2){
         document.getElementById("gif").src =
-        "https://media.tenor.com/5i8g9C3pR1QAAAAi/cat-begging.gif";
+        "https://i.imgur.com/8Km9tLL.gif";
 
         document.getElementById("text").innerText =
-        "Baby maan jao na! Kitna bhav khaogi 😭";
-
-        document.getElementById("sub").innerText =
-        "bhut glt baat hai yrr 😭";
+        "Baby maan jao na 😭";
     }
 
-    moveButton();
+    move();
 }
 
-function moveButton(){
+function move(){
     let btn = document.getElementById("noBtn");
 
     let x = Math.random() * (window.innerWidth - 100);
