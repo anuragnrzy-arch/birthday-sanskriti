@@ -9,7 +9,7 @@
 <style>
 body {
     margin: 0;
-    overflow: hidden;
+    overflow: hidden; /* ❌ scroll band */
     font-family: Arial;
     background: linear-gradient(135deg, #ffd6e0, #d6ecff);
 }
@@ -39,40 +39,18 @@ img {
     width: 160px;
 }
 
-h2 {
-    color: #333;
-}
-
-p {
-    color: #555;
-    font-size: 14px;
-}
-
 button {
     padding: 10px 18px;
     margin: 10px;
-    border: none;
     border-radius: 10px;
+    border: none;
     background: white;
     cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
+/* 🔥 FIX */
 #noBtn {
-    position: absolute;
-}
-
-/* 💖 HEARTS */
-.heart {
-    position: absolute;
-    top: -20px; /* 🔥 upar se start */
-    color: red;
-    animation: fall linear infinite;
-}
-
-@keyframes fall {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(110vh); }
+    position: fixed; /* 👈 important */
 }
 </style>
 </head>
@@ -81,54 +59,38 @@ button {
 
 <div class="slider" id="slider">
 
-<!-- 💖 SLIDE 1 -->
+<!-- SLIDE 1 -->
 <div class="slide">
 <div class="container">
 <img src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif">
 <h2>Do you love me? 🥺</h2>
-<p>Be honest 💖</p>
 
 <button onclick="goSlide(1)">Yes</button>
 <button id="noBtn" onclick="moveNo()">No</button>
 </div>
 </div>
 
-<!-- 💔 SLIDE 2 -->
+<!-- SLIDE 2 -->
 <div class="slide">
 <div class="container">
-<img src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif">
-<h2>We broke up… 💔</h2>
-<p>That phase was really hard for me… I missed you every day.</p>
-
-<button onclick="goSlide(2)">Next ➡️</button>
+<h2>We broke up 💔</h2>
+<button onclick="goSlide(2)">Next</button>
 </div>
 </div>
 
-<!-- 💖 SLIDE 3 -->
+<!-- SLIDE 3 -->
 <div class="slide">
 <div class="container">
-<img src="https://media.giphy.com/media/l378giAZgxPw3eO52/giphy.gif">
-<h2>But we came back… 💖</h2>
-<p>After 1 year… we fixed everything and it feels even more special now.</p>
-
-<button onclick="goSlide(3)">Next ➡️</button>
+<h2>We came back 💖</h2>
+<button onclick="goSlide(3)">Next</button>
 </div>
 </div>
 
-<!-- 💫 SLIDE 4 -->
+<!-- SLIDE 4 -->
 <div class="slide">
 <div class="container">
-<img src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif">
 <h2>May 9 💫</h2>
-<p>
-May 9… the day we met, the most special day of my life.
-Even after everything we went through, we found our way back.
-I don’t want to lose you again.
-I just want to stay with you forever.
-I love you ❤️
-</p>
-
-<button>❤️</button>
+<p>I love you ❤️</p>
 </div>
 </div>
 
@@ -136,47 +98,24 @@ I love you ❤️
 
 <script>
 
-// 👉 SLIDE MOVE
-function goSlide(index){
+// SLIDE MOVE
+function goSlide(i){
     document.getElementById("slider").style.transform =
-    "translateX(-" + index + "00vw)";
-
-    // 💖 last slide pe hearts
-    if(index == 3){
-        startHearts();
-    }
+    "translateX(-" + i + "00vw)";
 }
 
-// 😆 NO BUTTON
+// 😆 FIXED MOVE
 function moveNo(){
     let btn = document.getElementById("noBtn");
 
-    let x = Math.random() * (window.innerWidth - 100);
+    let x = Math.random() * (window.innerWidth - 80);
     let y = Math.random() * (window.innerHeight - 50);
 
     btn.style.left = x + "px";
     btn.style.top = y + "px";
 }
 
-// 💖 HEART RAIN (TOP SE)
-function startHearts(){
-    setInterval(() => {
-        let heart = document.createElement("div");
-        heart.className = "heart";
-        heart.innerText = "💖";
-
-        heart.style.left = Math.random() * 100 + "vw";
-        heart.style.fontSize = (Math.random() * 20 + 10) + "px";
-        heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
-
-        document.body.appendChild(heart);
-
-        setTimeout(() => heart.remove(), 5000);
-
-    }, 200);
-}
-
 </script>
 
 </body>
-    </html>
+</html>
