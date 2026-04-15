@@ -12,19 +12,17 @@ body{
   background:linear-gradient(135deg,#ffd6e0,#d6ecff);
 }
 
-/* VIEWPORT FIX */
 .wrapper{
   width:100vw;
   height:100vh;
   overflow:hidden;
 }
 
-/* SLIDER */
 .slider{
   display:flex;
   width:400%;
   height:100%;
-  transition:0.5s ease;
+  transition:0.5s;
 }
 
 .slide{
@@ -37,7 +35,6 @@ body{
   text-align:center;
 }
 
-/* CONTENT */
 .container{width:80%;}
 
 img{width:140px;}
@@ -76,7 +73,7 @@ button{
 <!-- 1 -->
 <div class="slide">
 <div class="container">
-<img src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif">
+<img src="https://media.tenor.com/qjX6dC4qKpUAAAAi/cute-cat.gif">
 <h2>Do you love me? 🥺</h2>
 
 <button onclick="go(1)">Yes</button>
@@ -87,6 +84,7 @@ button{
 <!-- 2 -->
 <div class="slide">
 <div class="container">
+<img src="https://media.tenor.com/tw4eQy6cGvMAAAAi/cute-cry.gif">
 <h2>We broke up 💔</h2>
 <p>I missed you every day...</p>
 
@@ -97,6 +95,7 @@ button{
 <!-- 3 -->
 <div class="slide">
 <div class="container">
+<img src="https://media.tenor.com/qjX6dC4qKpUAAAAi/cute-cat.gif">
 <h2>We came back 💖</h2>
 <p>After 1 year... we fixed everything.</p>
 
@@ -107,8 +106,14 @@ button{
 <!-- 4 -->
 <div class="slide">
 <div class="container">
+<img src="https://media.tenor.com/2roX3uxz_68AAAAi/cat-love.gif">
 <h2>May 9 💫</h2>
-<p>I love you ❤️</p>
+<p>
+May 9… the most special day of my life.
+Even after everything, we came back.
+I don’t want to lose you again.
+I love you ❤️
+</p>
 </div>
 </div>
 
@@ -123,7 +128,7 @@ function go(i){
   if(i==3) hearts();
 }
 
-/* NO BUTTON SAFE */
+/* NO BUTTON */
 function moveNo(){
   let x=Math.random()*(window.innerWidth-80);
   let y=Math.random()*(window.innerHeight-50);
