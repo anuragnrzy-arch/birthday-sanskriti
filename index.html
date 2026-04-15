@@ -9,21 +9,30 @@
 <style>
 body {
     margin: 0;
+    overflow: hidden;
     font-family: Arial;
-    text-align: center;
     background: linear-gradient(135deg, #ffd6e0, #d6ecff);
+}
+
+/* SLIDER */
+.slider {
+    display: flex;
+    width: 300vw;
+    height: 100vh;
+    transition: transform 0.6s ease-in-out;
+}
+
+.slide {
+    width: 100vw;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    overflow: hidden;
 }
 
 .container {
-    padding: 20px;
-    max-width: 320px;
-    position: relative;
-    z-index: 2;
+    text-align: center;
+    max-width: 300px;
 }
 
 img {
@@ -70,69 +79,63 @@ button {
 
 <body>
 
+<div class="slider" id="slider">
+
+<!-- 💖 SLIDE 1 -->
+<div class="slide">
 <div class="container">
+<img src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif">
+<h2>Do you love me? 🥺</h2>
+<p>Be honest 💖</p>
 
-<img id="gif" src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif">
-
-<h2 id="title">Do you love me? 🥺</h2>
-<p id="text">Be honest 💖</p>
-
-<button id="yesBtn" onclick="yes()">Yes</button>
+<button onclick="goSlide(1)">Yes</button>
 <button id="noBtn" onclick="moveNo()">No</button>
+</div>
+</div>
+
+<!-- 💔 SLIDE 2 -->
+<div class="slide">
+<div class="container">
+<img src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif">
+<h2>We broke up… 💔</h2>
+<p>That phase was really hard for me… I missed you every day.</p>
+
+<button onclick="goSlide(2)">Next ➡️</button>
+</div>
+</div>
+
+<!-- 💫 SLIDE 3 -->
+<div class="slide">
+<div class="container">
+<img src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif">
+<h2>May 9 💫</h2>
+<p>
+May 9… the day we met, the most special day of my life.
+Even after everything, we came back together.
+I don’t want to lose you again.
+I just want to stay with you forever.
+I love you ❤️
+</p>
+
+<button>❤️</button>
+</div>
+</div>
 
 </div>
 
 <script>
 
-let step = 0;
+let current = 0;
 
-// ❤️ YES CLICK
-function yes(){
-    step = 1;
+// 👉 SLIDE MOVE FUNCTION
+function goSlide(index){
+    current = index;
+    document.getElementById("slider").style.transform =
+    "translateX(-" + index + "00vw)";
 
-    document.getElementById("gif").src =
-    "https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif";
-
-    document.getElementById("title").innerText =
-    "We broke up… 💔";
-
-    document.getElementById("text").innerText =
-    "That phase was really hard for me… I missed you every single day.";
-
-    document.getElementById("noBtn").style.display = "none";
-
-    document.getElementById("yesBtn").innerText = "Next ➡️";
-    document.getElementById("yesBtn").setAttribute("onclick","next()");
-}
-
-// ➡️ NEXT SLIDES
-function next(){
-    step++;
-
-    if(step == 2){
-        document.getElementById("gif").src =
-        "https://media.giphy.com/media/l378giAZgxPw3eO52/giphy.gif";
-
-        document.getElementById("title").innerText =
-        "But we found each other again 💖";
-
-        document.getElementById("text").innerText =
-        "After 1 year… we are back. And honestly, it feels even more special than before.";
-    }
-
-    else if(step == 3){
-        document.getElementById("gif").src =
-        "https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif";
-
-        document.getElementById("title").innerText =
-        "May 9 💫";
-
-        document.getElementById("text").innerText =
-        "May 9… the day we met, the day that changed everything for me. I still remember every little moment of that day, the way we talked, the way I felt around you… it was different, it was special. Even after everything we went through, after the distance, the silence, and the pain… somehow we found our way back to each other. And that means more to me than anything else. I don’t want to lose you again. I just want to stay, to make more memories with you, and to keep you happy. I love you ❤️";
-
-        document.getElementById("yesBtn").innerText = "❤️";
-
-        startHearts(); // 💖 START RAIN
+    // 💖 last slide pe hearts start
+    if(index == 2){
+        startHearts();
     }
 }
 
@@ -147,7 +150,7 @@ function moveNo(){
     btn.style.top = y + "px";
 }
 
-// 💖 HEART RAIN FUNCTION
+// 💖 HEART RAIN
 function startHearts(){
     setInterval(() => {
         let heart = document.createElement("div");
@@ -160,9 +163,7 @@ function startHearts(){
 
         document.body.appendChild(heart);
 
-        setTimeout(() => {
-            heart.remove();
-        }, 5000);
+        setTimeout(() => heart.remove(), 5000);
 
     }, 200);
 }
