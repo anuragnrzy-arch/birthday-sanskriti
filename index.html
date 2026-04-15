@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For You 💖</title>
+
+<title>For You ❤️</title>
 
 <style>
 body {
@@ -22,14 +23,14 @@ body {
     max-width: 300px;
 }
 
-iframe {
-    width: 180px;
-    height: 180px;
-    border: none;
+img {
+    width: 160px;
+    margin-bottom: 10px;
 }
 
 h2 {
     color: #333;
+    font-size: 22px;
 }
 
 p {
@@ -45,6 +46,7 @@ button {
     background: white;
     cursor: pointer;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    font-size: 16px;
 }
 </style>
 </head>
@@ -52,12 +54,15 @@ button {
 <body>
 
 <div class="container">
-    <iframe id="gif" src="https://giphy.com/embed/JIX9t2j0ZTN9S"></iframe>
+
+    <!-- 🐱 START GIF -->
+    <img id="gif" src="https://media.tenor.com/qjX6dC4qKpUAAAAi/cute-cat.gif">
 
     <h2 id="title">Hey… 🥺</h2>
     <p id="text">I want to tell you something...</p>
 
     <button onclick="next()">Next ➡️</button>
+
 </div>
 
 <script>
@@ -67,37 +72,40 @@ let page = 0;
 function next(){
     page++;
 
+    // 💔 Slide 1 (Breakup)
     if(page == 1){
         document.getElementById("gif").src =
-        "https://giphy.com/embed/3oriO0OEd9QIDdllqo";
+        "https://media.tenor.com/tw4eQy6cGvMAAAAi/cute-cry.gif";
 
         document.getElementById("title").innerText =
         "We broke up… 💔";
 
         document.getElementById("text").innerText =
-        "That day was really hard for me… I missed you every single day.";
+        "That time was really hard for me… I missed you every single day.";
     }
 
+    // 💖 Slide 2 (Back together)
     else if(page == 2){
         document.getElementById("gif").src =
-        "https://giphy.com/embed/l378giAZgxPw3eO52";
+        "https://media.tenor.com/qjX6dC4qKpUAAAAi/cute-cat.gif";
 
         document.getElementById("title").innerText =
-        "But we fixed it… 💖";
+        "But we found our way again… 💖";
 
         document.getElementById("text").innerText =
-        "After 1 year… we are back again. And it feels special.";
+        "After 1 year… we are back. And it feels more special than ever.";
     }
 
+    // 💫 Slide 3 (May 9 special)
     else if(page == 3){
         document.getElementById("gif").src =
-        "https://giphy.com/embed/MDJ9IbxxvDUQM";
+        "https://media.tenor.com/2roX3uxz_68AAAAi/cat-love.gif";
 
         document.getElementById("title").innerText =
         "May 9 💫";
 
         document.getElementById("text").innerText =
-        "That day means everything to me… I just want to say I love you ❤️";
+        "The day we met… the most special day of my life. I love you ❤️";
 
         document.querySelector("button").innerText = "❤️";
     }
