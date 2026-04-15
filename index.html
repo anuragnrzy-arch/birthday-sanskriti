@@ -21,16 +21,15 @@ body {
 .container {
     padding: 20px;
     max-width: 300px;
+    position: relative;
 }
 
 img {
     width: 160px;
-    margin-bottom: 10px;
 }
 
 h2 {
     color: #333;
-    font-size: 22px;
 }
 
 p {
@@ -40,13 +39,16 @@ p {
 
 button {
     padding: 10px 18px;
-    margin-top: 15px;
+    margin: 10px;
     border: none;
     border-radius: 10px;
     background: white;
     cursor: pointer;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    font-size: 16px;
+}
+
+#noBtn {
+    position: absolute;
 }
 </style>
 </head>
@@ -55,60 +57,79 @@ button {
 
 <div class="container">
 
-    <!-- 🐱 START GIF -->
-    <img id="gif" src="https://media.tenor.com/qjX6dC4qKpUAAAAi/cute-cat.gif">
+<img id="gif" src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif">
 
-    <h2 id="title">Hey… 🥺</h2>
-    <p id="text">I want to tell you something...</p>
+<h2 id="title">Do you love me? 🥺</h2>
+<p id="text">Be honest 💖</p>
 
-    <button onclick="next()">Next ➡️</button>
+<button id="yesBtn" onclick="yes()">Yes</button>
+<button id="noBtn" onclick="moveNo()">No</button>
 
 </div>
 
 <script>
 
-let page = 0;
+let step = 0;
 
+// ❤️ YES CLICK
+function yes(){
+    step = 1;
+
+    document.getElementById("gif").src =
+    "https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif";
+
+    document.getElementById("title").innerText =
+    "We broke up… 💔";
+
+    document.getElementById("text").innerText =
+    "That phase was really hard for me… I missed you every single day.";
+
+    document.getElementById("noBtn").style.display = "none";
+
+    document.getElementById("yesBtn").innerText = "Next ➡️";
+    document.getElementById("yesBtn").setAttribute("onclick","next()");
+}
+
+// ➡️ NEXT SLIDES
 function next(){
-    page++;
+    step++;
 
-    // 💔 Slide 1 (Breakup)
-    if(page == 1){
+    // 💖 Slide 2
+    if(step == 2){
         document.getElementById("gif").src =
-        "https://media.tenor.com/tw4eQy6cGvMAAAAi/cute-cry.gif";
+        "https://media.giphy.com/media/l378giAZgxPw3eO52/giphy.gif";
 
         document.getElementById("title").innerText =
-        "We broke up… 💔";
+        "But we found each other again 💖";
 
         document.getElementById("text").innerText =
-        "That time was really hard for me… I missed you every single day.";
+        "After 1 year… we are back. And honestly, it feels even more special than before.";
     }
 
-    // 💖 Slide 2 (Back together)
-    else if(page == 2){
+    // 💫 Slide 3 (LONG MESSAGE)
+    else if(step == 3){
         document.getElementById("gif").src =
-        "https://media.tenor.com/qjX6dC4qKpUAAAAi/cute-cat.gif";
-
-        document.getElementById("title").innerText =
-        "But we found our way again… 💖";
-
-        document.getElementById("text").innerText =
-        "After 1 year… we are back. And it feels more special than ever.";
-    }
-
-    // 💫 Slide 3 (May 9 special)
-    else if(page == 3){
-        document.getElementById("gif").src =
-        "https://media.tenor.com/2roX3uxz_68AAAAi/cat-love.gif";
+        "https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif";
 
         document.getElementById("title").innerText =
         "May 9 💫";
 
         document.getElementById("text").innerText =
-        "The day we met… the most special day of my life. I love you ❤️";
+        "May 9… the day we met, the day that changed everything for me. I still remember every little moment of that day, the way we talked, the way I felt around you… it was different, it was special. Even after everything we went through, after the distance, the silence, and the pain… somehow we found our way back to each other. And that means more to me than anything else. I don’t want to lose you again. I just want to stay, to make more memories with you, and to keep you happy. I love you ❤️";
 
-        document.querySelector("button").innerText = "❤️";
+        document.getElementById("yesBtn").innerText = "❤️";
     }
+}
+
+// 😆 NO BUTTON BHAGEGA
+function moveNo(){
+    let btn = document.getElementById("noBtn");
+
+    let x = Math.random() * (window.innerWidth - 100);
+    let y = Math.random() * (window.innerHeight - 50);
+
+    btn.style.left = x + "px";
+    btn.style.top = y + "px";
 }
 
 </script>
