@@ -2,59 +2,49 @@
 <html>
 <head>
 <meta charset="UTF-8">
-
-<!-- ✅ MOBILE FIX -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Love Page</title>
+<title>For You 💖</title>
 
 <style>
 body {
     margin: 0;
-    height: 100vh;
+    font-family: Arial;
+    text-align: center;
+    background: linear-gradient(135deg, #ffd6e0, #d6ecff);
     display: flex;
     justify-content: center;
     align-items: center;
-
-    /* 💖 Soft pink + sky gradient */
-    background: linear-gradient(135deg, #ffd6e0, #d6ecff);
-
-    font-family: Arial;
-    text-align: center;
+    height: 100vh;
 }
 
 .container {
     padding: 20px;
+    max-width: 300px;
 }
 
 iframe {
-    width: 160px;
-    height: 160px;
+    width: 180px;
+    height: 180px;
     border: none;
 }
 
 h2 {
-    font-size: 22px;
     color: #333;
 }
 
 p {
     color: #555;
+    font-size: 14px;
 }
 
 button {
     padding: 10px 18px;
-    margin: 10px;
+    margin-top: 15px;
     border: none;
     border-radius: 10px;
     background: white;
     cursor: pointer;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    font-size: 16px;
-}
-
-#noBtn {
-    position: absolute;
 }
 </style>
 </head>
@@ -64,55 +54,53 @@ button {
 <div class="container">
     <iframe id="gif" src="https://giphy.com/embed/JIX9t2j0ZTN9S"></iframe>
 
-    <h2 id="text">Do you love me? 🥺</h2>
-    <p>Chiku is all yours 💖</p>
+    <h2 id="title">Hey… 🥺</h2>
+    <p id="text">I want to tell you something...</p>
 
-    <button onclick="yes()">Yes</button>
-    <button id="noBtn" onclick="no()">No</button>
+    <button onclick="next()">Next ➡️</button>
 </div>
 
 <script>
 
-let step = 0;
+let page = 0;
 
-function yes(){
-    document.getElementById("gif").src =
-    "https://giphy.com/embed/MDJ9IbxxvDUQM";
+function next(){
+    page++;
 
-    document.getElementById("text").innerText =
-    "I knew it! You Love me 😘💖";
-}
-
-function no(){
-    step++;
-
-    if(step == 1){
+    if(page == 1){
         document.getElementById("gif").src =
         "https://giphy.com/embed/3oriO0OEd9QIDdllqo";
 
+        document.getElementById("title").innerText =
+        "We broke up… 💔";
+
         document.getElementById("text").innerText =
-        "Please think again 🥺";
+        "That day was really hard for me… I missed you every single day.";
     }
 
-    else if(step == 2){
+    else if(page == 2){
         document.getElementById("gif").src =
         "https://giphy.com/embed/l378giAZgxPw3eO52";
 
+        document.getElementById("title").innerText =
+        "But we fixed it… 💖";
+
         document.getElementById("text").innerText =
-        "Baby maan jao na 😭";
+        "After 1 year… we are back again. And it feels special.";
     }
 
-    move();
-}
+    else if(page == 3){
+        document.getElementById("gif").src =
+        "https://giphy.com/embed/MDJ9IbxxvDUQM";
 
-function move(){
-    let btn = document.getElementById("noBtn");
+        document.getElementById("title").innerText =
+        "May 9 💫";
 
-    let x = Math.random() * (window.innerWidth - 100);
-    let y = Math.random() * (window.innerHeight - 50);
+        document.getElementById("text").innerText =
+        "That day means everything to me… I just want to say I love you ❤️";
 
-    btn.style.left = x + "px";
-    btn.style.top = y + "px";
+        document.querySelector("button").innerText = "❤️";
+    }
 }
 
 </script>
