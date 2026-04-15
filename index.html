@@ -16,12 +16,14 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
+    overflow: hidden;
 }
 
 .container {
     padding: 20px;
-    max-width: 300px;
+    max-width: 320px;
     position: relative;
+    z-index: 2;
 }
 
 img {
@@ -49,6 +51,19 @@ button {
 
 #noBtn {
     position: absolute;
+}
+
+/* 💖 HEARTS */
+.heart {
+    position: absolute;
+    color: red;
+    font-size: 20px;
+    animation: fall linear infinite;
+}
+
+@keyframes fall {
+    0% {transform: translateY(-10vh);}
+    100% {transform: translateY(110vh);}
 }
 </style>
 </head>
@@ -94,7 +109,6 @@ function yes(){
 function next(){
     step++;
 
-    // 💖 Slide 2
     if(step == 2){
         document.getElementById("gif").src =
         "https://media.giphy.com/media/l378giAZgxPw3eO52/giphy.gif";
@@ -106,7 +120,6 @@ function next(){
         "After 1 year… we are back. And honestly, it feels even more special than before.";
     }
 
-    // 💫 Slide 3 (LONG MESSAGE)
     else if(step == 3){
         document.getElementById("gif").src =
         "https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif";
@@ -118,10 +131,12 @@ function next(){
         "May 9… the day we met, the day that changed everything for me. I still remember every little moment of that day, the way we talked, the way I felt around you… it was different, it was special. Even after everything we went through, after the distance, the silence, and the pain… somehow we found our way back to each other. And that means more to me than anything else. I don’t want to lose you again. I just want to stay, to make more memories with you, and to keep you happy. I love you ❤️";
 
         document.getElementById("yesBtn").innerText = "❤️";
+
+        startHearts(); // 💖 START RAIN
     }
 }
 
-// 😆 NO BUTTON BHAGEGA
+// 😆 NO BUTTON MOVE
 function moveNo(){
     let btn = document.getElementById("noBtn");
 
@@ -130,6 +145,26 @@ function moveNo(){
 
     btn.style.left = x + "px";
     btn.style.top = y + "px";
+}
+
+// 💖 HEART RAIN FUNCTION
+function startHearts(){
+    setInterval(() => {
+        let heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerText = "💖";
+
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = (Math.random() * 20 + 10) + "px";
+        heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
+
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+            heart.remove();
+        }, 5000);
+
+    }, 200);
 }
 
 </script>
