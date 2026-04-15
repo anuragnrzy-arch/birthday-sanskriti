@@ -2,6 +2,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
+
+<!-- ✅ MOBILE FIX -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Love Page</title>
 
 <style>
@@ -11,15 +15,31 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #e8cfc8;
+
+    /* 💖 Soft pink + sky gradient */
+    background: linear-gradient(135deg, #ffd6e0, #d6ecff);
+
     font-family: Arial;
     text-align: center;
 }
 
+.container {
+    padding: 20px;
+}
+
 iframe {
-    width: 180px;
-    height: 180px;
+    width: 160px;
+    height: 160px;
     border: none;
+}
+
+h2 {
+    font-size: 22px;
+    color: #333;
+}
+
+p {
+    color: #555;
 }
 
 button {
@@ -29,6 +49,8 @@ button {
     border-radius: 10px;
     background: white;
     cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    font-size: 16px;
 }
 
 #noBtn {
@@ -39,10 +61,11 @@ button {
 
 <body>
 
-<div>
+<div class="container">
     <iframe id="gif" src="https://giphy.com/embed/JIX9t2j0ZTN9S"></iframe>
+
     <h2 id="text">Do you love me? 🥺</h2>
-    <p>Chiku is all yours</p>
+    <p>Chiku is all yours 💖</p>
 
     <button onclick="yes()">Yes</button>
     <button id="noBtn" onclick="no()">No</button>
@@ -57,7 +80,7 @@ function yes(){
     "https://giphy.com/embed/MDJ9IbxxvDUQM";
 
     document.getElementById("text").innerText =
-    "I knew it! You Love me 😘";
+    "I knew it! You Love me 😘💖";
 }
 
 function no(){
