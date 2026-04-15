@@ -1,111 +1,109 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Special Question 💖</title>
+<meta charset="UTF-8">
+<title>Love Page 💖</title>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial;
-      background: linear-gradient(pink, lightblue);
-      text-align: center;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial;
+    background: #f5d6d6;
+    text-align: center;
+}
 
-    .box {
-      background: white;
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.2);
-    }
+.container {
+    margin-top: 100px;
+}
 
-    h2 {
-      margin-bottom: 20px;
-    }
+img {
+    width: 150px;
+}
 
-    button {
-      padding: 10px 20px;
-      margin: 10px;
-      font-size: 18px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-    }
+h2 {
+    margin: 20px;
+}
 
-    #yes {
-      background: green;
-      color: white;
-    }
+button {
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+}
 
-    #no {
-      background: red;
-      color: white;
-      position: relative;
-    }
+.yes {
+    background: #4CAF50;
+    color: white;
+}
 
-  </style>
+.no {
+    background: #f44336;
+    color: white;
+    position: relative;
+}
+</style>
+
 </head>
-
 <body>
 
-  <div class="box">
-    <h2>Do you love me? 💖</h2>
-
-    <button id="yes" onclick="yesClick()">Yes</button>
-    <button id="no" onmouseover="moveNo()">No</button>
-
-    <p id="msg"></p>
-  </div>
-
-  <script>
-    function yesClick() {
-      document.getElementById("msg").innerHTML = "Yay! 💕 I knew it!";
-    }
-
-    function moveNo() {
-      let btn = document.getElementById("no");
-
-      let x = Math.random() * 200;
-      let y = Math.random() * 200;
-
-      btn.style.position = "relative";
-      btn.style.left = x + "px";
-      btn.style.top = y + "px";
-    }
-  </script>
-
-</body>
-</html>    <h2>Welcome Anurag 🔥</h2>
-    <button onclick="startGame()">Play Game</button>
-</div>
-
-<div class="hidden" id="game">
-    <canvas id="canvas" width="600" height="200"></canvas>
-    <div class="game-ui">
-        <button onclick="jump()">Jump</button>
-        <p id="score">Score: 0</p>
-    </div>
+<div class="container" id="content">
+    <img src="https://media.tenor.com/9vRAkntogEMAAAAi/cute-cat.gif">
+    <h2>Do you love me? 🥺</h2>
+    <button class="yes" onclick="yesClick()">Yes</button>
+    <button class="no" onclick="noClick()">No</button>
 </div>
 
 <script>
-/* FLOW CONTROL */
-function openName() {
-    step1.classList.add("hidden");
-    step2.classList.remove("hidden");
+
+let step = 0;
+
+function noClick() {
+    step++;
+
+    if(step === 1){
+        document.getElementById("content").innerHTML = `
+            <img src="https://media.tenor.com/7eKxvS2Z0XAAAAAi/cute-panda.gif">
+            <h2>Please think again! 😟</h2>
+            <button class="yes" onclick="yesClick()">Yes</button>
+            <button class="no" onclick="noClick()">No</button>
+        `;
+    }
+
+    else if(step === 2){
+        document.getElementById("content").innerHTML = `
+            <img src="https://media.tenor.com/F1c6gK5b7XAAAAAi/cute-love.gif">
+            <h2>Baby maan jao na! Kitna bhav khaogi 😭</h2>
+            <button class="yes" onclick="yesClick()">Yes</button>
+            <button class="no" id="runBtn">No</button>
+        `;
+
+        let btn = document.getElementById("runBtn");
+
+        btn.addEventListener("mouseover", function(){
+            let x = Math.random() * window.innerWidth - 100;
+            let y = Math.random() * window.innerHeight - 100;
+
+            btn.style.position = "absolute";
+            btn.style.left = x + "px";
+            btn.style.top = y + "px";
+        });
+    }
 }
 
-function neymar() {
-    error.innerText = "❌ ERROR: Access Denied!";
+function yesClick(){
+    document.getElementById("content").innerHTML = `
+        <img src="https://media.tenor.com/7yUvePIv8aAAAAAi/love.gif">
+        <h2>I knew it! You love me a lot 😘</h2>
+    `;
 }
 
-function anurag() {
-    step2.classList.add("hidden");
-    step3.classList.remove("hidden");
-}
+</script>
 
+</body>
+</html>
 function startGame() {
     step3.classList.add("hidden");
     game.classList.remove("hidden");
