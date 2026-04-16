@@ -3,206 +3,250 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Do you love me?</title>
+    <title>For My Love ❤️</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
-
+        /* CSS START - Sab styling yahan hai */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Arial', sans-serif;
         }
 
         body {
+            background-color: #fde2e4; /* Light Pink Background */
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        /* Container jo slides ko move karega */
+        .main-container {
+            display: flex;
+            width: 400vw; /* 4 slides = 400% width */
+            height: 100vh;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .slide {
+            width: 100vw;
             height: 100vh;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            background: radial-gradient(circle, #ffe6e6, #ffcccc); /* Soft pinkish background */
-            overflow: hidden;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
             position: relative;
         }
 
-        /* Transition classes for sliding to next page */
-        .slide-out-left {
-            transform: translateX(-150vw);
-            transition: transform 0.8s ease-in-out;
-        }
-
-        /* Glassmorphism Card */
-        .card {
-            background: rgba(255, 255, 255, 0.35);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            border-radius: 20px;
-            padding: 40px 30px;
-            text-align: center;
-            box-shadow: 0 8px 32px 0 rgba(255, 138, 152, 0.2);
-            width: 90%;
-            max-width: 400px;
-            z-index: 10;
-            transition: transform 0.8s ease-in-out;
-        }
-
-        .icons {
-            font-size: 50px;
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .icons span {
-            filter: drop-shadow(0px 0px 8px rgba(255,0,0,0.4)); /* Glowing effect */
+        img {
+            width: 200px;
+            margin-bottom: 20px;
+            border-radius: 10px;
         }
 
         h1 {
+            font-size: 2.2rem;
             color: #333;
-            font-size: 24px;
-            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        p {
+            color: #777;
+            font-size: 1.1rem;
             margin-bottom: 30px;
         }
 
-        .buttons-container {
+        .btn-group {
             display: flex;
-            justify-content: center;
             gap: 20px;
-            position: relative;
-            height: 50px;
+            justify-content: center;
+            align-items: center;
+            min-height: 50px;
         }
 
         button {
-            padding: 10px 25px;
-            font-size: 16px;
-            border-radius: 30px;
+            padding: 12px 35px;
+            font-size: 1rem;
             border: none;
+            border-radius: 5px;
             cursor: pointer;
-            font-weight: 500;
-            transition: transform 0.2s;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-
-        .yes-btn {
-            background: linear-gradient(135deg, #ff758c, #ff7eb3);
-            color: white;
-            z-index: 2;
-        }
-
-        .yes-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 15px rgba(255, 117, 140, 0.4);
-        }
-
-        .no-btn {
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: 0.2s;
             background: white;
-            color: #333;
-            position: absolute;
-            left: 55%; /* Default position */
+            color: black;
         }
 
-        .footer-text {
-            margin-top: 30px;
-            font-size: 12px;
-            color: #777;
-            font-style: italic;
+        #noBtn {
+            position: absolute;
+            z-index: 10;
         }
 
-        /* Floating Hearts Animation */
-        .floating-heart {
+        /* Slide 4 Special - Heart Rain */
+        .heart {
             position: absolute;
+            top: -50px;
             font-size: 20px;
-            color: rgba(255, 117, 140, 0.6);
-            animation: floatUp linear infinite;
+            color: #ff4d6d;
+            animation: fall linear forwards;
             z-index: 1;
         }
 
-        @keyframes floatUp {
-            0% { transform: translateY(100vh) scale(0.5); opacity: 1; }
-            100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+        @keyframes fall {
+            to { transform: translateY(110vh) rotate(360deg); }
         }
+
+        /* Love Letter / Envelope Styling */
+        .envelope-container {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 5;
+        }
+
+        .pass-input {
+            padding: 10px;
+            border: 2px solid #ffb3c1;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            outline: none;
+        }
+
+        .letter-box {
+            display: none;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            max-width: 300px;
+            transform: scale(0);
+            transition: 0.5s;
+        }
+
+        .letter-box.open {
+            display: block;
+            transform: scale(1);
+        }
+
     </style>
 </head>
 <body>
 
-    <div id="hearts-container"></div>
-
-    <div class="card" id="mainCard">
-        <div class="icons">
-            <span>😸</span><span>❤️</span>
-        </div>
-        <h1>Do you love me !?</h1>
+    <div class="main-container" id="slider">
         
-        <div class="buttons-container">
-            <button class="yes-btn" id="yesBtn">Yes 💖</button>
-            <button class="no-btn" id="noBtn">No 🙅🏻‍♀️</button>
-        </div>
+        <section class="slide">
+            <img src="https://media.tenor.com/cyX69N7pL6AAAAAj/mochi-cat.gif" alt="Cat">
+            <h1>Do you love me!? 🥰</h1>
+            <p>Chiku is all yours</p>
+            <div class="btn-group">
+                <button onclick="goNext()">Yes</button>
+                <button id="noBtn">No</button>
+            </div>
+        </section>
 
-        <div class="footer-text">
-            Some love stories don't allow 'no' ✨
-        </div>
+        <section class="slide">
+            <img src="https://media.tenor.com/97y469p9684AAAAj/cute-cat.gif" alt="Thinking Cat">
+            <h1>Please think again! 🙄</h1>
+            <p>itni jaldi na matt bolo 😭</p>
+            <div class="btn-group">
+                <button onclick="goNext()">Yes</button>
+                <button onclick="alert('Sirf Yes dabana allow hai! 😂')">No</button>
+            </div>
+        </section>
+
+        <section class="slide">
+            <img src="https://media.tenor.com/T0_YfVp877AAAAAj/mochi-cat-peach-and-goma.gif" alt="Crying Cat">
+            <h1>Baby Man jao na! 😫</h1>
+            <p>Kitna bhav khaogi... bhut glt baat hai yrr 😢</p>
+            <div class="btn-group">
+                <button onclick="goNext()">Yes</button>
+            </div>
+        </section>
+
+        <section class="slide">
+            <div id="rain-zone"></div>
+            <h1>I knew it! You Love me a lot 😘</h1>
+            
+            <div class="envelope-container">
+                <div id="lockSection">
+                    <input type="text" id="code" class="pass-input" placeholder="Enter code (10ml)">
+                    <button onclick="checkCode()">Open Letter 💌</button>
+                </div>
+
+                <div id="letter" class="letter-box">
+                    <h3 style="color:#ff4d6d">My Love,</h3>
+                    <p style="font-size: 0.9rem; color: #333; margin-top: 10px;">
+                        You are the best thing that ever happened to me. 
+                        Tumhare bina sab adhura hai. ❤️<br><br>
+                        <b>Forever Yours!</b>
+                    </p>
+                </div>
+            </div>
+        </section>
+
     </div>
 
     <script>
-        // 1. Moving "No" Button Logic
+        // JAVASCRIPT START - Sab logic yahan hai
+        let currentSlide = 0;
+        const slider = document.getElementById('slider');
         const noBtn = document.getElementById('noBtn');
-        const card = document.getElementById('mainCard');
 
-        function moveButton() {
-            // Screen limits calculate karke bounds banaye
-            const maxX = window.innerWidth - noBtn.clientWidth - 20; 
-            const maxY = window.innerHeight - noBtn.clientHeight - 20;
+        // 1. "No" Button bhagne wala logic (Mobile & Desktop)
+        const moveNo = () => {
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            
+            noBtn.style.left = `${x}px`;
+            noBtn.style.top = `${y}px`;
+        };
 
-            const randomX = Math.floor(Math.random() * maxX);
-            const randomY = Math.floor(Math.random() * maxY);
-
-            // Change position to fixed so it can go anywhere on screen, not just inside card
-            noBtn.style.position = 'fixed';
-            noBtn.style.left = randomX + 'px';
-            noBtn.style.top = randomY + 'px';
-        }
-
-        // Mobile touch aur desktop hover dono ke liye event listeners
-        noBtn.addEventListener('mouseover', moveButton);
+        noBtn.addEventListener('mouseenter', moveNo);
         noBtn.addEventListener('touchstart', (e) => {
-            e.preventDefault(); // Click rokne ke liye
-            moveButton();
+            e.preventDefault(); // Prevents clicking on mobile
+            moveNo();
         });
 
-        // 2. "Yes" Button Click -> Slide out transition
-        document.getElementById('yesBtn').addEventListener('click', () => {
-            // Card ko left side slide kar dega
-            card.classList.add('slide-out-left');
+        // 2. Slide change logic
+        function goNext() {
+            currentSlide++;
+            slider.style.transform = `translateX(-${currentSlide * 100}vw)`;
             
-            // Yahan aap next page (Page 2) par redirect kar sakte hain
-            setTimeout(() => {
-                // Example: window.location.href = "page2.html";
-                alert('Slide 1 complete! Now link this to page2.html in your code.');
-            }, 800); // 0.8s wait karega slide hone ka
-        });
-
-        // 3. Floating Hearts Generator
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.innerHTML = '❤️';
-            heart.classList.add('floating-heart');
-            
-            // Random styling
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = Math.random() * 3 + 4 + 's'; // 4s to 7s
-            heart.style.fontSize = Math.random() * 15 + 10 + 'px'; // 10px to 25px
-            
-            document.getElementById('hearts-container').appendChild(heart);
-            
-            // Remove after animation to save memory
-            setTimeout(() => {
-                heart.remove();
-            }, 7000);
+            if(currentSlide === 3) {
+                startHeartRain();
+            }
         }
 
-        setInterval(createHeart, 300); // Har 300ms mein naya heart
-    </script>
+        // 3. Heart Rain logic
+        function startHeartRain() {
+            const rainZone = document.getElementById('rain-zone');
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.innerHTML = '💗';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
+                rainZone.appendChild(heart);
+                
+                setTimeout(() => heart.remove(), 5000);
+            }, 300);
+        }
 
+        // 4. Letter Password Logic
+        function checkCode() {
+            const input = document.getElementById('code').value;
+            if(input === '10ml') {
+                document.getElementById('lockSection').style.display = 'none';
+                const letter = document.getElementById('letter');
+                letter.classList.add('open');
+            } else {
+                alert("Galat code! Hint: wo jo tumne bola tha (10ml) 😉");
+            }
+        }
+    </script>
 </body>
 </html>
