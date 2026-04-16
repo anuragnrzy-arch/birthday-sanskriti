@@ -24,18 +24,25 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            transition: all 0.6s ease;
+            transition: all 0.8s cubic-bezier(0.65, 0, 0.35, 1);
         }
 
-        .lock-icon { font-size: 80px; margin-bottom: 20px; transition: transform 0.4s ease; }
+        .lock-icon { 
+            font-size: 80px; 
+            margin-bottom: 20px; 
+            transition: transform 1s ease, filter 1s ease; /* Slower transition */
+        }
+        
         .lock-input-box {
             background: rgba(255, 255, 255, 0.4);
             padding: 30px;
             border-radius: 20px;
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             text-align: center;
             width: 85%;
             max-width: 320px;
+            transition: opacity 0.5s ease;
         }
 
         .slider-container {
@@ -131,7 +138,7 @@
 
     <div id="master-lock-screen">
         <div class="lock-icon" id="mainLockEmoji">🔒</div>
-        <div class="lock-input-box">
+        <div class="lock-input-box" id="lockBox">
             <p style="margin-bottom:15px; font-weight:bold; color:#444;">Type your boyfriend name 😤</p>
             <input type="text" id="bfNameInput" placeholder="Enter name...">
             <button onclick="unlockMaster()" style="background:#ff4d6d; color:white; width:100%;">Unlock</button>
@@ -208,18 +215,28 @@
         const pct = document.getElementById('loadPercent');
         const overlay = document.getElementById('loading-overlay');
 
-        // UNLOCK MASTER SCREEN
+        // UNLOCK MASTER SCREEN - ADJUSTED TIMING
         function unlockMaster() {
             const name = document.getElementById('bfNameInput').value.trim().toLowerCase();
             if(name === "anurag") {
-                document.getElementById('mainLockEmoji').innerText = "🔓";
-                document.getElementById('mainLockEmoji').style.transform = "scale(1.5)";
+                // 1. Change emoji slowly
+                const emoji = document.getElementById('mainLockEmoji');
+                emoji.innerText = "🔓";
+                emoji.style.transform = "scale(1.4)";
+                
+                // Hide input box to focus on lock
+                document.getElementById('lockBox').style.opacity = '0';
+
+                // 2. Wait 1 second after opening
                 setTimeout(() => {
                     const masterScreen = document.getElementById('master-lock-screen');
                     masterScreen.style.opacity = '0';
-                    masterScreen.style.transform = 'translateY(-100%)';
-                    setTimeout(() => masterScreen.style.display = 'none', 600);
-                }, 400);
+                    masterScreen.style.transform = 'translateY(-100%)'; // Slides up
+                    
+                    setTimeout(() => {
+                        masterScreen.style.display = 'none';
+                    }, 800);
+                }, 1000); // 1 sec pause
             } else {
                 alert("Wrong person! 😤");
             }
