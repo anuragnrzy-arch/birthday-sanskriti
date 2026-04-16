@@ -5,17 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>For Sanskriti</title>
     <style>
-        /* CSS Reset - No Italics */
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; font-style: normal !important; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
 
         body {
-            background-color: #3b2a30; 
+            background-color: #ffcad4;
             overflow: hidden;
             touch-action: none; 
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
         }
 
         .slider-container {
@@ -32,63 +27,66 @@
             justify-content: center;
             align-items: center;
             position: relative;
+            background: radial-gradient(circle, #ffdee9 0%, #ffcad4 100%);
         }
 
         .glass-card {
-            background: rgba(45, 35, 40, 0.9);
-            border-radius: 30px;
-            padding: 50px 25px;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 40px 20px;
             text-align: center;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 10px 40px rgba(255, 105, 135, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.5);
             width: 90%;
-            max-width: 360px;
+            max-width: 350px;
             z-index: 10;
         }
 
-        .emoji-header { font-size: 60px; margin-bottom: 20px; display: flex; justify-content: center; gap: 15px; }
-        h2 { font-weight: 500; color: #eee; font-size: 24px; margin-bottom: 8px; }
-        h1 { font-size: 28px; margin-bottom: 40px; color: #fff; font-weight: 600; }
+        .emoji-header { font-size: 50px; margin-bottom: 10px; }
+        h2 { font-weight: 500; color: #444; margin-bottom: 5px; }
+        h1 { font-size: 24px; margin-bottom: 30px; color: #222; }
 
         .btn-wrapper {
             position: relative;
-            height: 160px;
+            height: 150px;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
         button {
-            padding: 14px 45px;
+            padding: 12px 35px;
             border: none;
-            border-radius: 30px;
+            border-radius: 25px;
             cursor: pointer;
             font-weight: bold;
-            font-size: 18px;
+            font-size: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
-        #yesBtn { background-color: #ff4d6d; color: white; z-index: 11; }
+        #yesBtn { background-color: #ff4d6d; color: white; }
 
+        /* NO button initial state */
         #noBtn { 
-            background-color: #1a1a1a; 
+            background-color: #222; 
             color: #ff4d6d; 
             position: absolute;
-            top: 85px; 
+            top: 75px; 
+            transition: 0.1s ease-out;
             z-index: 999;
+            white-space: nowrap;
         }
 
-        .footer-text { font-size: 12px; color: #777; margin-top: 30px; }
+        .footer-text { font-size: 11px; color: #888; margin-top: 25px; font-style: italic; }
 
-        /* Rain & Letter */
+        /* Last Page Letter & Rain */
         .hidden { display: none; }
-        .paper { background: #fff; padding: 25px; border-radius: 15px; text-align: left; margin-top: 20px; color: #333; }
-        .heart-drop { position: absolute; top: -20px; color: #ff4d6d; font-size: 25px; pointer-events: none; animation: fall linear forwards; }
+        .paper { background: #fff; padding: 20px; border-radius: 10px; text-align: left; margin-top: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .heart-drop { position: absolute; top: -20px; color: #ff4d6d; font-size: 22px; pointer-events: none; animation: fall linear forwards; }
         @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
-        
-        input[type="text"] { 
-            padding: 12px; border-radius: 10px; border: 1px solid #444; 
-            background: #222; color: white; width: 85%; margin-bottom: 15px; text-align: center; font-size: 18px;
-        }
+        input[type="text"] { padding: 12px; border-radius: 10px; border: 1px solid #ffcad4; width: 80%; margin-bottom: 10px; outline: none; }
     </style>
 </head>
 <body>
@@ -96,7 +94,7 @@
     <div class="slider-container" id="mainSlider">
         <section class="slide">
             <div class="glass-card">
-                <div class="emoji-header"><span>🐱</span><span>❤️</span></div>
+                <div class="emoji-header">🐱 ❤️</div>
                 <h2>Sanskriti</h2>
                 <h1>Do you love me!?</h1>
                 <div class="btn-wrapper">
@@ -107,22 +105,35 @@
             </div>
         </section>
 
-        <section class="slide"><div class="glass-card"><h1>You're special! ✨</h1><button onclick="nextSlide(2)" style="background:#ff4d6d; color:white; margin-top:30px">Next ➔</button></div></section>
-        <section class="slide"><div class="glass-card"><h1>A promise... 🌸</h1><button onclick="nextSlide(3)" style="background:#ff4d6d; color:white; margin-top:30px">Read Letter 💌</button></div></section>
+        <section class="slide">
+            <div class="glass-card">
+                <h1>You're special! ✨</h1>
+                <p>Tumhari hansi meri sabse badi khushi hai. ❤️</p>
+                <button onclick="nextSlide(2)" style="background:#ff4d6d;color:white;margin-top:20px">Next ➔</button>
+            </div>
+        </section>
+
+        <section class="slide">
+            <div class="glass-card">
+                <h1>A promise... 🌸</h1>
+                <p>Main humesha tumhare saath rahunga.</p>
+                <button onclick="nextSlide(3)" style="background:#ff4d6d;color:white;margin-top:20px">Read Letter 💌</button>
+            </div>
+        </section>
 
         <section class="slide">
             <div id="rainContainer"></div>
             <div class="glass-card">
                 <div id="lockSection">
                     <h1>A Private Letter 💌</h1>
-                    <p style="color: #ccc; margin-bottom: 15px;">Type <b>10ml</b> to unlock</p>
-                    <input type="text" id="passcode" placeholder="Enter code here">
-                    <button onclick="checkCode()" style="background:#ff4d6d; color:white; width: 85%;">Open</button>
+                    <p>Type <b>10ml</b> to unlock</p><br>
+                    <input type="text" id="passcode" placeholder="Enter code">
+                    <button onclick="checkCode()" style="background:#ff4d6d;color:white">Open</button>
                 </div>
                 <div id="letterContent" class="hidden">
                     <div class="paper">
-                        <h3 style="color:#ff4d6d; margin-bottom: 10px;">Dear Sanskriti,</h3>
-                        <p>Yahan aapka paragraph aayega...</p>
+                        <h3 style="color:#ff4d6d">Dear Sanskriti,</h3>
+                        <p>Yahan apna letter likhein...</p>
                     </div>
                 </div>
             </div>
@@ -133,16 +144,28 @@
         const noBtn = document.getElementById('noBtn');
         const slider = document.getElementById('mainSlider');
 
+        // FIXED JUMP LOGIC - SCREEN KE ANDAR HI RAHEGA
         const moveNoButton = (e) => {
             if(e.type === 'touchstart') e.preventDefault();
-            const padding = 60;
-            const availableWidth = window.innerWidth - noBtn.offsetWidth - (padding * 2);
-            const availableHeight = window.innerHeight - noBtn.offsetHeight - (padding * 2);
-            const randomX = Math.floor(Math.random() * availableWidth) + padding;
-            const randomY = Math.floor(Math.random() * availableHeight) + padding;
+
+            // Button size
+            const btnWidth = noBtn.offsetWidth;
+            const btnHeight = noBtn.offsetHeight;
+
+            // Safe area (screen edges se 50px door)
+            const padding = 50;
+            const maxX = window.innerWidth - btnWidth - padding;
+            const maxY = window.innerHeight - btnHeight - padding;
+
+            // Generate Random X and Y
+            let randomX = Math.floor(Math.random() * (maxX - padding)) + padding;
+            let randomY = Math.floor(Math.random() * (maxY - padding)) + padding;
+
+            // Apply fixed position to ensure it jumps anywhere on screen
             noBtn.style.position = 'fixed';
             noBtn.style.left = randomX + 'px';
             noBtn.style.top = randomY + 'px';
+            noBtn.style.margin = '0'; // Remove any default centering
         };
 
         noBtn.addEventListener('mouseover', moveNoButton);
@@ -150,19 +173,16 @@
 
         function nextSlide(idx) {
             slider.style.transform = `translateX(-${idx * 100}vw)`;
+            // Jab page change ho, 'No' button ko hide kar do taki doosre pages pe na dikhe
             if(idx > 0) noBtn.style.display = 'none';
             if(idx === 3) startHeartRain();
         }
 
         function checkCode() {
-            const code = document.getElementById('passcode').value.trim().toLowerCase();
-            // Ab ye "10ML", "10ml", ya "10mL" sab accept karega!
-            if(code === "10ml") {
-                document.getElementById('lockSection').style.display = 'none';
+            if(document.getElementById('passcode').value === "10ml") {
+                document.getElementById('lockSection').classList.add('hidden');
                 document.getElementById('letterContent').classList.remove('hidden');
-            } else {
-                alert("Wrong code! Hint: It's '10ml' (number 10 + letters M and L)");
-            }
+            } else { alert("Hint: 10ml"); }
         }
 
         function startHeartRain() {
