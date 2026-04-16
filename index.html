@@ -9,8 +9,8 @@
 
         body {
             background-color: #ffcad4;
-            overflow: hidden; /* Screen se bahar kuch nahi jayega */
-            touch-action: none; /* Mobile zoom/scroll disable */
+            overflow: hidden;
+            touch-action: none; 
         }
 
         .slider-container {
@@ -50,7 +50,7 @@
 
         .btn-wrapper {
             position: relative;
-            height: 140px;
+            height: 150px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -66,26 +66,27 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
-        #yesBtn { background-color: #ff4d6d; color: white; margin-bottom: 20px; }
+        #yesBtn { background-color: #ff4d6d; color: white; }
 
+        /* NO button initial state */
         #noBtn { 
             background-color: #222; 
             color: #ff4d6d; 
             position: absolute;
-            top: 70px; /* Starting position inside your white box area */
-            transition: all 0.2s ease;
+            top: 75px; 
+            transition: 0.1s ease-out;
             z-index: 999;
+            white-space: nowrap;
         }
 
-        .footer-text { font-size: 11px; color: #888; margin-top: 20px; font-style: italic; }
+        .footer-text { font-size: 11px; color: #888; margin-top: 25px; font-style: italic; }
 
-        /* Rain & Letter */
+        /* Last Page Letter & Rain */
         .hidden { display: none; }
-        .paper { background: #fff; padding: 20px; border-radius: 10px; text-align: left; margin-top: 15px; }
-        .heart-drop { position: absolute; top: -20px; color: #ff4d6d; font-size: 22px; animation: fall linear forwards; }
+        .paper { background: #fff; padding: 20px; border-radius: 10px; text-align: left; margin-top: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .heart-drop { position: absolute; top: -20px; color: #ff4d6d; font-size: 22px; pointer-events: none; animation: fall linear forwards; }
         @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
-        
-        input[type="text"] { padding: 12px; border-radius: 10px; border: 1px solid #ffcad4; width: 80%; margin-bottom: 10px; }
+        input[type="text"] { padding: 12px; border-radius: 10px; border: 1px solid #ffcad4; width: 80%; margin-bottom: 10px; outline: none; }
     </style>
 </head>
 <body>
@@ -100,12 +101,25 @@
                     <button id="yesBtn" onclick="nextSlide(1)">Yes 💖</button>
                     <button id="noBtn">No 🙈</button>
                 </div>
-                <p class="footer-text">Some love stories don't allow "no" 🐝</p>
+                <p class="footer-text">Some love stories don't allow "no" 😤</p>
             </div>
         </section>
 
-        <section class="slide"><div class="glass-card"><h1>You're special! ✨</h1><button onclick="nextSlide(2)" style="background:#ff4d6d;color:white;margin-top:20px">Next ➔</button></div></section>
-        <section class="slide"><div class="glass-card"><h1>A promise... 🌸</h1><button onclick="nextSlide(3)" style="background:#ff4d6d;color:white;margin-top:20px">Read Letter 💌</button></div></section>
+        <section class="slide">
+            <div class="glass-card">
+                <h1>You're special! ✨</h1>
+                <p>Tumhari hansi meri sabse badi khushi hai. ❤️</p>
+                <button onclick="nextSlide(2)" style="background:#ff4d6d;color:white;margin-top:20px">Next ➔</button>
+            </div>
+        </section>
+
+        <section class="slide">
+            <div class="glass-card">
+                <h1>A promise... 🌸</h1>
+                <p>Main humesha tumhare saath rahunga.</p>
+                <button onclick="nextSlide(3)" style="background:#ff4d6d;color:white;margin-top:20px">Read Letter 💌</button>
+            </div>
+        </section>
 
         <section class="slide">
             <div id="rainContainer"></div>
@@ -113,13 +127,13 @@
                 <div id="lockSection">
                     <h1>A Private Letter 💌</h1>
                     <p>Type <b>10ml</b> to unlock</p><br>
-                    <input type="text" id="passcode">
+                    <input type="text" id="passcode" placeholder="Enter code">
                     <button onclick="checkCode()" style="background:#ff4d6d;color:white">Open</button>
                 </div>
                 <div id="letterContent" class="hidden">
                     <div class="paper">
                         <h3 style="color:#ff4d6d">Dear Sanskriti,</h3>
-                        <p>Tum bohot pyaari ho... [Your paragraph here]</p>
+                        <p>Yahan apna letter likhein...</p>
                     </div>
                 </div>
             </div>
@@ -130,23 +144,28 @@
         const noBtn = document.getElementById('noBtn');
         const slider = document.getElementById('mainSlider');
 
+        // FIXED JUMP LOGIC - SCREEN KE ANDAR HI RAHEGA
         const moveNoButton = (e) => {
             if(e.type === 'touchstart') e.preventDefault();
 
-            // SAARE SIDES SE 60px KA GAP (Button gayab nahi hoga)
-            const padding = 60; 
-            
-            // Available area calculate karo
-            const vw = window.innerWidth;
-            const vh = window.innerHeight;
+            // Button size
+            const btnWidth = noBtn.offsetWidth;
+            const btnHeight = noBtn.offsetHeight;
 
-            // Nayi random position (Safe boundary ke andar)
-            const randomX = Math.floor(Math.random() * (vw - (padding * 2))) + padding;
-            const randomY = Math.floor(Math.random() * (vh - (padding * 2))) + padding;
+            // Safe area (screen edges se 50px door)
+            const padding = 50;
+            const maxX = window.innerWidth - btnWidth - padding;
+            const maxY = window.innerHeight - btnHeight - padding;
 
-            noBtn.style.position = 'fixed'; // Pure screen ke hisaab se move hoga
+            // Generate Random X and Y
+            let randomX = Math.floor(Math.random() * (maxX - padding)) + padding;
+            let randomY = Math.floor(Math.random() * (maxY - padding)) + padding;
+
+            // Apply fixed position to ensure it jumps anywhere on screen
+            noBtn.style.position = 'fixed';
             noBtn.style.left = randomX + 'px';
             noBtn.style.top = randomY + 'px';
+            noBtn.style.margin = '0'; // Remove any default centering
         };
 
         noBtn.addEventListener('mouseover', moveNoButton);
@@ -154,6 +173,8 @@
 
         function nextSlide(idx) {
             slider.style.transform = `translateX(-${idx * 100}vw)`;
+            // Jab page change ho, 'No' button ko hide kar do taki doosre pages pe na dikhe
+            if(idx > 0) noBtn.style.display = 'none';
             if(idx === 3) startHeartRain();
         }
 
@@ -161,7 +182,7 @@
             if(document.getElementById('passcode').value === "10ml") {
                 document.getElementById('lockSection').classList.add('hidden');
                 document.getElementById('letterContent').classList.remove('hidden');
-            } else { alert("Code is 10ml"); }
+            } else { alert("Hint: 10ml"); }
         }
 
         function startHeartRain() {
