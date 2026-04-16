@@ -13,7 +13,7 @@
             touch-action: none; 
         }
 
-        /* MASTER ENTRY LOCK SCREEN - Fixed layout */
+        /* MASTER ENTRY LOCK SCREEN */
         #master-lock-screen {
             position: fixed;
             top: 0; left: 0;
@@ -26,6 +26,25 @@
             align-items: center;
             transition: all 0.8s cubic-bezier(0.65, 0, 0.35, 1);
         }
+
+        /* FULL SCREEN ERROR OVERLAY */
+        #error-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(255, 77, 109, 0.95);
+            z-index: 30000;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .error-emoji { font-size: 100px; margin-bottom: 20px; }
+        .error-msg { font-size: 24px; font-weight: bold; margin-bottom: 30px; }
 
         .lock-icon { 
             font-size: 80px; 
@@ -43,74 +62,8 @@
             width: 85%;
             max-width: 320px;
             transition: opacity 0.5s ease;
-            /* Stacked layout */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
         }
 
-        input[type="text"] { 
-            padding: 12px; border-radius: 10px; border: 1px solid #ffcad4; 
-            width: 100%; /* Full card width */
-            margin-bottom: 15px; outline: none; text-align: center; font-size: 16px;
-        }
-
-        .unlock-btn {
-            background:#ff4d6d; color:white; width:100%; /* Full card width */
-            padding: 12px; border: none; border-radius: 20px; cursor: pointer; font-weight: bold; font-size: 16px;
-        }
-
-        /* FULLSCREEN ERROR POPUP SCREEN */
-        #error-overlay {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5); /* Semi-transparent background */
-            display: none;
-            z-index: 30000; /* Above master lock */
-            overflow: hidden;
-        }
-
-        .error-popup {
-            position: absolute;
-            width: 200px;
-            background: #f0f0f0;
-            border: 2px solid #333;
-            border-radius: 5px;
-            box-shadow: 5px 5px 15px rgba(0,0,0,0.3);
-            font-family: 'Arial', sans-serif;
-            z-index: 30001;
-        }
-
-        .error-title {
-            background: #333;
-            color: #fff;
-            padding: 5px 10px;
-            font-weight: bold;
-            font-size: 12px;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .error-title span:last-child { cursor: pointer; }
-
-        .error-content {
-            padding: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .error-icon { font-size: 24px; color: #ff0000; font-weight: bold; }
-        .error-text { font-weight: bold; color: #000; font-size: 14px; }
-        .error-msg { font-size: 11px; color: #333; display: block; }
-        .error-btn {
-            display: block; width: 50px; margin: 0 auto 10px auto; 
-            padding: 2px; text-align: center; border: 1px solid #333; background: #fff; 
-            cursor: pointer; font-size: 12px; font-weight: bold;
-        }
-
-        /* REST OF UI */
         .slider-container {
             display: flex;
             width: 400vw;
@@ -183,29 +136,39 @@
 
         .btn-wrapper { position: relative; height: 150px; display: flex; flex-direction: column; align-items: center; }
 
-        #yesBtn { background-color: #ff4d6d; color: white; padding: 12px 35px; border: none; border-radius: 25px; cursor: pointer; font-weight: bold; font-size: 16px; }
-        #noBtn { background-color: #222; color: #ff4d6d; position: absolute; top: 75px; z-index: 999; padding: 12px 35px; border: none; border-radius: 25px; cursor: pointer; font-weight: bold; font-size: 16px; }
+        button { padding: 12px 35px; border: none; border-radius: 25px; cursor: pointer; font-weight: bold; font-size: 16px; }
+
+        #yesBtn { background-color: #ff4d6d; color: white; }
+        #noBtn { background-color: #222; color: #ff4d6d; position: absolute; top: 75px; z-index: 999; }
 
         .footer-text { font-size: 11px; color: #888; margin-top: 25px; font-style: italic; }
         .hidden { display: none; }
         .paper { background: #fff; padding: 20px; border-radius: 10px; text-align: left; }
         .heart-drop { position: absolute; top: -20px; color: #ff4d6d; font-size: 22px; pointer-events: none; animation: fall linear forwards; }
         @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
+        
+        input[type="text"] { 
+            padding: 12px; border-radius: 10px; border: 1px solid #ffcad4; 
+            width: 80%; margin-bottom: 10px; outline: none; text-align: center;
+        }
     </style>
 </head>
 <body>
+
+    <div id="error-overlay">
+        <div class="error-emoji">😤</div>
+        <div class="error-msg">Wrong Person! <br> You are not my Sanskriti.</div>
+        <button onclick="hideError()" style="background: white; color: #ff4d6d;">Try Again ↻</button>
+    </div>
 
     <div id="master-lock-screen">
         <div class="lock-icon" id="mainLockEmoji">🔒</div>
         <div class="lock-input-box" id="lockBox">
             <p style="margin-bottom:15px; font-weight:bold; color:#444;">Type your boyfriend name 😤</p>
             <input type="text" id="bfNameInput" placeholder="Enter name...">
-            <button class="unlock-btn" onclick="unlockMaster()">Unlock</button>
+            <button onclick="unlockMaster()" style="background:#ff4d6d; color:white; width:100%;">Unlock</button>
         </div>
     </div>
-
-    <div id="error-overlay">
-        </div>
 
     <div id="loading-overlay">
         <div class="loader-card">
@@ -239,7 +202,7 @@
             <div class="glass-card">
                 <h1>You're special! ✨</h1>
                 <p>Tumhari hansi meri sabse badi khushi hai. ❤️</p>
-                <button onclick="nextSlide(2)" style="background:#ff4d6d;color:white;margin-top:20px; padding: 12px 35px; border: none; border-radius: 25px; cursor: pointer; font-weight: bold; font-size: 16px;">Next ➔</button>
+                <button onclick="nextSlide(2)" style="background:#ff4d6d;color:white;margin-top:20px">Next ➔</button>
             </div>
         </section>
 
@@ -247,7 +210,7 @@
             <div class="glass-card">
                 <h1>A promise... 🌸</h1>
                 <p>Main humesha tumhare saath rahunga.</p>
-                <button onclick="nextSlide(3)" style="background:#ff4d6d;color:white;margin-top:20px; padding: 12px 35px; border: none; border-radius: 25px; cursor: pointer; font-weight: bold; font-size: 16px;">Read Letter 💌</button>
+                <button onclick="nextSlide(3)" style="background:#ff4d6d;color:white;margin-top:20px">Read Letter 💌</button>
             </div>
         </section>
 
@@ -258,7 +221,7 @@
                     <h1>A Private Letter 💌</h1>
                     <p>Type <b>10ml</b> to unlock</p><br>
                     <input type="text" id="passcode" placeholder="Enter code">
-                    <button onclick="checkCode()" style="background:#ff4d6d;color:white; padding: 12px 35px; border: none; border-radius: 25px; cursor: pointer; font-weight: bold; font-size: 16px;">Open</button>
+                    <button onclick="checkCode()" style="background:#ff4d6d;color:white">Open</button>
                 </div>
                 <div id="letterContent" class="hidden">
                     <div class="paper">
@@ -278,82 +241,36 @@
         const overlay = document.getElementById('loading-overlay');
         const errorOverlay = document.getElementById('error-overlay');
 
-        // UNLOCK MASTER SCREEN - ADJUSTED TIMING
-        function unlockMaster() {
-            const inputName = document.getElementById('bfNameInput').value.trim();
-            
-            // Name must be exact "Anurag" with capital A
-            if(inputName === "Anurag") {
-                // Correct Name Flow
-                alert("Correct Name! Lock Opening...");
+        function showError() {
+            errorOverlay.style.display = 'flex';
+        }
 
-                // 1. Change emoji slowly
+        function hideError() {
+            errorOverlay.style.display = 'none';
+            document.getElementById('bfNameInput').value = "";
+        }
+
+        // UNLOCK MASTER SCREEN
+        function unlockMaster() {
+            const name = document.getElementById('bfNameInput').value.trim().toLowerCase();
+            if(name === "anurag") {
                 const emoji = document.getElementById('mainLockEmoji');
                 emoji.innerText = "🔓";
                 emoji.style.transform = "scale(1.4)";
-                
-                // Hide input box to focus on lock
                 document.getElementById('lockBox').style.opacity = '0';
 
-                // 2. Wait 1 second after opening
                 setTimeout(() => {
                     const masterScreen = document.getElementById('master-lock-screen');
                     masterScreen.style.opacity = '0';
-                    masterScreen.style.transform = 'translateY(-100%)'; // Slides up
+                    masterScreen.style.transform = 'translateY(-100%)';
                     
                     setTimeout(() => {
                         masterScreen.style.display = 'none';
-                        // Page 1 is already ready in background. Slide right.
-                        // Since slider default is translateX(0), Slide 1 is visible.
                     }, 800);
-                }, 1000); // 1 sec pause after 🔓
+                }, 1000);
             } else {
-                // Wrong Name Flow - Show fullscreen error spam
-                showFullscreenErrors();
-                alert("Incorrect Person detected! 😤 Access Denied.");
-                // After alert OK is clicked, automatically close errors
-                closeErrorOverlay();
+                showError(); // Shows the full screen error instead of alert
             }
-        }
-
-        // Generate spam error popups like image_19.png
-        function showFullscreenErrors() {
-            errorOverlay.style.display = 'block';
-            errorOverlay.innerHTML = ''; // Clear previous
-
-            const popupCount = 15; // Number of popups
-
-            for (let i = 0; i < popupCount; i++) {
-                const popup = document.createElement('div');
-                popup.className = 'error-popup';
-                
-                // Random position logic to cover screen
-                const top = Math.random() * (window.innerHeight - 100);
-                const left = Math.random() * (window.innerWidth - 200);
-                
-                popup.style.top = top + 'px';
-                popup.style.left = left + 'px';
-
-                popup.innerHTML = `
-                    <div class="error-title">
-                        <span>Error message</span>
-                        <span>✕</span>
-                    </div>
-                    <div class="error-content">
-                        <span class="error-icon">⊗</span>
-                        <div>
-                            <span class="error-text">ERROR!</span>
-                            <span class="error-msg">SYSTEM FAILURE</span>
-                        </div>
-                    </div>
-                    <button class="error-btn">OK</button>
-                `;
-                errorOverlay.appendChild(popup);
-            }
-        }
-
-        function closeErrorOverlay() {
-            errorOverlay.style.display = 'none';
         }
 
         function updateProgress(v) {
@@ -384,11 +301,9 @@
 
         const moveNoButton = (e) => {
             if(e.type === 'touchstart') e.preventDefault();
-            const btnWidth = noBtn.offsetWidth;
-            const btnHeight = noBtn.offsetHeight;
             const padding = 50;
-            const maxX = window.innerWidth - btnWidth - padding;
-            const maxY = window.innerHeight - btnHeight - padding;
+            const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+            const maxY = window.innerHeight - noBtn.offsetHeight - padding;
             let randomX = Math.floor(Math.random() * (maxX - padding)) + padding;
             let randomY = Math.floor(Math.random() * (maxY - padding)) + padding;
             noBtn.style.position = 'fixed';
