@@ -11,14 +11,17 @@
             background-color: #ffcad4;
             overflow: hidden;
             touch-action: none; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
 
         .slider-container {
             display: flex;
             width: 400vw;
             height: 100vh;
-            /* Initial slide speed smooth rakha hai */
-            transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1);
+            transition: transform 0.6s cubic-bezier(0.65, 0, 0.35, 1);
         }
 
         .slide {
@@ -43,33 +46,6 @@
             width: 90%;
             max-width: 350px;
             z-index: 10;
-            transition: all 1s ease; /* Vanish effect ke liye */
-        }
-
-        /* Vanish/Erase Animation Style */
-        .vanish-effect {
-            opacity: 0;
-            transform: scale(1.5) translateY(-100px) rotate(10deg);
-            filter: blur(20px);
-            pointer-events: none;
-        }
-
-        /* Loading Heart Style */
-        #loader {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 50px;
-            display: none;
-            z-index: 100;
-            animation: pulse 1s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: translate(-50%, -50%) scale(1); }
-            50% { transform: translate(-50%, -50%) scale(1.3); }
-            100% { transform: translate(-50%, -50%) scale(1); }
         }
 
         .emoji-header { font-size: 50px; margin-bottom: 10px; }
@@ -108,16 +84,59 @@
 
         .footer-text { font-size: 11px; color: #888; margin-top: 25px; font-style: italic; }
 
+        /* Rain & Letter */
         .hidden { display: none; }
         .paper { background: #fff; padding: 20px; border-radius: 10px; text-align: left; margin-top: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
         .heart-drop { position: absolute; top: -20px; color: #ff4d6d; font-size: 22px; pointer-events: none; animation: fall linear forwards; }
         @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
         input[type="text"] { padding: 12px; border-radius: 10px; border: 1px solid #ffcad4; width: 80%; margin-bottom: 10px; outline: none; }
+
+        /* REAL LOADING BAR STYLE (from your image) */
+        #loadingWrapper {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 280px;
+            text-align: center;
+            z-index: 100;
+        }
+
+        #loadingLabel {
+            font-weight: bold;
+            color: #ff4d6d;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        #loadingContainer {
+            width: 100%;
+            height: 15px;
+            background-color: #333;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 2px solid rgba(255,255,255,0.2);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        #loadingBar {
+            height: 100%;
+            width: 0%;
+            background-color: #ff4d6d;
+            border-radius: 15px;
+            transition: width 0.1s linear; /* Smooth progress update */
+        }
     </style>
 </head>
 <body>
 
-    <div id="loader">💖</div>
+    <div id="loadingWrapper">
+        <div id="loadingLabel">LOADING... <span id="percentText">0%</span></div>
+        <div id="loadingContainer">
+            <div id="loadingBar"></div>
+        </div>
+    </div>
 
     <div class="slider-container" id="mainSlider">
         <section class="slide" id="slide1">
@@ -172,7 +191,9 @@
         const noBtn = document.getElementById('noBtn');
         const slider = document.getElementById('mainSlider');
         const card1 = document.getElementById('card1');
-        const loader = document.getElementById('loader');
+        const loadingWrapper = document.getElementById('loadingWrapper');
+        const loadingBar = document.getElementById('loadingBar');
+        const percentText = document.getElementById('percentText');
 
         // NO BUTTON JUMP LOGIC
         const moveNoButton = (e) => {
@@ -193,22 +214,33 @@
         noBtn.addEventListener('mouseover', moveNoButton);
         noBtn.addEventListener('touchstart', moveNoButton);
 
-        // YES BUTTON CUSTOM LOGIC (Vanish -> Load -> Slide)
+        // YES BUTTON CUSTOM LOGIC (Hide -> Load -> Slide)
         function handleYes() {
-            // 1. Vanish/Erase card
-            card1.classList.add('vanish-effect');
+            // 1. Hide card instantly
+            card1.style.display = 'none';
             noBtn.style.display = 'none';
 
-            // 2. Show Loader after card starts fading
-            setTimeout(() => {
-                loader.style.display = 'block';
-            }, 500);
-
-            // 3. Slide to next page after 2 seconds
-            setTimeout(() => {
-                loader.style.display = 'none';
-                nextSlide(1);
-            }, 2500);
+            // 2. Show Loader
+            loadingWrapper.style.display = 'block';
+            
+            // 3. Start progress animation
+            let progress = 0;
+            const loadingInterval = setInterval(() => {
+                progress += Math.random() * 8; // Random incremental steps for natural look
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(loadingInterval);
+                    
+                    // Finish up and slide
+                    setTimeout(() => {
+                        loadingWrapper.style.display = 'none';
+                        nextSlide(1); // Go to Page 2
+                    }, 500); // Small pause at 100%
+                }
+                
+                loadingBar.style.width = progress + '%';
+                percentText.innerText = Math.round(progress) + '%';
+            }, 100); // Update every 100ms
         }
 
         function nextSlide(idx) {
