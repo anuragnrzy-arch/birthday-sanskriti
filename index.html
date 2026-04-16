@@ -1,233 +1,208 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Do you love me?</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 
-<style>
-*{margin:0;padding:0;box-sizing:border-box;}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
 
-body{
-  font-family:sans-serif;
-  background:#2e1616;
-  overflow:hidden;
-}
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle, #ffe6e6, #ffcccc); /* Soft pinkish background */
+            overflow: hidden;
+            position: relative;
+        }
 
-/* SLIDER */
-.slider{
-  display:flex;
-  width:400%;
-  height:100vh;
-  transition:0.6s ease;
-}
+        /* Transition classes for sliding to next page */
+        .slide-out-left {
+            transform: translateX(-150vw);
+            transition: transform 0.8s ease-in-out;
+        }
 
-.page{
-  width:100%;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-}
+        /* Glassmorphism Card */
+        .card {
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 8px 32px 0 rgba(255, 138, 152, 0.2);
+            width: 90%;
+            max-width: 400px;
+            z-index: 10;
+            transition: transform 0.8s ease-in-out;
+        }
 
-/* BOX */
-.box{
-  width:280px;
-  padding:30px;
-  background:#5a2c2c;
-  border-radius:20px;
-  text-align:center;
-  position:relative;
-  box-shadow:0 0 30px rgba(255,0,100,0.5);
-}
+        .icons {
+            font-size: 50px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
 
-/* TEXT */
-.emoji{font-size:28px;}
-h2{color:#ffdede;margin:15px 0;}
+        .icons span {
+            filter: drop-shadow(0px 0px 8px rgba(255,0,0,0.4)); /* Glowing effect */
+        }
 
-/* BUTTON */
-button{
-  display:block;
-  width:70%;
-  margin:12px auto;
-  padding:12px;
-  border:none;
-  border-radius:20px;
-  font-size:16px;
-}
+        h1 {
+            color: #333;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
 
-.yes{background:#ff4d6d;color:white;}
-.no{
-  background:black;
-  color:white;
-  position:absolute;
-}
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            position: relative;
+            height: 50px;
+        }
 
-/* RAIN */
-.rain{
-  position:fixed;
-  top:-20px;
-  animation:fall linear infinite;
-}
+        button {
+            padding: 10px 25px;
+            font-size: 16px;
+            border-radius: 30px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: transform 0.2s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
 
-@keyframes fall{
-  to{transform:translateY(100vh);}
-}
+        .yes-btn {
+            background: linear-gradient(135deg, #ff758c, #ff7eb3);
+            color: white;
+            z-index: 2;
+        }
 
-/* LETTER */
-.envelope{
-  width:120px;
-  height:80px;
-  background:#ff4d6d;
-  margin:20px auto;
-  position:relative;
-}
+        .yes-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(255, 117, 140, 0.4);
+        }
 
-.flap{
-  position:absolute;
-  width:0;
-  height:0;
-  border-left:60px solid transparent;
-  border-right:60px solid transparent;
-  border-bottom:40px solid #ff6b81;
-  top:-40px;
-  transition:0.5s;
-}
+        .no-btn {
+            background: white;
+            color: #333;
+            position: absolute;
+            left: 55%; /* Default position */
+        }
 
-.paper{
-  width:100px;
-  height:0;
-  background:white;
-  margin:auto;
-  overflow:hidden;
-  transition:0.6s;
-  padding:0 10px;
-}
+        .footer-text {
+            margin-top: 30px;
+            font-size: 12px;
+            color: #777;
+            font-style: italic;
+        }
 
-.open .flap{transform:rotateX(180deg);}
-.open .paper{height:130px;padding:10px;}
+        /* Floating Hearts Animation */
+        .floating-heart {
+            position: absolute;
+            font-size: 20px;
+            color: rgba(255, 117, 140, 0.6);
+            animation: floatUp linear infinite;
+            z-index: 1;
+        }
 
-input{
-  padding:8px;
-  border-radius:10px;
-  border:none;
-}
-</style>
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) scale(0.5); opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="slider" id="slider">
+    <div id="hearts-container"></div>
 
-<!-- PAGE 1 -->
-<div class="page">
-  <div class="box" id="box">
+    <div class="card" id="mainCard">
+        <div class="icons">
+            <span>😸</span><span>❤️</span>
+        </div>
+        <h1>Do you love me !?</h1>
+        
+        <div class="buttons-container">
+            <button class="yes-btn" id="yesBtn">Yes 💖</button>
+            <button class="no-btn" id="noBtn">No 🙅🏻‍♀️</button>
+        </div>
 
-    <div class="emoji">😍❤️</div>
-    <h2>Do you love me!?</h2>
-
-    <button class="yes" onclick="next(1)">Yes</button>
-    <button class="no" id="noBtn">No</button>
-
-  </div>
-</div>
-
-<!-- PAGE 2 -->
-<div class="page">
-  <div class="box">
-    <h2>Why do you love me? 😏</h2>
-    <button class="yes" onclick="next(2)">Because you're special ❤️</button>
-    <button class="yes" onclick="next(2)">Because I feel good with you 🥺</button>
-  </div>
-</div>
-
-<!-- PAGE 3 -->
-<div class="page">
-  <div class="box">
-    <h2>Will you stay with me? 💞</h2>
-    <button class="yes" onclick="next(3)">Always ❤️</button>
-    <button class="yes" onclick="next(3)">Yes forever 😌</button>
-  </div>
-</div>
-
-<!-- PAGE 4 -->
-<div class="page">
-  <div class="box">
-
-    <h2>Enter code 💌</h2>
-    <input id="code" placeholder="type 10ml">
-    <br><br>
-    <button class="yes" onclick="openLetter()">Open</button>
-
-    <div class="envelope" id="env">
-      <div class="flap"></div>
+        <div class="footer-text">
+            Some love stories don't allow 'no' ✨
+        </div>
     </div>
 
-    <div class="paper" id="paper">
-      <p style="font-size:12px;">
-        May 9, 2022…<br><br>
-        It’s been years, but I still remember everything…  
-        the talks, the feelings…  
-        and somehow, you never left ❤️
-      </p>
-    </div>
+    <script>
+        // 1. Moving "No" Button Logic
+        const noBtn = document.getElementById('noBtn');
+        const card = document.getElementById('mainCard');
 
-  </div>
-</div>
+        function moveButton() {
+            // Screen limits calculate karke bounds banaye
+            const maxX = window.innerWidth - noBtn.clientWidth - 20; 
+            const maxY = window.innerHeight - noBtn.clientHeight - 20;
 
-</div>
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
 
-<script>
+            // Change position to fixed so it can go anywhere on screen, not just inside card
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+        }
 
-/* SLIDE */
-let current=0;
-function next(n){
-  current=n;
-  document.getElementById("slider").style.transform="translateX(-"+(current*100)+"%)";
-}
+        // Mobile touch aur desktop hover dono ke liye event listeners
+        noBtn.addEventListener('mouseover', moveButton);
+        noBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault(); // Click rokne ke liye
+            moveButton();
+        });
 
-/* NO BUTTON */
-const noBtn=document.getElementById("noBtn");
-const box=document.getElementById("box");
+        // 2. "Yes" Button Click -> Slide out transition
+        document.getElementById('yesBtn').addEventListener('click', () => {
+            // Card ko left side slide kar dega
+            card.classList.add('slide-out-left');
+            
+            // Yahan aap next page (Page 2) par redirect kar sakte hain
+            setTimeout(() => {
+                // Example: window.location.href = "page2.html";
+                alert('Slide 1 complete! Now link this to page2.html in your code.');
+            }, 800); // 0.8s wait karega slide hone ka
+        });
 
-noBtn.style.left="50%";
-noBtn.style.top="75%";
-noBtn.style.transform="translate(-50%,-50%)";
+        // 3. Floating Hearts Generator
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.innerHTML = '❤️';
+            heart.classList.add('floating-heart');
+            
+            // Random styling
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 3 + 4 + 's'; // 4s to 7s
+            heart.style.fontSize = Math.random() * 15 + 10 + 'px'; // 10px to 25px
+            
+            document.getElementById('hearts-container').appendChild(heart);
+            
+            // Remove after animation to save memory
+            setTimeout(() => {
+                heart.remove();
+            }, 7000);
+        }
 
-noBtn.addEventListener("mouseover",()=>{
-  const rect=box.getBoundingClientRect();
-
-  const x=Math.random()*(rect.width-80);
-  const y=Math.random()*(rect.height-50);
-
-  noBtn.style.left=x+"px";
-  noBtn.style.top=y+"px";
-});
-
-noBtn.onclick=(e)=>e.preventDefault();
-
-/* LETTER */
-function openLetter(){
-  let val=document.getElementById("code").value;
-
-  if(val==="10ml"){
-    document.getElementById("env").classList.add("open");
-    document.getElementById("paper").classList.add("open");
-  }else{
-    alert("Wrong code 😒");
-  }
-}
-
-/* HEART RAIN */
-function rain(){
-  const h=document.createElement("div");
-  h.classList.add("rain");
-  h.innerHTML="💗";
-  h.style.left=Math.random()*100+"vw";
-  h.style.animationDuration=(2+Math.random()*3)+"s";
-  document.body.appendChild(h);
-  setTimeout(()=>h.remove(),5000);
-}
-setInterval(rain,300);
-
-</script>
+        setInterval(createHeart, 300); // Har 300ms mein naya heart
+    </script>
 
 </body>
 </html>
