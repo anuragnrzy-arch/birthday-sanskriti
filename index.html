@@ -2,96 +2,137 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Do you love me?</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Love</title>
 
 <style>
-body {
-  margin: 0;
-  height: 100vh;
-  background: #ffd6dc;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: Arial, sans-serif;
-  overflow: hidden;
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
 }
 
-.container {
-  text-align: center;
-  background: #ffc0cb;
-  padding: 30px;
-  border-radius: 20px;
-  box-shadow: 0 0 30px rgba(255, 0, 100, 0.3);
-  position: relative;
+body{
+  height:100vh;
+  background:#5a2c2c;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+  font-family: 'Segoe UI', sans-serif;
 }
 
-h2 {
-  color: #333;
+/* Card */
+.card{
+  width:280px;
+  padding:30px;
+  background:#6d3a3a;
+  border-radius:25px;
+  text-align:center;
+  box-shadow:0 0 40px rgba(255,0,80,0.4);
+  position:relative;
 }
 
-.heart {
-  font-size: 40px;
+/* Heart */
+.heart{
+  font-size:40px;
+  color:#ff3c5f;
   animation: glow 1s infinite alternate;
 }
 
-@keyframes glow {
-  from { text-shadow: 0 0 10px red; }
-  to { text-shadow: 0 0 25px pink; }
+@keyframes glow{
+  from{ text-shadow:0 0 10px #ff3c5f;}
+  to{ text-shadow:0 0 25px #ff6b81;}
 }
 
-.buttons {
-  margin-top: 20px;
-  position: relative;
+/* Text */
+h2{
+  color:#f5dede;
+  margin:15px 0;
+  font-weight:500;
 }
 
-button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 20px;
-  font-size: 16px;
-  cursor: pointer;
+/* Buttons */
+.btn{
+  padding:10px 20px;
+  border:none;
+  border-radius:20px;
+  font-size:16px;
+  cursor:pointer;
+  margin:5px;
 }
 
-.yes {
-  background: #ff4d6d;
-  color: white;
+.yes{
+  background:#ff4d6d;
+  color:white;
 }
 
-.no {
-  background: white;
-  position: absolute;
+.no{
+  background:black;
+  color:white;
+  position:fixed;
 }
 
+/* Heart Rain */
+.rain{
+  position:fixed;
+  top:-20px;
+  color:#ff4d6d;
+  animation: fall linear infinite;
+}
+
+@keyframes fall{
+  to{
+    transform:translateY(100vh);
+  }
+}
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="card">
   <div class="heart">❤️</div>
   <h2>Do you love me?</h2>
-
-  <div class="buttons">
-    <button class="yes" onclick="nextPage()">Yes ❤️</button>
-    <button class="no" id="noBtn">No 😒</button>
-  </div>
+  <button class="btn yes" onclick="nextPage()">Yes ❤️</button>
 </div>
+
+<button class="btn no" id="noBtn">No 😒</button>
 
 <script>
 const noBtn = document.getElementById("noBtn");
 
-noBtn.addEventListener("mouseover", () => {
+/* NO button run but stay inside screen */
+noBtn.addEventListener("click", moveBtn);
+noBtn.addEventListener("mouseover", moveBtn);
+
+function moveBtn(){
   const x = Math.random() * (window.innerWidth - 100);
   const y = Math.random() * (window.innerHeight - 50);
-
   noBtn.style.left = x + "px";
   noBtn.style.top = y + "px";
-});
-
-function nextPage() {
-  alert("Next page slide ayega 😏");
 }
+
+/* Next page */
+function nextPage(){
+  alert("Next slide banayenge 😏");
+}
+
+/* Heart rain */
+function createHeart(){
+  const heart = document.createElement("div");
+  heart.classList.add("rain");
+  heart.innerHTML = "💗";
+
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.animationDuration = (2 + Math.random()*3) + "s";
+
+  document.body.appendChild(heart);
+
+  setTimeout(()=>heart.remove(),5000);
+}
+
+setInterval(createHeart,300);
 </script>
 
 </body>
