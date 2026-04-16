@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <title>Love</title>
 
@@ -10,15 +10,15 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 
 body{
-  font-family: 'Segoe UI', sans-serif;
-  overflow:hidden;
+  font-family:sans-serif;
   background:#3b1f1f;
+  overflow:hidden;
 }
 
 /* SLIDER */
 .slider{
   display:flex;
-  width:400%;
+  width:200%;
   height:100vh;
   transition:0.6s ease;
 }
@@ -31,36 +31,18 @@ body{
   align-items:center;
 }
 
-/* CARD STYLE */
+/* CARD */
 .card{
-  width:300px;
+  width:280px;
   padding:30px;
   background:#5a2c2c;
   border-radius:25px;
   text-align:center;
-  box-shadow:0 0 40px rgba(255,0,100,0.4);
+  box-shadow:0 0 40px rgba(255,0,80,0.4);
+  position:relative;
 }
 
-/* TEXT */
-h2{
-  color:#ffdede;
-  margin:15px 0;
-}
-
-/* BUTTON */
-button{
-  padding:12px 25px;
-  border:none;
-  border-radius:25px;
-  margin:10px;
-  cursor:pointer;
-  font-size:16px;
-}
-
-.yes{background:#ff4d6d;color:white;}
-.no{background:black;color:white;position:absolute;}
-
-/* HEART GLOW */
+/* HEART */
 .heart{
   font-size:40px;
   color:#ff4d6d;
@@ -72,24 +54,70 @@ button{
   to{ text-shadow:0 0 30px pink;}
 }
 
-/* HEART RAIN */
-.rain{
-  position:fixed;
-  top:-20px;
-  font-size:14px;
-  animation:fall linear infinite;
+h2{color:#ffdede;margin:15px 0;}
+
+/* BUTTON */
+button{
+  padding:12px 25px;
+  border:none;
+  border-radius:25px;
+  margin-top:10px;
+  cursor:pointer;
 }
 
-@keyframes fall{
-  to{ transform:translateY(100vh);}
+.yes{background:#ff4d6d;color:white;}
+.no{
+  background:black;
+  color:white;
+  position:absolute;
 }
 
 /* LETTER */
-.letter{
+.envelope{
+  width:120px;
+  height:80px;
+  background:#ff4d6d;
+  position:relative;
+  margin:20px auto;
+  cursor:pointer;
+}
+
+.flap{
+  position:absolute;
+  width:0;
+  height:0;
+  border-left:60px solid transparent;
+  border-right:60px solid transparent;
+  border-bottom:40px solid #ff6b81;
+  top:-40px;
+  transition:0.5s;
+}
+
+.paper{
+  width:100px;
+  height:0;
   background:white;
-  padding:20px;
+  margin:auto;
+  overflow:hidden;
+  transition:0.6s;
+  border-radius:5px;
+  padding:0 10px;
+}
+
+/* OPEN animation */
+.open .flap{
+  transform:rotateX(180deg);
+}
+
+.open .paper{
+  height:120px;
+  padding:10px;
+}
+
+input{
+  padding:8px;
   border-radius:10px;
-  display:none;
+  border:none;
 }
 </style>
 </head>
@@ -100,96 +128,85 @@ button{
 
 <!-- PAGE 1 -->
 <div class="page">
-  <div class="card">
+  <div class="card" id="card">
+
     <div class="heart">❤️</div>
     <h2>Do you love me?</h2>
-    <button class="yes" onclick="next(1)">Yes ❤️</button>
+
+    <!-- YES -->
+    <button class="yes" onclick="goLast()">Yes ❤️</button>
+
+    <!-- NO (below with gap) -->
     <button class="no" id="noBtn">No 😒</button>
+
   </div>
 </div>
 
-<!-- PAGE 2 -->
+<!-- PAGE 2 (FINAL) -->
 <div class="page">
   <div class="card">
-    <h2>Why do you love me? 😏</h2>
-    <button class="yes" onclick="next(2)">Because you're special ❤️</button>
-    <button class="yes" onclick="next(2)">Because I miss you 🥺</button>
-  </div>
-</div>
 
-<!-- PAGE 3 -->
-<div class="page">
-  <div class="card">
-    <h2>Will you stay with me forever? 💞</h2>
-    <button class="yes" onclick="next(3)">Yes always ❤️</button>
-    <button class="yes" onclick="next(3)">Obviously 😌</button>
-  </div>
-</div>
-
-<!-- PAGE 4 -->
-<div class="page">
-  <div class="card">
-    <h2>Enter code to open letter 💌</h2>
-    <input id="code" placeholder="type 10ml" style="padding:10px;border-radius:10px;border:none;">
+    <h2>Enter code 💌</h2>
+    <input id="code" placeholder="type code">
     <br><br>
-    <button class="yes" onclick="openLetter()">Open</button>
+    <button class="yes" onclick="check()">Open</button>
 
-    <div class="letter" id="letter">
-      <p>
-        From the day I met you, everything changed... ❤️<br><br>
-        I don't know what future holds,  
-        but I just want you in it 💗
+    <div class="envelope" id="env">
+      <div class="flap"></div>
+    </div>
+
+    <div class="paper" id="paper">
+      <p style="font-size:12px;">
+        May 9, 2022…<br><br>
+        It's been years, but I still remember everything.  
+        The moments, the talks, the feelings…  
+        Somehow, they never left ❤️  
       </p>
     </div>
+
   </div>
 </div>
 
 </div>
 
 <script>
-let slide = 0;
 const slider = document.getElementById("slider");
 
-/* NEXT PAGE */
-function next(n){
-  slide = n;
-  slider.style.transform = "translateX(-"+(slide*100)+"%)";
+/* YES → last page */
+function goLast(){
+  slider.style.transform="translateX(-100%)";
 }
 
-/* NO BUTTON RUN */
-const noBtn = document.getElementById("noBtn");
+/* NO button (inside card only) */
+const noBtn=document.getElementById("noBtn");
+const card=document.getElementById("card");
+
+/* initial position (below yes) */
 noBtn.style.left="50%";
-noBtn.style.top="65%";
+noBtn.style.top="75%";
 noBtn.style.transform="translate(-50%,-50%)";
 
 noBtn.addEventListener("mouseover",()=>{
-  const x = Math.random()*(window.innerWidth-100);
-  const y = Math.random()*(window.innerHeight-50);
+  const rect=card.getBoundingClientRect();
+
+  const x=Math.random()*(rect.width-80);
+  const y=Math.random()*(rect.height-50);
+
   noBtn.style.left=x+"px";
   noBtn.style.top=y+"px";
 });
 
-/* LETTER OPEN */
-function openLetter(){
-  const val = document.getElementById("code").value;
+/* CODE CHECK */
+function check(){
+  const val=document.getElementById("code").value;
+
   if(val==="10ml"){
-    document.getElementById("letter").style.display="block";
+    document.getElementById("env").classList.add("open");
+    document.getElementById("paper").classList.add("open");
   }else{
     alert("Wrong code 😒");
   }
 }
-
-/* HEART RAIN */
-function heart(){
-  const h=document.createElement("div");
-  h.classList.add("rain");
-  h.innerHTML="💗";
-  h.style.left=Math.random()*100+"vw";
-  h.style.animationDuration=(2+Math.random()*3)+"s";
-  document.body.appendChild(h);
-  setTimeout(()=>h.remove(),5000);
-}
-setInterval(heart,300);
 </script>
 
 </body>
