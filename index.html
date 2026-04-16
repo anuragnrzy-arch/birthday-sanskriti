@@ -8,7 +8,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
 
         body {
-            /* Background thoda fade out aur light blue-ish pink tone mein */
             background-color: #fce4ec; 
             overflow: hidden;
             touch-action: none; 
@@ -28,7 +27,6 @@
             transition: all 0.8s cubic-bezier(0.65, 0, 0.35, 1);
         }
 
-        /* SMALL COMPUTER ERROR BOX */
         #error-overlay {
             position: fixed;
             top: 0; left: 0;
@@ -53,15 +51,10 @@
 
         @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
-        .error-msg { color: #333; font-weight: bold; margin-bottom: 20px; font-size: 16px; line-height: 1.4; }
-
-        .lock-icon { font-size: 80px; margin-bottom: 20px; transition: transform 1s ease; }
-        
         .lock-input-box {
-            /* Box background from your 2nd pic */
             background: rgba(255, 240, 245, 0.9);
             padding: 30px; border-radius: 20px;
-            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
             text-align: center; width: 85%; max-width: 320px;
             border: 1px solid rgba(255, 182, 193, 0.5);
         }
@@ -74,19 +67,26 @@
         .slide {
             width: 100vw; height: 100vh;
             display: flex; justify-content: center; align-items: center;
-            /* Fade out background style */
             background: radial-gradient(circle, #fdf2f5 0%, #fce4ec 100%);
         }
 
         .glass-card {
-            /* Deeper pinkish-white for the box as requested */
             background: rgba(255, 245, 247, 0.9);
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            border-radius: 25px; padding: 40px 20px;
+            backdrop-filter: blur(15px);
+            border-radius: 25px; padding: 30px 20px;
             text-align: center; width: 90%; max-width: 350px;
-            transition: opacity 0.4s ease;
             box-shadow: 0 8px 32px rgba(255, 182, 193, 0.3);
             border: 1.5px solid rgba(255, 255, 255, 0.8);
+        }
+
+        /* IMAGE STYLING */
+        .couple-img {
+            width: 100%;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            max-height: 250px;
+            object-fit: cover;
         }
 
         #loading-overlay {
@@ -94,7 +94,7 @@
             width: 100%; height: 100%; background: #fdf2f5;
             display: none; flex-direction: column;
             justify-content: center; align-items: center; z-index: 10000;
-            transition: opacity 0.5s ease, visibility 0.5s;
+            transition: opacity 0.5s ease;
         }
 
         .loader-card {
@@ -134,8 +134,8 @@
     </div>
 
     <div id="master-lock-screen">
-        <div class="lock-icon" id="mainLockEmoji">🔒</div>
-        <div class="lock-input-box" id="lockBox">
+        <div class="lock-icon" id="mainLockEmoji" style="font-size: 80px; margin-bottom: 20px;">🔒</div>
+        <div class="lock-input-box">
             <p style="margin-bottom:15px; font-weight:bold; color:#444;">Type your boyfriend name 😤</p>
             <input type="text" id="bfNameInput" placeholder="Enter name...">
             <button onclick="unlockMaster()" style="background:#ff4d6d; color:white; width:100%;">Unlock</button>
@@ -170,6 +170,7 @@
 
         <section class="slide">
             <div class="glass-card">
+                <img src="https://i.ibb.co/3Wb0hV9/image-15.png" alt="Special Pic" class="couple-img">
                 <h1 style="color: #ff4d6d;">You're special! ✨</h1>
                 <p style="color: #555;">Tumhari hansi meri sabse badi khushi hai. ❤️</p>
                 <button onclick="nextSlide(2)" style="background:#ff4d6d;color:white;margin-top:20px">Next ➔</button>
@@ -178,7 +179,8 @@
 
         <section class="slide">
             <div class="glass-card">
-                <h1 style="color: #ff4d6d;">A promise... 🌸</h1>
+                <div style="font-size:60px">🌸</div>
+                <h1 style="color: #ff4d6d;">A promise...</h1>
                 <p style="color: #555;">Main humesha tumhare saath rahunga.</p>
                 <button onclick="nextSlide(3)" style="background:#ff4d6d;color:white;margin-top:20px">Read Letter 💌</button>
             </div>
@@ -189,10 +191,13 @@
                 <div id="lockSection">
                     <h1 style="color: #ff4d6d;">A Private Letter 💌</h1>
                     <input type="text" id="passcode" placeholder="Enter 10ml">
-                    <button onclick="checkCode()" style="background:#ff4d6d;color:white">Open</button>
+                    <button onclick="checkCode()" style="background:#ff4d6d;color:white; width:85%">Open</button>
                 </div>
                 <div id="letterContent" class="hidden">
-                    <p style="color: #444;">Dear Sanskriti, yahan apna letter likhein... ❤️</p>
+                    <div style="text-align: left; line-height: 1.6; color: #444;">
+                        <strong style="color:#ff4d6d">May 9th, 2026</strong><br><br>
+                        I still remember May 9th, 2022... the day everything between us started. It’s been years, but that day still feels special to me. ❤️
+                    </div>
                 </div>
             </div>
         </section>
@@ -207,83 +212,39 @@
         const noBtn = document.getElementById('noBtn');
 
         function unlockMaster() {
-            const name = document.getElementById('bfNameInput').value.trim().toLowerCase();
-            if(name === "anurag") {
+            if(document.getElementById('bfNameInput').value.trim().toLowerCase() === "anurag") {
                 document.getElementById('mainLockEmoji').innerText = "🔓";
-                document.getElementById('mainLockEmoji').style.transform = "scale(1.4)";
-                document.getElementById('lockBox').style.opacity = '0';
                 setTimeout(() => {
-                    const master = document.getElementById('master-lock-screen');
-                    master.style.opacity = '0';
-                    master.style.transform = 'translateY(-100%)';
-                    setTimeout(() => master.style.display = 'none', 800);
-                }, 1000);
-            } else {
-                errorOverlay.style.display = 'flex';
-            }
-        }
-
-        function hideError() {
-            errorOverlay.style.display = 'none';
-            document.getElementById('bfNameInput').value = "";
+                    document.getElementById('master-lock-screen').style.transform = 'translateY(-100%)';
+                }, 800);
+            } else { errorOverlay.style.display = 'flex'; }
         }
 
         async function triggerLoading() {
             document.getElementById('loveCard').style.opacity = '0';
-            setTimeout(async () => {
-                overlay.style.display = 'flex';
-                
-                for(let i=1; i<=50; i++) {
-                    updateBar(i);
-                    await new Promise(r => setTimeout(r, 25));
-                }
-                
-                await new Promise(r => setTimeout(r, 1000));
-                
-                for(let i=51; i<=90; i++) {
-                    updateBar(i);
-                    await new Promise(r => setTimeout(r, 15));
-                }
-
-                updateBar(50);
-                await new Promise(r => setTimeout(r, 1000));
-
-                for(let i=51; i<=90; i++) {
-                    updateBar(i);
-                    await new Promise(r => setTimeout(r, 20));
-                }
-
-                await new Promise(r => setTimeout(r, 400));
-                
-                nextSlide(1);
-                overlay.style.opacity = '0';
-                setTimeout(() => { overlay.style.display = 'none'; }, 600);
-            }, 200);
+            overlay.style.display = 'flex';
+            let p = 0;
+            while(p < 90) { p++; bar.style.width = p+'%'; pct.innerText = p+'%'; await new Promise(r=>setTimeout(r, 15)); }
+            await new Promise(r=>setTimeout(r, 1000));
+            while(p < 100) { p++; bar.style.width = p+'%'; pct.innerText = p+'%'; await new Promise(r=>setTimeout(r, 20)); }
+            nextSlide(1);
+            overlay.style.opacity = '0';
+            setTimeout(() => { overlay.style.display = 'none'; }, 600);
         }
 
-        function updateBar(val) {
-            bar.style.width = val + "%";
-            pct.innerText = val + "%";
-        }
+        function nextSlide(idx) { slider.style.transform = `translateX(-${idx * 100}vw)`; }
+        function hideError() { errorOverlay.style.display = 'none'; }
 
-        function nextSlide(idx) {
-            slider.style.transform = `translateX(-${idx * 100}vw)`;
-        }
-
-        const moveNoButton = (e) => {
+        const moveNo = (e) => {
             if(e.type === 'touchstart') e.preventDefault();
-            const padding = 50;
-            const maxX = window.innerWidth - noBtn.offsetWidth - padding;
-            const maxY = window.innerHeight - noBtn.offsetHeight - padding;
-            let randomX = Math.floor(Math.random() * (maxX - padding)) + padding;
-            let randomY = Math.floor(Math.random() * (maxY - padding)) + padding;
+            const maxX = window.innerWidth - noBtn.offsetWidth - 50;
+            const maxY = window.innerHeight - noBtn.offsetHeight - 50;
             noBtn.style.position = 'fixed';
-            noBtn.style.left = randomX + 'px';
-            noBtn.style.top = randomY + 'px';
+            noBtn.style.left = Math.random() * maxX + 'px';
+            noBtn.style.top = Math.random() * maxY + 'px';
         };
-
-        noBtn.addEventListener('mouseover', moveNoButton);
-        noBtn.addEventListener('touchstart', moveNoButton);
+        noBtn.addEventListener('mouseover', moveNo);
+        noBtn.addEventListener('touchstart', moveNo);
 
         function checkCode() {
             if(document.getElementById('passcode').value === "10ml") {
