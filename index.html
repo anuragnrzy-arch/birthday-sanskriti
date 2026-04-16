@@ -13,6 +13,67 @@
             touch-action: none; 
         }
 
+        /* LOADING SCREEN - Full Screen Overlay */
+        #loader-screen {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: radial-gradient(circle, #ffdee9 0%, #ffcad4 100%);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .progress-wrapper {
+            width: 80%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 14px;
+            background: rgba(0,0,0,0.1);
+            border-radius: 20px;
+            position: relative;
+            margin-bottom: 10px;
+            overflow: visible; /* Heart bahar dikhne ke liye */
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background: #ff4d6d;
+            border-radius: 20px;
+            position: relative;
+            transition: width 0.3s ease;
+        }
+
+        .progress-heart {
+            position: absolute;
+            right: -12px;
+            top: -25px;
+            font-size: 20px;
+        }
+
+        .percent-text {
+            position: absolute;
+            right: 0;
+            top: 20px;
+            font-weight: bold;
+            color: #444;
+        }
+
+        .loading-label {
+            margin-top: 30px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            color: #ff4d6d;
+        }
+
+        /* SLIDER LOGIC */
         .slider-container {
             display: flex;
             width: 400vw;
@@ -27,7 +88,6 @@
             justify-content: center;
             align-items: center;
             position: relative;
-            background: radial-gradient(circle, #ffdee9 0%, #ffcad4 100%);
         }
 
         .glass-card {
@@ -44,119 +104,50 @@
             z-index: 10;
         }
 
-        /* LOADING BAR STYLES */
-        #loader-screen {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100vw; height: 100vh;
-            display: none;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background: radial-gradient(circle, #ffdee9 0%, #ffcad4 100%);
-            z-index: 1000;
-        }
-
-        .progress-container {
-            width: 85%;
-            max-width: 320px;
-            height: 16px;
-            background: #444;
-            border-radius: 20px;
-            position: relative;
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
-        }
-
-        .progress-bar {
-            width: 0%;
-            height: 100%;
-            background: #ff4d6d;
-            border-radius: 20px;
-            transition: width 0.4s ease-in-out;
-            position: relative;
-        }
-
-        .progress-heart {
-            position: absolute;
-            right: -10px;
-            top: -25px;
-            font-size: 20px;
-        }
-
-        .percent-tag {
-            position: absolute;
-            right: 0;
-            top: -25px;
-            font-size: 14px;
-            font-weight: bold;
-            color: #333;
-        }
-
-        .loading-text {
-            margin-top: 20px;
-            font-weight: bold;
-            color: #444;
-            letter-spacing: 3px;
-            font-size: 16px;
-        }
-
-        /* REST OF UI */
         .emoji-header { font-size: 50px; margin-bottom: 10px; }
-        h2 { font-weight: 500; color: #444; margin-bottom: 5px; }
         h1 { font-size: 24px; margin-bottom: 30px; color: #222; }
-
-        .btn-wrapper {
-            position: relative;
-            height: 150px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
+        
+        .btn-wrapper { position: relative; height: 150px; display: flex; flex-direction: column; align-items: center; }
+        
         button {
-            padding: 12px 35px;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 16px;
+            padding: 12px 35px; border: none; border-radius: 25px;
+            cursor: pointer; font-weight: bold; font-size: 16px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
         #yesBtn { background-color: #ff4d6d; color: white; }
-        #noBtn { background-color: #222; color: #ff4d6d; position: absolute; top: 75px; transition: 0.1s ease-out; z-index: 999; white-space: nowrap; }
+        #noBtn { background-color: #222; color: #ff4d6d; position: absolute; top: 75px; transition: 0.1s; z-index: 999; }
 
-        .footer-text { font-size: 11px; color: #888; margin-top: 25px; font-style: italic; }
         .hidden { display: none; }
-        .paper { background: #fff; padding: 20px; border-radius: 10px; text-align: left; margin-top: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        .heart-drop { position: absolute; top: -20px; color: #ff4d6d; font-size: 22px; pointer-events: none; animation: fall linear forwards; }
+        .paper { background: #fff; padding: 20px; border-radius: 10px; text-align: left; margin-top: 15px; }
+        .heart-drop { position: absolute; top: -20px; color: #ff4d6d; font-size: 22px; animation: fall linear forwards; }
         @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
-        input[type="text"] { padding: 12px; border-radius: 10px; border: 1px solid #ffcad4; width: 80%; margin-bottom: 10px; outline: none; }
     </style>
 </head>
 <body>
 
     <div id="loader-screen">
-        <div class="progress-container">
-            <div class="percent-tag" id="percentText">0%</div>
-            <div class="progress-bar" id="progressBar">
-                <span class="progress-heart">❤️</span>
+        <div class="progress-wrapper">
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar">
+                    <span class="progress-heart">❤️</span>
+                </div>
+                <div class="percent-text" id="percentNum">0%</div>
             </div>
+            <div class="loading-label">LOADING...</div>
         </div>
-        <div class="loading-text">LOADING...</div>
     </div>
 
     <div class="slider-container" id="mainSlider">
-        <section class="slide">
+        <section class="slide" id="firstSlide">
             <div class="glass-card">
                 <div class="emoji-header">🐱 ❤️</div>
                 <h2>Sanskriti</h2>
                 <h1>Do you love me!?</h1>
                 <div class="btn-wrapper">
-                    <button id="yesBtn" onclick="startLoadingProcess()">Yes 💖</button>
+                    <button id="yesBtn" onclick="runLoader()">Yes 💖</button>
                     <button id="noBtn">No 🙈</button>
                 </div>
-                <p class="footer-text">Some love stories don't allow "no" 😤</p>
             </div>
         </section>
 
@@ -182,8 +173,8 @@
                 <div id="lockSection">
                     <h1>A Private Letter 💌</h1>
                     <p>Type <b>10ml</b> to unlock</p><br>
-                    <input type="text" id="passcode" placeholder="Enter code">
-                    <button onclick="checkCode()" style="background:#ff4d6d;color:white">Open</button>
+                    <input type="text" id="passcode" placeholder="Enter code" style="padding:10px; border-radius:10px; border:1px solid #ddd; width:80%">
+                    <button onclick="checkCode()" style="background:#ff4d6d;color:white; margin-top:10px">Open</button>
                 </div>
                 <div id="letterContent" class="hidden">
                     <div class="paper">
@@ -198,71 +189,51 @@
     <script>
         const noBtn = document.getElementById('noBtn');
         const slider = document.getElementById('mainSlider');
-        const progressBar = document.getElementById('progressBar');
-        const percentText = document.getElementById('percentText');
-        const loaderScreen = document.getElementById('loader-screen');
+        const loader = document.getElementById('loader-screen');
+        const bar = document.getElementById('progressBar');
+        const pText = document.getElementById('percentNum');
 
-        function updateBar(val) {
-            progressBar.style.width = val + "%";
-            percentText.innerText = val + "%";
-        }
+        // Loader Function
+        async function runLoader() {
+            // 1. First slide vanish karo aur loader dikhao
+            document.getElementById('firstSlide').style.opacity = "0";
+            loader.style.display = "flex";
 
-        async function startLoadingProcess() {
-            // Loader show karo
-            loaderScreen.style.display = "flex";
-            
-            // 1% to 50%
-            for(let i=0; i<=50; i++) {
-                updateBar(i);
-                await new Promise(r => setTimeout(r, 30));
-            }
-
-            // Wait for 2 seconds at 50%
-            await new Promise(r => setTimeout(r, 2000));
-
-            // 50% to 90%
-            for(let i=51; i<=90; i++) {
-                updateBar(i);
+            // 2. 1% se 50% tak loading
+            for(let i=1; i<=50; i++) {
+                bar.style.width = i + "%";
+                pText.innerText = i + "%";
                 await new Promise(r => setTimeout(r, 40));
             }
 
-            // Back to 50%
-            await new Promise(r => setTimeout(r, 500));
-            updateBar(50);
-            
-            // Final to 90%
-            await new Promise(r => setTimeout(r, 800));
+            // 3. Pause for 2 seconds
+            await new Promise(r => setTimeout(r, 2000));
+
+            // 4. 50% se 90% tak
             for(let i=51; i<=90; i++) {
-                updateBar(i);
-                await new Promise(r => setTimeout(r, 20));
+                bar.style.width = i + "%";
+                pText.innerText = i + "%";
+                await new Promise(r => setTimeout(r, 50));
             }
 
-            // Finish and show next page
-            await new Promise(r => setTimeout(r, 600));
-            loaderScreen.style.opacity = "0";
-            setTimeout(() => {
-                loaderScreen.style.display = "none";
-                nextSlide(1);
-            }, 500);
+            // 5. Wapas 50% par aana
+            await new Promise(r => setTimeout(r, 500));
+            bar.style.width = "50%";
+            pText.innerText = "50%";
+
+            // 6. Wapas 90% par aake open hona
+            await new Promise(r => setTimeout(r, 800));
+            for(let i=51; i<=90; i++) {
+                bar.style.width = i + "%";
+                pText.innerText = i + "%";
+                await new Promise(r => setTimeout(r, 30));
+            }
+
+            // Final: Loader hide karo aur direct 2nd slide par slide karo
+            await new Promise(r => setTimeout(r, 500));
+            loader.style.display = "none";
+            nextSlide(1); 
         }
-
-        const moveNoButton = (e) => {
-            if(e.type === 'touchstart') e.preventDefault();
-            const btnWidth = noBtn.offsetWidth;
-            const btnHeight = noBtn.offsetHeight;
-            const padding = 50;
-            const maxX = window.innerWidth - btnWidth - padding;
-            const maxY = window.innerHeight - btnHeight - padding;
-            let randomX = Math.floor(Math.random() * (maxX - padding)) + padding;
-            let randomY = Math.floor(Math.random() * (maxY - padding)) + padding;
-            noBtn.style.position = 'fixed';
-            noBtn.style.left = randomX + 'px';
-            noBtn.style.top = randomY + 'px';
-            noBtn.style.margin = '0';
-        };
-
-        noBtn.addEventListener('mouseover', moveNoButton);
-        noBtn.addEventListener('touchstart', moveNoButton);
 
         function nextSlide(idx) {
             slider.style.transform = `translateX(-${idx * 100}vw)`;
@@ -270,25 +241,20 @@
             if(idx === 3) startHeartRain();
         }
 
+        // NO Button Jump Logic
+        const moveNoButton = (e) => {
+            if(e.type === 'touchstart') e.preventDefault();
+            const maxX = window.innerWidth - noBtn.offsetWidth - 50;
+            const maxY = window.innerHeight - noBtn.offsetHeight - 50;
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = (Math.random() * maxX + 25) + 'px';
+            noBtn.style.top = (Math.random() * maxY + 25) + 'px';
+        };
+
+        noBtn.addEventListener('mouseover', moveNoButton);
+        noBtn.addEventListener('touchstart', moveNoButton);
+
         function checkCode() {
             if(document.getElementById('passcode').value === "10ml") {
-                document.getElementById('lockSection').classList.add('hidden');
-                document.getElementById('letterContent').classList.remove('hidden');
-            } else { alert("Hint: 10ml"); }
-        }
-
-        function startHeartRain() {
-            const container = document.getElementById('rainContainer');
-            setInterval(() => {
-                const heart = document.createElement('div');
-                heart.classList.add('heart-drop');
-                heart.innerHTML = '💗';
-                heart.style.left = Math.random() * 100 + 'vw';
-                heart.style.animationDuration = (Math.random() * 2 + 2) + 's';
-                container.appendChild(heart);
-                setTimeout(() => heart.remove(), 4000);
-            }, 300);
-        }
-    </script>
-</body>
-</html>
+                document.getElementById('lockSection').classList
+        
