@@ -5,16 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>For Sanskriti</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; font-style: normal !important; }
 
         body {
             background-color: #ffcad4;
             overflow: hidden;
             touch-action: none; 
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
         }
 
         .slider-container {
@@ -46,10 +42,70 @@
             width: 90%;
             max-width: 350px;
             z-index: 10;
+            transition: all 0.5s ease;
+        }
+
+        /* Vanish Effect */
+        .vanish { opacity: 0; transform: scale(0.8); pointer-events: none; }
+
+        /* LOADING BAR STYLES */
+        #loader-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+            text-align: center;
+            width: 80%;
+            max-width: 300px;
+            z-index: 100;
+        }
+
+        .loading-text { margin-bottom: 10px; font-weight: bold; color: #444; letter-spacing: 1px; }
+
+        .progress-wrapper {
+            width: 100%;
+            height: 16px;
+            background: #222;
+            border-radius: 20px;
+            position: relative;
+            padding: 3px;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background: #ff4d6d;
+            border-radius: 20px;
+            transition: width 2s linear;
+            position: relative;
+        }
+
+        /* Bouncing Heart on Bar */
+        .heart-on-bar {
+            position: absolute;
+            right: -10px;
+            top: -25px;
+            font-size: 20px;
+            animation: bounce 0.5s infinite alternate;
+        }
+
+        .percentage {
+            position: absolute;
+            right: 0;
+            top: -25px;
+            font-size: 12px;
+            color: #444;
+            font-weight: bold;
+        }
+
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-5px); }
         }
 
         .emoji-header { font-size: 50px; margin-bottom: 10px; }
-        h2 { font-weight: 500; color: #444; margin-bottom: 5px; }
         h1 { font-size: 24px; margin-bottom: 30px; color: #222; }
 
         .btn-wrapper {
@@ -67,85 +123,40 @@
             cursor: pointer;
             font-weight: bold;
             font-size: 16px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
         #yesBtn { background-color: #ff4d6d; color: white; }
+        #noBtn { background-color: #222; color: #ff4d6d; position: absolute; top: 75px; z-index: 999; }
 
-        #noBtn { 
-            background-color: #222; 
-            color: #ff4d6d; 
-            position: absolute;
-            top: 75px; 
-            transition: 0.1s ease-out;
-            z-index: 999;
-            white-space: nowrap;
-        }
+        .footer-text { font-size: 11px; color: #888; margin-top: 25px; }
 
-        .footer-text { font-size: 11px; color: #888; margin-top: 25px; font-style: italic; }
-
-        /* Rain & Letter */
         .hidden { display: none; }
-        .paper { background: #fff; padding: 20px; border-radius: 10px; text-align: left; margin-top: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .paper { background: #fff; padding: 20px; border-radius: 10px; text-align: left; margin-top: 15px; color: #333; }
         .heart-drop { position: absolute; top: -20px; color: #ff4d6d; font-size: 22px; pointer-events: none; animation: fall linear forwards; }
         @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
-        input[type="text"] { padding: 12px; border-radius: 10px; border: 1px solid #ffcad4; width: 80%; margin-bottom: 10px; outline: none; }
-
-        /* REAL LOADING BAR STYLE (from your image) */
-        #loadingWrapper {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 280px;
-            text-align: center;
-            z-index: 100;
-        }
-
-        #loadingLabel {
-            font-weight: bold;
-            color: #ff4d6d;
-            font-size: 16px;
-            margin-bottom: 8px;
-        }
-
-        #loadingContainer {
-            width: 100%;
-            height: 15px;
-            background-color: #333;
-            border-radius: 15px;
-            overflow: hidden;
-            border: 2px solid rgba(255,255,255,0.2);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        }
-
-        #loadingBar {
-            height: 100%;
-            width: 0%;
-            background-color: #ff4d6d;
-            border-radius: 15px;
-            transition: width 0.1s linear; /* Smooth progress update */
-        }
+        input[type="text"] { padding: 12px; border-radius: 10px; border: 1px solid #ffcad4; width: 80%; margin-bottom: 10px; text-align: center; }
     </style>
 </head>
 <body>
 
-    <div id="loadingWrapper">
-        <div id="loadingLabel">LOADING... <span id="percentText">0%</span></div>
-        <div id="loadingContainer">
-            <div id="loadingBar"></div>
+    <div id="loader-container">
+        <div class="percentage" id="percentText">0%</div>
+        <div class="progress-wrapper">
+            <div class="progress-bar" id="progressBar">
+                <div class="heart-on-bar">❤️</div>
+            </div>
         </div>
+        <div class="loading-text" style="margin-top:10px">LOADING</div>
     </div>
 
     <div class="slider-container" id="mainSlider">
-        <section class="slide" id="slide1">
+        <section class="slide">
             <div class="glass-card" id="card1">
                 <div class="emoji-header">🐱 ❤️</div>
                 <h2>Sanskriti</h2>
                 <h1>Do you love me!?</h1>
                 <div class="btn-wrapper">
-                    <button id="yesBtn" onclick="handleYes()">Yes 💖</button>
+                    <button id="yesBtn" onclick="startLoading()">Yes 💖</button>
                     <button id="noBtn">No 🙈</button>
                 </div>
                 <p class="footer-text">Some love stories don't allow "no" 😤</p>
@@ -190,57 +201,50 @@
     <script>
         const noBtn = document.getElementById('noBtn');
         const slider = document.getElementById('mainSlider');
-        const card1 = document.getElementById('card1');
-        const loadingWrapper = document.getElementById('loadingWrapper');
-        const loadingBar = document.getElementById('loadingBar');
-        const percentText = document.getElementById('percentText');
 
-        // NO BUTTON JUMP LOGIC
         const moveNoButton = (e) => {
             if(e.type === 'touchstart') e.preventDefault();
-            const btnWidth = noBtn.offsetWidth;
-            const btnHeight = noBtn.offsetHeight;
             const padding = 50;
-            const maxX = window.innerWidth - btnWidth - padding;
-            const maxY = window.innerHeight - btnHeight - padding;
+            const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+            const maxY = window.innerHeight - noBtn.offsetHeight - padding;
             let randomX = Math.floor(Math.random() * (maxX - padding)) + padding;
             let randomY = Math.floor(Math.random() * (maxY - padding)) + padding;
             noBtn.style.position = 'fixed';
             noBtn.style.left = randomX + 'px';
             noBtn.style.top = randomY + 'px';
-            noBtn.style.margin = '0';
         };
 
         noBtn.addEventListener('mouseover', moveNoButton);
         noBtn.addEventListener('touchstart', moveNoButton);
 
-        // YES BUTTON CUSTOM LOGIC (Hide -> Load -> Slide)
-        function handleYes() {
-            // 1. Hide card instantly
-            card1.style.display = 'none';
+        function startLoading() {
+            // 1. Vanish the card
+            document.getElementById('card1').classList.add('vanish');
             noBtn.style.display = 'none';
 
             // 2. Show Loader
-            loadingWrapper.style.display = 'block';
-            
-            // 3. Start progress animation
-            let progress = 0;
-            const loadingInterval = setInterval(() => {
-                progress += Math.random() * 8; // Random incremental steps for natural look
-                if (progress >= 100) {
-                    progress = 100;
-                    clearInterval(loadingInterval);
-                    
-                    // Finish up and slide
-                    setTimeout(() => {
-                        loadingWrapper.style.display = 'none';
-                        nextSlide(1); // Go to Page 2
-                    }, 500); // Small pause at 100%
-                }
+            setTimeout(() => {
+                document.getElementById('loader-container').style.display = 'block';
+                let bar = document.getElementById('progressBar');
+                let text = document.getElementById('percentText');
+                let width = 0;
                 
-                loadingBar.style.width = progress + '%';
-                percentText.innerText = Math.round(progress) + '%';
-            }, 100); // Update every 100ms
+                // Animation for 90%
+                let interval = setInterval(() => {
+                    if (width >= 90) {
+                        clearInterval(interval);
+                        // 3. Move to next slide
+                        setTimeout(() => {
+                            document.getElementById('loader-container').style.display = 'none';
+                            nextSlide(1);
+                        }, 500);
+                    } else {
+                        width++;
+                        bar.style.width = width + '%';
+                        text.innerText = width + '%';
+                    }
+                }, 25); // Speed adjustment
+            }, 500);
         }
 
         function nextSlide(idx) {
@@ -250,7 +254,7 @@
         }
 
         function checkCode() {
-            if(document.getElementById('passcode').value === "10ml") {
+            if(document.getElementById('passcode').value.toLowerCase() === "10ml") {
                 document.getElementById('lockSection').classList.add('hidden');
                 document.getElementById('letterContent').classList.remove('hidden');
             } else { alert("Hint: 10ml"); }
