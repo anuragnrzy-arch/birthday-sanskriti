@@ -31,42 +31,19 @@ body{
   border-radius:25px;
   text-align:center;
   box-shadow:0 0 40px rgba(255,0,80,0.4);
+  position:relative;
 }
 
-/* PIXEL HEART */
-.pixel-heart{
-  width:40px;
-  height:40px;
-  margin:auto;
-  background:red;
-  position:relative;
-  transform:rotate(-45deg);
+/* Heart */
+.heart{
+  font-size:40px;
+  color:#ff3c5f;
   animation: glow 1s infinite alternate;
 }
 
-.pixel-heart::before,
-.pixel-heart::after{
-  content:'';
-  width:40px;
-  height:40px;
-  background:red;
-  border-radius:50%;
-  position:absolute;
-}
-
-.pixel-heart::before{
-  top:-20px;
-  left:0;
-}
-
-.pixel-heart::after{
-  left:20px;
-  top:0;
-}
-
 @keyframes glow{
-  from{ box-shadow:0 0 10px red;}
-  to{ box-shadow:0 0 25px pink;}
+  from{ text-shadow:0 0 10px red;}
+  to{ text-shadow:0 0 25px pink;}
 }
 
 /* Text */
@@ -75,28 +52,24 @@ h2{
   margin:15px 0;
 }
 
-/* Buttons row */
-.buttons{
-  display:flex;
-  justify-content:center;
-  gap:10px;
-  margin-top:10px;
-}
-
 /* Buttons */
-button{
-  padding:10px 20px;
+.btn{
+  padding:12px 25px;
   border:none;
-  border-radius:20px;
+  border-radius:25px;
   font-size:16px;
   cursor:pointer;
+  display:block;
+  margin:10px auto;
 }
 
+/* Yes button */
 .yes{
   background:#ff4d6d;
   color:white;
 }
 
+/* No button */
 .no{
   background:black;
   color:white;
@@ -110,6 +83,72 @@ button{
   font-size:14px;
   animation: fall linear infinite;
 }
+
+@keyframes fall{
+  to{
+    transform:translateY(100vh);
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <div class="heart">❤️</div>
+  <h2>Do you love me?</h2>
+
+  <!-- YES button -->
+  <button class="btn yes" onclick="nextPage()">Yes ❤️</button>
+
+  <!-- NO button (starts below Yes) -->
+  <button class="btn no" id="noBtn">No 😒</button>
+</div>
+
+<script>
+const noBtn = document.getElementById("noBtn");
+
+/* initial position below yes */
+noBtn.style.left = "50%";
+noBtn.style.top = "65%";
+noBtn.style.transform = "translate(-50%, -50%)";
+
+/* move but stay visible */
+noBtn.addEventListener("mouseover", move);
+
+function move(){
+  const x = Math.random() * (window.innerWidth - 100);
+  const y = Math.random() * (window.innerHeight - 50);
+
+  noBtn.style.left = x + "px";
+  noBtn.style.top = y + "px";
+}
+
+/* next page */
+function nextPage(){
+  alert("Next page 😏");
+}
+
+/* heart rain */
+function createHeart(){
+  const heart = document.createElement("div");
+  heart.classList.add("rain");
+  heart.innerHTML = "💗";
+
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.animationDuration = (2 + Math.random()*3) + "s";
+
+  document.body.appendChild(heart);
+
+  setTimeout(()=>heart.remove(),5000);
+}
+
+setInterval(createHeart,300);
+</script>
+
+</body>
+</html>}
 
 @keyframes fall{
   to{
