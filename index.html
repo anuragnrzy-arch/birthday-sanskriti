@@ -45,13 +45,13 @@
             transition: opacity 0.4s ease, transform 0.4s ease;
         }
 
-        /* LOADING SCREEN OVERLAY - Covers everything */
+        /* FULL LOADING OVERLAY - Covers everything */
         #loading-overlay {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
             background: #ffdee9;
-            display: none; /* Initial Hidden */
+            display: none; 
             flex-direction: column;
             justify-content: center;
             align-items: center;
@@ -105,7 +105,6 @@
 
         @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-5px); } }
 
-        /* UI Elements */
         .emoji-header { font-size: 50px; margin-bottom: 10px; }
         h1 { font-size: 24px; margin-bottom: 30px; color: #222; }
 
@@ -129,7 +128,11 @@
         #yesBtn { background-color: #ff4d6d; color: white; }
         #noBtn { background-color: #222; color: #ff4d6d; position: absolute; top: 75px; z-index: 999; }
 
+        /* Footnote Text */
+        .footer-text { font-size: 11px; color: #888; margin-top: 25px; font-style: italic; }
+
         .hidden { display: none; }
+        .paper { background: #fff; padding: 20px; border-radius: 10px; text-align: left; }
         .heart-drop { position: absolute; top: -20px; color: #ff4d6d; font-size: 22px; pointer-events: none; animation: fall linear forwards; }
         @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
         input[type="text"] { padding: 12px; border-radius: 10px; border: 1px solid #ffcad4; width: 80%; margin-bottom: 10px; outline: none; }
@@ -161,6 +164,7 @@
                     <button id="yesBtn" onclick="triggerLoading()">Yes 💖</button>
                     <button id="noBtn">No 🙈</button>
                 </div>
+                <p class="footer-text">Some love stories don't allow "no" 😤</p>
             </div>
         </section>
 
@@ -190,7 +194,7 @@
                     <button onclick="checkCode()" style="background:#ff4d6d;color:white">Open</button>
                 </div>
                 <div id="letterContent" class="hidden">
-                    <div class="paper" style="background:#fff; padding:20px; border-radius:10px; text-align:left">
+                    <div class="paper">
                         <h3 style="color:#ff4d6d">Dear Sanskriti,</h3>
                         <p>Yahan apna letter likhein...</p>
                     </div>
@@ -216,47 +220,46 @@
             document.getElementById('loveCard').style.transform = 'scale(0.8)';
             noBtn.style.display = 'none';
 
-            // 2. Show Full Loader
+            // 2. Start Full Screen Loader after a tiny delay
             setTimeout(async () => {
                 document.getElementById('loading-overlay').style.display = 'flex';
                 
-                // 1 to 50%
+                // 1% to 50%
                 for(let i=1; i<=50; i++) {
                     updateProgress(i);
                     await new Promise(r => setTimeout(r, 30));
                 }
 
-                // Stop 2s
+                // Stop 2s at 50%
                 await new Promise(r => setTimeout(r, 2000));
 
-                // 50 to 90%
+                // 50% to 90%
                 for(let i=51; i<=90; i++) {
                     updateProgress(i);
                     await new Promise(r => setTimeout(r, 40));
                 }
 
-                // Back to 50%
+                // Drop back to 50%
                 await new Promise(r => setTimeout(r, 500));
                 updateProgress(50);
 
-                // Final to 90%
+                // Final jump to 90%
                 await new Promise(r => setTimeout(r, 800));
                 for(let i=51; i<=90; i++) {
                     updateProgress(i);
                     await new Promise(r => setTimeout(r, 20));
                 }
 
-                // 3. Open Next Page Direct
+                // Close and Slide to Page 2
                 await new Promise(r => setTimeout(r, 600));
                 document.getElementById('loading-overlay').style.opacity = '0';
                 setTimeout(() => {
                     document.getElementById('loading-overlay').style.display = 'none';
-                    nextSlide(1);
+                    nextSlide(1); 
                 }, 500);
             }, 400);
         }
 
-        // NO button jump logic
         const moveNoButton = (e) => {
             if(e.type === 'touchstart') e.preventDefault();
             const padding = 50;
