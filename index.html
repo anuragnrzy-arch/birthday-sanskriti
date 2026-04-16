@@ -3,187 +3,180 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For My Love ❤️</title>
+    <title>For Sanskriti</title>
     <style>
-        /* CSS START - Sab styling yahan hai */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
-        }
+        /* --- CSS START --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
 
         body {
-            background-color: #fde2e4; /* Light Pink Background */
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
+            background-color: #ffcad4;
+            overflow: hidden; /* Screen ke bahar scroll na ho */
         }
 
-        /* Container jo slides ko move karega */
-        .main-container {
+        /* Sliding Pages Container */
+        .slider-container {
             display: flex;
-            width: 400vw; /* 4 slides = 400% width */
+            width: 400vw; /* 4 Pages */
             height: 100vh;
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1);
         }
 
         .slide {
             width: 100vw;
             height: 100vh;
             display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
-            text-align: center;
-            padding: 20px;
+            align-items: center;
             position: relative;
+            background: radial-gradient(circle, #ffdee9 0%, #ffcad4 100%);
         }
 
-        img {
-            width: 200px;
-            margin-bottom: 20px;
-            border-radius: 10px;
-        }
-
-        h1 {
-            font-size: 2.2rem;
-            color: #333;
-            margin-bottom: 5px;
-        }
-
-        p {
-            color: #777;
-            font-size: 1.1rem;
-            margin-bottom: 30px;
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            align-items: center;
-            min-height: 50px;
-        }
-
-        button {
-            padding: 12px 35px;
-            font-size: 1rem;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: 0.2s;
-            background: white;
-            color: black;
-        }
-
-        #noBtn {
-            position: absolute;
+        /* Glassmorphism Card (Waisa hi jaisa photo mein hai) */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 50px 30px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(255, 105, 135, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            width: 90%;
+            max-width: 380px;
             z-index: 10;
         }
 
-        /* Slide 4 Special - Heart Rain */
-        .heart {
+        .emoji-header { font-size: 50px; margin-bottom: 15px; filter: drop-shadow(0 0 5px rgba(255,0,0,0.3)); }
+        h2 { font-weight: 500; color: #444; margin-bottom: 5px; }
+        h1 { font-size: 26px; margin-bottom: 35px; color: #222; font-weight: 700; }
+
+        /* Buttons Styling */
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 40px; /* Gap between Yes and No */
+            margin-bottom: 25px;
+            height: 50px;
+            align-items: center;
+        }
+
+        button {
+            padding: 12px 28px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        #yesBtn { background-color: #ff4d6d; color: white; }
+        #noBtn { 
+            background-color: white; 
+            color: #ff4d6d; 
+            position: absolute; /* Bahut zaroori jumping ke liye */
+            transition: 0.1s; 
+        }
+
+        .footer-text { font-size: 11px; color: #888; margin-top: 15px; font-style: italic; }
+
+        /* Page 4: Letter & Rain */
+        .hidden { display: none; }
+        .paper {
+            background: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            animation: slideIn 1.2s ease;
+            text-align: left;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(100px) rotate(5deg); opacity: 0; }
+            to { transform: translateY(0) rotate(0deg); opacity: 1; }
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid #ffcad4;
+            margin-bottom: 15px;
+            width: 80%;
+            outline: none;
+        }
+
+        .heart-drop {
             position: absolute;
-            top: -50px;
-            font-size: 20px;
+            top: -20px;
             color: #ff4d6d;
+            font-size: 22px;
+            pointer-events: none;
             animation: fall linear forwards;
-            z-index: 1;
         }
 
         @keyframes fall {
             to { transform: translateY(110vh) rotate(360deg); }
         }
-
-        /* Love Letter / Envelope Styling */
-        .envelope-container {
-            margin-top: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            z-index: 5;
-        }
-
-        .pass-input {
-            padding: 10px;
-            border: 2px solid #ffb3c1;
-            border-radius: 5px;
-            margin-bottom: 10px;
-            outline: none;
-        }
-
-        .letter-box {
-            display: none;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            max-width: 300px;
-            transform: scale(0);
-            transition: 0.5s;
-        }
-
-        .letter-box.open {
-            display: block;
-            transform: scale(1);
-        }
-
+        /* --- CSS END --- */
     </style>
 </head>
 <body>
 
-    <div class="main-container" id="slider">
+    <div class="slider-container" id="mainSlider">
         
         <section class="slide">
-            <img src="https://media.tenor.com/cyX69N7pL6AAAAAj/mochi-cat.gif" alt="Cat">
-            <h1>Do you love me!? 🥰</h1>
-            <p>Chiku is all yours</p>
-            <div class="btn-group">
-                <button onclick="goNext()">Yes</button>
-                <button id="noBtn">No</button>
-            </div>
-        </section>
-
-        <section class="slide">
-            <img src="https://media.tenor.com/97y469p9684AAAAj/cute-cat.gif" alt="Thinking Cat">
-            <h1>Please think again! 🙄</h1>
-            <p>itni jaldi na matt bolo 😭</p>
-            <div class="btn-group">
-                <button onclick="goNext()">Yes</button>
-                <button onclick="alert('Sirf Yes dabana allow hai! 😂')">No</button>
-            </div>
-        </section>
-
-        <section class="slide">
-            <img src="https://media.tenor.com/T0_YfVp877AAAAAj/mochi-cat-peach-and-goma.gif" alt="Crying Cat">
-            <h1>Baby Man jao na! 😫</h1>
-            <p>Kitna bhav khaogi... bhut glt baat hai yrr 😢</p>
-            <div class="btn-group">
-                <button onclick="goNext()">Yes</button>
-            </div>
-        </section>
-
-        <section class="slide">
-            <div id="rain-zone"></div>
-            <h1>I knew it! You Love me a lot 😘</h1>
-            
-            <div class="envelope-container">
-                <div id="lockSection">
-                    <input type="text" id="code" class="pass-input" placeholder="Enter code (10ml)">
-                    <button onclick="checkCode()">Open Letter 💌</button>
+            <div class="glass-card">
+                <div class="emoji-header">🐱 ❤️</div>
+                <h2>Sanskriti</h2>
+                <h1>Do you love me!?</h1>
+                <div class="btn-group">
+                    <button id="yesBtn" onclick="nextSlide(1)">Yes 💖</button>
+                    <button id="noBtn" style="left: 55%; margin-top: 0px;">No 🙈</button>
                 </div>
+                <p class="footer-text">Some love stories don't allow "no" 🐝</p>
+            </div>
+        </section>
 
-                <div id="letter" class="letter-box">
-                    <h3 style="color:#ff4d6d">My Love,</h3>
-                    <p style="font-size: 0.9rem; color: #333; margin-top: 10px;">
-                        You are the best thing that ever happened to me. 
-                        Tumhare bina sab adhura hai. ❤️<br><br>
-                        <b>Forever Yours!</b>
-                    </p>
+        <section class="slide">
+            <div class="glass-card">
+                <div class="emoji-header">✨</div>
+                <h1>You're special!</h1>
+                <p>Tumhari hansi meri sabse badi khushi hai. ❤️</p>
+                <br>
+                <button onclick="nextSlide(2)" style="background: #ff4d6d; color:white;">Next ➔</button>
+            </div>
+        </section>
+
+        <section class="slide">
+            <div class="glass-card">
+                <div class="emoji-header">🌸</div>
+                <h1>A promise...</h1>
+                <p>Main humesha tumhare saath rahunga, chahe kuch bhi ho jaye.</p>
+                <br>
+                <button onclick="nextSlide(3)" style="background: #ff4d6d; color:white;">Read Letter 💌</button>
+            </div>
+        </section>
+
+        <section class="slide" id="lastPage">
+            <div id="rainContainer"></div>
+            <div class="glass-card">
+                <div id="lockSection">
+                    <h1>A Private Letter 💌</h1>
+                    <p style="margin-bottom: 10px;">Type <b>10ml</b> to unlock</p>
+                    <input type="text" id="passcode" placeholder="Enter secret code...">
+                    <br>
+                    <button onclick="checkCode()" style="background: #ff4d6d; color:white;">Open Letter</button>
+                </div>
+                
+                <div id="letterContent" class="hidden">
+                    <div class="paper">
+                        <h3 style="color: #ff4d6d;">Dear Sanskriti,</h3>
+                        <p>Yahan aapka paragraph aayega. Aap likh sakte hain ki wo aapke liye kitni important hain aur aap unhe kitna pasand karte hain...</p>
+                        <p><b>Always yours, <br> [Your Name]</b></p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -191,62 +184,67 @@
     </div>
 
     <script>
-        // JAVASCRIPT START - Sab logic yahan hai
-        let currentSlide = 0;
-        const slider = document.getElementById('slider');
+        /* --- JAVASCRIPT START --- */
         const noBtn = document.getElementById('noBtn');
+        const slider = document.getElementById('mainSlider');
 
-        // 1. "No" Button bhagne wala logic (Mobile & Desktop)
-        const moveNo = () => {
-            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
-            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+        // 1. No Button Logic: Bhagega par screen ke andar rahega
+        const moveNoButton = () => {
+            const padding = 50; // Screen edges se door rakhne ke liye
+            const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+            const maxY = window.innerHeight - noBtn.offsetHeight - padding;
             
-            noBtn.style.left = `${x}px`;
-            noBtn.style.top = `${y}px`;
+            const randomX = Math.floor(Math.random() * maxX) + padding/2;
+            const randomY = Math.floor(Math.random() * maxY) + padding/2;
+            
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
         };
 
-        noBtn.addEventListener('mouseenter', moveNo);
+        noBtn.addEventListener('mouseover', moveNoButton);
         noBtn.addEventListener('touchstart', (e) => {
-            e.preventDefault(); // Prevents clicking on mobile
-            moveNo();
+            e.preventDefault(); // Mobile touch issues rokne ke liye
+            moveNoButton();
         });
 
-        // 2. Slide change logic
-        function goNext() {
-            currentSlide++;
-            slider.style.transform = `translateX(-${currentSlide * 100}vw)`;
+        // 2. Slide Transition: Left slide logic
+        function nextSlide(currentIndex) {
+            const moveAmount = currentIndex * 100;
+            slider.style.transform = `translateX(-${moveAmount}vw)`;
             
-            if(currentSlide === 3) {
+            // Agar last page par gaye toh baarish shuru karo
+            if(currentIndex === 3) {
                 startHeartRain();
             }
         }
 
-        // 3. Heart Rain logic
-        function startHeartRain() {
-            const rainZone = document.getElementById('rain-zone');
-            setInterval(() => {
-                const heart = document.createElement('div');
-                heart.classList.add('heart');
-                heart.innerHTML = '💗';
-                heart.style.left = Math.random() * 100 + 'vw';
-                heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
-                rainZone.appendChild(heart);
-                
-                setTimeout(() => heart.remove(), 5000);
-            }, 300);
-        }
-
-        // 4. Letter Password Logic
+        // 3. Secret Code Check
         function checkCode() {
-            const input = document.getElementById('code').value;
-            if(input === '10ml') {
-                document.getElementById('lockSection').style.display = 'none';
-                const letter = document.getElementById('letter');
-                letter.classList.add('open');
+            const input = document.getElementById('passcode').value;
+            if(input === "10ml") {
+                document.getElementById('lockSection').classList.add('hidden');
+                document.getElementById('letterContent').classList.remove('hidden');
             } else {
-                alert("Galat code! Hint: wo jo tumne bola tha (10ml) 😉");
+                alert("Galat code! Hint: 10ml");
             }
         }
+
+        // 4. Heart Rain Animation
+        function startHeartRain() {
+            const container = document.getElementById('rainContainer');
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.classList.add('heart-drop');
+                heart.innerHTML = '💗';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                container.appendChild(heart);
+                
+                // Memory saaf karne ke liye
+                setTimeout(() => heart.remove(), 4000);
+            }, 300);
+        }
+        /* --- JAVASCRIPT END --- */
     </script>
 </body>
 </html>
