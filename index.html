@@ -1,17 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
 body{
-  margin:0;
+  font-family:sans-serif;
+  background:#2e1616;
+  overflow:hidden;
+}
+
+/* SLIDER */
+.slider{
+  display:flex;
+  width:400%;
   height:100vh;
+  transition:0.6s ease;
+}
+
+.page{
+  width:100%;
   display:flex;
   justify-content:center;
   align-items:center;
-  background:#3b1f1f;
-  font-family:sans-serif;
 }
 
 /* BOX */
@@ -21,82 +34,198 @@ body{
   background:#5a2c2c;
   border-radius:20px;
   text-align:center;
-  box-shadow:0 0 30px rgba(255,0,80,0.4);
   position:relative;
-}
-
-/* EMOJI */
-.emoji{
-  font-size:30px;
+  box-shadow:0 0 30px rgba(255,0,100,0.5);
 }
 
 /* TEXT */
-h2{
-  color:#ffdede;
-  margin:10px 0 20px;
-}
+.emoji{font-size:28px;}
+h2{color:#ffdede;margin:15px 0;}
 
-/* BUTTONS */
+/* BUTTON */
 button{
   display:block;
   width:70%;
-  margin:10px auto;
+  margin:12px auto;
   padding:12px;
   border:none;
   border-radius:20px;
   font-size:16px;
 }
 
-.yes{
-  background:#ff4d6d;
-  color:white;
-}
-
+.yes{background:#ff4d6d;color:white;}
 .no{
   background:black;
   color:white;
   position:absolute;
 }
-</style>
 
+/* RAIN */
+.rain{
+  position:fixed;
+  top:-20px;
+  animation:fall linear infinite;
+}
+
+@keyframes fall{
+  to{transform:translateY(100vh);}
+}
+
+/* LETTER */
+.envelope{
+  width:120px;
+  height:80px;
+  background:#ff4d6d;
+  margin:20px auto;
+  position:relative;
+}
+
+.flap{
+  position:absolute;
+  width:0;
+  height:0;
+  border-left:60px solid transparent;
+  border-right:60px solid transparent;
+  border-bottom:40px solid #ff6b81;
+  top:-40px;
+  transition:0.5s;
+}
+
+.paper{
+  width:100px;
+  height:0;
+  background:white;
+  margin:auto;
+  overflow:hidden;
+  transition:0.6s;
+  padding:0 10px;
+}
+
+.open .flap{transform:rotateX(180deg);}
+.open .paper{height:130px;padding:10px;}
+
+input{
+  padding:8px;
+  border-radius:10px;
+  border:none;
+}
+</style>
 </head>
 
 <body>
 
-<div class="box" id="box">
+<div class="slider" id="slider">
 
-  <div class="emoji">😍❤️</div>
-  <h2>Do you love me!?</h2>
+<!-- PAGE 1 -->
+<div class="page">
+  <div class="box" id="box">
 
-  <button class="yes" onclick="alert('Good 😏')">Yes</button>
-  <button class="no" id="noBtn">No</button>
+    <div class="emoji">😍❤️</div>
+    <h2>Do you love me!?</h2>
+
+    <button class="yes" onclick="next(1)">Yes</button>
+    <button class="no" id="noBtn">No</button>
+
+  </div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page">
+  <div class="box">
+    <h2>Why do you love me? 😏</h2>
+    <button class="yes" onclick="next(2)">Because you're special ❤️</button>
+    <button class="yes" onclick="next(2)">Because I feel good with you 🥺</button>
+  </div>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page">
+  <div class="box">
+    <h2>Will you stay with me? 💞</h2>
+    <button class="yes" onclick="next(3)">Always ❤️</button>
+    <button class="yes" onclick="next(3)">Yes forever 😌</button>
+  </div>
+</div>
+
+<!-- PAGE 4 -->
+<div class="page">
+  <div class="box">
+
+    <h2>Enter code 💌</h2>
+    <input id="code" placeholder="type 10ml">
+    <br><br>
+    <button class="yes" onclick="openLetter()">Open</button>
+
+    <div class="envelope" id="env">
+      <div class="flap"></div>
+    </div>
+
+    <div class="paper" id="paper">
+      <p style="font-size:12px;">
+        May 9, 2022…<br><br>
+        It’s been years, but I still remember everything…  
+        the talks, the feelings…  
+        and somehow, you never left ❤️
+      </p>
+    </div>
+
+  </div>
+</div>
 
 </div>
 
 <script>
 
-const noBtn = document.getElementById("noBtn");
-const box = document.getElementById("box");
+/* SLIDE */
+let current=0;
+function next(n){
+  current=n;
+  document.getElementById("slider").style.transform="translateX(-"+(current*100)+"%)";
+}
 
-/* start position (below YES) */
-noBtn.style.left = "50%";
-noBtn.style.top = "75%";
-noBtn.style.transform = "translate(-50%,-50%)";
+/* NO BUTTON */
+const noBtn=document.getElementById("noBtn");
+const box=document.getElementById("box");
 
-/* move INSIDE box only */
-noBtn.addEventListener("mouseover", () => {
+noBtn.style.left="50%";
+noBtn.style.top="75%";
+noBtn.style.transform="translate(-50%,-50%)";
 
-  const rect = box.getBoundingClientRect();
+noBtn.addEventListener("mouseover",()=>{
+  const rect=box.getBoundingClientRect();
 
-  const x = Math.random() * (rect.width - 100);
-  const y = Math.random() * (rect.height - 50);
+  const x=Math.random()*(rect.width-80);
+  const y=Math.random()*(rect.height-50);
 
-  noBtn.style.left = x + "px";
-  noBtn.style.top = y + "px";
+  noBtn.style.left=x+"px";
+  noBtn.style.top=y+"px";
 });
 
-/* disable click */
-noBtn.onclick = (e)=> e.preventDefault();
+noBtn.onclick=(e)=>e.preventDefault();
+
+/* LETTER */
+function openLetter(){
+  let val=document.getElementById("code").value;
+
+  if(val==="10ml"){
+    document.getElementById("env").classList.add("open");
+    document.getElementById("paper").classList.add("open");
+  }else{
+    alert("Wrong code 😒");
+  }
+}
+
+/* HEART RAIN */
+function rain(){
+  const h=document.createElement("div");
+  h.classList.add("rain");
+  h.innerHTML="💗";
+  h.style.left=Math.random()*100+"vw";
+  h.style.animationDuration=(2+Math.random()*3)+"s";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),5000);
+}
+setInterval(rain,300);
 
 </script>
 
