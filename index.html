@@ -2,23 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For Sanskriti</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"> <title>For Sanskriti</title>
     <style>
         /* --- CSS START --- */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
 
         body {
             background-color: #ffcad4;
-            overflow: hidden; /* Screen ke bahar scroll na ho */
+            overflow: hidden; /* Prevent page from scrolling */
         }
 
-        /* Sliding Pages Container */
         .slider-container {
             display: flex;
-            width: 400vw; /* 4 Pages */
+            width: 400vw;
             height: 100vh;
-            transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1);
+            transition: transform 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+            will-change: transform; /* Important for smoothness */
         }
 
         .slide {
@@ -31,7 +30,6 @@
             background: radial-gradient(circle, #ffdee9 0%, #ffcad4 100%);
         }
 
-        /* Glassmorphism Card (Waisa hi jaisa photo mein hai) */
         .glass-card {
             background: rgba(255, 255, 255, 0.4);
             backdrop-filter: blur(15px);
@@ -44,20 +42,18 @@
             width: 90%;
             max-width: 380px;
             z-index: 10;
+            display: flex;
+            flex-direction: column; /* Vertical stack */
+            align-items: center;
         }
 
         .emoji-header { font-size: 50px; margin-bottom: 15px; filter: drop-shadow(0 0 5px rgba(255,0,0,0.3)); }
         h2 { font-weight: 500; color: #444; margin-bottom: 5px; }
         h1 { font-size: 26px; margin-bottom: 35px; color: #222; font-weight: 700; }
 
-        /* Buttons Styling */
-        .btn-group {
-            display: flex;
-            justify-content: center;
-            gap: 40px; /* Gap between Yes and No */
-            margin-bottom: 25px;
-            height: 50px;
-            align-items: center;
+        /* Container just for Yes button to center it */
+        .yes-container {
+            margin-bottom: 25px; /* Space between Yes and initial No */
         }
 
         button {
@@ -72,14 +68,18 @@
         }
 
         #yesBtn { background-color: #ff4d6d; color: white; }
+
         #noBtn { 
             background-color: white; 
             color: #ff4d6d; 
-            position: absolute; /* Bahut zaroori jumping ke liye */
-            transition: 0.1s; 
+            position: absolute; /* Essential for jumping */
+            transition: left 0.1s ease, top 0.1s ease; /* Smooth but not jumpy */
+            /* Center initially within the card's center */
+            margin-top: 10px; /* Small default top margin for start */
+            will-change: left, top; /* Important for performance */
         }
 
-        .footer-text { font-size: 11px; color: #888; margin-top: 15px; font-style: italic; }
+        .footer-text { font-size: 11px; color: #888; margin-top: 50px; /* More space because No is in-between */ font-style: italic; z-index: 5; }
 
         /* Page 4: Letter & Rain */
         .hidden { display: none; }
@@ -127,15 +127,18 @@
 
     <div class="slider-container" id="mainSlider">
         
-        <section class="slide">
+        <section class="slide" id="page1Slide">
             <div class="glass-card">
                 <div class="emoji-header">🐱 ❤️</div>
                 <h2>Sanskriti</h2>
                 <h1>Do you love me!?</h1>
-                <div class="btn-group">
+                
+                <div class="yes-container">
                     <button id="yesBtn" onclick="nextSlide(1)">Yes 💖</button>
-                    <button id="noBtn" style="left: 55%; margin-top: 0px;">No 🙈</button>
                 </div>
+                
+                <button id="noBtn">No 🙈</button>
+                
                 <p class="footer-text">Some love stories don't allow "no" 🐝</p>
             </div>
         </section>
@@ -186,26 +189,41 @@
     <script>
         /* --- JAVASCRIPT START --- */
         const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
         const slider = document.getElementById('mainSlider');
+        const page1Slide = document.getElementById('page1Slide');
 
-        // 1. No Button Logic: Bhagega par screen ke andar rahega
-        const moveNoButton = () => {
-            const padding = 50; // Screen edges se door rakhne ke liye
+        // Initial positioning for NO button so it starts below Yes
+        const initNoBtn = () => {
+            const yesRect = yesBtn.getBoundingClientRect();
+            // Start it below Yes, centered horizontally
+            noBtn.style.top = (yesRect.bottom - page1Slide.offsetTop + 15) + 'px';
+            noBtn.style.left = (yesRect.left + (yesBtn.offsetWidth / 2) - (noBtn.offsetWidth / 2)) + 'px';
+        };
+        
+        // Use a timeout to ensure getBoundingClientRect works
+        setTimeout(initNoBtn, 100);
+
+        // 1. No Button Logic: Bhagega par screen ke andar rahega, no transform zoom
+        const moveNoButton = (e) => {
+            // Stop touch events from propagating
+            if(e.type === 'touchstart') e.preventDefault();
+            
+            const padding = 40; // Screen edges se door
             const maxX = window.innerWidth - noBtn.offsetWidth - padding;
             const maxY = window.innerHeight - noBtn.offsetHeight - padding;
             
             const randomX = Math.floor(Math.random() * maxX) + padding/2;
             const randomY = Math.floor(Math.random() * maxY) + padding/2;
             
+            // DIRECTLY SET LEFT/TOP instead of transform
             noBtn.style.left = randomX + 'px';
             noBtn.style.top = randomY + 'px';
         };
 
+        // Event listeners
         noBtn.addEventListener('mouseover', moveNoButton);
-        noBtn.addEventListener('touchstart', (e) => {
-            e.preventDefault(); // Mobile touch issues rokne ke liye
-            moveNoButton();
-        });
+        noBtn.addEventListener('touchstart', moveNoButton);
 
         // 2. Slide Transition: Left slide logic
         function nextSlide(currentIndex) {
@@ -214,6 +232,9 @@
             
             // Agar last page par gaye toh baarish shuru karo
             if(currentIndex === 3) {
+                // Ensure heartrain is clean
+                const container = document.getElementById('rainContainer');
+                container.innerHTML = '';
                 startHeartRain();
             }
         }
@@ -230,9 +251,11 @@
         }
 
         // 4. Heart Rain Animation
+        let rainInterval;
         function startHeartRain() {
+            if (rainInterval) clearInterval(rainInterval);
             const container = document.getElementById('rainContainer');
-            setInterval(() => {
+            rainInterval = setInterval(() => {
                 const heart = document.createElement('div');
                 heart.classList.add('heart-drop');
                 heart.innerHTML = '💗';
