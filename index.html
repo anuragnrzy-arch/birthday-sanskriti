@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>For Sanskriti</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; font-style: normal !important; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
 
         body {
             background-color: #ffcad4;
@@ -42,35 +42,29 @@
             width: 90%;
             max-width: 350px;
             z-index: 10;
-            transition: all 0.5s ease;
+            transition: opacity 0.5s ease;
         }
 
-        /* Vanish Effect */
-        .vanish { opacity: 0; transform: scale(0.8); pointer-events: none; }
-
-        /* LOADING BAR STYLES */
-        #loader-container {
+        /* Loading Bar Styles */
+        #loader-screen {
             position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
             display: none;
-            text-align: center;
-            width: 80%;
-            max-width: 300px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             z-index: 100;
         }
 
-        .loading-text { margin-bottom: 10px; font-weight: bold; color: #444; letter-spacing: 1px; }
-
-        .progress-wrapper {
-            width: 100%;
-            height: 16px;
-            background: #222;
+        .progress-container {
+            width: 80%;
+            max-width: 300px;
+            height: 14px;
+            background: #333;
             border-radius: 20px;
             position: relative;
-            padding: 3px;
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
+            overflow: visible;
         }
 
         .progress-bar {
@@ -78,25 +72,32 @@
             height: 100%;
             background: #ff4d6d;
             border-radius: 20px;
-            transition: width 2s linear;
+            transition: width 0.1s linear;
             position: relative;
         }
 
-        /* Bouncing Heart on Bar */
-        .heart-on-bar {
+        .progress-heart {
             position: absolute;
             right: -10px;
-            top: -25px;
-            font-size: 20px;
-            animation: bounce 0.5s infinite alternate;
+            top: -22px;
+            font-size: 18px;
+            animation: bounce 0.6s infinite alternate;
         }
 
-        .percentage {
+        .percent-tag {
             position: absolute;
             right: 0;
             top: -25px;
             font-size: 12px;
             color: #444;
+            font-weight: bold;
+        }
+
+        .loading-text {
+            margin-top: 15px;
+            color: #444;
+            letter-spacing: 2px;
+            font-size: 14px;
             font-weight: bold;
         }
 
@@ -106,6 +107,7 @@
         }
 
         .emoji-header { font-size: 50px; margin-bottom: 10px; }
+        h2 { font-weight: 500; color: #444; margin-bottom: 5px; }
         h1 { font-size: 24px; margin-bottom: 30px; color: #222; }
 
         .btn-wrapper {
@@ -123,40 +125,40 @@
             cursor: pointer;
             font-weight: bold;
             font-size: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
         #yesBtn { background-color: #ff4d6d; color: white; }
-        #noBtn { background-color: #222; color: #ff4d6d; position: absolute; top: 75px; z-index: 999; }
+        #noBtn { background-color: #222; color: #ff4d6d; position: absolute; top: 75px; transition: 0.1s ease-out; z-index: 999; white-space: nowrap; }
 
-        .footer-text { font-size: 11px; color: #888; margin-top: 25px; }
-
+        .footer-text { font-size: 11px; color: #888; margin-top: 25px; font-style: italic; }
         .hidden { display: none; }
-        .paper { background: #fff; padding: 20px; border-radius: 10px; text-align: left; margin-top: 15px; color: #333; }
+        .paper { background: #fff; padding: 20px; border-radius: 10px; text-align: left; margin-top: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
         .heart-drop { position: absolute; top: -20px; color: #ff4d6d; font-size: 22px; pointer-events: none; animation: fall linear forwards; }
         @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
-        input[type="text"] { padding: 12px; border-radius: 10px; border: 1px solid #ffcad4; width: 80%; margin-bottom: 10px; text-align: center; }
+        input[type="text"] { padding: 12px; border-radius: 10px; border: 1px solid #ffcad4; width: 80%; margin-bottom: 10px; outline: none; }
     </style>
 </head>
 <body>
 
-    <div id="loader-container">
-        <div class="percentage" id="percentText">0%</div>
-        <div class="progress-wrapper">
+    <div id="loader-screen">
+        <div class="progress-container">
+            <div class="percent-tag" id="percentText">0%</div>
             <div class="progress-bar" id="progressBar">
-                <div class="heart-on-bar">❤️</div>
+                <span class="progress-heart">❤️</span>
             </div>
         </div>
-        <div class="loading-text" style="margin-top:10px">LOADING</div>
+        <div class="loading-text">LOADING</div>
     </div>
 
     <div class="slider-container" id="mainSlider">
         <section class="slide">
-            <div class="glass-card" id="card1">
+            <div class="glass-card" id="firstCard">
                 <div class="emoji-header">🐱 ❤️</div>
                 <h2>Sanskriti</h2>
                 <h1>Do you love me!?</h1>
                 <div class="btn-wrapper">
-                    <button id="yesBtn" onclick="startLoading()">Yes 💖</button>
+                    <button id="yesBtn" onclick="handleYes()">Yes 💖</button>
                     <button id="noBtn">No 🙈</button>
                 </div>
                 <p class="footer-text">Some love stories don't allow "no" 😤</p>
@@ -204,47 +206,49 @@
 
         const moveNoButton = (e) => {
             if(e.type === 'touchstart') e.preventDefault();
+            const btnWidth = noBtn.offsetWidth;
+            const btnHeight = noBtn.offsetHeight;
             const padding = 50;
-            const maxX = window.innerWidth - noBtn.offsetWidth - padding;
-            const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+            const maxX = window.innerWidth - btnWidth - padding;
+            const maxY = window.innerHeight - btnHeight - padding;
             let randomX = Math.floor(Math.random() * (maxX - padding)) + padding;
             let randomY = Math.floor(Math.random() * (maxY - padding)) + padding;
             noBtn.style.position = 'fixed';
             noBtn.style.left = randomX + 'px';
             noBtn.style.top = randomY + 'px';
+            noBtn.style.margin = '0';
         };
 
         noBtn.addEventListener('mouseover', moveNoButton);
         noBtn.addEventListener('touchstart', moveNoButton);
 
-        function startLoading() {
-            // 1. Vanish the card
-            document.getElementById('card1').classList.add('vanish');
+        function handleYes() {
+            // 1. First card ko gayab karo
+            document.getElementById('firstCard').style.opacity = '0';
             noBtn.style.display = 'none';
 
-            // 2. Show Loader
+            // 2. Loading start karo
             setTimeout(() => {
-                document.getElementById('loader-container').style.display = 'block';
+                document.getElementById('loader-screen').style.display = 'flex';
+                let width = 0;
                 let bar = document.getElementById('progressBar');
                 let text = document.getElementById('percentText');
-                let width = 0;
                 
-                // Animation for 90%
                 let interval = setInterval(() => {
                     if (width >= 90) {
                         clearInterval(interval);
-                        // 3. Move to next slide
+                        // 3. 90% hote hi next slide
                         setTimeout(() => {
-                            document.getElementById('loader-container').style.display = 'none';
+                            document.getElementById('loader-screen').style.display = 'none';
                             nextSlide(1);
-                        }, 500);
+                        }, 400);
                     } else {
                         width++;
                         bar.style.width = width + '%';
                         text.innerText = width + '%';
                     }
-                }, 25); // Speed adjustment
-            }, 500);
+                }, 30); // Speed of loading
+            }, 300);
         }
 
         function nextSlide(idx) {
@@ -254,7 +258,7 @@
         }
 
         function checkCode() {
-            if(document.getElementById('passcode').value.toLowerCase() === "10ml") {
+            if(document.getElementById('passcode').value === "10ml") {
                 document.getElementById('lockSection').classList.add('hidden');
                 document.getElementById('letterContent').classList.remove('hidden');
             } else { alert("Hint: 10ml"); }
