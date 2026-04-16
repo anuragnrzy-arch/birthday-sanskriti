@@ -32,7 +32,7 @@
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.3); /* Dim background */
+            background: rgba(0, 0, 0, 0.3);
             z-index: 30000;
             display: none;
             justify-content: center;
@@ -50,34 +50,21 @@
             animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        @keyframes popIn {
-            from { transform: scale(0.8); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
+        @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
         .error-msg { color: #333; font-weight: bold; margin-bottom: 20px; font-size: 16px; line-height: 1.4; }
 
-        .lock-icon { 
-            font-size: 80px; 
-            margin-bottom: 20px; 
-            transition: transform 1s ease;
-        }
+        .lock-icon { font-size: 80px; margin-bottom: 20px; transition: transform 1s ease; }
         
         .lock-input-box {
             background: rgba(255, 255, 255, 0.4);
-            padding: 30px;
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            text-align: center;
-            width: 85%;
-            max-width: 320px;
+            padding: 30px; border-radius: 20px;
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            text-align: center; width: 85%; max-width: 320px;
         }
 
         .slider-container {
-            display: flex;
-            width: 400vw;
-            height: 100vh;
+            display: flex; width: 400vw; height: 100vh;
             transition: transform 0.6s cubic-bezier(0.65, 0, 0.35, 1);
         }
 
@@ -89,25 +76,17 @@
 
         .glass-card {
             background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border-radius: 25px;
-            padding: 40px 20px;
-            text-align: center;
-            width: 90%; max-width: 350px;
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border-radius: 25px; padding: 40px 20px;
+            text-align: center; width: 90%; max-width: 350px;
             transition: opacity 0.4s ease;
         }
 
         #loading-overlay {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: #ffdee9;
-            display: none; 
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 10000;
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%; background: #ffdee9;
+            display: none; flex-direction: column;
+            justify-content: center; align-items: center; z-index: 10000;
         }
 
         .loader-card {
@@ -117,18 +96,20 @@
         }
 
         .progress-container { width: 100%; height: 14px; background: #222; border-radius: 20px; position: relative; margin-top: 10px; }
-        .progress-bar { width: 0%; height: 100%; background: #ff4d6d; border-radius: 20px; transition: width 0.2s linear; }
+        .progress-bar { width: 0%; height: 100%; background: #ff4d6d; border-radius: 20px; transition: width 0.1s linear; }
         .pct-text { position: absolute; right: 0; top: -22px; font-size: 13px; font-weight: bold; color: #333; }
 
-        button { padding: 12px 35px; border: none; border-radius: 25px; cursor: pointer; font-weight: bold; font-size: 16px; }
+        .btn-wrapper { position: relative; height: 150px; display: flex; flex-direction: column; align-items: center; }
+        button { padding: 12px 35px; border: none; border-radius: 25px; cursor: pointer; font-weight: bold; font-size: 16px; transition: 0.3s; }
         #yesBtn { background-color: #ff4d6d; color: white; }
-        #noBtn { background-color: #222; color: #ff4d6d; position: absolute; top: 75px; z-index: 999; }
+        #noBtn { background-color: #222; color: #ff4d6d; position: absolute; top: 70px; z-index: 999; }
         
+        .footer-text { font-size: 11px; color: #888; margin-top: 25px; font-style: italic; }
+
         input[type="text"] { 
             padding: 12px; border-radius: 10px; border: 1px solid #ffcad4; 
             width: 85%; margin-bottom: 15px; outline: none; text-align: center;
         }
-
         .hidden { display: none; }
     </style>
 </head>
@@ -173,6 +154,7 @@
                     <button id="yesBtn" onclick="triggerLoading()">Yes 💖</button>
                     <button id="noBtn">No 🙈</button>
                 </div>
+                <p class="footer-text">Some love stories don't allow "no" 😤</p>
             </div>
         </section>
 
@@ -208,8 +190,11 @@
 
     <script>
         const slider = document.getElementById('mainSlider');
+        const bar = document.getElementById('loadBar');
+        const pct = document.getElementById('loadPercent');
         const overlay = document.getElementById('loading-overlay');
         const errorOverlay = document.getElementById('error-overlay');
+        const noBtn = document.getElementById('noBtn');
 
         function unlockMaster() {
             const name = document.getElementById('bfNameInput').value.trim().toLowerCase();
@@ -221,6 +206,7 @@
                     const master = document.getElementById('master-lock-screen');
                     master.style.opacity = '0';
                     master.style.transform = 'translateY(-100%)';
+                    setTimeout(() => master.style.display = 'none', 800);
                 }, 1000);
             } else {
                 errorOverlay.style.display = 'flex';
@@ -232,35 +218,49 @@
             document.getElementById('bfNameInput').value = "";
         }
 
-        function nextSlide(idx) {
-            slider.style.transform = `translateX(-${idx * 100}vw)`;
-        }
-
         async function triggerLoading() {
             document.getElementById('loveCard').style.opacity = '0';
             setTimeout(async () => {
                 overlay.style.display = 'flex';
-                let bar = document.getElementById('loadBar');
-                let pct = document.getElementById('loadPercent');
-                for(let i=1; i<=100; i++) {
+                // 1% to 50%
+                for(let i=1; i<=50; i++) {
                     bar.style.width = i + "%";
                     pct.innerText = i + "%";
-                    await new Promise(r => setTimeout(r, 20));
+                    await new Promise(r => setTimeout(r, 30));
                 }
+                // Pause for 1 second
+                await new Promise(r => setTimeout(r, 1000));
+                // 51% to 90%
+                for(let i=51; i<=90; i++) {
+                    bar.style.width = i + "%";
+                    pct.innerText = i + "%";
+                    await new Promise(r => setTimeout(r, 15));
+                }
+                // Slide to next page
                 nextSlide(1);
-                overlay.style.display = 'none';
+                overlay.style.opacity = '0';
+                setTimeout(() => { overlay.style.display = 'none'; }, 300);
             }, 200);
         }
 
-        // Floating No button logic
-        const noBtn = document.getElementById('noBtn');
-        const moveBtn = () => {
+        function nextSlide(idx) {
+            slider.style.transform = `translateX(-${idx * 100}vw)`;
+        }
+
+        const moveNoButton = (e) => {
+            if(e.type === 'touchstart') e.preventDefault();
+            const padding = 50;
+            const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+            const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+            let randomX = Math.floor(Math.random() * (maxX - padding)) + padding;
+            let randomY = Math.floor(Math.random() * (maxY - padding)) + padding;
             noBtn.style.position = 'fixed';
-            noBtn.style.left = Math.random() * (window.innerWidth - 100) + 'px';
-            noBtn.style.top = Math.random() * (window.innerHeight - 50) + 'px';
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
         };
-        noBtn.addEventListener('mouseover', moveBtn);
-        noBtn.addEventListener('touchstart', moveBtn);
+
+        noBtn.addEventListener('mouseover', moveNoButton);
+        noBtn.addEventListener('touchstart', moveNoButton);
 
         function checkCode() {
             if(document.getElementById('passcode').value === "10ml") {
