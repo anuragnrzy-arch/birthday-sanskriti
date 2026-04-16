@@ -45,7 +45,7 @@
             transition: opacity 0.4s ease, transform 0.4s ease;
         }
 
-        /* FULL LOADING OVERLAY - Covers everything */
+        /* LOADING SCREEN OVERLAY */
         #loading-overlay {
             position: fixed;
             top: 0; left: 0;
@@ -56,6 +56,7 @@
             justify-content: center;
             align-items: center;
             z-index: 10000;
+            transition: opacity 0.3s ease; /* Faster vanish */
         }
 
         .loader-card {
@@ -82,7 +83,7 @@
             height: 100%;
             background: #ff4d6d;
             border-radius: 20px;
-            transition: width 0.3s ease;
+            transition: width 0.2s linear; /* Smoother bar */
             position: relative;
         }
 
@@ -128,7 +129,6 @@
         #yesBtn { background-color: #ff4d6d; color: white; }
         #noBtn { background-color: #222; color: #ff4d6d; position: absolute; top: 75px; z-index: 999; }
 
-        /* Footnote Text */
         .footer-text { font-size: 11px; color: #888; margin-top: 25px; font-style: italic; }
 
         .hidden { display: none; }
@@ -208,6 +208,7 @@
         const slider = document.getElementById('mainSlider');
         const bar = document.getElementById('loadBar');
         const pct = document.getElementById('loadPercent');
+        const overlay = document.getElementById('loading-overlay');
 
         function updateProgress(v) {
             bar.style.width = v + "%";
@@ -215,19 +216,18 @@
         }
 
         async function triggerLoading() {
-            // 1. Vanish Card 1
+            // 1. Vanish Card 1 instantly
             document.getElementById('loveCard').style.opacity = '0';
-            document.getElementById('loveCard').style.transform = 'scale(0.8)';
             noBtn.style.display = 'none';
 
-            // 2. Start Full Screen Loader after a tiny delay
+            // 2. Start Overlay
             setTimeout(async () => {
-                document.getElementById('loading-overlay').style.display = 'flex';
+                overlay.style.display = 'flex';
                 
                 // 1% to 50%
                 for(let i=1; i<=50; i++) {
                     updateProgress(i);
-                    await new Promise(r => setTimeout(r, 30));
+                    await new Promise(r => setTimeout(r, 25));
                 }
 
                 // Stop 2s at 50%
@@ -236,28 +236,33 @@
                 // 50% to 90%
                 for(let i=51; i<=90; i++) {
                     updateProgress(i);
-                    await new Promise(r => setTimeout(r, 40));
+                    await new Promise(r => setTimeout(r, 35));
                 }
 
                 // Drop back to 50%
-                await new Promise(r => setTimeout(r, 500));
+                await new Promise(r => setTimeout(r, 400));
                 updateProgress(50);
 
                 // Final jump to 90%
-                await new Promise(r => setTimeout(r, 800));
+                await new Promise(r => setTimeout(r, 700));
                 for(let i=51; i<=90; i++) {
                     updateProgress(i);
-                    await new Promise(r => setTimeout(r, 20));
+                    await new Promise(r => setTimeout(r, 15));
                 }
 
-                // Close and Slide to Page 2
-                await new Promise(r => setTimeout(r, 600));
-                document.getElementById('loading-overlay').style.opacity = '0';
+                // 3. FAST TRANSITION: Slide and Vanish at the same time
+                await new Promise(r => setTimeout(r, 400));
+                
+                // Start sliding the 2nd page from right side background mein
+                nextSlide(1); 
+                
+                // Vanish overlay immediately so page is visible
+                overlay.style.opacity = '0';
                 setTimeout(() => {
-                    document.getElementById('loading-overlay').style.display = 'none';
-                    nextSlide(1); 
-                }, 500);
-            }, 400);
+                    overlay.style.display = 'none';
+                }, 300);
+
+            }, 200);
         }
 
         const moveNoButton = (e) => {
