@@ -73,6 +73,27 @@
             width: 100vw; height: 100vh;
             display: flex; justify-content: center; align-items: center;
             background: radial-gradient(circle, #fdf2f5 0%, #fce4ec 100%);
+            position: relative;
+        }
+
+        /* SPECIAL 4TH PAGE STYLES */
+        .special-slide {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%) !important;
+            overflow: hidden;
+        }
+
+        .heart-rain {
+            position: absolute;
+            bottom: -20px;
+            color: #ff4d6d;
+            font-size: 20px;
+            user-select: none;
+            pointer-events: none;
+            animation: moveUp linear infinite;
+        }
+
+        @keyframes moveUp {
+            to { transform: translateY(-110vh) rotate(360deg); }
         }
 
         .glass-card {
@@ -83,6 +104,19 @@
             transition: opacity 0.4s ease;
             box-shadow: 0 8px 32px rgba(255, 182, 193, 0.3);
             border: 1.5px solid rgba(255, 255, 255, 0.8);
+            z-index: 10;
+        }
+
+        /* LETTER BOX SCROLLABLE */
+        .letter-box {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            max-height: 250px;
+            overflow-y: auto;
+            text-align: left;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
         }
 
         #loading-overlay {
@@ -124,7 +158,7 @@
     <div id="error-overlay">
         <div class="error-popup">
             <div style="font-size: 40px; margin-bottom: 10px;">⚠️</div>
-            <div class="error-msg">System Error: <br> Invalid Boyfriend Name! 😤</div>
+            <div class="error-msg" id="errorMessage">System Error: <br> Invalid Boyfriend Name! 😤</div>
             <button onclick="hideError()" style="background: #ff4d6d; color: white; width: 100%;">Try Again</button>
         </div>
     </div>
@@ -176,19 +210,32 @@
             <div class="glass-card">
                 <h1 style="color: #ff4d6d;">A promise... 🌸</h1>
                 <p style="color: #555;">Main humesha tumhare saath rahunga.</p>
-                <button onclick="nextSlide(3)" style="background:#ff4d6d;color:white;margin-top:20px">Read Letter 💌</button>
+                <button onclick="nextSlide(3)" style="background:#ff4d6d;color:white;margin-top:20px">See Surprise 🎁</button>
             </div>
         </section>
 
-        <section class="slide">
-            <div class="glass-card">
-                <div id="lockSection">
-                    <h1 style="color: #ff4d6d;">A Private Letter 💌</h1>
-                    <input type="text" id="passcode" placeholder="Enter 10ml">
-                    <button onclick="checkCode()" style="background:#ff4d6d;color:white">Open</button>
-                </div>
-                <div id="letterContent" class="hidden">
-                    <p style="color: #444;">Dear Sanskriti, yahan apna letter likhein... ❤️</p>
+        <section class="slide special-slide" id="surpriseSlide">
+            <div id="heartContainer"></div>
+            
+            <div class="glass-card" id="specialLockSection">
+                <h2 style="color: #ff4d6d; font-size: 28px;">Something Special</h2>
+                <p style="color: #888; margin-bottom: 20px; font-style: italic;">Awaits You...</p>
+                <input type="text" id="passcode" placeholder="Enter Code 10ml">
+                <button onclick="checkCode()" style="background:#ff4d6d; color:white; width:100%;">Enter Code</button>
+            </div>
+
+            <div class="glass-card hidden" id="letterContent">
+                <div style="font-size: 40px;">❤️</div>
+                <h1 style="color: #ff4d6d;">You Are My Everything</h1>
+                <div class="letter-box">
+                    <p style="color: #444; line-height: 1.6;">
+                        My Dearest Sanskriti,<br><br>
+                        Every moment with you feels like magic. You are the light that brightens my darkest days and the dream I never want to wake up from.<br><br>
+                        I love you more than words can express. I promise to love you through every season of life, to support your dreams, and to create beautiful memories together.<br><br>
+                        You are my forever person, my soulmate, and my greatest blessing.<br><br>
+                        With all my love,<br>
+                        Your devoted partner ❤️
+                    </p>
                 </div>
             </div>
         </section>
@@ -202,6 +249,7 @@
         const errorOverlay = document.getElementById('error-overlay');
         const noBtn = document.getElementById('noBtn');
 
+        // Unlock Main Screen
         function unlockMaster() {
             const name = document.getElementById('bfNameInput').value.trim().toLowerCase();
             if(name === "anurag") {
@@ -215,42 +263,37 @@
                     setTimeout(() => master.style.display = 'none', 800);
                 }, 1000);
             } else {
-                errorOverlay.style.display = 'flex';
+                showError("System Error: <br> Invalid Boyfriend Name! 😤");
             }
+        }
+
+        // Surprise Page Code Check
+        function checkCode() {
+            if(document.getElementById('passcode').value === "10ml") {
+                document.getElementById('specialLockSection').classList.add('hidden');
+                document.getElementById('letterContent').classList.remove('hidden');
+            } else {
+                showError("System Error: <br> Incorrect Surprise Code! 😤");
+            }
+        }
+
+        function showError(msg) {
+            document.getElementById('errorMessage').innerHTML = msg;
+            errorOverlay.style.display = 'flex';
         }
 
         function hideError() {
             errorOverlay.style.display = 'none';
-            document.getElementById('bfNameInput').value = "";
         }
 
         async function triggerLoading() {
             document.getElementById('loveCard').style.opacity = '0';
             setTimeout(async () => {
                 overlay.style.display = 'flex';
-                
-                for(let i=1; i<=50; i++) {
-                    updateBar(i);
-                    await new Promise(r => setTimeout(r, 25));
-                }
-                
-                await new Promise(r => setTimeout(r, 1000));
-                
-                for(let i=51; i<=90; i++) {
-                    updateBar(i);
-                    await new Promise(r => setTimeout(r, 15));
-                }
-
-                updateBar(50);
-                await new Promise(r => setTimeout(r, 1000));
-
-                for(let i=51; i<=90; i++) {
+                for(let i=1; i<=100; i++) {
                     updateBar(i);
                     await new Promise(r => setTimeout(r, 20));
                 }
-
-                await new Promise(r => setTimeout(r, 400));
-                
                 nextSlide(1);
                 overlay.style.opacity = '0';
                 setTimeout(() => { overlay.style.display = 'none'; }, 600);
@@ -264,8 +307,25 @@
 
         function nextSlide(idx) {
             slider.style.transform = `translateX(-${idx * 100}vw)`;
+            if(idx === 3) createHearts();
         }
 
+        // Heart Rain Animation
+        function createHearts() {
+            const container = document.getElementById('heartContainer');
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.classList.add('heart-rain');
+                heart.innerHTML = '❤️';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                heart.style.opacity = Math.random();
+                container.appendChild(heart);
+                setTimeout(() => heart.remove(), 5000);
+            }, 300);
+        }
+
+        // No Button Escape Logic
         const moveNoButton = (e) => {
             if(e.type === 'touchstart') e.preventDefault();
             const padding = 50;
@@ -280,13 +340,6 @@
 
         noBtn.addEventListener('mouseover', moveNoButton);
         noBtn.addEventListener('touchstart', moveNoButton);
-
-        function checkCode() {
-            if(document.getElementById('passcode').value === "10ml") {
-                document.getElementById('lockSection').classList.add('hidden');
-                document.getElementById('letterContent').classList.remove('hidden');
-            }
-        }
     </script>
 </body>
 </html>
