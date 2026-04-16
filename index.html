@@ -27,29 +27,40 @@
             transition: all 0.8s cubic-bezier(0.65, 0, 0.35, 1);
         }
 
-        /* FULL SCREEN ERROR OVERLAY */
+        /* SMALL COMPUTER ERROR BOX */
         #error-overlay {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: rgba(255, 77, 109, 0.95);
+            background: rgba(0, 0, 0, 0.3); /* Dim background */
             z-index: 30000;
             display: none;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            color: white;
-            text-align: center;
-            padding: 20px;
         }
 
-        .error-emoji { font-size: 100px; margin-bottom: 20px; }
-        .error-msg { font-size: 24px; font-weight: bold; margin-bottom: 30px; }
+        .error-popup {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            width: 280px;
+            border: 2px solid #ff4d6d;
+            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .error-msg { color: #333; font-weight: bold; margin-bottom: 20px; font-size: 16px; line-height: 1.4; }
 
         .lock-icon { 
             font-size: 80px; 
             margin-bottom: 20px; 
-            transition: transform 1s ease, filter 1s ease;
+            transition: transform 1s ease;
         }
         
         .lock-input-box {
@@ -61,7 +72,6 @@
             text-align: center;
             width: 85%;
             max-width: 320px;
-            transition: opacity 0.5s ease;
         }
 
         .slider-container {
@@ -74,7 +84,6 @@
         .slide {
             width: 100vw; height: 100vh;
             display: flex; justify-content: center; align-items: center;
-            position: relative;
             background: radial-gradient(circle, #ffdee9 0%, #ffcad4 100%);
         }
 
@@ -85,14 +94,10 @@
             border-radius: 25px;
             padding: 40px 20px;
             text-align: center;
-            box-shadow: 0 10px 40px rgba(255, 105, 135, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.5);
             width: 90%; max-width: 350px;
-            z-index: 10;
-            transition: opacity 0.4s ease, transform 0.4s ease;
+            transition: opacity 0.4s ease;
         }
 
-        /* LOADING OVERLAY */
         #loading-overlay {
             position: fixed;
             top: 0; left: 0;
@@ -103,7 +108,6 @@
             justify-content: center;
             align-items: center;
             z-index: 10000;
-            transition: opacity 0.3s ease;
         }
 
         .loader-card {
@@ -112,53 +116,30 @@
             backdrop-filter: blur(10px); text-align: center;
         }
 
-        .progress-container {
-            width: 100%; height: 14px; background: #222; border-radius: 20px;
-            position: relative; margin-top: 10px;
-        }
-
-        .progress-bar {
-            width: 0%; height: 100%; background: #ff4d6d; border-radius: 20px;
-            transition: width 0.2s linear; position: relative;
-        }
-
-        .loading-heart {
-            position: absolute; right: -10px; top: -25px; font-size: 20px;
-            animation: bounce 0.5s infinite alternate;
-        }
-
+        .progress-container { width: 100%; height: 14px; background: #222; border-radius: 20px; position: relative; margin-top: 10px; }
+        .progress-bar { width: 0%; height: 100%; background: #ff4d6d; border-radius: 20px; transition: width 0.2s linear; }
         .pct-text { position: absolute; right: 0; top: -22px; font-size: 13px; font-weight: bold; color: #333; }
 
-        @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-5px); } }
-
-        .emoji-header { font-size: 50px; margin-bottom: 10px; }
-        h1 { font-size: 24px; margin-bottom: 30px; color: #222; }
-
-        .btn-wrapper { position: relative; height: 150px; display: flex; flex-direction: column; align-items: center; }
-
         button { padding: 12px 35px; border: none; border-radius: 25px; cursor: pointer; font-weight: bold; font-size: 16px; }
-
         #yesBtn { background-color: #ff4d6d; color: white; }
         #noBtn { background-color: #222; color: #ff4d6d; position: absolute; top: 75px; z-index: 999; }
-
-        .footer-text { font-size: 11px; color: #888; margin-top: 25px; font-style: italic; }
-        .hidden { display: none; }
-        .paper { background: #fff; padding: 20px; border-radius: 10px; text-align: left; }
-        .heart-drop { position: absolute; top: -20px; color: #ff4d6d; font-size: 22px; pointer-events: none; animation: fall linear forwards; }
-        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
         
         input[type="text"] { 
             padding: 12px; border-radius: 10px; border: 1px solid #ffcad4; 
-            width: 80%; margin-bottom: 10px; outline: none; text-align: center;
+            width: 85%; margin-bottom: 15px; outline: none; text-align: center;
         }
+
+        .hidden { display: none; }
     </style>
 </head>
 <body>
 
     <div id="error-overlay">
-        <div class="error-emoji">😤</div>
-        <div class="error-msg">Wrong Person! <br> You are not my Sanskriti.</div>
-        <button onclick="hideError()" style="background: white; color: #ff4d6d;">Try Again ↻</button>
+        <div class="error-popup">
+            <div style="font-size: 40px; margin-bottom: 10px;">⚠️</div>
+            <div class="error-msg">System Error: <br> Invalid Boyfriend Name! 😤</div>
+            <button onclick="hideError()" style="background: #ff4d6d; color: white; width: 100%;">Try Again</button>
+        </div>
     </div>
 
     <div id="master-lock-screen">
@@ -175,26 +156,23 @@
             <div style="position:relative">
                 <span class="pct-text" id="loadPercent">0%</span>
                 <div class="progress-container">
-                    <div class="progress-bar" id="loadBar">
-                        <span class="loading-heart">❤️</span>
-                    </div>
+                    <div class="progress-bar" id="loadBar"></div>
                 </div>
             </div>
-            <div style="margin-top:20px; font-weight:bold; color:#444; letter-spacing:2px">LOADING...</div>
+            <div style="margin-top:20px; font-weight:bold; color:#444;">LOADING...</div>
         </div>
     </div>
 
     <div class="slider-container" id="mainSlider">
         <section class="slide">
             <div class="glass-card" id="loveCard">
-                <div class="emoji-header">🐱 ❤️</div>
+                <div style="font-size:50px">🐱 ❤️</div>
                 <h2>Sanskriti</h2>
-                <h1>Do you love me!?</h1>
+                <h1 style="margin-bottom:30px">Do you love me!?</h1>
                 <div class="btn-wrapper">
                     <button id="yesBtn" onclick="triggerLoading()">Yes 💖</button>
                     <button id="noBtn">No 🙈</button>
                 </div>
-                <p class="footer-text">Some love stories don't allow "no" 😤</p>
             </div>
         </section>
 
@@ -215,34 +193,38 @@
         </section>
 
         <section class="slide">
-            <div id="rainContainer"></div>
             <div class="glass-card">
                 <div id="lockSection">
                     <h1>A Private Letter 💌</h1>
-                    <p>Type <b>10ml</b> to unlock</p><br>
-                    <input type="text" id="passcode" placeholder="Enter code">
+                    <input type="text" id="passcode" placeholder="Enter 10ml">
                     <button onclick="checkCode()" style="background:#ff4d6d;color:white">Open</button>
                 </div>
                 <div id="letterContent" class="hidden">
-                    <div class="paper">
-                        <h3 style="color:#ff4d6d">Dear Sanskriti,</h3>
-                        <p>Yahan apna letter likhein...</p>
-                    </div>
+                    <p>Dear Sanskriti, yahan apna letter likhein... ❤️</p>
                 </div>
             </div>
         </section>
     </div>
 
     <script>
-        const noBtn = document.getElementById('noBtn');
         const slider = document.getElementById('mainSlider');
-        const bar = document.getElementById('loadBar');
-        const pct = document.getElementById('loadPercent');
         const overlay = document.getElementById('loading-overlay');
         const errorOverlay = document.getElementById('error-overlay');
 
-        function showError() {
-            errorOverlay.style.display = 'flex';
+        function unlockMaster() {
+            const name = document.getElementById('bfNameInput').value.trim().toLowerCase();
+            if(name === "anurag") {
+                document.getElementById('mainLockEmoji').innerText = "🔓";
+                document.getElementById('mainLockEmoji').style.transform = "scale(1.4)";
+                document.getElementById('lockBox').style.opacity = '0';
+                setTimeout(() => {
+                    const master = document.getElementById('master-lock-screen');
+                    master.style.opacity = '0';
+                    master.style.transform = 'translateY(-100%)';
+                }, 1000);
+            } else {
+                errorOverlay.style.display = 'flex';
+            }
         }
 
         function hideError() {
@@ -250,94 +232,41 @@
             document.getElementById('bfNameInput').value = "";
         }
 
-        // UNLOCK MASTER SCREEN
-        function unlockMaster() {
-            const name = document.getElementById('bfNameInput').value.trim().toLowerCase();
-            if(name === "anurag") {
-                const emoji = document.getElementById('mainLockEmoji');
-                emoji.innerText = "🔓";
-                emoji.style.transform = "scale(1.4)";
-                document.getElementById('lockBox').style.opacity = '0';
-
-                setTimeout(() => {
-                    const masterScreen = document.getElementById('master-lock-screen');
-                    masterScreen.style.opacity = '0';
-                    masterScreen.style.transform = 'translateY(-100%)';
-                    
-                    setTimeout(() => {
-                        masterScreen.style.display = 'none';
-                    }, 800);
-                }, 1000);
-            } else {
-                showError(); // Shows the full screen error instead of alert
-            }
-        }
-
-        function updateProgress(v) {
-            bar.style.width = v + "%";
-            pct.innerText = v + "%";
+        function nextSlide(idx) {
+            slider.style.transform = `translateX(-${idx * 100}vw)`;
         }
 
         async function triggerLoading() {
             document.getElementById('loveCard').style.opacity = '0';
-            noBtn.style.display = 'none';
-
             setTimeout(async () => {
                 overlay.style.display = 'flex';
-                for(let i=1; i<=50; i++) { updateProgress(i); await new Promise(r => setTimeout(r, 25)); }
-                await new Promise(r => setTimeout(r, 2000));
-                for(let i=51; i<=90; i++) { updateProgress(i); await new Promise(r => setTimeout(r, 35)); }
-                await new Promise(r => setTimeout(r, 400));
-                updateProgress(50);
-                await new Promise(r => setTimeout(r, 700));
-                for(let i=51; i<=90; i++) { updateProgress(i); await new Promise(r => setTimeout(r, 15)); }
-
-                await new Promise(r => setTimeout(r, 400));
-                nextSlide(1); 
-                overlay.style.opacity = '0';
-                setTimeout(() => { overlay.style.display = 'none'; }, 300);
+                let bar = document.getElementById('loadBar');
+                let pct = document.getElementById('loadPercent');
+                for(let i=1; i<=100; i++) {
+                    bar.style.width = i + "%";
+                    pct.innerText = i + "%";
+                    await new Promise(r => setTimeout(r, 20));
+                }
+                nextSlide(1);
+                overlay.style.display = 'none';
             }, 200);
         }
 
-        const moveNoButton = (e) => {
-            if(e.type === 'touchstart') e.preventDefault();
-            const padding = 50;
-            const maxX = window.innerWidth - noBtn.offsetWidth - padding;
-            const maxY = window.innerHeight - noBtn.offsetHeight - padding;
-            let randomX = Math.floor(Math.random() * (maxX - padding)) + padding;
-            let randomY = Math.floor(Math.random() * (maxY - padding)) + padding;
+        // Floating No button logic
+        const noBtn = document.getElementById('noBtn');
+        const moveBtn = () => {
             noBtn.style.position = 'fixed';
-            noBtn.style.left = randomX + 'px';
-            noBtn.style.top = randomY + 'px';
+            noBtn.style.left = Math.random() * (window.innerWidth - 100) + 'px';
+            noBtn.style.top = Math.random() * (window.innerHeight - 50) + 'px';
         };
-
-        noBtn.addEventListener('mouseover', moveNoButton);
-        noBtn.addEventListener('touchstart', moveNoButton);
-
-        function nextSlide(idx) {
-            slider.style.transform = `translateX(-${idx * 100}vw)`;
-            if(idx > 0) noBtn.style.display = 'none';
-            if(idx === 3) startHeartRain();
-        }
+        noBtn.addEventListener('mouseover', moveBtn);
+        noBtn.addEventListener('touchstart', moveBtn);
 
         function checkCode() {
             if(document.getElementById('passcode').value === "10ml") {
                 document.getElementById('lockSection').classList.add('hidden');
                 document.getElementById('letterContent').classList.remove('hidden');
-            } else { alert("Hint: 10ml"); }
-        }
-
-        function startHeartRain() {
-            const container = document.getElementById('rainContainer');
-            setInterval(() => {
-                const heart = document.createElement('div');
-                heart.classList.add('heart-drop');
-                heart.innerHTML = '💗';
-                heart.style.left = Math.random() * 100 + 'vw';
-                heart.style.animationDuration = (Math.random() * 2 + 2) + 's';
-                container.appendChild(heart);
-                setTimeout(() => heart.remove(), 4000);
-            }, 300);
+            }
         }
     </script>
 </body>
