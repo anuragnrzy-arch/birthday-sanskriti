@@ -1,153 +1,97 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Do you love me?</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
-
-body{
-  overflow:hidden;
-  font-family:Arial;
-  background:linear-gradient(135deg,#ffd6e0,#d6ecff);
+body {
+  margin: 0;
+  height: 100vh;
+  background: #ffd6dc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
 }
 
-.wrapper{
-  width:100vw;
-  height:100vh;
-  overflow:hidden;
+.container {
+  text-align: center;
+  background: #ffc0cb;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 0 30px rgba(255, 0, 100, 0.3);
+  position: relative;
 }
 
-.slider{
-  display:flex;
-  width:400%;
-  height:100%;
-  transition:0.5s;
+h2 {
+  color: #333;
 }
 
-.slide{
-  width:100vw;
-  height:100vh;
-  flex-shrink:0;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
+.heart {
+  font-size: 40px;
+  animation: glow 1s infinite alternate;
 }
 
-.container{width:80%;}
-
-iframe{
-  width:150px;
-  height:150px;
-  border:none;
+@keyframes glow {
+  from { text-shadow: 0 0 10px red; }
+  to { text-shadow: 0 0 25px pink; }
 }
 
-button{
-  padding:10px 18px;
-  margin:10px;
-  border:none;
-  border-radius:10px;
-  background:white;
+.buttons {
+  margin-top: 20px;
+  position: relative;
 }
 
-#noBtn{
-  position:fixed;
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  font-size: 16px;
+  cursor: pointer;
 }
 
-/* HEART */
-.heart{
-  position:fixed;
-  top:-20px;
-  animation:fall linear forwards;
+.yes {
+  background: #ff4d6d;
+  color: white;
 }
 
-@keyframes fall{
-  to{transform:translateY(110vh);}
+.no {
+  background: white;
+  position: absolute;
 }
+
 </style>
 </head>
 
 <body>
 
-<div class="wrapper">
-<div class="slider" id="slider">
-
-<!-- 1 -->
-<div class="slide">
 <div class="container">
-<iframe src="https://giphy.com/embed/JIX9t2j0ZTN9S"></iframe>
-<h2>Do you love me? 🥺</h2>
+  <div class="heart">❤️</div>
+  <h2>Do you love me?</h2>
 
-<button onclick="go(1)">Yes</button>
-<button id="noBtn" onclick="moveNo()">No</button>
-</div>
-</div>
-
-<!-- 2 -->
-<div class="slide">
-<div class="container">
-<iframe src="https://giphy.com/embed/3oriO0OEd9QIDdllqo"></iframe>
-<h2>We broke up 💔</h2>
-
-<button onclick="go(2)">Next</button>
-</div>
-</div>
-
-<!-- 3 -->
-<div class="slide">
-<div class="container">
-<iframe src="https://giphy.com/embed/l378giAZgxPw3eO52"></iframe>
-<h2>We came back 💖</h2>
-
-<button onclick="go(3)">Next</button>
-</div>
-</div>
-
-<!-- 4 -->
-<div class="slide">
-<div class="container">
-<iframe src="https://giphy.com/embed/MDJ9IbxxvDUQM"></iframe>
-<h2>May 9 💫</h2>
-<p>I love you ❤️</p>
-</div>
-</div>
-
-</div>
+  <div class="buttons">
+    <button class="yes" onclick="nextPage()">Yes ❤️</button>
+    <button class="no" id="noBtn">No 😒</button>
+  </div>
 </div>
 
 <script>
+const noBtn = document.getElementById("noBtn");
 
-function go(i){
-  document.getElementById("slider").style.transform =
-  "translateX(-"+i+"00vw)";
-  if(i==3) hearts();
+noBtn.addEventListener("mouseover", () => {
+  const x = Math.random() * (window.innerWidth - 100);
+  const y = Math.random() * (window.innerHeight - 50);
+
+  noBtn.style.left = x + "px";
+  noBtn.style.top = y + "px";
+});
+
+function nextPage() {
+  alert("Next page slide ayega 😏");
 }
-
-function moveNo(){
-  let x=Math.random()*(window.innerWidth-80);
-  let y=Math.random()*(window.innerHeight-50);
-
-  noBtn.style.left=x+"px";
-  noBtn.style.top=y+"px";
-}
-
-function hearts(){
-  setInterval(()=>{
-    let h=document.createElement("div");
-    h.className="heart";
-    h.innerText="💖";
-
-    h.style.left=Math.random()*100+"vw";
-    h.style.fontSize=(Math.random()*20+10)+"px";
-    h.style.animationDuration=(Math.random()*2+3)+"s";
-
-    document.body.appendChild(h);
-
-    setTimeout(()=>h.remove(),4000);
-  },200);
-}
-
 </script>
 
 </body>
