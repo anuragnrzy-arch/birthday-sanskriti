@@ -1,212 +1,103 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-<title>Love</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
-
 body{
-  font-family:sans-serif;
-  background:#3b1f1f;
-  overflow:hidden;
-}
-
-/* SLIDER */
-.slider{
-  display:flex;
-  width:200%;
-  height:100vh;
-  transition:0.6s ease;
-}
-
-.page{
-  width:100%;
+  margin:0;
   height:100vh;
   display:flex;
   justify-content:center;
   align-items:center;
+  background:#3b1f1f;
+  font-family:sans-serif;
 }
 
-/* CARD */
-.card{
+/* BOX */
+.box{
   width:280px;
   padding:30px;
   background:#5a2c2c;
-  border-radius:25px;
+  border-radius:20px;
   text-align:center;
-  box-shadow:0 0 40px rgba(255,0,80,0.4);
+  box-shadow:0 0 30px rgba(255,0,80,0.4);
   position:relative;
 }
 
-/* HEART */
-.heart{
-  font-size:40px;
-  color:#ff4d6d;
-  animation:glow 1s infinite alternate;
+/* EMOJI */
+.emoji{
+  font-size:30px;
 }
 
-@keyframes glow{
-  from{ text-shadow:0 0 10px red;}
-  to{ text-shadow:0 0 30px pink;}
+/* TEXT */
+h2{
+  color:#ffdede;
+  margin:10px 0 20px;
 }
 
-h2{color:#ffdede;margin:15px 0;}
-
-/* BUTTON */
+/* BUTTONS */
 button{
-  padding:12px 25px;
+  display:block;
+  width:70%;
+  margin:10px auto;
+  padding:12px;
   border:none;
-  border-radius:25px;
-  margin-top:10px;
-  cursor:pointer;
+  border-radius:20px;
+  font-size:16px;
 }
 
-.yes{background:#ff4d6d;color:white;}
+.yes{
+  background:#ff4d6d;
+  color:white;
+}
+
 .no{
   background:black;
   color:white;
   position:absolute;
 }
-
-/* LETTER */
-.envelope{
-  width:120px;
-  height:80px;
-  background:#ff4d6d;
-  position:relative;
-  margin:20px auto;
-  cursor:pointer;
-}
-
-.flap{
-  position:absolute;
-  width:0;
-  height:0;
-  border-left:60px solid transparent;
-  border-right:60px solid transparent;
-  border-bottom:40px solid #ff6b81;
-  top:-40px;
-  transition:0.5s;
-}
-
-.paper{
-  width:100px;
-  height:0;
-  background:white;
-  margin:auto;
-  overflow:hidden;
-  transition:0.6s;
-  border-radius:5px;
-  padding:0 10px;
-}
-
-/* OPEN animation */
-.open .flap{
-  transform:rotateX(180deg);
-}
-
-.open .paper{
-  height:120px;
-  padding:10px;
-}
-
-input{
-  padding:8px;
-  border-radius:10px;
-  border:none;
-}
 </style>
+
 </head>
 
 <body>
 
-<div class="slider" id="slider">
+<div class="box" id="box">
 
-<!-- PAGE 1 -->
-<div class="page">
-  <div class="card" id="card">
+  <div class="emoji">😍❤️</div>
+  <h2>Do you love me!?</h2>
 
-    <div class="heart">❤️</div>
-    <h2>Do you love me?</h2>
-
-    <!-- YES -->
-    <button class="yes" onclick="goLast()">Yes ❤️</button>
-
-    <!-- NO (below with gap) -->
-    <button class="no" id="noBtn">No 😒</button>
-
-  </div>
-</div>
-
-<!-- PAGE 2 (FINAL) -->
-<div class="page">
-  <div class="card">
-
-    <h2>Enter code 💌</h2>
-    <input id="code" placeholder="type code">
-    <br><br>
-    <button class="yes" onclick="check()">Open</button>
-
-    <div class="envelope" id="env">
-      <div class="flap"></div>
-    </div>
-
-    <div class="paper" id="paper">
-      <p style="font-size:12px;">
-        May 9, 2022…<br><br>
-        It's been years, but I still remember everything.  
-        The moments, the talks, the feelings…  
-        Somehow, they never left ❤️  
-      </p>
-    </div>
-
-  </div>
-</div>
+  <button class="yes" onclick="alert('Good 😏')">Yes</button>
+  <button class="no" id="noBtn">No</button>
 
 </div>
 
 <script>
-const slider = document.getElementById("slider");
 
-/* YES → last page */
-function goLast(){
-  slider.style.transform="translateX(-100%)";
-}
+const noBtn = document.getElementById("noBtn");
+const box = document.getElementById("box");
 
-/* NO button (inside card only) */
-const noBtn=document.getElementById("noBtn");
-const card=document.getElementById("card");
+/* start position (below YES) */
+noBtn.style.left = "50%";
+noBtn.style.top = "75%";
+noBtn.style.transform = "translate(-50%,-50%)";
 
-/* initial position (below yes) */
-noBtn.style.left="50%";
-noBtn.style.top="75%";
-noBtn.style.transform="translate(-50%,-50%)";
+/* move INSIDE box only */
+noBtn.addEventListener("mouseover", () => {
 
-noBtn.addEventListener("mouseover",()=>{
-  const rect=card.getBoundingClientRect();
+  const rect = box.getBoundingClientRect();
 
-  const x=Math.random()*(rect.width-80);
-  const y=Math.random()*(rect.height-50);
+  const x = Math.random() * (rect.width - 100);
+  const y = Math.random() * (rect.height - 50);
 
-  noBtn.style.left=x+"px";
-  noBtn.style.top=y+"px";
+  noBtn.style.left = x + "px";
+  noBtn.style.top = y + "px";
 });
 
-/* CODE CHECK */
-function check(){
-  const val=document.getElementById("code").value;
+/* disable click */
+noBtn.onclick = (e)=> e.preventDefault();
 
-  if(val==="10ml"){
-    document.getElementById("env").classList.add("open");
-    document.getElementById("paper").classList.add("open");
-  }else{
-    alert("Wrong code 😒");
-  }
-}
 </script>
 
 </body>
