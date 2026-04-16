@@ -48,7 +48,6 @@
             border: 2px solid #ff4d6d;
         }
 
-        /* SLIDER & CARD STYLE */
         .slider-container {
             display: flex; width: 400vw; height: 100vh;
             transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1);
@@ -70,7 +69,6 @@
             position: relative;
         }
 
-        /* LOADING OVERLAY */
         #loading-overlay {
             position: fixed; top: 0; left: 0;
             width: 100%; height: 100%; background: #fdf2f5;
@@ -87,7 +85,6 @@
         }
 
         .progress-bar { width: 0%; height: 100%; background: #ff4d6d; border-radius: 20px; transition: width 0.2s ease; }
-        .pct-text { position: absolute; right: 0; top: -22px; font-size: 13px; font-weight: bold; color: #ff4d6d; }
 
         /* BUTTONS */
         .btn-wrapper { position: relative; height: 150px; display: flex; flex-direction: column; align-items: center; }
@@ -97,7 +94,7 @@
         
         .footer-text { font-size: 11px; color: #a38b91; margin-top: 25px; font-style: italic; display: block; width: 100%; text-align: center;}
 
-        /* LETTER PAGE STYLES */
+        /* ENVELOPE STYLES */
         .envelope-container {
             position: relative;
             width: 250px; height: 160px;
@@ -122,17 +119,6 @@
 
         .envelope-container.open::before { transform: rotateX(180deg); }
 
-        .letter-heart {
-            font-size: 45px;
-            color: #ff4d6d;
-            z-index: 5;
-            cursor: pointer;
-            display: flex; flex-direction: column; align-items: center;
-            transition: opacity 0.4s;
-        }
-
-        .heart-text { font-size: 10px; color: white; width: 100px; font-weight: bold; margin-top: 5px; }
-
         .letter-content {
             position: absolute;
             bottom: 5px;
@@ -141,36 +127,17 @@
             border-radius: 5px;
             padding: 15px;
             transition: all 1s ease;
-            z-index: 2;
-            opacity: 0;
+            z-index: 2; opacity: 0;
             overflow: hidden;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
         }
 
         .letter-content.out {
             opacity: 1;
-            transform: translateY(-160px); /* Upward slide */
+            transform: translateY(-160px); 
             width: 300px; height: auto; min-height: 400px;
-            padding: 20px;
-            z-index: 100;
-            left: -25px;
-            overflow-y: auto;
+            padding: 20px; z-index: 100; left: -25px;
         }
-
-        .letter-photo {
-            width: 100%;
-            height: auto;
-            max-height: 250px;
-            object-fit: contain;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-        }
-
-        .letter-text { color: #333; text-align: left; font-size: 14px; line-height: 1.5; width: 100%; }
 
         input[type="text"] { 
             padding: 12px; border-radius: 10px; border: 1.5px solid #ffcad4; 
@@ -180,6 +147,12 @@
 
         .hidden { display: none; }
         .vanish { opacity: 0; pointer-events: none; }
+
+        /* PIC STYLE */
+        .couple-pic {
+            width: 100%; border-radius: 15px; margin-bottom: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
     </style>
 </head>
 <body>
@@ -187,7 +160,7 @@
     <div id="error-overlay">
         <div class="error-popup">
             <div style="font-size: 40px; margin-bottom: 10px;">⚠️</div>
-            <div id="errorMsg" class="error-msg" style="margin-bottom: 20px;">System Error: <br> Invalid Boyfriend Name! 😤</div>
+            <div id="errorMsg" style="margin-bottom: 20px; font-weight: bold;">System Error! 😤</div>
             <button onclick="hideError()" style="background: #ff4d6d; color: white; width: 100%;">Try Again</button>
         </div>
     </div>
@@ -204,8 +177,8 @@
     <div id="loading-overlay">
         <div class="loader-card">
             <div style="position:relative">
-                <span id="loadPercent" class="pct-text" style="position: absolute; right: 0; top: -22px; font-weight: bold; color: #ff4d6d;">0%</span>
-                <div class="progress-container">
+                <span id="loadPercent" style="position: absolute; right: 0; top: -22px; font-weight: bold; color: #ff4d6d;">0%</span>
+                <div style="width: 100%; height: 14px; background: #eee; border-radius: 20px;">
                     <div class="progress-bar" id="loadBar"></div>
                 </div>
             </div>
@@ -227,30 +200,38 @@
             </div>
         </section>
 
-        <section class="slide"><div class="glass-card"><div style="font-size:80px">❓</div><button onclick="nextSlide(2)" style="background:#ff4d6d;color:white;margin-top:20px">Next ➔</button></div></section>
-        <section class="slide"><div class="glass-card"><div style="font-size:80px">❓</div><button onclick="nextSlide(3)" style="background:#ff4d6d;color:white;margin-top:20px">Next ➔</button></div></section>
+        <section class="slide">
+            <div class="glass-card">
+                <img src="https://i.ibb.co/3Wb0hV9/image-15.png" alt="Couple" class="couple-pic">
+                <h1 style="color: #ff4d6d;">You're special! ✨</h1>
+                <p style="color: #555;">Tumhari hansi meri sabse badi khushi hai. ❤️</p>
+                <button onclick="nextSlide(2)" style="background:#ff4d6d;color:white;margin-top:20px">Next ➔</button>
+            </div>
+        </section>
 
         <section class="slide">
-            <div class="glass-card" style="height: 520px; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; overflow: visible;">
-                <h1 id="openTxt" style="color: #ff4d6d; margin-bottom: 20px; z-index: 10;">A Private Letter 💌</h1>
-                <div id="letterUI" style="display: flex; flex-direction: column; align-items: center;">
-                    <input type="text" id="passcode" placeholder="Enter 10ml">
-                    <button onclick="checkLetterCode()" style="background:#ff4d6d;color:white; width: 85%;">Open</button>
-                    
-                    <div class="envelope-container" id="envelope" style="margin-top: 30px;">
-                        <div class="letter-heart" id="letterHeart">
-                            ❤️
-                            <div class="heart-text">Type secret code...</div>
-                        </div>
-                        <div class="letter-content" id="finalLetter">
-                            <img src="https://i.ibb.co/3Wb0hV9/image-15.png" alt="Couple" class="letter-photo">
-                            
-                            <div class="letter-text">
-                                <strong style="color:#ff4d6d">May 9th, 2026</strong><br><br>
-                                I still remember May 9th, 2022… the day everything between us started. It’s been years, but that day still feels special to me. Out of all the days, somehow we found each other, and that moment became a part of my life that I’ll always value.<br><br>
-                                I know I made a lot of mistakes… more than I should have. I’m really sorry for everything that hurt you. This time, I don’t just want to promise things — I want to prove it through my actions. I’m working on myself, trying to become better, not just for us but also as a person.<br><br>
-                                I don’t know what the future holds, but I truly hope we keep moving forward together, understanding each other more and more. What we have is something I don’t want to lose again… and I’ll do my best to make sure we stay strong this time.
-                            </div>
+            <div class="glass-card">
+                <div style="font-size:60px">🌸</div>
+                <h1 style="color: #ff4d6d;">A promise...</h1>
+                <p style="color: #555;">Main humesha tumhare saath rahunga.</p>
+                <button onclick="nextSlide(3)" style="background:#ff4d6d;color:white;margin-top:20px">Read Letter 💌</button>
+            </div>
+        </section>
+
+        <section class="slide">
+            <div class="glass-card" style="height: 520px; overflow: visible;">
+                <h1 id="pvtTxt" style="color: #ff4d6d; margin-bottom: 20px;">A Private Letter 💌</h1>
+                <input type="text" id="passcode" placeholder="Enter 10ml">
+                <button id="openBtn" onclick="checkLetterCode()" style="background:#ff4d6d;color:white;width:85%">Open</button>
+                
+                <div class="envelope-container" id="envelope" style="margin-top: 30px;">
+                    <div id="heartIcon" style="font-size:45px; color:#ff4d6d; z-index:5;">❤️</div>
+                    <div class="letter-content" id="finalLetter">
+                        <div style="text-align: left; color: #333; font-size: 14px;">
+                            <strong style="color:#ff4d6d">May 9th, 2026</strong><br><br>
+                            I still remember May 9th, 2022… the day everything between us started. It’s been years, but that day still feels special to me.<br><br>
+                            I know I made a lot of mistakes… I’m really sorry for everything. I want to prove it through my actions. I’m working on myself for us.<br><br>
+                            I truly hope we keep moving forward together. What we have is something I don’t want to lose again.
                         </div>
                     </div>
                 </div>
@@ -261,18 +242,61 @@
     <script>
         const slider = document.getElementById('mainSlider');
         const errOverlay = document.getElementById('error-overlay');
-        const errTitle = document.getElementById('errorMsg');
         const noBtn = document.getElementById('noBtn');
 
         function unlockMaster() {
-            const name = document.getElementById('bfNameInput').value.trim().toLowerCase();
-            if(name === "anurag") {
+            if(document.getElementById('bfNameInput').value.trim().toLowerCase() === "anurag") {
                 document.getElementById('mainLockEmoji').innerText = "🔓";
                 setTimeout(() => {
                     const master = document.getElementById('master-lock-screen');
-                    master.style.opacity = '0';
                     master.style.transform = 'translateY(-100%)';
                 }, 800);
-            } else {
-                errTitle.innerHTML = "System Error: <br
-        
+            } else { errOverlay.style.display = 'flex'; }
+        }
+
+        async function triggerLoading() {
+            document.getElementById('loveCard').style.opacity = '0';
+            const overlay = document.getElementById('loading-overlay');
+            overlay.style.display = 'flex';
+            const bar = document.getElementById('loadBar');
+            const pct = document.getElementById('loadPercent');
+            
+            let p = 0;
+            while(p < 90) { p++; bar.style.width = p+'%'; pct.innerText = p+'%'; await new Promise(r=>setTimeout(r, 15)); }
+            await new Promise(r=>setTimeout(r, 1000));
+            while(p < 100) { p++; bar.style.width = p+'%'; pct.innerText = p+'%'; await new Promise(r=>setTimeout(r, 20)); }
+            
+            nextSlide(1);
+            overlay.style.opacity = '0';
+            setTimeout(() => overlay.style.display = 'none', 600);
+        }
+
+        function checkLetterCode() {
+            if(document.getElementById('passcode').value === "10ml") {
+                document.getElementById('passcode').classList.add('hidden');
+                document.getElementById('openBtn').classList.add('hidden');
+                document.getElementById('pvtTxt').classList.add('hidden');
+                document.getElementById('heartIcon').classList.add('vanish');
+
+                setTimeout(() => {
+                    document.getElementById('envelope').classList.add('open');
+                    setTimeout(() => { document.getElementById('finalLetter').classList.add('out'); }, 800);
+                }, 400);
+            } else { errOverlay.style.display = 'flex'; }
+        }
+
+        function hideError() { errOverlay.style.display = 'none'; }
+        function nextSlide(idx) { slider.style.transform = `translateX(-${idx * 100}vw)`; }
+
+        const moveNo = (e) => {
+            if(e.type === 'touchstart') e.preventDefault();
+            const maxX = window.innerWidth - noBtn.offsetWidth - 50;
+            const maxY = window.innerHeight - noBtn.offsetHeight - 50;
+            noBtn.style.left = Math.random() * maxX + 'px';
+            noBtn.style.top = Math.random() * maxY + 'px';
+        };
+        noBtn.addEventListener('mouseover', moveNo);
+        noBtn.addEventListener('touchstart', moveNo);
+    </script>
+</body>
+</html>
