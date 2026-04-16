@@ -27,7 +27,6 @@
             transition: all 0.8s cubic-bezier(0.65, 0, 0.35, 1);
         }
 
-        /* SMALL COMPUTER ERROR BOX */
         #error-overlay {
             position: fixed;
             top: 0; left: 0;
@@ -49,7 +48,7 @@
             border: 2px solid #ff4d6d;
         }
 
-        /* CARD STYLE */
+        /* SLIDER & CARD STYLE */
         .slider-container {
             display: flex; width: 400vw; height: 100vh;
             transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1);
@@ -102,7 +101,7 @@
         .envelope-container {
             position: relative;
             width: 250px; height: 160px;
-            background: #ff8fa3; /* lighter body */
+            background: #ff8fa3; 
             margin: 20px auto;
             border-radius: 0 0 10px 10px;
             perspective: 1000px;
@@ -115,15 +114,13 @@
             top: 0; left: 0;
             border-left: 125px solid transparent;
             border-right: 125px solid transparent;
-            border-top: 90px solid #ff4d6d; /* darker flap */
+            border-top: 90px solid #ff4d6d;
             transform-origin: top;
             transition: transform 0.6s ease;
             z-index: 4;
         }
 
-        .envelope-container.open::before {
-            transform: rotateX(180deg);
-        }
+        .envelope-container.open::before { transform: rotateX(180deg); }
 
         .letter-heart {
             font-size: 45px;
@@ -134,13 +131,7 @@
             transition: opacity 0.4s;
         }
 
-        .heart-text {
-            font-size: 10px;
-            color: white;
-            width: 100px;
-            font-weight: bold;
-            margin-top: 5px;
-        }
+        .heart-text { font-size: 10px; color: white; width: 100px; font-weight: bold; margin-top: 5px; }
 
         .letter-content {
             position: absolute;
@@ -154,16 +145,32 @@
             opacity: 0;
             overflow: hidden;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .letter-content.out {
             opacity: 1;
-            transform: translateY(-160px); /* Slides UPWARDS */
+            transform: translateY(-160px); /* Upward slide */
             width: 300px; height: auto; min-height: 400px;
             padding: 20px;
             z-index: 100;
             left: -25px;
+            overflow-y: auto;
         }
+
+        .letter-photo {
+            width: 100%;
+            height: auto;
+            max-height: 250px;
+            object-fit: contain;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        .letter-text { color: #333; text-align: left; font-size: 14px; line-height: 1.5; width: 100%; }
 
         input[type="text"] { 
             padding: 12px; border-radius: 10px; border: 1.5px solid #ffcad4; 
@@ -197,8 +204,8 @@
     <div id="loading-overlay">
         <div class="loader-card">
             <div style="position:relative">
-                <span id="loadPercent" style="position: absolute; right: 0; top: -22px; font-weight: bold; color: #ff4d6d;">0%</span>
-                <div style="width: 100%; height: 14px; background: #eee; border-radius: 20px;">
+                <span id="loadPercent" class="pct-text" style="position: absolute; right: 0; top: -22px; font-weight: bold; color: #ff4d6d;">0%</span>
+                <div class="progress-container">
                     <div class="progress-bar" id="loadBar"></div>
                 </div>
             </div>
@@ -225,7 +232,7 @@
 
         <section class="slide">
             <div class="glass-card" style="height: 520px; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; overflow: visible;">
-                <h1 id="privateTxt" style="color: #ff4d6d; margin-bottom: 20px; z-index: 10;">A Private Letter 💌</h1>
+                <h1 id="openTxt" style="color: #ff4d6d; margin-bottom: 20px; z-index: 10;">A Private Letter 💌</h1>
                 <div id="letterUI" style="display: flex; flex-direction: column; align-items: center;">
                     <input type="text" id="passcode" placeholder="Enter 10ml">
                     <button onclick="checkLetterCode()" style="background:#ff4d6d;color:white; width: 85%;">Open</button>
@@ -235,11 +242,15 @@
                             ❤️
                             <div class="heart-text">Type secret code...</div>
                         </div>
-                        <div class="letter-content" id="finalLetter" style="color: #333; text-align: left; font-size: 14px; line-height: 1.5; padding: 20px;">
-                            <strong style="color:#ff4d6d">May 9th, 2026</strong><br><br>
-                            I still remember May 9th, 2022… the day everything between us started. It’s been years, but that day still feels special to me. Out of all the days, somehow we found each other, and that moment became a part of my life that I’ll always value.<br><br>
-                            I know I made a lot of mistakes… more than I should have. I’m really sorry for everything that hurt you. This time, I don’t just want to promise things — I want to prove it through my actions. I’m working on myself, trying to become better, not just for us but also as a person.<br><br>
-                            I don’t know what the future holds, but I truly hope we keep moving forward together, understanding each other more and more. What we have is something I don’t want to lose again… and I’ll do my best to make sure we stay strong this time.
+                        <div class="letter-content" id="finalLetter">
+                            <img src="https://i.ibb.co/3Wb0hV9/image-15.png" alt="Couple" class="letter-photo">
+                            
+                            <div class="letter-text">
+                                <strong style="color:#ff4d6d">May 9th, 2026</strong><br><br>
+                                I still remember May 9th, 2022… the day everything between us started. It’s been years, but that day still feels special to me. Out of all the days, somehow we found each other, and that moment became a part of my life that I’ll always value.<br><br>
+                                I know I made a lot of mistakes… more than I should have. I’m really sorry for everything that hurt you. This time, I don’t just want to promise things — I want to prove it through my actions. I’m working on myself, trying to become better, not just for us but also as a person.<br><br>
+                                I don’t know what the future holds, but I truly hope we keep moving forward together, understanding each other more and more. What we have is something I don’t want to lose again… and I’ll do my best to make sure we stay strong this time.
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -250,7 +261,7 @@
     <script>
         const slider = document.getElementById('mainSlider');
         const errOverlay = document.getElementById('error-overlay');
-        const errTxt = document.getElementById('errorMsg');
+        const errTitle = document.getElementById('errorMsg');
         const noBtn = document.getElementById('noBtn');
 
         function unlockMaster() {
@@ -263,95 +274,5 @@
                     master.style.transform = 'translateY(-100%)';
                 }, 800);
             } else {
-                errOverlay.style.display = 'flex';
-            }
-        }
-
-        // CORRECT LOADING LOGIC
-        async function triggerLoading() {
-            document.getElementById('loveCard').style.opacity = '0';
-            const overlay = document.getElementById('loading-overlay');
-            overlay.style.display = 'flex';
-            const bar = document.getElementById('loadBar');
-            const pct = document.getElementById('loadPercent');
-            
-            // Fast count up 1-90
-            let p = 0;
-            while(p < 90) {
-                p++;
-                bar.style.width = p+'%';
-                pct.innerText = p+'%';
-                await new Promise(r=>setTimeout(r, 15));
-            }
-
-            // 1 second delay (vanish effect)
-            await new Promise(r=>setTimeout(r, 1000));
-            
-            // Fast count up 91-100
-            while(p < 100) {
-                p++;
-                bar.style.width = p+'%';
-                pct.innerText = p+'%';
-                await new Promise(r=>setTimeout(r, 20));
-            }
-            
-            // Next Slide and Vanish overlay
-            nextSlide(1);
-            overlay.style.opacity = '0';
-            setTimeout(() => {
-                overlay.style.display = 'none';
-                // Reset for future clicks
-                overlay.style.opacity = '1'; 
-                p = 0;
-                bar.style.width = '0%';
-                pct.innerText = '0%';
-            }, 600);
-        }
-
-        // LETTER OPEN FIXED LOGIC
-        function checkLetterCode() {
-            if(document.getElementById('passcode').value === "10ml") {
-                // Vanish input, button and header text
-                document.getElementById('passcode').classList.add('hidden');
-                event.target.classList.add('hidden');
-                document.getElementById('privateTxt').classList.add('hidden');
-                
-                // Vanish heart on envelope
-                const heart = document.getElementById('letterHeart');
-                heart.classList.add('vanish');
-
-                // Correct sequence animation
-                setTimeout(() => {
-                    const envelope = document.getElementById('envelope');
-                    const letter = document.getElementById('finalLetter');
-                    
-                    // 1. Envelope opens
-                    envelope.classList.add('open');
-                    
-                    setTimeout(() => {
-                        // 2. Letter slides out UPWARDS
-                        letter.classList.add('out');
-                    }, 800);
-                }, 400);
-            } else {
-                errTxt.innerHTML = "System Error: <br> Invalid Secret Code! 😤";
-                errOverlay.style.display = 'flex';
-            }
-        }
-
-        function hideError() { errOverlay.style.display = 'none'; }
-        function nextSlide(idx) { slider.style.transform = `translateX(-${idx * 100}vw)`; }
-
-        const moveNo = (e) => {
-            if(e.type === 'touchstart') e.preventDefault();
-            const padding = 50;
-            const maxX = window.innerWidth - noBtn.offsetWidth - padding;
-            const maxY = window.innerHeight - noBtn.offsetHeight - padding;
-            noBtn.style.left = Math.random() * (maxX - padding) + padding + 'px';
-            noBtn.style.top = Math.random() * (maxY - padding) + padding + 'px';
-        };
-        noBtn.addEventListener('mouseover', moveNo);
-        noBtn.addEventListener('touchstart', moveNo);
-    </script>
-</body>
-</html>
+                errTitle.innerHTML = "System Error: <br
+        
