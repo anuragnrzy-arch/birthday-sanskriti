@@ -5,13 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>For Sanskriti</title>
     <style>
-        /* --- CSS START --- */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
 
         body {
             background-color: #ffcad4;
-            overflow: hidden;
-            touch-action: manipulation; /* Mobile zoom rokhne ke liye */
+            overflow: hidden; /* Screen se bahar kuch nahi jayega */
+            touch-action: none; /* Mobile zoom/scroll disable */
         }
 
         .slider-container {
@@ -43,20 +42,15 @@
             width: 90%;
             max-width: 350px;
             z-index: 10;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
         }
 
         .emoji-header { font-size: 50px; margin-bottom: 10px; }
         h2 { font-weight: 500; color: #444; margin-bottom: 5px; }
         h1 { font-size: 24px; margin-bottom: 30px; color: #222; }
 
-        /* Buttons area */
-        .controls {
+        .btn-wrapper {
             position: relative;
-            width: 100%;
-            height: 120px; /* Space for both buttons */
+            height: 140px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -72,108 +66,60 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
-        #yesBtn { 
-            background-color: #ff4d6d; 
-            color: white;
-            z-index: 11;
-        }
+        #yesBtn { background-color: #ff4d6d; color: white; margin-bottom: 20px; }
 
         #noBtn { 
-            background-color: #222; /* Darker like your screenshot */
+            background-color: #222; 
             color: #ff4d6d; 
             position: absolute;
-            top: 65px; /* Exactly in your white box area */
-            transition: all 0.15s ease-out;
-            white-space: nowrap;
-            z-index: 12;
+            top: 70px; /* Starting position inside your white box area */
+            transition: all 0.2s ease;
+            z-index: 999;
         }
 
         .footer-text { font-size: 11px; color: #888; margin-top: 20px; font-style: italic; }
 
-        /* Page 4 Styling */
+        /* Rain & Letter */
         .hidden { display: none; }
-        .paper {
-            background: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            text-align: left;
-            animation: slideIn 1s ease;
-        }
-        @keyframes slideIn { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-
-        input[type="text"] {
-            padding: 12px;
-            border-radius: 10px;
-            border: 1px solid #ffcad4;
-            margin-bottom: 15px;
-            width: 80%;
-            outline: none;
-        }
-
-        .heart-drop {
-            position: absolute;
-            top: -20px;
-            color: #ff4d6d;
-            font-size: 22px;
-            pointer-events: none;
-            animation: fall linear forwards;
-        }
+        .paper { background: #fff; padding: 20px; border-radius: 10px; text-align: left; margin-top: 15px; }
+        .heart-drop { position: absolute; top: -20px; color: #ff4d6d; font-size: 22px; animation: fall linear forwards; }
         @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
+        
+        input[type="text"] { padding: 12px; border-radius: 10px; border: 1px solid #ffcad4; width: 80%; margin-bottom: 10px; }
     </style>
 </head>
 <body>
 
     <div class="slider-container" id="mainSlider">
-        
         <section class="slide">
             <div class="glass-card">
                 <div class="emoji-header">🐱 ❤️</div>
                 <h2>Sanskriti</h2>
                 <h1>Do you love me!?</h1>
-                
-                <div class="controls">
+                <div class="btn-wrapper">
                     <button id="yesBtn" onclick="nextSlide(1)">Yes 💖</button>
                     <button id="noBtn">No 🙈</button>
                 </div>
-                
                 <p class="footer-text">Some love stories don't allow "no" 🐝</p>
             </div>
         </section>
 
-        <section class="slide">
-            <div class="glass-card">
-                <h1>You're special! ✨</h1>
-                <p>Tumhari hansi meri sabse badi khushi hai. ❤️</p>
-                <br>
-                <button onclick="nextSlide(2)" style="background: #ff4d6d; color:white;">Next ➔</button>
-            </div>
-        </section>
-
-        <section class="slide">
-            <div class="glass-card">
-                <h1>A promise... 🌸</h1>
-                <p>Main humesha tumhare saath rahunga, chahe kuch bhi ho jaye.</p>
-                <br>
-                <button onclick="nextSlide(3)" style="background: #ff4d6d; color:white;">Read Letter 💌</button>
-            </div>
-        </section>
+        <section class="slide"><div class="glass-card"><h1>You're special! ✨</h1><button onclick="nextSlide(2)" style="background:#ff4d6d;color:white;margin-top:20px">Next ➔</button></div></section>
+        <section class="slide"><div class="glass-card"><h1>A promise... 🌸</h1><button onclick="nextSlide(3)" style="background:#ff4d6d;color:white;margin-top:20px">Read Letter 💌</button></div></section>
 
         <section class="slide">
             <div id="rainContainer"></div>
             <div class="glass-card">
                 <div id="lockSection">
                     <h1>A Private Letter 💌</h1>
-                    <p style="margin-bottom: 10px;">Type <b>10ml</b> to unlock</p>
-                    <input type="text" id="passcode" placeholder="Enter secret code...">
-                    <button onclick="checkCode()" style="background: #ff4d6d; color:white;">Open</button>
+                    <p>Type <b>10ml</b> to unlock</p><br>
+                    <input type="text" id="passcode">
+                    <button onclick="checkCode()" style="background:#ff4d6d;color:white">Open</button>
                 </div>
-                
                 <div id="letterContent" class="hidden">
                     <div class="paper">
-                        <h3 style="color: #ff4d6d; margin-bottom: 10px;">Dear Sanskriti,</h3>
-                        <p>Aapke liye paragraph yahan likhein... Aap bohot pyaari hain!</p>
-                        <p style="margin-top:15px;"><b>Always yours, <br> [Your Name]</b></p>
+                        <h3 style="color:#ff4d6d">Dear Sanskriti,</h3>
+                        <p>Tum bohot pyaari ho... [Your paragraph here]</p>
                     </div>
                 </div>
             </div>
@@ -184,39 +130,38 @@
         const noBtn = document.getElementById('noBtn');
         const slider = document.getElementById('mainSlider');
 
-        // NO button bhagane ka logic (Boundary Check ke saath)
         const moveNoButton = (e) => {
             if(e.type === 'touchstart') e.preventDefault();
 
-            const padding = 30; // Screen edges se safe distance
-            // Screen ki width/height minus button ki width/height
-            const maxX = window.innerWidth - noBtn.offsetWidth - padding;
-            const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+            // SAARE SIDES SE 60px KA GAP (Button gayab nahi hoga)
+            const padding = 60; 
+            
+            // Available area calculate karo
+            const vw = window.innerWidth;
+            const vh = window.innerHeight;
 
-            // Naya Random position calculate karna
-            const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
-            const randomY = Math.max(padding, Math.floor(Math.random() * maxY));
+            // Nayi random position (Safe boundary ke andar)
+            const randomX = Math.floor(Math.random() * (vw - (padding * 2))) + padding;
+            const randomY = Math.floor(Math.random() * (vh - (padding * 2))) + padding;
 
+            noBtn.style.position = 'fixed'; // Pure screen ke hisaab se move hoga
             noBtn.style.left = randomX + 'px';
             noBtn.style.top = randomY + 'px';
-            noBtn.style.position = 'fixed'; // Pure screen par bhagane ke liye fix kar diya
         };
 
         noBtn.addEventListener('mouseover', moveNoButton);
         noBtn.addEventListener('touchstart', moveNoButton);
 
-        function nextSlide(currentIndex) {
-            slider.style.transform = `translateX(-${currentIndex * 100}vw)`;
-            if(currentIndex === 3) startHeartRain();
+        function nextSlide(idx) {
+            slider.style.transform = `translateX(-${idx * 100}vw)`;
+            if(idx === 3) startHeartRain();
         }
 
         function checkCode() {
             if(document.getElementById('passcode').value === "10ml") {
                 document.getElementById('lockSection').classList.add('hidden');
                 document.getElementById('letterContent').classList.remove('hidden');
-            } else {
-                alert("Wrong code! Hint: 10ml");
-            }
+            } else { alert("Code is 10ml"); }
         }
 
         function startHeartRain() {
