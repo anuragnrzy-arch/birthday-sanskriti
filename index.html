@@ -129,6 +129,7 @@
         .special-title { color: white; font-size: 40px; font-weight: bold; margin-bottom: 5px; text-shadow: 2px 2px 10px rgba(0,0,0,0.1); z-index: 10; }
         .special-subtitle { color: white; font-size: 22px; font-style: italic; margin-bottom: 40px; opacity: 0.9; z-index: 10; }
         
+        /* THE BEGIN BUTTON FIX */
         .begin-btn { 
             background: #ff4d6d !important; 
             color: white !important; 
@@ -148,47 +149,29 @@
         }
         @keyframes floatUp { to { transform: translateY(-110vh) rotate(360deg); opacity: 0; } }
 
-        /* --- FINAL PAGE: BACKGROUND SCROLLABLE --- */
+        /* --- FINAL LETTER PAGE (Slide 5) --- */
         #final-letter-page {
-            display: none; 
-            opacity: 0; 
-            transition: opacity 3s ease;
-            background: #fce4ec; 
-            width: 100vw; 
-            height: 100vh;
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            z-index: 5000;
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: flex-start;
-            padding-top: 40px; 
-            overflow-y: scroll; /* Full background page scroll */
-            touch-action: auto; 
-            -webkit-overflow-scrolling: touch;
+            display: none; opacity: 0; transition: opacity 3s ease;
+            background: #fce4ec; width: 100vw; height: 100vh;
+            position: fixed; top: 0; left: 0; z-index: 5000;
+            flex-direction: column; align-items: center; justify-content: flex-start;
+            padding-top: 40px; overflow-y: auto; touch-action: auto;
         }
 
         .letter-love-header { color: #ff4d6d; font-size: 28px; font-weight: bold; margin-bottom: 5px; }
         .letter-subtitle { color: #888; font-size: 16px; margin-bottom: 25px; }
 
         .white-paper {
-            background: white; 
-            width: 90%; 
-            max-width: 350px;
-            border-radius: 15px; 
-            padding: 25px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            margin-bottom: 200px; /* Iske niche tum apni 3 pics laga sako isliye space diya hai */
-            position: relative;
-            flex-shrink: 0; /* Letter box ko dabne se bachata hai */
+            background: white; width: 90%; max-width: 350px;
+            border-radius: 15px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            margin-bottom: 40px; position: relative;
         }
 
         .red-letter-title { color: #ff4d6d; font-size: 18px; font-weight: bold; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
         
         .scroll-text {
             color: #555; font-size: 15px; line-height: 1.6; text-align: left;
-            overflow: visible; /* Letter box khud scroll nahi hoga ab */
+            max-height: 350px; overflow-y: auto; padding-right: 5px;
         }
 
         .bg-hearts-static {
