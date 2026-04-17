@@ -94,9 +94,12 @@
 
         .loader-card {
             width: 85%; max-width: 320px; padding: 40px 20px;
-            background: rgba(255, 255, 255, 0.6); border-radius: 25px;
-            backdrop-filter: blur(10px); text-align: center;
-            border: 1px solid #ffcad4;
+            background: rgba(255, 245, 247, 0.9); /* Changed to match glass-card */
+            border-radius: 25px;
+            backdrop-filter: blur(15px); text-align: center;
+            /* Added white glow effect and border just like 2nd pic */
+            box-shadow: 0 8px 32px rgba(255, 182, 193, 0.3);
+            border: 1.5px solid rgba(255, 255, 255, 0.8);
         }
 
         .progress-container { width: 100%; height: 14px; background: #eee; border-radius: 20px; position: relative; margin-top: 10px; }
@@ -152,8 +155,7 @@
         /* --- FINAL LETTER PAGE (Slide 5) --- */
         #final-letter-page {
             display: none; opacity: 0; transition: opacity 3s ease;
-            background: #ffffff; /* Changed from #fce4ec to White */
-            width: 100vw; height: 100vh;
+            background: #fce4ec; width: 100vw; height: 100vh;
             position: fixed; top: 0; left: 0; z-index: 5000;
             flex-direction: column; align-items: center; justify-content: flex-start;
             padding-top: 40px; 
@@ -169,14 +171,12 @@
             border-radius: 15px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);
             margin-bottom: 40px; position: relative;
             flex-shrink: 0; 
-            border: 1px solid #eee; /* Light border to define the white paper on white bg */
         }
 
         .red-letter-title { color: #ff4d6d; font-size: 18px; font-weight: bold; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
         
         .scroll-text {
-            color: #000000; /* Changed from #555 to Black for readability */
-            font-size: 15px; line-height: 1.6; text-align: left;
+            color: #555; font-size: 15px; line-height: 1.6; text-align: left;
             max-height: 350px; overflow-y: auto; padding-right: 5px;
         }
 
