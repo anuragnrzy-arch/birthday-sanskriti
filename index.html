@@ -16,7 +16,7 @@
         /* NO BUTTON MESSAGE BOX (Hanging Style) */
         #no-message-box {
             position: fixed;
-            top: -200px; /* Initially hidden above */
+            top: -200px; 
             left: 50%;
             transform: translateX(-50%);
             z-index: 1000;
@@ -99,7 +99,6 @@
 
         .lock-icon { font-size: 80px; margin-bottom: 20px; transition: transform 1s ease; }
         
-        /* ADDED GLOW EFFECT TO LOCK BOX */
         .lock-input-box {
             background: rgba(255, 240, 245, 0.9);
             padding: 30px; border-radius: 20px;
@@ -177,21 +176,98 @@
         
         .begin-btn { background: #ff4d6d !important; color: white !important; padding: 15px 45px; border-radius: 35px; font-size: 18px; font-weight: bold; border: none; z-index: 10; box-shadow: 0 5px 20px rgba(255, 77, 109, 0.4); transition: 0.3s; }
 
-        /* FLOATING HEARTS STYLE */
         .floating-heart { position: absolute; bottom: -50px; color: rgba(255, 77, 109, 0.4); font-size: 20px; animation: floatUp linear infinite; z-index: 1; pointer-events: none; }
         @keyframes floatUp { to { transform: translateY(-110vh) rotate(360deg); opacity: 0; } }
 
         #final-letter-page { display: none; opacity: 0; transition: opacity 3s ease; background: #fce4ec; width: 100vw; height: 100vh; position: fixed; top: 0; left: 0; z-index: 5000; flex-direction: column; align-items: center; justify-content: flex-start; padding-top: 40px; overflow-y: scroll; overflow-x: hidden; }
         
-        /* HEARTS CONTAINER FOR BACKGROUND */
         #bg-heart-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
 
         .letter-love-header { color: #ff4d6d; font-size: 28px; font-weight: bold; margin-bottom: 5px; z-index: 10; position: relative; }
         .letter-subtitle { color: #888; font-size: 16px; margin-bottom: 25px; z-index: 10; position: relative; }
-        .white-paper { background: white; width: 90%; max-width: 350px; border-radius: 15px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 40px; position: relative; flex-shrink: 0; z-index: 10; }
+        .white-paper { background: white; width: 90%; max-width: 350px; border-radius: 15px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 20px; position: relative; flex-shrink: 0; z-index: 10; }
         .red-letter-title { color: #ff4d6d; font-size: 18px; font-weight: bold; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
         .scroll-text { color: #555; font-size: 15px; line-height: 1.6; text-align: left; max-height: 350px; overflow-y: auto; padding-right: 5px; }
-        .extra-blank-space { height: 2000px; width: 100%; flex-shrink: 0; }
+
+        /* NEW MEMORIES SECTION */
+        .memories-container {
+            width: 90%;
+            max-width: 350px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 10;
+            margin-bottom: 100px;
+        }
+
+        .memories-title-card {
+            background: white;
+            padding: 15px 25px;
+            border-radius: 20px;
+            border: 2px solid #ff4d6d;
+            box-shadow: 0 0 20px rgba(255, 77, 109, 0.4);
+            color: #ff4d6d;
+            font-weight: bold;
+            font-size: 18px;
+            text-align: center;
+            margin-bottom: 10px;
+            animation: glowPulse 2s infinite alternate;
+        }
+
+        .memory-string {
+            width: 2px;
+            height: 40px;
+            background: #ff4d6d;
+            position: relative;
+        }
+
+        .photo-grid {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            gap: 10px;
+            margin-top: -2px;
+        }
+
+        .memory-box-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: loveWave 3s ease-in-out infinite alternate;
+        }
+
+        .memory-box-wrapper:nth-child(2) { animation-delay: 0.5s; }
+        .memory-box-wrapper:nth-child(3) { animation-delay: 1s; }
+
+        @keyframes loveWave {
+            from { transform: translateY(0); }
+            to { transform: translateY(10px); }
+        }
+
+        .memory-box {
+            width: 85px;
+            height: 110px;
+            background: #fff;
+            border: 2px solid #ff4d6d;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 30px;
+            color: #ff4d6d;
+            box-shadow: 0 0 15px rgba(255, 77, 109, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .memory-box::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            box-shadow: inset 0 0 10px rgba(255, 77, 109, 0.2);
+        }
+
+        .extra-blank-space { height: 100px; width: 100%; flex-shrink: 0; }
     </style>
 </head>
 <body>
@@ -238,6 +314,7 @@
         
         <div class="letter-love-header">💖 LOVE 💖</div>
         <div class="letter-subtitle">You're my everything</div>
+        
         <div class="white-paper">
             <div class="red-letter-title">A Letter From My Heart</div>
             <div class="scroll-text">
@@ -248,6 +325,26 @@
                 No matter what happens, I'll always be here for you. I want you to know that you're never alone, and I will always stand by your side. ❤️
             </div>
         </div>
+
+        <div class="memories-container">
+            <div class="memories-title-card">OUR MEMORIES 💝😌🤞🏻✨</div>
+            <div class="memory-string"></div>
+            <div class="photo-grid">
+                <div class="memory-box-wrapper">
+                    <div class="memory-string" style="height:25px;"></div>
+                    <div class="memory-box">❓</div>
+                </div>
+                <div class="memory-box-wrapper">
+                    <div class="memory-string" style="height:45px;"></div>
+                    <div class="memory-box">❓</div>
+                </div>
+                <div class="memory-box-wrapper">
+                    <div class="memory-string" style="height:25px;"></div>
+                    <div class="memory-box">❓</div>
+                </div>
+            </div>
+        </div>
+
         <div class="extra-blank-space"></div>
     </div>
 
@@ -358,41 +455,4 @@
                 heart.classList.add('floating-heart');
                 heart.innerHTML = '❤️';
                 heart.style.left = Math.random() * 100 + 'vw';
-                heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
-                container.appendChild(heart);
-                setTimeout(() => heart.remove(), 5000);
-            }, 400);
-        }
-
-        function revealLetter() {
-            const specialPage = document.getElementById('something-special-page');
-            specialPage.style.opacity = '0';
-            setTimeout(() => {
-                slider.style.display = 'none';
-                const letterPage = document.getElementById('final-letter-page');
-                letterPage.style.display = 'flex';
-                document.body.style.overflowY = "auto";
-                document.body.style.touchAction = "auto";
-                startHearts('bg-heart-container');
-                setTimeout(() => { letterPage.style.opacity = '1'; }, 50);
-            }, 1500);
-        }
-
-        const moveNoButton = (e) => {
-            if(e.type === 'touchstart') e.preventDefault();
-            noMsgBox.style.top = '0px'; 
-            const padding = 50;
-            const maxX = window.innerWidth - noBtn.offsetWidth - padding;
-            const maxY = window.innerHeight - noBtn.offsetHeight - padding;
-            let randomX = Math.floor(Math.random() * (maxX - padding)) + padding;
-            let randomY = Math.floor(Math.random() * (maxY - padding)) + padding;
-            noBtn.style.position = 'fixed';
-            noBtn.style.left = randomX + 'px';
-            noBtn.style.top = randomY + 'px';
-        };
-
-        noBtn.addEventListener('mouseover', moveNoButton);
-        noBtn.addEventListener('touchstart', moveNoButton);
-    </script>
-</body>
-</html>
+                heart.style.animationDuration = (Math.random() * 3 +
