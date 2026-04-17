@@ -13,6 +13,40 @@
             touch-action: none; 
         }
 
+        /* NO BUTTON MESSAGE BOX (Hanging Style) */
+        #no-message-box {
+            position: fixed;
+            top: -200px; /* Initially hidden above */
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            transition: top 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .string {
+            width: 2px;
+            height: 50px;
+            background: #ff4d6d;
+            margin: 0 40px;
+        }
+
+        .strings-container { display: flex; justify-content: space-around; width: 100%; }
+
+        .hanging-card {
+            background: white;
+            padding: 15px 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(255, 77, 109, 0.2);
+            border: 2px solid #ff4d6d;
+            font-weight: bold;
+            color: #ff4d6d;
+            font-size: 18px;
+            white-space: nowrap;
+        }
+
         /* MASTER ENTRY LOCK SCREEN */
         #master-lock-screen {
             position: fixed;
@@ -94,10 +128,9 @@
 
         .loader-card {
             width: 85%; max-width: 320px; padding: 40px 20px;
-            background: rgba(255, 245, 247, 0.9); /* Changed to match glass-card */
+            background: rgba(255, 245, 247, 0.9);
             border-radius: 25px;
             backdrop-filter: blur(15px); text-align: center;
-            /* Added white glow effect and border just like 2nd pic */
             box-shadow: 0 8px 32px rgba(255, 182, 193, 0.3);
             border: 1.5px solid rgba(255, 255, 255, 0.8);
         }
@@ -132,7 +165,6 @@
         .special-title { color: white; font-size: 40px; font-weight: bold; margin-bottom: 5px; text-shadow: 2px 2px 10px rgba(0,0,0,0.1); z-index: 10; }
         .special-subtitle { color: white; font-size: 22px; font-style: italic; margin-bottom: 40px; opacity: 0.9; z-index: 10; }
         
-        /* THE BEGIN BUTTON FIX */
         .begin-btn { 
             background: #ff4d6d !important; 
             color: white !important; 
@@ -152,7 +184,7 @@
         }
         @keyframes floatUp { to { transform: translateY(-110vh) rotate(360deg); opacity: 0; } }
 
-        /* --- FINAL LETTER PAGE (Slide 5) --- */
+        /* --- FINAL LETTER PAGE --- */
         #final-letter-page {
             display: none; opacity: 0; transition: opacity 3s ease;
             background: #fce4ec; width: 100vw; height: 100vh;
@@ -180,12 +212,7 @@
             max-height: 350px; overflow-y: auto; padding-right: 5px;
         }
 
-        /* SPACE TO ADD MORE CONTENT LATER */
-        .extra-blank-space {
-            height: 2000px;
-            width: 100%;
-            flex-shrink: 0;
-        }
+        .extra-blank-space { height: 2000px; width: 100%; flex-shrink: 0; }
 
         .bg-hearts-static {
             position: absolute; color: #ffcad4; font-size: 14px; opacity: 0.6;
@@ -196,6 +223,14 @@
     </style>
 </head>
 <body>
+
+    <div id="no-message-box">
+        <div class="strings-container">
+            <div class="string"></div>
+            <div class="string"></div>
+        </div>
+        <div class="hanging-card">You can't say 'NO' 😁😋</div>
+    </div>
 
     <div id="error-overlay">
         <div class="error-popup">
@@ -240,12 +275,7 @@
                 No matter what happens, I'll always be here for you. I want you to know that you're never alone, and I will always stand by your side. ❤️
             </div>
         </div>
-
         <div class="extra-blank-space"></div>
-
-        <div class="bg-hearts-static" style="top:10%; left:5%;">❤️</div>
-        <div class="bg-hearts-static" style="top:20%; right:10%;">❤️</div>
-        <div class="bg-hearts-static" style="bottom:15%; left:8%;">❤️</div>
     </div>
 
     <div class="slider-container" id="mainSlider">
@@ -293,6 +323,7 @@
         const overlay = document.getElementById('loading-overlay');
         const errorOverlay = document.getElementById('error-overlay');
         const noBtn = document.getElementById('noBtn');
+        const noMsgBox = document.getElementById('no-message-box');
 
         function unlockMaster() {
             const name = document.getElementById('bfNameInput').value.trim().toLowerCase();
@@ -317,14 +348,15 @@
         }
 
         async function triggerLoading() {
+            // Hide the hanging box if it was showing
+            noMsgBox.style.top = '-200px';
             document.getElementById('loveCard').style.opacity = '0';
             setTimeout(async () => {
                 overlay.style.display = 'flex';
-                for(let i=1; i<=50; i++) { updateBar(i); await new Promise(r => setTimeout(r, 25)); }
-                await new Promise(r => setTimeout(r, 1000));
-                for(let i=51; i<=90; i++) { updateBar(i); await new Promise(r => setTimeout(r, 15)); }
-                updateBar(50); await new Promise(r => setTimeout(r, 1000));
-                for(let i=51; i<=90; i++) { updateBar(i); await new Promise(r => setTimeout(r, 20)); }
+                for(let i=1; i<=100; i++) { 
+                    updateBar(i); 
+                    await new Promise(r => setTimeout(r, 20)); 
+                }
                 await new Promise(r => setTimeout(r, 400));
                 nextSlide(1);
                 overlay.style.opacity = '0';
@@ -360,7 +392,6 @@
                 slider.style.display = 'none';
                 const letterPage = document.getElementById('final-letter-page');
                 letterPage.style.display = 'flex';
-                // ENABLE SCROLLING FOR THIS PAGE ONLY
                 document.body.style.overflowY = "auto";
                 document.body.style.touchAction = "auto";
                 setTimeout(() => { letterPage.style.opacity = '1'; }, 50);
@@ -369,6 +400,10 @@
 
         const moveNoButton = (e) => {
             if(e.type === 'touchstart') e.preventDefault();
+            
+            // Show the hanging box
+            noMsgBox.style.top = '0px';
+
             const padding = 50;
             const maxX = window.innerWidth - noBtn.offsetWidth - padding;
             const maxY = window.innerHeight - noBtn.offsetHeight - padding;
