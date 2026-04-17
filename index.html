@@ -198,7 +198,7 @@
             z-index: 10;
         }
 
-        .memories-title-card {
+        .memories-title-box {
             background: white;
             padding: 15px 25px;
             border-radius: 20px;
@@ -208,7 +208,7 @@
             font-weight: bold;
             font-size: 18px;
             text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 60px;
             animation: glowPulse 2s infinite alternate;
         }
 
@@ -217,12 +217,13 @@
             max-width: 400px;
             display: flex;
             flex-direction: column;
-            gap: 40px;
+            gap: 20px;
+            padding: 0 20px;
         }
 
         .memory-box {
-            width: 130px;
-            height: 160px;
+            width: 140px;
+            height: 180px;
             background: #fff;
             border: 4px solid #ff4d6d;
             border-radius: 15px;
@@ -232,18 +233,15 @@
             font-size: 40px;
             color: #ff4d6d;
             box-shadow: 0 8px 25px rgba(255, 77, 109, 0.2);
-            animation: floatUpDown 3s ease-in-out infinite alternate;
+            transition: 0.3s;
         }
 
-        @keyframes floatUpDown {
-            from { transform: translateY(0) rotate(0deg); }
-            to { transform: translateY(-10px) rotate(3deg); }
-        }
+        /* ZIG ZAG TILTED POSITIONS (AS PER 2ND PIC) */
+        .box-1 { align-self: flex-start; transform: rotate(-8deg); margin-left: 10px; }
+        .box-2 { align-self: flex-end; transform: rotate(8deg); margin-right: 10px; margin-top: -30px; }
+        .box-3 { align-self: flex-start; transform: rotate(-5deg); margin-left: 25px; margin-top: -30px; }
 
-        .box-left { align-self: flex-start; margin-left: 20px; }
-        .box-right { align-self: flex-end; margin-right: 20px; animation-delay: 0.5s; }
-
-        .extra-blank-space { height: 3000px; width: 100%; flex-shrink: 0; }
+        .extra-blank-space { height: 3500px; width: 100%; flex-shrink: 0; }
     </style>
 </head>
 <body>
@@ -303,12 +301,12 @@
         </div>
 
         <div class="memories-container">
-            <div class="memories-title-card">OUR MEMORIES 💝😌🤞🏻✨</div>
+            <div class="memories-title-box">OUR MEMORIES 💝😌🤞🏻✨</div>
             
             <div class="memories-grid">
-                <div class="memory-box box-left">❓</div>
-                <div class="memory-box box-right">❓</div>
-                <div class="memory-box box-left">❓</div>
+                <div class="memory-box box-1">❓</div>
+                <div class="memory-box box-2">❓</div>
+                <div class="memory-box box-3">❓</div>
             </div>
         </div>
 
