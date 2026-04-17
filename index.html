@@ -217,7 +217,7 @@
             max-width: 400px;
             display: flex;
             flex-direction: column;
-            gap: 40px; /* Space between boxes (Gap badha diya) */
+            gap: 40px; 
             padding: 0 20px;
         }
 
@@ -301,7 +301,7 @@
         </div>
 
         <div class="memories-container">
-            <div class="memories-title-box">OUR MEMORIES 💝😌🤞🏻✨</div>
+            <div class="memories-title-box">OUR BEAUTIFUL MEMORIES 💝😌🤞🏻✨</div>
             
             <div class="memories-grid">
                 <div class="memory-box box-1">❓</div>
@@ -347,7 +347,10 @@
             <div id="heart-container"></div>
             <h1 class="special-title">Something Special</h1>
             <p class="special-subtitle">Awaits You</p>
-            <button class="begin-btn" onclick="revealLetter()">Click to Begin</button>
+            <div style="z-index: 10; width: 80%; max-width: 300px; display: flex; flex-direction: column; align-items: center;">
+                <input type="text" id="secretCodeInput" placeholder="Enter Code..." style="margin-bottom: 20px;">
+                <button class="begin-btn" onclick="checkSecretCode()">Click to Begin</button>
+            </div>
         </section>
     </div>
 
@@ -385,6 +388,17 @@
         function hideError() {
             errorOverlay.style.display = 'none';
             document.getElementById('bfNameInput').value = "";
+            document.getElementById('secretCodeInput').value = "";
+        }
+
+        function checkSecretCode() {
+            const code = document.getElementById('secretCodeInput').value.trim().toLowerCase();
+            if(code === "10ml") {
+                revealLetter();
+            } else {
+                errorText.innerHTML = "Wrong Secret Code! 😤<br><span style='color: white; font-size: 18px;'>Koshish karte raho... ❤️</span>";
+                errorOverlay.style.display = 'flex';
+            }
         }
 
         async function triggerLoading() {
