@@ -13,7 +13,25 @@
             touch-action: none; 
         }
 
-        /* NO BUTTON MESSAGE BOX (Hanging Style) */
+        /* MUSIC BUTTON STYLES */
+        #music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 6000;
+            background: white;
+            border: 2px solid #ff4d6d;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: none; /* Initially hidden */
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3);
+        }
+
+        /* NO BUTTON MESSAGE BOX */
         #no-message-box {
             position: fixed;
             top: -200px; 
@@ -26,225 +44,96 @@
             align-items: center;
         }
 
-        .string {
-            width: 2px;
-            height: 60px;
-            background: #ff4d6d;
-            margin: 0 45px;
-            position: relative;
-        }
-        
-        .string::before {
-            content: '';
-            position: absolute;
-            top: -10px; left: -2px;
-            width: 6px; height: 6px;
-            background: #ff4d6d; border-radius: 50%;
-        }
-
+        .string { width: 2px; height: 60px; background: #ff4d6d; margin: 0 45px; position: relative; }
         .strings-container { display: flex; justify-content: center; width: 100%; }
-
         .hanging-card {
-            background: white;
-            padding: 12px 20px;
-            border-radius: 12px;
-            box-shadow: 0 8px 20px rgba(255, 77, 109, 0.15);
-            border: 2px solid #ff4d6d;
-            font-weight: bold;
-            color: #ff4d6d;
-            font-size: 16px;
-            white-space: nowrap;
-            margin-top: -2px;
+            background: white; padding: 12px 20px; border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(255, 77, 109, 0.15); border: 2px solid #ff4d6d;
+            font-weight: bold; color: #ff4d6d; font-size: 16px; white-space: nowrap; margin-top: -2px;
         }
 
         /* MASTER ENTRY LOCK SCREEN */
         #master-lock-screen {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: #fdf2f5;
-            z-index: 20000;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #fdf2f5; z-index: 20000; display: flex;
+            flex-direction: column; justify-content: center; align-items: center;
             transition: all 0.8s cubic-bezier(0.65, 0, 0.35, 1);
         }
 
         #error-overlay {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.2);
-            z-index: 30000;
-            display: none;
-            justify-content: center;
-            align-items: center;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.2); z-index: 30000; display: none;
+            justify-content: center; align-items: center;
         }
 
         .error-popup {
-            background: white;
-            padding: 25px;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            width: 280px;
-            border: 2px solid #ff4d6d;
+            background: white; padding: 25px; border-radius: 15px;
+            text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            width: 280px; border: 2px solid #ff4d6d;
             animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-
         .error-msg { color: #333; font-weight: bold; margin-bottom: 20px; font-size: 16px; line-height: 1.4; }
-
         .lock-icon { font-size: 80px; margin-bottom: 20px; transition: transform 1s ease; }
         
         .lock-input-box {
-            background: rgba(255, 240, 245, 0.9);
-            padding: 30px; border-radius: 20px;
-            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-            text-align: center; width: 85%; max-width: 320px;
+            background: rgba(255, 240, 245, 0.9); padding: 30px; border-radius: 20px;
+            backdrop-filter: blur(10px); text-align: center; width: 85%; max-width: 320px;
             border: 1px solid rgba(255, 182, 193, 0.5);
-            box-shadow: 0 0 20px rgba(255, 77, 109, 0.3), 0 0 40px rgba(255, 77, 109, 0.1);
             animation: glowPulse 2s infinite alternate;
         }
 
         @keyframes glowPulse {
-            from { box-shadow: 0 0 15px rgba(255, 77, 109, 0.2), 0 0 30px rgba(255, 77, 109, 0.1); }
-            to { box-shadow: 0 0 30px rgba(255, 77, 109, 0.5), 0 0 50px rgba(255, 77, 109, 0.3); }
+            from { box-shadow: 0 0 15px rgba(255, 77, 109, 0.2); }
+            to { box-shadow: 0 0 30px rgba(255, 77, 109, 0.5); }
         }
 
-        .slider-container {
-            display: flex; width: 500vw; height: 100vh;
-            transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1);
-        }
+        .slider-container { display: flex; width: 500vw; height: 100vh; transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1); }
+        .slide { width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; background: radial-gradient(circle, #fdf2f5 0%, #fce4ec 100%); }
+        .glass-card { background: rgba(255, 245, 247, 0.9); backdrop-filter: blur(15px); border-radius: 25px; padding: 40px 20px; text-align: center; width: 90%; max-width: 350px; box-shadow: 0 8px 32px rgba(255, 182, 193, 0.3); border: 1.5px solid rgba(255, 255, 255, 0.8); }
 
-        .slide {
-            width: 100vw; height: 100vh;
-            display: flex; justify-content: center; align-items: center;
-            background: radial-gradient(circle, #fdf2f5 0%, #fce4ec 100%);
-        }
-
-        .glass-card {
-            background: rgba(255, 245, 247, 0.9);
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            border-radius: 25px; padding: 40px 20px;
-            text-align: center; width: 90%; max-width: 350px;
-            transition: opacity 0.4s ease;
-            box-shadow: 0 8px 32px rgba(255, 182, 193, 0.3);
-            border: 1.5px solid rgba(255, 255, 255, 0.8);
-        }
-
-        #loading-overlay {
-            position: fixed; top: 0; left: 0;
-            width: 100%; height: 100%; background: #fdf2f5;
-            display: none; flex-direction: column;
-            justify-content: center; align-items: center; z-index: 10000;
-            transition: opacity 0.5s ease, visibility 0.5s;
-        }
-
-        .loader-card {
-            width: 85%; max-width: 320px; padding: 40px 20px;
-            background: rgba(255, 245, 247, 0.9);
-            border-radius: 25px;
-            backdrop-filter: blur(15px); text-align: center;
-            box-shadow: 0 8px 32px rgba(255, 182, 193, 0.3);
-            border: 1.5px solid rgba(255, 255, 255, 0.8);
-        }
-
+        #loading-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fdf2f5; display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 10000; }
+        .loader-card { width: 85%; max-width: 320px; padding: 40px 20px; background: rgba(255, 245, 247, 0.9); border-radius: 25px; backdrop-filter: blur(15px); text-align: center; box-shadow: 0 8px 32px rgba(255, 182, 193, 0.3); }
         .progress-container { width: 100%; height: 14px; background: #eee; border-radius: 20px; position: relative; margin-top: 10px; }
         .progress-bar { width: 0%; height: 100%; background: #ff4d6d; border-radius: 20px; transition: width 0.2s ease; }
         .pct-text { position: absolute; right: 0; top: -22px; font-size: 13px; font-weight: bold; color: #ff4d6d; }
 
         .btn-wrapper { position: relative; height: 150px; display: flex; flex-direction: column; align-items: center; }
         button { padding: 12px 35px; border: none; border-radius: 25px; cursor: pointer; font-weight: bold; font-size: 16px; transition: 0.3s; }
-        #yesBtn { background-color: #ff4d6d; color: white; box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3); }
+        #yesBtn { background-color: #ff4d6d; color: white; }
         #noBtn { background-color: #444; color: #fff; position: absolute; top: 70px; z-index: 999; }
         
-        .footer-text { font-size: 11px; color: #a38b91; margin-top: 25px; font-style: italic; }
+        input[type="text"] { padding: 12px; border-radius: 10px; border: 1.5px solid #ffcad4; width: 85%; margin-bottom: 15px; outline: none; text-align: center; }
 
-        input[type="text"] { 
-            padding: 12px; border-radius: 10px; border: 1.5px solid #ffcad4; 
-            width: 85%; margin-bottom: 15px; outline: none; text-align: center;
-            background: white;
-        }
-
-        #something-special-page { transition: opacity 1.5s ease; }
         .special-slide { background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%) !important; flex-direction: column; position: relative; overflow: hidden; }
-        .special-title { color: white; font-size: 40px; font-weight: bold; margin-bottom: 5px; text-shadow: 2px 2px 10px rgba(0,0,0,0.1); z-index: 10; }
-        .special-subtitle { color: white; font-size: 22px; font-style: italic; margin-bottom: 40px; opacity: 0.9; z-index: 10; }
-        
-        .begin-btn { background: #ff4d6d !important; color: white !important; padding: 15px 45px; border-radius: 35px; font-size: 18px; font-weight: bold; border: none; z-index: 10; box-shadow: 0 5px 20px rgba(255, 77, 109, 0.4); transition: 0.3s; }
+        .special-title { color: white; font-size: 40px; font-weight: bold; z-index: 10; }
+        .special-subtitle { color: white; font-size: 22px; font-style: italic; margin-bottom: 40px; z-index: 10; }
+        .begin-btn { background: #ff4d6d !important; color: white !important; padding: 15px 45px; border-radius: 35px; font-size: 18px; font-weight: bold; z-index: 10; }
 
         .floating-heart { position: absolute; bottom: -50px; color: rgba(255, 77, 109, 0.4); font-size: 20px; animation: floatUp linear infinite; z-index: 1; pointer-events: none; }
         @keyframes floatUp { to { transform: translateY(-110vh) rotate(360deg); opacity: 0; } }
 
-        #final-letter-page { display: none; opacity: 0; transition: opacity 3s ease; background: #fce4ec; width: 100vw; height: 100vh; position: fixed; top: 0; left: 0; z-index: 5000; flex-direction: column; align-items: center; justify-content: flex-start; padding-top: 40px; overflow-y: scroll; overflow-x: hidden; }
+        #final-letter-page { display: none; opacity: 0; transition: opacity 3s ease; background: #fce4ec; width: 100vw; height: 100vh; position: fixed; top: 0; left: 0; z-index: 5000; flex-direction: column; align-items: center; justify-content: flex-start; padding-top: 40px; overflow-y: scroll; }
+        .white-paper { background: white; width: 90%; max-width: 350px; border-radius: 15px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 40px; z-index: 10; }
+        .memories-title-box { background: white; padding: 15px 25px; border-radius: 20px; border: 2px solid #ff4d6d; color: #ff4d6d; font-weight: bold; margin-bottom: 60px; }
         
-        #bg-heart-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
-
-        .letter-love-header { color: #ff4d6d; font-size: 28px; font-weight: bold; margin-bottom: 5px; z-index: 10; position: relative; }
-        .letter-subtitle { color: #888; font-size: 16px; margin-bottom: 25px; z-index: 10; position: relative; }
-        .white-paper { background: white; width: 90%; max-width: 350px; border-radius: 15px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 40px; position: relative; flex-shrink: 0; z-index: 10; }
-        .red-letter-title { color: #ff4d6d; font-size: 18px; font-weight: bold; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
-        .scroll-text { color: #555; font-size: 15px; line-height: 1.6; text-align: left; max-height: 350px; overflow-y: auto; padding-right: 5px; }
-
-        /* MEMORIES SECTION STYLES */
-        .memories-container {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            z-index: 10;
-        }
-
-        .memories-title-box {
-            background: white;
-            padding: 15px 25px;
-            border-radius: 20px;
-            border: 2px solid #ff4d6d;
-            box-shadow: 0 0 20px rgba(255, 77, 109, 0.4);
-            color: #ff4d6d;
-            font-weight: bold;
-            font-size: 18px;
-            text-align: center;
-            margin-bottom: 60px;
-            animation: glowPulse 2s infinite alternate;
-        }
-
-        .memories-grid {
-            width: 90%;
-            max-width: 400px;
-            display: flex;
-            flex-direction: column;
-            gap: 40px; 
-            padding: 0 20px;
-        }
-
-        .memory-box {
-            width: 140px;
-            height: 180px;
-            background: #fff;
-            border: 4px solid #ff4d6d;
-            border-radius: 15px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 40px;
-            color: #ff4d6d;
-            box-shadow: 0 8px 25px rgba(255, 77, 109, 0.2);
-            transition: 0.3s;
-        }
-
-        /* ZIG ZAG TILTED WITH GAP */
+        .memory-box { width: 140px; height: 180px; background: #fff; border: 4px solid #ff4d6d; border-radius: 15px; display: flex; justify-content: center; align-items: center; font-size: 40px; color: #ff4d6d; }
         .box-1 { align-self: flex-start; transform: rotate(-8deg); margin-left: 10px; }
         .box-2 { align-self: flex-end; transform: rotate(8deg); margin-right: 10px; }
-        .box-3 { align-self: flex-start; transform: rotate(-5deg); margin-left: 25px; }
-
-        .extra-blank-space { height: 3500px; width: 100%; flex-shrink: 0; }
+        
+        .extra-blank-space { height: 500px; width: 100%; }
     </style>
 </head>
 <body>
+
+    <audio id="bgMusic" loop>
+        <source src="https://files.catbox.moe/p4b66x.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="music-control" onclick="toggleMusic()">
+        <span id="music-icon" style="font-size: 24px;">🎵</span>
+    </div>
 
     <div id="no-message-box">
         <div class="strings-container">
@@ -273,43 +162,31 @@
 
     <div id="loading-overlay">
         <div class="loader-card">
-            <div style="position:relative">
-                <span class="pct-text" id="loadPercent">0%</span>
-                <div class="progress-container">
-                    <div class="progress-bar" id="loadBar"></div>
-                </div>
-            </div>
-            <div style="margin-top:20px; font-weight:bold; color:#ff4d6d; letter-spacing: 1px;">LOADING...</div>
+            <span class="pct-text" id="loadPercent">0%</span>
+            <div class="progress-container"><div class="progress-bar" id="loadBar"></div></div>
+            <div style="margin-top:20px; font-weight:bold; color:#ff4d6d;">LOADING...</div>
         </div>
     </div>
 
     <div id="final-letter-page">
-        <div id="bg-heart-container"></div>
-        
-        <div class="letter-love-header">💗 ᴍʏ ʟᴏᴍʟ 💗</div>
-        <div class="letter-subtitle">ʏᴏᴜ'ʀᴇ ᴍʏ ᴇᴠᴇʀʏᴛʜɪɴɢ</div>
+        <div id="bg-heart-container" style="position:fixed; top:0; width:100%; height:100%; pointer-events:none;"></div>
+        <div style="color: #ff4d6d; font-size: 28px; font-weight: bold;">💖 LOVE 💖</div>
+        <div style="color: #888; margin-bottom: 25px;">You're my everything</div>
         
         <div class="white-paper">
-            <div class="red-letter-title">A Letter From My Heart</div>
-            <div class="scroll-text">
+            <div style="color: #ff4d6d; font-weight: bold; border-bottom: 1px solid #eee; padding-bottom: 10px;">A Letter From My Heart</div>
+            <div style="color: #555; font-size: 15px; margin-top: 15px; line-height: 1.6;">
                 <strong>To my special one</strong><br><br>
                 If you're busy, I'll wait for you. I know sometimes life can be really busy and you might not have time to talk to me. That's okay I'll be patient and wait because you are important to me.<br><br>
-                If you're feeling sad or upset, I'll be here to listen to you. You don't have to go through it alone. I want to hear about your feelings and help you feel better.<br><br>
-                If you need help with anything, I'll be there to help you. You can always count on me for support and care.<br><br>
-                No matter what happens, I'll always be here for you. I want you to know that you're never alone, and I will always stand by your side. ❤️
+                No matter what happens, I'll always be here for you. ❤️
             </div>
         </div>
 
-        <div class="memories-container">
-            <div class="memories-title-box">ᴏᴜʀ ᴍᴇᴍᴏʀɪᴇꜱ 💝😌🤞🏻✨</div>
-            
-            <div class="memories-grid">
-                <div class="memory-box box-1">❓</div>
-                <div class="memory-box box-2">❓</div>
-                <div class="memory-box box-3">❓</div>
-            </div>
+        <div class="memories-title-box">OUR BEAUTIFUL MEMORIES 💝😌🤞🏻✨</div>
+        <div style="display: flex; flex-direction: column; gap: 40px; width: 90%;">
+            <div class="memory-box box-1">❓</div>
+            <div class="memory-box box-2">❓</div>
         </div>
-
         <div class="extra-blank-space"></div>
     </div>
 
@@ -318,156 +195,117 @@
             <div class="glass-card" id="loveCard">
                 <div style="font-size:50px">🐱 ❤️</div>
                 <h2 style="color: #ff4d6d;">Sanskriti</h2>
-                <h1 style="margin-bottom:30px; color: #444;">Do you love me!?</h1>
+                <h1 style="margin-bottom:30px;">Do you love me!?</h1>
                 <div class="btn-wrapper">
-                    <button id="yesBtn" onclick="triggerLoading()">Yes 👀</button>
+                    <button id="yesBtn" onclick="triggerLoading()">Yes 💖</button>
                     <button id="noBtn">No 😒</button>
                 </div>
-                <p class="footer-text">Some love stories don't allow "no" 😤</p>
             </div>
         </section>
 
         <section class="slide">
             <div class="glass-card">
-                <h1 style="color: #ff4d6d;">You're special! ✨</h1>
-                <p style="color: #555;">Tumhari hansi meri sabse badi khushi hai. ❤️</p>
+                <h1>You're special! ✨</h1>
                 <button onclick="nextSlide(2)" style="background:#ff4d6d;color:white;margin-top:20px">Next ➔</button>
             </div>
         </section>
 
         <section class="slide">
             <div class="glass-card">
-                <h1 style="color: #ff4d6d;">A promise... 🌸</h1>
-                <p style="color: #555;">Main humesha tumhare saath rahunga.</p>
+                <h1>A promise... 🌸</h1>
                 <button onclick="nextSlide(3)" style="background:#ff4d6d;color:white;margin-top:20px">Read Letter 💌</button>
             </div>
         </section>
 
         <section class="slide special-slide" id="something-special-page">
-            <div id="heart-container"></div>
-            <h1 class="special-title">ꜱᴏᴍᴇᴛʜɪɴɢ ꜱᴘᴇᴄɪᴀʟ </h1>
-            <p class="special-subtitle">ᴀᴡᴀɪᴛꜱ ʏᴏᴜ</p>
-            <div style="z-index: 10; width: 80%; max-width: 300px; display: flex; flex-direction: column; align-items: center;">
-                <input type="text" id="secretCodeInput" placeholder="Enter Code..." style="margin-bottom: 20px;">
-                <button class="begin-btn" onclick="checkSecretCode()">Click to Begin</button>
-            </div>
+            <h1 class="special-title">Something Special</h1>
+            <input type="text" id="secretCodeInput" placeholder="Enter Code..." style="margin-top: 20px;">
+            <button class="begin-btn" onclick="checkSecretCode()">Click to Begin</button>
         </section>
     </div>
 
     <script>
-        const slider = document.getElementById('mainSlider');
-        const bar = document.getElementById('loadBar');
-        const pct = document.getElementById('loadPercent');
-        const overlay = document.getElementById('loading-overlay');
-        const errorOverlay = document.getElementById('error-overlay');
-        const errorText = document.getElementById('error-text-content');
-        const noBtn = document.getElementById('noBtn');
-        const noMsgBox = document.getElementById('no-message-box');
+        const audio = document.getElementById('bgMusic');
+        const musicIcon = document.getElementById('music-icon');
+        const musicBtn = document.getElementById('music-control');
+
+        function toggleMusic() {
+            if (audio.paused) {
+                audio.play();
+                musicIcon.innerText = "🎵";
+            } else {
+                audio.pause();
+                musicIcon.innerText = "🔇";
+            }
+        }
 
         function unlockMaster() {
             const name = document.getElementById('bfNameInput').value.trim().toLowerCase();
             if(name === "anurag") {
                 document.getElementById('mainLockEmoji').innerText = "🔓";
-                document.getElementById('mainLockEmoji').style.transform = "scale(1.4)";
-                document.getElementById('lockBox').style.opacity = '0';
-                setTimeout(() => {
-                    const master = document.getElementById('master-lock-screen');
-                    master.style.opacity = '0';
-                    master.style.transform = 'translateY(-100%)';
-                    setTimeout(() => master.style.display = 'none', 800);
-                }, 1000);
-            } else if (name === "") {
-                errorText.innerHTML = "System Error:";
-                errorOverlay.style.display = 'flex';
+                setTimeout(() => { document.getElementById('master-lock-screen').style.display = 'none'; }, 1000);
             } else {
-                errorText.innerHTML = "System Error: <br> Invalid Boyfriend Name! 😤<br><span style='color: white; font-size: 18px;'>WHO IS HE!?? 🤨🤨😤</span>";
-                errorOverlay.style.display = 'flex';
+                document.getElementById('error-text-content').innerHTML = "System Error: <br> Invalid Boyfriend Name! 😤<br><span style='color: white; font-size: 18px;'>WHO IS HE!?? 🤨🤨😤</span>";
+                document.getElementById('error-overlay').style.display = 'flex';
             }
         }
 
-        function hideError() {
-            errorOverlay.style.display = 'none';
-            document.getElementById('bfNameInput').value = "";
-            document.getElementById('secretCodeInput').value = "";
-        }
+        function hideError() { document.getElementById('error-overlay').style.display = 'none'; }
 
         function checkSecretCode() {
-            const code = document.getElementById('secretCodeInput').value.trim().toLowerCase();
-            if(code === "10ml") {
+            if(document.getElementById('secretCodeInput').value.trim().toLowerCase() === "10ml") {
                 revealLetter();
             } else {
-                errorText.innerHTML = "Wrong Code !!😤";
-                errorOverlay.style.display = 'flex';
+                document.getElementById('error-text-content').innerHTML = "Wrong Code !!😤";
+                document.getElementById('error-overlay').style.display = 'flex';
             }
-        }
-
-        async function triggerLoading() {
-            noMsgBox.style.top = '-200px'; 
-            document.getElementById('loveCard').style.opacity = '0';
-            setTimeout(async () => {
-                overlay.style.display = 'flex';
-                for(let i=1; i<=50; i++) { updateBar(i); await new Promise(r => setTimeout(r, 25)); }
-                await new Promise(r => setTimeout(r, 1000));
-                for(let i=51; i<=90; i++) { updateBar(i); await new Promise(r => setTimeout(r, 15)); }
-                updateBar(50); await new Promise(r => setTimeout(r, 1000));
-                for(let i=51; i<=90; i++) { updateBar(i); await new Promise(r => setTimeout(r, 20)); }
-                await new Promise(r => setTimeout(r, 400));
-                nextSlide(1);
-                overlay.style.opacity = '0';
-                setTimeout(() => { overlay.style.display = 'none'; overlay.style.opacity = '1'; }, 600);
-            }, 200);
-        }
-
-        function updateBar(val) { bar.style.width = val + "%"; pct.innerText = val + "%"; }
-
-        function nextSlide(idx) {
-            slider.style.transform = `translateX(-${idx * 100}vw)`;
-            if(idx === 3) startHearts('heart-container');
-        }
-
-        function startHearts(containerId) {
-            const container = document.getElementById(containerId);
-            if(!container) return;
-            setInterval(() => {
-                const heart = document.createElement('div');
-                heart.classList.add('floating-heart');
-                heart.innerHTML = '❤️';
-                heart.style.left = Math.random() * 100 + 'vw';
-                heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
-                container.appendChild(heart);
-                setTimeout(() => heart.remove(), 5000);
-            }, 400);
         }
 
         function revealLetter() {
-            const specialPage = document.getElementById('something-special-page');
-            specialPage.style.opacity = '0';
+            document.getElementById('something-special-page').style.opacity = '0';
             setTimeout(() => {
-                slider.style.display = 'none';
-                const letterPage = document.getElementById('final-letter-page');
-                letterPage.style.display = 'flex';
+                document.getElementById('mainSlider').style.display = 'none';
+                document.getElementById('final-letter-page').style.display = 'flex';
+                document.getElementById('final-letter-page').style.opacity = '1';
                 document.body.style.overflowY = "auto";
                 document.body.style.touchAction = "auto";
+                musicBtn.style.display = 'flex'; // Show music button
+                audio.play(); // Auto play gaana
                 startHearts('bg-heart-container');
-                setTimeout(() => { letterPage.style.opacity = '1'; }, 50);
             }, 1500);
         }
 
-        const moveNoButton = (e) => {
-            if(e.type === 'touchstart') e.preventDefault();
-            noMsgBox.style.top = '0px'; 
-            const padding = 50;
-            const maxX = window.innerWidth - noBtn.offsetWidth - padding;
-            const maxY = window.innerHeight - noBtn.offsetHeight - padding;
-            let randomX = Math.floor(Math.random() * (maxX - padding)) + padding;
-            let randomY = Math.floor(Math.random() * (maxY - padding)) + padding;
-            noBtn.style.position = 'fixed';
-            noBtn.style.left = randomX + 'px';
-            noBtn.style.top = randomY + 'px';
-        };
+        async function triggerLoading() {
+            document.getElementById('loading-overlay').style.display = 'flex';
+            for(let i=0; i<=100; i++) { 
+                document.getElementById('loadBar').style.width = i + "%"; 
+                document.getElementById('loadPercent').innerText = i + "%";
+                await new Promise(r => setTimeout(r, 30)); 
+            }
+            nextSlide(1);
+            document.getElementById('loading-overlay').style.display = 'none';
+        }
 
-        noBtn.addEventListener('mouseover', moveNoButton);
-        noBtn.addEventListener('touchstart', moveNoButton);
+        function nextSlide(idx) { document.getElementById('mainSlider').style.transform = `translateX(-${idx * 100}vw)`; }
+
+        function startHearts(id) {
+            const container = document.getElementById(id);
+            setInterval(() => {
+                const h = document.createElement('div');
+                h.classList.add('floating-heart');
+                h.innerHTML = '❤️';
+                h.style.left = Math.random() * 100 + 'vw';
+                container.appendChild(h);
+                setTimeout(() => h.remove(), 5000);
+            }, 400);
+        }
+
+        const noBtn = document.getElementById('noBtn');
+        noBtn.addEventListener('mouseover', () => {
+            document.getElementById('no-message-box').style.top = '0px';
+            noBtn.style.left = Math.random() * 80 + 'vw';
+            noBtn.style.top = Math.random() * 80 + 'vh';
+        });
     </script>
 </body>
 </html>
