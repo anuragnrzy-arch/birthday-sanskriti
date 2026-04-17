@@ -73,7 +73,6 @@
             width: 100vw; height: 100vh;
             display: flex; justify-content: center; align-items: center;
             background: radial-gradient(circle, #fdf2f5 0%, #fce4ec 100%);
-            position: relative;
         }
 
         .glass-card {
@@ -84,92 +83,6 @@
             transition: opacity 0.4s ease;
             box-shadow: 0 8px 32px rgba(255, 182, 193, 0.3);
             border: 1.5px solid rgba(255, 255, 255, 0.8);
-        }
-
-        /* PAGE 4 SPECIAL SCROLLABLE STYLES */
-        .scroll-slide {
-            display: block; 
-            overflow-y: auto; 
-            touch-action: pan-y;
-            background: linear-gradient(to bottom, #fdf2f5, #ffccd5);
-        }
-
-        .page4-container {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 50px 0;
-        }
-
-        .white-letter {
-            background: white;
-            width: 85%;
-            max-width: 350px;
-            padding: 30px 20px;
-            border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            margin-bottom: 60px;
-            text-align: center;
-        }
-
-        .memory-section {
-            width: 100%;
-            text-align: center;
-            margin-bottom: 60px;
-        }
-
-        .photo-hangers {
-            display: flex;
-            justify-content: space-around;
-            padding: 20px;
-        }
-
-        .hanging-photo {
-            width: 80px;
-            height: 100px;
-            background: white;
-            border: 2px solid #fff;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 30px;
-            position: relative;
-            transform-origin: top center;
-            animation: swing 3s ease-in-out infinite;
-        }
-
-        .hanging-photo::before {
-            content: '';
-            position: absolute;
-            top: -40px;
-            left: 50%;
-            width: 2px;
-            height: 40px;
-            background: #ff4d6d;
-        }
-
-        @keyframes swing {
-            0%, 100% { transform: rotate(-5deg); }
-            50% { transform: rotate(5deg); }
-        }
-
-        .surprise-btn {
-            background: #ff4d6d;
-            color: white;
-            padding: 15px 30px;
-            border-radius: 30px;
-            border: none;
-            font-weight: bold;
-            cursor: pointer;
-            margin-bottom: 100px;
-        }
-
-        .final-surprise {
-            font-size: 80px;
-            margin-bottom: 100px;
-            display: none;
         }
 
         #loading-overlay {
@@ -211,7 +124,7 @@
     <div id="error-overlay">
         <div class="error-popup">
             <div style="font-size: 40px; margin-bottom: 10px;">⚠️</div>
-            <div class="error-msg">System Error: <br> Invalid Input! 😤</div>
+            <div class="error-msg">System Error: <br> Invalid Boyfriend Name! 😤</div>
             <button onclick="hideError()" style="background: #ff4d6d; color: white; width: 100%;">Try Again</button>
         </div>
     </div>
@@ -267,40 +180,16 @@
             </div>
         </section>
 
-        <section class="slide scroll-slide" id="page4">
-            <div style="height: 100vh; display: flex; justify-content: center; align-items: center;" id="page4Lock">
-                <div class="glass-card">
-                    <h1 style="color: #ff4d6d; margin-bottom: 20px;">A Private Letter 💌</h1>
+        <section class="slide">
+            <div class="glass-card">
+                <div id="lockSection">
+                    <h1 style="color: #ff4d6d;">A Private Letter 💌</h1>
                     <input type="text" id="passcode" placeholder="Enter 10ml">
-                    <button onclick="checkCode()" style="background:#ff4d6d;color:white; width:100%;">Open</button>
+                    <button onclick="checkCode()" style="background:#ff4d6d;color:white">Open</button>
                 </div>
-            </div>
-
-            <div class="page4-container hidden" id="page4Content">
-                <h1 style="color: #ff4d6d; margin-bottom: 20px; font-size: 28px;">U R My Everything ❤️</h1>
-                
-                <div class="white-letter">
-                    <h2 style="color: #ff4d6d; margin-bottom: 15px;">A Letter From My Heart</h2>
-                    <p style="color: #444; line-height: 1.6; text-align: left;">
-                        Dear Sanskriti,<br><br>
-                        Yahan apna message likhein jo aap dikhana chahte hain. Aap is section mein jitna chahe bada letter likh sakte hain, ye scrollable hai.<br><br>
-                        With Love,<br>Anurag ❤️
-                    </p>
+                <div id="letterContent" class="hidden">
+                    <p style="color: #444;">Dear Sanskriti, yahan apna letter likhein... ❤️</p>
                 </div>
-
-                <div class="memory-section">
-                    <h2 style="color: #ff4d6d; margin-bottom: 30px;">Our Beautiful Memories</h2>
-                    <div class="photo-hangers">
-                        <div class="hanging-photo">?</div>
-                        <div class="hanging-photo">?</div>
-                        <div class="hanging-photo">?</div>
-                    </div>
-                </div>
-
-                <button class="surprise-btn" id="surpriseBtn" onclick="showFinalSurprise()">Tap to See a Surprise</button>
-                <div class="final-surprise" id="finalQ">?</div>
-
-                <p style="color: #a38b91; font-style: italic; font-size: 12px;">(Scroll down to explore everything)</p>
             </div>
         </section>
     </div>
@@ -332,16 +221,36 @@
 
         function hideError() {
             errorOverlay.style.display = 'none';
+            document.getElementById('bfNameInput').value = "";
         }
 
         async function triggerLoading() {
             document.getElementById('loveCard').style.opacity = '0';
             setTimeout(async () => {
                 overlay.style.display = 'flex';
-                for(let i=1; i<=100; i++) {
+                
+                for(let i=1; i<=50; i++) {
+                    updateBar(i);
+                    await new Promise(r => setTimeout(r, 25));
+                }
+                
+                await new Promise(r => setTimeout(r, 1000));
+                
+                for(let i=51; i<=90; i++) {
+                    updateBar(i);
+                    await new Promise(r => setTimeout(r, 15));
+                }
+
+                updateBar(50);
+                await new Promise(r => setTimeout(r, 1000));
+
+                for(let i=51; i<=90; i++) {
                     updateBar(i);
                     await new Promise(r => setTimeout(r, 20));
                 }
+
+                await new Promise(r => setTimeout(r, 400));
+                
                 nextSlide(1);
                 overlay.style.opacity = '0';
                 setTimeout(() => { overlay.style.display = 'none'; }, 600);
@@ -357,23 +266,6 @@
             slider.style.transform = `translateX(-${idx * 100}vw)`;
         }
 
-        function checkCode() {
-            if(document.getElementById('passcode').value === "10ml") {
-                document.getElementById('page4Lock').classList.add('hidden');
-                document.getElementById('page4Content').classList.remove('hidden');
-                // Allow scrolling on body ONLY for this page
-                document.body.style.overflowY = "auto";
-            } else {
-                errorOverlay.style.display = 'flex';
-            }
-        }
-
-        function showFinalSurprise() {
-            document.getElementById('surpriseBtn').style.display = 'none';
-            document.getElementById('finalQ').style.display = 'block';
-        }
-
-        // No button logic
         const moveNoButton = (e) => {
             if(e.type === 'touchstart') e.preventDefault();
             const padding = 50;
@@ -388,6 +280,13 @@
 
         noBtn.addEventListener('mouseover', moveNoButton);
         noBtn.addEventListener('touchstart', moveNoButton);
+
+        function checkCode() {
+            if(document.getElementById('passcode').value === "10ml") {
+                document.getElementById('lockSection').classList.add('hidden');
+                document.getElementById('letterContent').classList.remove('hidden');
+            }
+        }
     </script>
 </body>
 </html>
