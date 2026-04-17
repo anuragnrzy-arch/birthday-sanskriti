@@ -452,4 +452,39 @@
                 heart.style.left = Math.random() * 100 + 'vw';
                 heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
                 container.appendChild(heart);
-                setTimeout(() =>
+                setTimeout(() => heart.remove(), 5000);
+            }, 400);
+        }
+
+        function revealLetter() {
+            const specialPage = document.getElementById('something-special-page');
+            specialPage.style.opacity = '0';
+            setTimeout(() => {
+                slider.style.display = 'none';
+                const letterPage = document.getElementById('final-letter-page');
+                letterPage.style.display = 'flex';
+                document.body.style.overflowY = "auto";
+                document.body.style.touchAction = "auto";
+                startHearts('bg-heart-container');
+                setTimeout(() => { letterPage.style.opacity = '1'; }, 50);
+            }, 1500);
+        }
+
+        const moveNoButton = (e) => {
+            if(e.type === 'touchstart') e.preventDefault();
+            noMsgBox.style.top = '0px'; 
+            const padding = 50;
+            const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+            const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+            let randomX = Math.floor(Math.random() * (maxX - padding)) + padding;
+            let randomY = Math.floor(Math.random() * (maxY - padding)) + padding;
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+        };
+
+        noBtn.addEventListener('mouseover', moveNoButton);
+        noBtn.addEventListener('touchstart', moveNoButton);
+    </script>
+</body>
+</html>
