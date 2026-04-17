@@ -152,11 +152,12 @@
         /* --- FINAL LETTER PAGE (Slide 5) --- */
         #final-letter-page {
             display: none; opacity: 0; transition: opacity 3s ease;
-            background: #fce4ec; width: 100vw; height: 100vh;
+            background: #ffffff; /* Yaha change kiya: Pink to White */
+            width: 100vw; height: 100vh;
             position: fixed; top: 0; left: 0; z-index: 5000;
             flex-direction: column; align-items: center; justify-content: flex-start;
             padding-top: 40px; 
-            overflow-y: scroll; /* Enable background scroll */
+            overflow-y: scroll; 
             overflow-x: hidden;
         }
 
@@ -165,9 +166,11 @@
 
         .white-paper {
             background: white; width: 90%; max-width: 350px;
-            border-radius: 15px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border-radius: 15px; padding: 25px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08); /* Shadow adjustment */
+            border: 1px solid #f0f0f0; /* Subtle border for white-on-white visibility */
             margin-bottom: 40px; position: relative;
-            flex-shrink: 0; /* Important for scroll */
+            flex-shrink: 0; 
         }
 
         .red-letter-title { color: #ff4d6d; font-size: 18px; font-weight: bold; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
