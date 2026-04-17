@@ -148,7 +148,7 @@
         }
         @keyframes floatUp { to { transform: translateY(-110vh) rotate(360deg); opacity: 0; } }
 
-        /* --- FINAL LETTER PAGE (Slide 5) - FULL PAGE SCROLLABLE --- */
+        /* --- FINAL PAGE: BACKGROUND SCROLLABLE --- */
         #final-letter-page {
             display: none; 
             opacity: 0; 
@@ -164,9 +164,9 @@
             align-items: center; 
             justify-content: flex-start;
             padding-top: 40px; 
-            overflow-y: auto; /* Pura background page scrollable ho gaya */
-            overflow-x: hidden;
-            touch-action: auto; /* Touch controls enabled for scrolling */
+            overflow-y: scroll; /* Full background page scroll */
+            touch-action: auto; 
+            -webkit-overflow-scrolling: touch;
         }
 
         .letter-love-header { color: #ff4d6d; font-size: 28px; font-weight: bold; margin-bottom: 5px; }
@@ -179,18 +179,16 @@
             border-radius: 15px; 
             padding: 25px; 
             box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            margin-bottom: 60px; /* Space at bottom so user can scroll fully */
+            margin-bottom: 200px; /* Iske niche tum apni 3 pics laga sako isliye space diya hai */
             position: relative;
+            flex-shrink: 0; /* Letter box ko dabne se bachata hai */
         }
 
         .red-letter-title { color: #ff4d6d; font-size: 18px; font-weight: bold; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
         
         .scroll-text {
-            color: #555; 
-            font-size: 16px; 
-            line-height: 1.6; 
-            text-align: left;
-            /* Yahan se individual scroll hata diya kyunki ab pura page scroll hota hai */
+            color: #555; font-size: 15px; line-height: 1.6; text-align: left;
+            overflow: visible; /* Letter box khud scroll nahi hoga ab */
         }
 
         .bg-hearts-static {
@@ -244,8 +242,6 @@
                 If you're feeling sad or upset, I'll be here to listen to you. You don't have to go through it alone. I want to hear about your feelings and help you feel better.<br><br>
                 If you need help with anything, I'll be there to help you. You can always count on me for support and care.<br><br>
                 No matter what happens, I'll always be here for you. I want you to know that you're never alone, and I will always stand by your side. ❤️
-                <br><br>
-                Tum mere liye bahut special ho aur hamesha rahogi. 🌸
             </div>
         </div>
         <div class="bg-hearts-static" style="top:10%; left:5%;">❤️</div>
