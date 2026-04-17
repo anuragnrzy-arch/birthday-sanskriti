@@ -99,12 +99,20 @@
 
         .lock-icon { font-size: 80px; margin-bottom: 20px; transition: transform 1s ease; }
         
+        /* ADDED GLOW EFFECT TO LOCK BOX */
         .lock-input-box {
             background: rgba(255, 240, 245, 0.9);
             padding: 30px; border-radius: 20px;
             backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
             text-align: center; width: 85%; max-width: 320px;
             border: 1px solid rgba(255, 182, 193, 0.5);
+            box-shadow: 0 0 20px rgba(255, 77, 109, 0.3), 0 0 40px rgba(255, 77, 109, 0.1);
+            animation: glowPulse 2s infinite alternate;
+        }
+
+        @keyframes glowPulse {
+            from { box-shadow: 0 0 15px rgba(255, 77, 109, 0.2), 0 0 30px rgba(255, 77, 109, 0.1); }
+            to { box-shadow: 0 0 30px rgba(255, 77, 109, 0.5), 0 0 50px rgba(255, 77, 109, 0.3); }
         }
 
         .slider-container {
@@ -342,7 +350,6 @@
             if(idx === 3) startHearts('heart-container');
         }
 
-        // Updated function to handle different containers
         function startHearts(containerId) {
             const container = document.getElementById(containerId);
             if(!container) return;
@@ -366,7 +373,6 @@
                 letterPage.style.display = 'flex';
                 document.body.style.overflowY = "auto";
                 document.body.style.touchAction = "auto";
-                // Start background hearts when letter is revealed
                 startHearts('bg-heart-container');
                 setTimeout(() => { letterPage.style.opacity = '1'; }, 50);
             }, 1500);
