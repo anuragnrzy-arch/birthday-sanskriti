@@ -13,7 +13,7 @@
             touch-action: none; 
         }
 
-        /* NO BUTTON MESSAGE BOX */
+        /* NO BUTTON MESSAGE BOX (Hanging Style) */
         #no-message-box {
             position: fixed;
             top: -200px; 
@@ -96,6 +96,7 @@
         @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
         .error-msg { color: #333; font-weight: bold; margin-bottom: 20px; font-size: 16px; line-height: 1.4; }
+
         .lock-icon { font-size: 80px; margin-bottom: 20px; transition: transform 1s ease; }
         
         .lock-input-box {
@@ -188,57 +189,59 @@
         .red-letter-title { color: #ff4d6d; font-size: 18px; font-weight: bold; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
         .scroll-text { color: #555; font-size: 15px; line-height: 1.6; text-align: left; max-height: 350px; overflow-y: auto; padding-right: 5px; }
 
-        /* --- NEW MEMORIES & ZIGZAG DESIGN --- */
+        /* MEMORIES SECTION STYLES */
         .memories-container {
-            width: 90%;
-            max-width: 380px;
+            width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
             z-index: 10;
-            margin-top: 20px;
         }
 
         .memories-title-card {
             background: white;
             padding: 15px 25px;
             border-radius: 20px;
-            border: 2.5px solid #ff4d6d;
+            border: 2px solid #ff4d6d;
             box-shadow: 0 0 20px rgba(255, 77, 109, 0.4);
             color: #ff4d6d;
             font-weight: bold;
             font-size: 18px;
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 50px;
             animation: glowPulse 2s infinite alternate;
         }
 
         .memories-grid {
-            width: 100%;
+            width: 90%;
+            max-width: 400px;
             display: flex;
             flex-direction: column;
-            gap: 30px;
+            gap: 40px;
         }
 
         .memory-box {
-            width: 120px;
-            height: 150px;
-            background: white;
-            border: 3px solid #ff4d6d;
+            width: 130px;
+            height: 160px;
+            background: #fff;
+            border: 4px solid #ff4d6d;
             border-radius: 15px;
             display: flex;
             justify-content: center;
             align-items: center;
             font-size: 40px;
             color: #ff4d6d;
-            box-shadow: 0 0 15px rgba(255, 77, 109, 0.3);
-            position: relative;
+            box-shadow: 0 8px 25px rgba(255, 77, 109, 0.2);
+            animation: floatUpDown 3s ease-in-out infinite alternate;
         }
 
-        /* Zig Zag Alignment */
-        .box-left { align-self: flex-start; margin-left: 20px; transform: rotate(-5deg); }
-        .box-right { align-self: flex-end; margin-right: 20px; transform: rotate(5deg); }
-        .box-center { align-self: center; transform: rotate(-2deg); }
+        @keyframes floatUpDown {
+            from { transform: translateY(0) rotate(0deg); }
+            to { transform: translateY(-10px) rotate(3deg); }
+        }
+
+        .box-left { align-self: flex-start; margin-left: 20px; }
+        .box-right { align-self: flex-end; margin-right: 20px; animation-delay: 0.5s; }
 
         .extra-blank-space { height: 3000px; width: 100%; flex-shrink: 0; }
     </style>
@@ -305,7 +308,7 @@
             <div class="memories-grid">
                 <div class="memory-box box-left">❓</div>
                 <div class="memory-box box-right">❓</div>
-                <div class="memory-box box-center">❓</div>
+                <div class="memory-box box-left">❓</div>
             </div>
         </div>
 
@@ -391,10 +394,11 @@
             document.getElementById('loveCard').style.opacity = '0';
             setTimeout(async () => {
                 overlay.style.display = 'flex';
-                for(let i=1; i<=100; i++) { 
-                    updateBar(i); 
-                    await new Promise(r => setTimeout(r, i < 50 ? 20 : 10)); 
-                }
+                for(let i=1; i<=50; i++) { updateBar(i); await new Promise(r => setTimeout(r, 25)); }
+                await new Promise(r => setTimeout(r, 1000));
+                for(let i=51; i<=90; i++) { updateBar(i); await new Promise(r => setTimeout(r, 15)); }
+                updateBar(50); await new Promise(r => setTimeout(r, 1000));
+                for(let i=51; i<=90; i++) { updateBar(i); await new Promise(r => setTimeout(r, 20)); }
                 await new Promise(r => setTimeout(r, 400));
                 nextSlide(1);
                 overlay.style.opacity = '0';
@@ -403,7 +407,11 @@
         }
 
         function updateBar(val) { bar.style.width = val + "%"; pct.innerText = val + "%"; }
-        function nextSlide(idx) { slider.style.transform = `translateX(-${idx * 100}vw)`; if(idx === 3) startHearts('heart-container'); }
+
+        function nextSlide(idx) {
+            slider.style.transform = `translateX(-${idx * 100}vw)`;
+            if(idx === 3) startHearts('heart-container');
+        }
 
         function startHearts(containerId) {
             const container = document.getElementById(containerId);
