@@ -129,6 +129,20 @@
         .special-title { color: white; font-size: 40px; font-weight: bold; margin-bottom: 5px; text-shadow: 2px 2px 10px rgba(0,0,0,0.1); z-index: 10; }
         .special-subtitle { color: white; font-size: 22px; font-style: italic; margin-bottom: 40px; opacity: 0.9; z-index: 10; }
         
+        /* THE BEGIN BUTTON FIX */
+        .begin-btn { 
+            background: #ff4d6d !important; 
+            color: white !important; 
+            padding: 15px 45px; 
+            border-radius: 35px;
+            font-size: 18px; 
+            font-weight: bold; 
+            border: none; 
+            z-index: 10;
+            box-shadow: 0 5px 20px rgba(255, 77, 109, 0.4); 
+            transition: 0.3s; 
+        }
+
         .floating-heart {
             position: absolute; bottom: -50px; color: rgba(255, 255, 255, 0.6);
             font-size: 20px; animation: floatUp linear infinite;
@@ -324,20 +338,13 @@
         }
 
         function revealLetter() {
-            // 1. Vanish current page
             const specialPage = document.getElementById('something-special-page');
             specialPage.style.opacity = '0';
-            
             setTimeout(() => {
-                // 2. Hide slider to prevent interaction
                 slider.style.display = 'none';
-                
-                // 3. Show Letter Page with 3s Fade In
                 const letterPage = document.getElementById('final-letter-page');
                 letterPage.style.display = 'flex';
-                setTimeout(() => {
-                    letterPage.style.opacity = '1';
-                }, 50);
+                setTimeout(() => { letterPage.style.opacity = '1'; }, 50);
             }, 1500);
         }
 
