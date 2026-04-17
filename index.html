@@ -27,7 +27,6 @@
             transition: all 0.8s cubic-bezier(0.65, 0, 0.35, 1);
         }
 
-        /* SMALL COMPUTER ERROR BOX */
         #error-overlay {
             position: fixed;
             top: 0; left: 0;
@@ -65,7 +64,7 @@
         }
 
         .slider-container {
-            display: flex; width: 400vw; height: 100vh;
+            display: flex; width: 500vw; height: 100vh;
             transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1);
         }
 
@@ -116,35 +115,57 @@
             width: 85%; margin-bottom: 15px; outline: none; text-align: center;
             background: white;
         }
-        .hidden { display: none; }
 
-        /* --- ONLY 4TH PAGE STYLES --- */
+        /* --- 4TH PAGE STYLES --- */
+        #something-special-page {
+            transition: opacity 1.5s ease;
+        }
+
         .special-slide {
             background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%) !important;
-            flex-direction: column;
-            position: relative;
-            overflow: hidden;
+            flex-direction: column; position: relative; overflow: hidden;
         }
-        .special-title {
-            color: white; font-size: 40px; font-weight: bold; margin-bottom: 5px;
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.1); z-index: 10;
-        }
-        .special-subtitle {
-            color: white; font-size: 22px; font-style: italic; margin-bottom: 40px;
-            opacity: 0.9; z-index: 10;
-        }
-        .begin-btn {
-            background: #ff4d6d; color: white; padding: 15px 45px; border-radius: 35px;
-            font-size: 18px; font-weight: bold; border: none; z-index: 10;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.15); transition: 0.3s;
-        }
+
+        .special-title { color: white; font-size: 40px; font-weight: bold; margin-bottom: 5px; text-shadow: 2px 2px 10px rgba(0,0,0,0.1); z-index: 10; }
+        .special-subtitle { color: white; font-size: 22px; font-style: italic; margin-bottom: 40px; opacity: 0.9; z-index: 10; }
+        
         .floating-heart {
             position: absolute; bottom: -50px; color: rgba(255, 255, 255, 0.6);
             font-size: 20px; animation: floatUp linear infinite;
         }
-        @keyframes floatUp {
-            to { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+        @keyframes floatUp { to { transform: translateY(-110vh) rotate(360deg); opacity: 0; } }
+
+        /* --- FINAL LETTER PAGE (Slide 5) --- */
+        #final-letter-page {
+            display: none; opacity: 0; transition: opacity 3s ease;
+            background: #fce4ec; width: 100vw; height: 100vh;
+            position: fixed; top: 0; left: 0; z-index: 5000;
+            flex-direction: column; align-items: center; justify-content: flex-start;
+            padding-top: 40px; overflow-y: auto; touch-action: auto;
         }
+
+        .letter-love-header { color: #ff4d6d; font-size: 28px; font-weight: bold; margin-bottom: 5px; }
+        .letter-subtitle { color: #888; font-size: 16px; margin-bottom: 25px; }
+
+        .white-paper {
+            background: white; width: 90%; max-width: 350px;
+            border-radius: 15px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            margin-bottom: 40px; position: relative;
+        }
+
+        .red-letter-title { color: #ff4d6d; font-size: 18px; font-weight: bold; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        
+        .scroll-text {
+            color: #555; font-size: 15px; line-height: 1.6; text-align: left;
+            max-height: 350px; overflow-y: auto; padding-right: 5px;
+        }
+
+        .bg-hearts-static {
+            position: absolute; color: #ffcad4; font-size: 14px; opacity: 0.6;
+            animation: floatSlowly 4s ease-in-out infinite alternate;
+        }
+        @keyframes floatSlowly { from { transform: translateY(0); } to { transform: translateY(-10px); } }
+
     </style>
 </head>
 <body>
@@ -178,6 +199,25 @@
         </div>
     </div>
 
+    <div id="final-letter-page">
+        <div class="letter-love-header">💖 LOVE 💖</div>
+        <div class="letter-subtitle">You're my everything</div>
+        
+        <div class="white-paper">
+            <div class="red-letter-title">A Letter From My Heart</div>
+            <div class="scroll-text">
+                <strong>To my special one</strong><br><br>
+                If you're busy, I'll wait for you. I know sometimes life can be really busy and you might not have time to talk to me. That's okay I'll be patient and wait because you are important to me.<br><br>
+                If you're feeling sad or upset, I'll be here to listen to you. You don't have to go through it alone. I want to hear about your feelings and help you feel better.<br><br>
+                If you need help with anything, I'll be there to help you. You can always count on me for support and care.<br><br>
+                No matter what happens, I'll always be here for you. I want you to know that you're never alone, and I will always stand by your side. ❤️
+            </div>
+        </div>
+        <div class="bg-hearts-static" style="top:10%; left:5%;">❤️</div>
+        <div class="bg-hearts-static" style="top:20%; right:10%;">❤️</div>
+        <div class="bg-hearts-static" style="bottom:15%; left:8%;">❤️</div>
+    </div>
+
     <div class="slider-container" id="mainSlider">
         <section class="slide">
             <div class="glass-card" id="loveCard">
@@ -208,11 +248,11 @@
             </div>
         </section>
 
-        <section class="slide special-slide">
+        <section class="slide special-slide" id="something-special-page">
             <div id="heart-container"></div>
             <h1 class="special-title">Something Special</h1>
             <p class="special-subtitle">Awaits You</p>
-            <button class="begin-btn" onclick="console.log('Begin Clicked')">Click to Begin</button>
+            <button class="begin-btn" onclick="revealLetter()">Click to Begin</button>
         </section>
     </div>
 
@@ -250,39 +290,19 @@
             document.getElementById('loveCard').style.opacity = '0';
             setTimeout(async () => {
                 overlay.style.display = 'flex';
-                
-                for(let i=1; i<=50; i++) {
-                    updateBar(i);
-                    await new Promise(r => setTimeout(r, 25));
-                }
-                
+                for(let i=1; i<=50; i++) { updateBar(i); await new Promise(r => setTimeout(r, 25)); }
                 await new Promise(r => setTimeout(r, 1000));
-                
-                for(let i=51; i<=90; i++) {
-                    updateBar(i);
-                    await new Promise(r => setTimeout(r, 15));
-                }
-
-                updateBar(50);
-                await new Promise(r => setTimeout(r, 1000));
-
-                for(let i=51; i<=90; i++) {
-                    updateBar(i);
-                    await new Promise(r => setTimeout(r, 20));
-                }
-
+                for(let i=51; i<=90; i++) { updateBar(i); await new Promise(r => setTimeout(r, 15)); }
+                updateBar(50); await new Promise(r => setTimeout(r, 1000));
+                for(let i=51; i<=90; i++) { updateBar(i); await new Promise(r => setTimeout(r, 20)); }
                 await new Promise(r => setTimeout(r, 400));
-                
                 nextSlide(1);
                 overlay.style.opacity = '0';
-                setTimeout(() => { overlay.style.display = 'none'; }, 600);
+                setTimeout(() => { overlay.style.display = 'none'; overlay.style.opacity = '1'; }, 600);
             }, 200);
         }
 
-        function updateBar(val) {
-            bar.style.width = val + "%";
-            pct.innerText = val + "%";
-        }
+        function updateBar(val) { bar.style.width = val + "%"; pct.innerText = val + "%"; }
 
         function nextSlide(idx) {
             slider.style.transform = `translateX(-${idx * 100}vw)`;
@@ -291,16 +311,34 @@
 
         function startHearts() {
             const container = document.getElementById('heart-container');
+            if(!container) return;
             setInterval(() => {
                 const heart = document.createElement('div');
                 heart.classList.add('floating-heart');
                 heart.innerHTML = '❤️';
                 heart.style.left = Math.random() * 100 + 'vw';
                 heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
-                heart.style.opacity = Math.random();
                 container.appendChild(heart);
                 setTimeout(() => heart.remove(), 5000);
-            }, 300);
+            }, 400);
+        }
+
+        function revealLetter() {
+            // 1. Vanish current page
+            const specialPage = document.getElementById('something-special-page');
+            specialPage.style.opacity = '0';
+            
+            setTimeout(() => {
+                // 2. Hide slider to prevent interaction
+                slider.style.display = 'none';
+                
+                // 3. Show Letter Page with 3s Fade In
+                const letterPage = document.getElementById('final-letter-page');
+                letterPage.style.display = 'flex';
+                setTimeout(() => {
+                    letterPage.style.opacity = '1';
+                }, 50);
+            }, 1500);
         }
 
         const moveNoButton = (e) => {
