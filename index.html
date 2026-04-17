@@ -27,7 +27,7 @@
             transition: all 0.8s cubic-bezier(0.65, 0, 0.35, 1);
         }
 
-        /* SMALL COMPUTER ERROR BOX */
+        /* ERROR POPUP */
         #error-overlay {
             position: fixed;
             top: 0; left: 0;
@@ -64,14 +64,20 @@
             border: 1px solid rgba(255, 182, 193, 0.5);
         }
 
+        /* SLIDER SYSTEM */
         .slider-container {
-            display: flex; width: 400vw; height: 100vh;
+            display: flex; width: 500vw; height: 100vh;
             transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1);
         }
 
         .slide {
             width: 100vw; height: 100vh;
             display: flex; justify-content: center; align-items: center;
+            position: relative;
+        }
+
+        /* DEFAULT SLIDE BACKGROUND */
+        .slide:not(.special-bg) {
             background: radial-gradient(circle, #fdf2f5 0%, #fce4ec 100%);
         }
 
@@ -85,6 +91,7 @@
             border: 1.5px solid rgba(255, 255, 255, 0.8);
         }
 
+        /* LOADING OVERLAY */
         #loading-overlay {
             position: fixed; top: 0; left: 0;
             width: 100%; height: 100%; background: #fdf2f5;
@@ -104,12 +111,66 @@
         .progress-bar { width: 0%; height: 100%; background: #ff4d6d; border-radius: 20px; transition: width 0.2s ease; }
         .pct-text { position: absolute; right: 0; top: -22px; font-size: 13px; font-weight: bold; color: #ff4d6d; }
 
+        /* BUTTONS */
         .btn-wrapper { position: relative; height: 150px; display: flex; flex-direction: column; align-items: center; }
         button { padding: 12px 35px; border: none; border-radius: 25px; cursor: pointer; font-weight: bold; font-size: 16px; transition: 0.3s; }
         #yesBtn { background-color: #ff4d6d; color: white; box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3); }
         #noBtn { background-color: #444; color: #fff; position: absolute; top: 70px; z-index: 999; }
         
         .footer-text { font-size: 11px; color: #a38b91; margin-top: 25px; font-style: italic; }
+
+        /* 4th PAGE (SOMETHING SPECIAL) STYLING */
+        .special-bg {
+            background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
+            overflow: hidden;
+        }
+
+        .special-content {
+            text-align: center;
+            z-index: 10;
+        }
+
+        .special-title {
+            color: white;
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            margin-bottom: 5px;
+        }
+
+        .special-subtitle {
+            color: rgba(255,255,255,0.9);
+            font-style: italic;
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .begin-btn {
+            background-color: #ff4d6d;
+            color: white;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            border-radius: 30px;
+            box-shadow: 0 5px 20px rgba(255, 77, 109, 0.4);
+            border: none;
+            cursor: pointer;
+        }
+
+        /* FLOATING HEARTS ANIMATION */
+        .heart {
+            position: absolute;
+            bottom: -10%;
+            color: #ff4d6d;
+            font-size: 20px;
+            user-select: none;
+            pointer-events: none;
+            animation: floatUp linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+        }
 
         input[type="text"] { 
             padding: 12px; border-radius: 10px; border: 1.5px solid #ffcad4; 
@@ -172,11 +233,19 @@
             </div>
         </section>
 
+        <section class="slide special-bg" id="specialPage">
+            <div class="special-content">
+                <h1 class="special-title">Something Special</h1>
+                <p class="special-subtitle">Awaits You</p>
+                <button class="begin-btn" onclick="nextSlide(3)">Click to Begin</button>
+            </div>
+            </section>
+
         <section class="slide">
             <div class="glass-card">
                 <h1 style="color: #ff4d6d;">A promise... 🌸</h1>
                 <p style="color: #555;">Main humesha tumhare saath rahunga.</p>
-                <button onclick="nextSlide(3)" style="background:#ff4d6d;color:white;margin-top:20px">Read Letter 💌</button>
+                <button onclick="nextSlide(4)" style="background:#ff4d6d;color:white;margin-top:20px">Read Letter 💌</button>
             </div>
         </section>
 
@@ -228,29 +297,10 @@
             document.getElementById('loveCard').style.opacity = '0';
             setTimeout(async () => {
                 overlay.style.display = 'flex';
-                
-                for(let i=1; i<=50; i++) {
+                for(let i=1; i<=100; i++) {
                     updateBar(i);
-                    await new Promise(r => setTimeout(r, 25));
+                    await new Promise(r => setTimeout(r, i < 50 ? 30 : 15));
                 }
-                
-                await new Promise(r => setTimeout(r, 1000));
-                
-                for(let i=51; i<=90; i++) {
-                    updateBar(i);
-                    await new Promise(r => setTimeout(r, 15));
-                }
-
-                updateBar(50);
-                await new Promise(r => setTimeout(r, 1000));
-
-                for(let i=51; i<=90; i++) {
-                    updateBar(i);
-                    await new Promise(r => setTimeout(r, 20));
-                }
-
-                await new Promise(r => setTimeout(r, 400));
-                
                 nextSlide(1);
                 overlay.style.opacity = '0';
                 setTimeout(() => { overlay.style.display = 'none'; }, 600);
@@ -266,6 +316,7 @@
             slider.style.transform = `translateX(-${idx * 100}vw)`;
         }
 
+        // NO button movement
         const moveNoButton = (e) => {
             if(e.type === 'touchstart') e.preventDefault();
             const padding = 50;
@@ -280,6 +331,26 @@
 
         noBtn.addEventListener('mouseover', moveNoButton);
         noBtn.addEventListener('touchstart', moveNoButton);
+
+        // Heart generation for the 4th page
+        function createHeart() {
+            const specialPage = document.getElementById('specialPage');
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = Math.random() * 3 + 2 + "s";
+            heart.style.opacity = Math.random();
+            heart.style.fontSize = Math.random() * 20 + 10 + "px";
+            
+            specialPage.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+
+        setInterval(createHeart, 300);
 
         function checkCode() {
             if(document.getElementById('passcode').value === "10ml") {
