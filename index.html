@@ -135,7 +135,7 @@
             border: 1.5px solid rgba(255, 255, 255, 0.8);
         }
 
-        /* --- PAGE 2: ENVELOPE SYSTEM (FIXED) --- */
+        /* --- PAGE 2: ENVELOPE SYSTEM --- */
         .page2-container {
             display: flex;
             flex-direction: column;
@@ -154,8 +154,8 @@
             border-radius: 0 0 15px 15px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.1);
             z-index: 5;
-            margin-top: 0px; 
-            transform: translateY(-40px);
+            transition: transform 0.5s ease;
+            transform: translateY(-40px); 
         }
 
         /* Flap */
@@ -168,42 +168,40 @@
             border-top: 100px solid #ff758f;
             transform-origin: top;
             transition: transform 0.4s ease;
-            z-index: 10; /* Keeps flap on top initially */
+            z-index: 10;
         }
 
         .envelope-wrapper.open::before {
             transform: rotateX(180deg);
-            z-index: 4; /* Moves behind the letter after opening */
+            z-index: 4;
         }
 
         /* Letter Styling */
         .letter-content {
             position: absolute;
-            top: 10px;
+            bottom: 10px; /* Starts inside */
             left: 50%;
-            transform: translateX(-50%) translateY(0);
-            width: 90%;
-            height: 160px;
+            transform: translateX(-50%);
+            width: 250px;
+            height: 150px;
             background: white;
             border-radius: 10px;
             padding: 20px;
-            z-index: 6; /* Behind flap initially */
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease, height 0.6s ease, width 0.6s ease;
+            z-index: 4; /* Behind flap initially */
             opacity: 0;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             overflow: hidden;
             pointer-events: none;
-            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, height 0.6s ease, width 0.6s ease;
         }
 
-        /* Step-by-Step Animation Logic */
-        .envelope-wrapper.open .letter-content {
+        /* State when pulled out */
+        .letter-content.pulled-out {
             opacity: 1;
-            /* 0.5s delay before moving up and changing size */
-            transition-delay: 0.5s; 
-            transform: translateX(-50%) translateY(-230px); 
             height: 440px;
             width: 330px;
-            z-index: 15; /* Moves to front */
+            z-index: 15; /* Above everything */
+            transform: translateX(-50%) translateY(-380px); /* Moves up and out from top flap */
             pointer-events: auto;
         }
 
@@ -247,6 +245,8 @@
             width: 140px; 
             box-shadow: 0 4px 10px rgba(0,123,255,0.2); 
         }
+
+        /* --- REST OF THE CODE (UNCHANGED) --- */
 
         #loading-overlay {
             position: fixed; top: 0; left: 0;
@@ -444,13 +444,12 @@
 
         <section class="slide">
             <div class="page2-container">
-                <div class="envelope-wrapper" id="envelopeBox">
-                    <div class="letter-content">
-                        <div class="scroll-box-page2">
-                            <strong style="font-size: 18px; color: #ff4d6d;">My Sona, ❤️</strong><br><br>
-                            I know I’ve made mistakes, and I’m truly sorry for them... I'm not here to make excuses or just say things I won’t follow. I understand where I went wrong and I’m working on becoming a better version of myself not just for you but for me too. I don’t want to repeat the same things again.<br><br>
-                            For 1 year, 2 months, and 11 days, we were apart after the breakup. During that time all I had was your pictures. I used to look at them, spend my time with those memories, and miss you more than I can explain. It made me realize your value even more. I won’t just say things now, I’ll prove it through my actions step by step... 🤞🏻✨🍀
-                        </div>
+                <div class="envelope-wrapper" id="envelopeBox"></div>
+                <div class="letter-content" id="letterBox">
+                    <div class="scroll-box-page2">
+                        <strong style="font-size: 18px; color: #ff4d6d;">My Sona, ❤️</strong><br><br>
+                        I know I’ve made mistakes, and I’m truly sorry for them... I'm not here to make excuses or just say things I won’t follow. I understand where I went wrong and I’m working on becoming a better version of myself not just for you but for me too. I don’t want to repeat the same things again.<br><br>
+                        For 1 year, 2 months, and 11 days, we were apart after the breakup. During that time all I had was your pictures. I used to look at them, spend my time with those memories, and miss you more than I can explain. It made me realize your value even more. I won’t just say things now, I’ll prove it through my actions step by step... 🤞🏻✨🍀
                     </div>
                 </div>
                 
@@ -492,13 +491,25 @@
 
         function handleEnvelope() {
             const env = document.getElementById('envelopeBox');
+            const letter = document.getElementById('letterBox');
             const btn = document.getElementById('openBtn');
+
             if(env.classList.contains('open')) {
-                env.classList.remove('open');
-                btn.innerText = "Open 💌";
+                // Closing sequence
+                letter.classList.remove('pulled-out');
+                setTimeout(() => {
+                    env.classList.remove('open');
+                    btn.innerText = "Open 💌";
+                }, 500); // Back inside after delay
             } else {
+                // Opening sequence
                 env.classList.add('open');
                 btn.innerText = "Close ✖";
+                
+                // 0.50 sec delay before letter comes out
+                setTimeout(() => {
+                    letter.classList.add('pulled-out');
+                }, 500);
             }
         }
 
