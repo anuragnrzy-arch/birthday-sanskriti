@@ -135,90 +135,78 @@
             border: 1.5px solid rgba(255, 255, 255, 0.8);
         }
 
-        /* 2nd PAGE ENVELOPE DESIGN */
-        .envelope-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+        /* PAGE 2 SPECIFIC: ENVELOPE & LETTER CENTERED */
+        .envelope-page-container {
             position: relative;
-            width: 100%;
+            width: 100%; height: 100%;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
         }
 
-        .envelope-wrapper {
+        .envelope-box {
             position: relative;
-            width: 250px;
-            height: 160px;
-            background: #ff4d6d;
+            width: 250px; height: 160px;
+            background-color: #ff4d6d;
             border-radius: 0 0 10px 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            margin-bottom: 30px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
             z-index: 5;
+            transition: transform 0.8s ease;
         }
 
-        .envelope-wrapper::before {
+        .envelope-box.move-down { transform: translateY(120px); }
+
+        .envelope-box::before {
             content: '';
             position: absolute;
             top: 0; left: 0;
             border-left: 125px solid transparent;
             border-right: 125px solid transparent;
-            border-top: 90px solid #ff758f;
+            border-top: 100px solid #ff758f;
             transform-origin: top;
-            transition: transform 0.6s ease;
+            transition: transform 0.5s ease;
             z-index: 10;
         }
 
-        .envelope-wrapper.open::before {
-            transform: rotateX(180deg);
-        }
+        .envelope-box.open::before { transform: rotateX(180deg); }
 
-        .letter-paper {
+        .inner-letter {
             position: absolute;
-            bottom: 5px;
-            left: 50%;
+            top: 10px; left: 50%;
             transform: translateX(-50%);
-            width: 90%;
-            height: 90%;
+            width: 230px; height: 140px;
             background: white;
-            border-radius: 8px;
-            padding: 20px;
-            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            z-index: 6;
-            overflow: hidden;
+            border-radius: 5px;
+            padding: 15px;
+            transition: all 0.8s cubic-bezier(0.65, 0, 0.35, 1);
+            z-index: 2;
+            opacity: 0;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            opacity: 0.8;
+            overflow: hidden;
         }
 
-        .envelope-wrapper.open .letter-paper {
-            bottom: 0;
-            height: 400px; /* Letter bada ho gaya */
-            width: 300px;
-            z-index: 15; /* Envelope ke upar nikal gaya */
-            opacity: 1;
+        .envelope-box.open .inner-letter {
+            transform: translate(-50%, -320px); /* Center pe laane ke liye */
+            width: 320px; height: 400px;
+            opacity: 1; z-index: 15;
             padding: 25px;
         }
 
-        .letter-text {
-            font-size: 14px;
-            color: #444;
-            line-height: 1.5;
-            text-align: left;
-            height: 100%;
-            overflow-y: auto;
+        .letter-content-text {
+            font-size: 14px; color: #444; line-height: 1.5;
+            text-align: left; height: 100%; overflow-y: auto;
         }
 
-        .letter-text::-webkit-scrollbar { width: 3px; }
-        .letter-text::-webkit-scrollbar-thumb { background: #ff4d6d; }
+        .letter-content-text strong { color: #ff4d6d; display: block; margin-bottom: 10px; }
 
-        .page2-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            z-index: 20; /* Buttons hamesha letter ke upar rahenge */
+        .p2-btn-group {
+            margin-top: 50px;
+            display: flex; flex-direction: column; gap: 15px;
+            z-index: 20;
         }
 
-        #openCloseBtn { background: #ff4d6d; color: white; min-width: 150px; }
-        #nextPageBtn { background: white; color: #ff4d6d; border: 2px solid #ff4d6d; min-width: 150px; }
+        .p2-btn-group button { min-width: 180px; }
+        #p2-open-btn { background: #ff4d6d; color: white; }
+        #p2-next-btn { background: #4a90e2; color: white; }
 
         #loading-overlay {
             position: fixed; top: 0; left: 0;
@@ -275,44 +263,20 @@
         .scroll-text { color: #555; font-size: 15px; line-height: 1.6; text-align: left; max-height: 350px; overflow-y: auto; padding-right: 5px; }
 
         .memories-container {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            z-index: 10;
+            width: 100%; display: flex; flex-direction: column; align-items: center; z-index: 10;
         }
 
         .memories-title-box {
-            background: white;
-            padding: 15px 25px;
-            border-radius: 20px;
-            border: 2px solid #ff4d6d;
-            box-shadow: 0 0 20px rgba(255, 77, 109, 0.4);
-            color: #ff4d6d;
-            font-weight: bold;
-            font-size: 18px;
-            text-align: center;
-            margin-bottom: 40px;
+            background: white; padding: 15px 25px; border-radius: 20px; border: 2px solid #ff4d6d;
+            box-shadow: 0 0 20px rgba(255, 77, 109, 0.4); color: #ff4d6d; font-weight: bold; font-size: 18px; text-align: center; margin-bottom: 40px;
             animation: glowPulse 2s infinite alternate;
         }
 
-        .zig-zag-grid {
-            width: 90%;
-            display: flex;
-            flex-direction: column;
-            gap: 40px;
-            padding-bottom: 60px;
-        }
+        .zig-zag-grid { width: 90%; display: flex; flex-direction: column; gap: 40px; padding-bottom: 60px; }
 
         .memory-photo {
-            width: 200px;
-            height: 280px;
-            background: white;
-            padding: 8px;
-            border: 2px solid #ff4d6d;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(255, 77, 109, 0.5), 0 5px 15px rgba(0,0,0,0.2);
-            overflow: hidden;
+            width: 200px; height: 280px; background: white; padding: 8px; border: 2px solid #ff4d6d; border-radius: 10px;
+            box-shadow: 0 0 15px rgba(255, 77, 109, 0.5), 0 5px 15px rgba(0,0,0,0.2); overflow: hidden;
             animation: waveFloat 4s ease-in-out infinite;
         }
 
@@ -321,12 +285,7 @@
             50% { transform: translateY(-15px) rotate(var(--rot-mid)); }
         }
 
-        .memory-photo img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 5px;
-        }
+        .memory-photo img { width: 100%; height: 100%; object-fit: cover; border-radius: 5px; }
 
         .pos-1 { align-self: flex-start; --rot: -6deg; --rot-mid: -3deg; }
         .pos-2 { align-self: flex-end; --rot: 6deg; --rot-mid: 3deg; }
@@ -415,19 +374,20 @@
         </section>
 
         <section class="slide">
-            <div class="envelope-container">
-                <div class="envelope-wrapper" id="envelope">
-                    <div class="letter-paper">
-                        <div class="letter-text">
-                            <strong style="color: #ff4d6d; font-size: 18px;">My Sona,</strong><br><br>
-                            I know I’ve made mistakes, and I’m truly sorry for them...I'm not here to make excuses or just say things I won’t follow. I understand where I went wrong and I’m working on becoming a better version of myself not just for you but for me too. I don’t want to repeat the same things again.<br><br>
-                            For 1 year, 2 months, and 11 days, we were apart after the breakup. During that time all I had was your pictures. I used to look at them spend my time with those memories and miss you more than I can explain. It made me realize your value even more. I won’t just say things now I’ll prove it through my actions step by step...🤞🏻✨🍀
+            <div class="envelope-page-container">
+                <div class="envelope-box" id="p2-envelope">
+                    <div class="inner-letter">
+                        <div class="letter-content-text">
+                            <strong>My Sona, ❤️</strong>
+                            I know I’ve made mistakes, and I’m truly sorry for them... I understand where I went wrong and I’m working on becoming a better version of myself. I don’t want to repeat the same things again.<br><br>
+                            For 1 year, 2 months, and 11 days, we were apart... during that time all I had was your pictures. I used to look at them, spend my time with those memories and miss you more than I can explain. It made me realize your value even more. I won’t just say things now I’ll prove it through my actions step by step...🤞🏻✨🍀
                         </div>
                     </div>
                 </div>
-                <div class="page2-buttons">
-                    <button id="openCloseBtn" onclick="toggleLetter()">Open ✉️</button>
-                    <button id="nextPageBtn" onclick="nextSlide(2)">Next ➔</button>
+
+                <div class="p2-btn-group">
+                    <button id="p2-open-btn" onclick="toggleP2Envelope()">Open ✉️</button>
+                    <button id="p2-next-btn" onclick="nextSlide(2)">Next ➔</button>
                 </div>
             </div>
         </section>
@@ -461,15 +421,15 @@
         const noBtn = document.getElementById('noBtn');
         const noMsgBox = document.getElementById('no-message-box');
 
-        // ENVELOPE LOGIC
-        function toggleLetter() {
-            const env = document.getElementById('envelope');
-            const btn = document.getElementById('openCloseBtn');
+        // PAGE 2 TOGGLE
+        function toggleP2Envelope() {
+            const env = document.getElementById('p2-envelope');
+            const btn = document.getElementById('p2-open-btn');
             if(env.classList.contains('open')) {
-                env.classList.remove('open');
+                env.classList.remove('open', 'move-down');
                 btn.innerText = "Open ✉️";
             } else {
-                env.classList.add('open');
+                env.classList.add('open', 'move-down');
                 btn.innerText = "Close ✖";
             }
         }
@@ -497,6 +457,8 @@
 
         function hideError() {
             errorOverlay.style.display = 'none';
+            document.getElementById('bfNameInput').value = "";
+            document.getElementById('secretCodeInput').value = "";
         }
 
         function checkSecretCode() {
@@ -514,10 +476,10 @@
             document.getElementById('loveCard').style.opacity = '0';
             setTimeout(async () => {
                 overlay.style.display = 'flex';
-                for(let i=1; i<=100; i++) { 
-                    updateBar(i); 
-                    await new Promise(r => setTimeout(r, 20)); 
-                }
+                // Fake complex loading logic as requested
+                for(let i=1; i<=50; i++) { updateBar(i); await new Promise(r => setTimeout(r, 25)); }
+                await new Promise(r => setTimeout(r, 800));
+                for(let i=51; i<=100; i++) { updateBar(i); await new Promise(r => setTimeout(r, 20)); }
                 await new Promise(r => setTimeout(r, 400));
                 nextSlide(1);
                 overlay.style.opacity = '0';
