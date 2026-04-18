@@ -220,6 +220,7 @@
             padding-bottom: 60px;
         }
 
+        /* PHOTO GLOW AND WAVE EFFECT */
         .memory-photo {
             width: 200px;
             height: 280px;
@@ -227,8 +228,16 @@
             padding: 8px;
             border: 2px solid #ff4d6d;
             border-radius: 10px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            /* Pink Glow Effect */
+            box-shadow: 0 0 15px rgba(255, 77, 109, 0.5), 0 5px 15px rgba(0,0,0,0.2);
             overflow: hidden;
+            /* Wave/Floating Animation */
+            animation: waveFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes waveFloat {
+            0%, 100% { transform: translateY(0) rotate(var(--rot)); }
+            50% { transform: translateY(-15px) rotate(var(--rot-mid)); }
         }
 
         .memory-photo img {
@@ -238,9 +247,10 @@
             border-radius: 5px;
         }
 
-        .pos-1 { align-self: flex-start; transform: rotate(-6deg); }
-        .pos-2 { align-self: flex-end; transform: rotate(6deg); }
-        .pos-3 { align-self: flex-start; transform: rotate(-4deg); }
+        /* Specific Rotations for Wave */
+        .pos-1 { align-self: flex-start; --rot: -6deg; --rot-mid: -3deg; }
+        .pos-2 { align-self: flex-end; --rot: 6deg; --rot-mid: 3deg; }
+        .pos-3 { align-self: flex-start; --rot: -4deg; --rot-mid: -1deg; }
 
         .extra-blank-space { height: 100px; width: 100%; flex-shrink: 0; }
     </style>
