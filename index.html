@@ -155,7 +155,8 @@
             box-shadow: 0 15px 35px rgba(0,0,0,0.1);
             z-index: 5;
             transition: transform 0.5s ease;
-            margin-top: 250px; /* Envelope ko thoda neeche kiya taaki letter center me rahe */
+            margin-top: 0px; /* Position adjusted to move it up */
+            transform: translateY(-40px); /* Fine-tuned to center it vertically */
         }
 
         /* Flap */
@@ -198,16 +199,17 @@
         /* Step 1: Letter comes out from top */
         .envelope-wrapper.open .letter-content {
             opacity: 1;
-            transform: translateX(-50%) translateY(-380px); /* Position adjusted for center view */
+            transform: translateX(-50%) translateY(-280px); /* Pehle upar nikalta hai */
             height: 440px;
             width: 330px;
             z-index: 15;
             pointer-events: auto;
+            /* Step 2: Moves to center after coming out */
             animation: moveToCenter 1s forwards 0.4s; 
         }
 
         @keyframes moveToCenter {
-            to { transform: translateX(-50%) translateY(-350px); } /* Final centered position */
+            to { transform: translateX(-50%) translateY(-220px); }
         }
 
         .scroll-box-page2 {
@@ -226,7 +228,7 @@
         /* --- BUTTONS SECTION (SIDE BY SIDE) --- */
         .action-btns-page2 {
             position: absolute;
-            bottom: 60px; 
+            bottom: 80px; 
             display: flex;
             flex-direction: row; 
             justify-content: center;
