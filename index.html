@@ -155,10 +155,9 @@
             box-shadow: 0 15px 35px rgba(0,0,0,0.1);
             z-index: 5;
             transition: transform 0.5s ease;
-            margin-top: -100px; /* Moves envelope up to leave space for buttons below */
+            margin-top: -100px; 
         }
 
-        /* Flap of the envelope */
         .envelope-wrapper::before {
             content: '';
             position: absolute;
@@ -176,7 +175,6 @@
             z-index: 4;
         }
 
-        /* The Letter Paper */
         .letter-content {
             position: absolute;
             top: 10px;
@@ -196,7 +194,7 @@
         }
 
         .envelope-wrapper.open .letter-content {
-            top: -240px; /* Center positioning */
+            top: -240px; 
             height: 440px;
             width: 330px;
             opacity: 1;
@@ -218,20 +216,36 @@
         .scroll-box-page2::-webkit-scrollbar { width: 3px; }
         .scroll-box-page2::-webkit-scrollbar-thumb { background: #ff4d6d; }
 
-        /* Buttons Section - MOVED TO BOTTOM (Blue/Red Area) */
+        /* --- BUTTONS STYLING AS PER YOUR REQUEST --- */
         .action-btns-page2 {
             position: absolute;
-            bottom: 40px; /* Positioned at the very bottom */
+            bottom: 50px; /* Exact place for buttons */
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 12px;
-            z-index: 25;
+            gap: 15px;
+            z-index: 30;
             width: 100%;
         }
 
-        #openBtn { background: #ff4d6d; color: white; width: 180px; box-shadow: 0 4px 10px rgba(255, 77, 109, 0.3); }
-        #nextBtn2 { background: #fff; color: #ff4d6d; width: 180px; border: 2.5px solid #ff4d6d; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        /* White button for Open/Close (Red Box in your image) */
+        #openBtn { 
+            background: white !important; 
+            color: #ff4d6d !important; 
+            width: 200px; 
+            border: 2px solid #ff4d6d;
+            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.2);
+            font-size: 17px;
+        }
+
+        /* Blue button for Next (Blue Box in your image) */
+        #nextBtn2 { 
+            background: #007bff !important; 
+            color: white !important; 
+            width: 200px; 
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+            font-size: 17px;
+        }
 
         /* --- REST OF THE CODE --- */
 
@@ -482,12 +496,13 @@
             const btn = document.getElementById('openBtn');
             if(env.classList.contains('open')) {
                 env.classList.remove('open');
-                btn.innerText = "Open ✉️";
-                btn.style.background = "#ff4d6d";
+                btn.innerText = "Close ✖";
+                btn.style.background = "white";
+                btn.style.color = "#ff4d6d";
             } else {
                 env.classList.add('open');
                 btn.innerText = "Close ✖";
-                btn.style.background = "#444";
+                btn.style.background = "white";
             }
         }
 
