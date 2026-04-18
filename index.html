@@ -135,78 +135,101 @@
             border: 1.5px solid rgba(255, 255, 255, 0.8);
         }
 
-        /* PAGE 2 SPECIFIC: ENVELOPE & LETTER CENTERED */
-        .envelope-page-container {
+        /* --- PAGE 2: ENVELOPE SYSTEM --- */
+        .page2-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
             position: relative;
-            width: 100%; height: 100%;
-            display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
         }
 
-        .envelope-box {
+        .envelope-wrapper {
             position: relative;
-            width: 250px; height: 160px;
-            background-color: #ff4d6d;
-            border-radius: 0 0 10px 10px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            width: 280px;
+            height: 180px;
+            background: #ff4d6d;
+            border-radius: 0 0 15px 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
             z-index: 5;
-            transition: transform 0.8s ease;
+            transition: transform 0.5s ease;
         }
 
-        .envelope-box.move-down { transform: translateY(120px); }
-
-        .envelope-box::before {
+        /* Flap of the envelope */
+        .envelope-wrapper::before {
             content: '';
             position: absolute;
             top: 0; left: 0;
-            border-left: 125px solid transparent;
-            border-right: 125px solid transparent;
+            border-left: 140px solid transparent;
+            border-right: 140px solid transparent;
             border-top: 100px solid #ff758f;
             transform-origin: top;
             transition: transform 0.5s ease;
             z-index: 10;
         }
 
-        .envelope-box.open::before { transform: rotateX(180deg); }
+        .envelope-wrapper.open::before {
+            transform: rotateX(180deg);
+            z-index: 4;
+        }
 
-        .inner-letter {
+        /* The Letter Paper */
+        .letter-content {
             position: absolute;
-            top: 10px; left: 50%;
+            top: 10px;
+            left: 50%;
             transform: translateX(-50%);
-            width: 230px; height: 140px;
+            width: 90%;
+            height: 80%;
             background: white;
-            border-radius: 5px;
-            padding: 15px;
-            transition: all 0.8s cubic-bezier(0.65, 0, 0.35, 1);
-            z-index: 2;
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 6;
             opacity: 0;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             overflow: hidden;
+            pointer-events: none;
         }
 
-        .envelope-box.open .inner-letter {
-            transform: translate(-50%, -320px); /* Center pe laane ke liye */
-            width: 320px; height: 400px;
-            opacity: 1; z-index: 15;
-            padding: 25px;
+        .envelope-wrapper.open .letter-content {
+            top: -220px; /* Moves letter to the center */
+            height: 420px;
+            width: 320px;
+            opacity: 1;
+            z-index: 15;
+            pointer-events: auto;
+            transform: translateX(-50%) translateY(0);
         }
 
-        .letter-content-text {
-            font-size: 14px; color: #444; line-height: 1.5;
-            text-align: left; height: 100%; overflow-y: auto;
+        .scroll-box-page2 {
+            height: 100%;
+            overflow-y: auto;
+            text-align: left;
+            font-size: 14px;
+            color: #444;
+            line-height: 1.6;
+            padding-right: 5px;
         }
 
-        .letter-content-text strong { color: #ff4d6d; display: block; margin-bottom: 10px; }
+        .scroll-box-page2::-webkit-scrollbar { width: 3px; }
+        .scroll-box-page2::-webkit-scrollbar-thumb { background: #ff4d6d; }
 
-        .p2-btn-group {
-            margin-top: 50px;
-            display: flex; flex-direction: column; gap: 15px;
+        /* Buttons Section */
+        .action-btns-page2 {
+            margin-top: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
             z-index: 20;
         }
 
-        .p2-btn-group button { min-width: 180px; }
-        #p2-open-btn { background: #ff4d6d; color: white; }
-        #p2-next-btn { background: #4a90e2; color: white; }
+        #openBtn { background: #ff4d6d; color: white; width: 160px; box-shadow: 0 4px 10px rgba(255, 77, 109, 0.3); }
+        #nextBtn2 { background: #fff; color: #ff4d6d; width: 160px; border: 2.5px solid #ff4d6d; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+
+        /* --- REST OF THE CODE --- */
 
         #loading-overlay {
             position: fixed; top: 0; left: 0;
@@ -263,20 +286,44 @@
         .scroll-text { color: #555; font-size: 15px; line-height: 1.6; text-align: left; max-height: 350px; overflow-y: auto; padding-right: 5px; }
 
         .memories-container {
-            width: 100%; display: flex; flex-direction: column; align-items: center; z-index: 10;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 10;
         }
 
         .memories-title-box {
-            background: white; padding: 15px 25px; border-radius: 20px; border: 2px solid #ff4d6d;
-            box-shadow: 0 0 20px rgba(255, 77, 109, 0.4); color: #ff4d6d; font-weight: bold; font-size: 18px; text-align: center; margin-bottom: 40px;
+            background: white;
+            padding: 15px 25px;
+            border-radius: 20px;
+            border: 2px solid #ff4d6d;
+            box-shadow: 0 0 20px rgba(255, 77, 109, 0.4);
+            color: #ff4d6d;
+            font-weight: bold;
+            font-size: 18px;
+            text-align: center;
+            margin-bottom: 40px;
             animation: glowPulse 2s infinite alternate;
         }
 
-        .zig-zag-grid { width: 90%; display: flex; flex-direction: column; gap: 40px; padding-bottom: 60px; }
+        .zig-zag-grid {
+            width: 90%;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            padding-bottom: 60px;
+        }
 
         .memory-photo {
-            width: 200px; height: 280px; background: white; padding: 8px; border: 2px solid #ff4d6d; border-radius: 10px;
-            box-shadow: 0 0 15px rgba(255, 77, 109, 0.5), 0 5px 15px rgba(0,0,0,0.2); overflow: hidden;
+            width: 200px;
+            height: 280px;
+            background: white;
+            padding: 8px;
+            border: 2px solid #ff4d6d;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(255, 77, 109, 0.5), 0 5px 15px rgba(0,0,0,0.2);
+            overflow: hidden;
             animation: waveFloat 4s ease-in-out infinite;
         }
 
@@ -285,7 +332,12 @@
             50% { transform: translateY(-15px) rotate(var(--rot-mid)); }
         }
 
-        .memory-photo img { width: 100%; height: 100%; object-fit: cover; border-radius: 5px; }
+        .memory-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 5px;
+        }
 
         .pos-1 { align-self: flex-start; --rot: -6deg; --rot-mid: -3deg; }
         .pos-2 { align-self: flex-end; --rot: 6deg; --rot-mid: 3deg; }
@@ -374,20 +426,20 @@
         </section>
 
         <section class="slide">
-            <div class="envelope-page-container">
-                <div class="envelope-box" id="p2-envelope">
-                    <div class="inner-letter">
-                        <div class="letter-content-text">
-                            <strong>My Sona, ❤️</strong>
-                            I know I’ve made mistakes, and I’m truly sorry for them... I understand where I went wrong and I’m working on becoming a better version of myself. I don’t want to repeat the same things again.<br><br>
-                            For 1 year, 2 months, and 11 days, we were apart... during that time all I had was your pictures. I used to look at them, spend my time with those memories and miss you more than I can explain. It made me realize your value even more. I won’t just say things now I’ll prove it through my actions step by step...🤞🏻✨🍀
+            <div class="page2-container">
+                <div class="envelope-wrapper" id="envelopeBox">
+                    <div class="letter-content">
+                        <div class="scroll-box-page2">
+                            <strong style="font-size: 18px; color: #ff4d6d;">My Sona, ❤️</strong><br><br>
+                            I know I’ve made mistakes, and I’m truly sorry for them... I'm not here to make excuses or just say things I won’t follow. I understand where I went wrong and I’m working on becoming a better version of myself not just for you but for me too. I don’t want to repeat the same things again.<br><br>
+                            For 1 year, 2 months, and 11 days, we were apart after the breakup. During that time all I had was your pictures. I used to look at them, spend my time with those memories, and miss you more than I can explain. It made me realize your value even more. I won’t just say things now, I’ll prove it through my actions step by step... 🤞🏻✨🍀
                         </div>
                     </div>
                 </div>
-
-                <div class="p2-btn-group">
-                    <button id="p2-open-btn" onclick="toggleP2Envelope()">Open ✉️</button>
-                    <button id="p2-next-btn" onclick="nextSlide(2)">Next ➔</button>
+                
+                <div class="action-btns-page2">
+                    <button id="openBtn" onclick="handleEnvelope()">Open ✉️</button>
+                    <button id="nextBtn2" onclick="nextSlide(2)">Next ➔</button>
                 </div>
             </div>
         </section>
@@ -421,16 +473,18 @@
         const noBtn = document.getElementById('noBtn');
         const noMsgBox = document.getElementById('no-message-box');
 
-        // PAGE 2 TOGGLE
-        function toggleP2Envelope() {
-            const env = document.getElementById('p2-envelope');
-            const btn = document.getElementById('p2-open-btn');
+        // PAGE 2 LOGIC
+        function handleEnvelope() {
+            const env = document.getElementById('envelopeBox');
+            const btn = document.getElementById('openBtn');
             if(env.classList.contains('open')) {
-                env.classList.remove('open', 'move-down');
+                env.classList.remove('open');
                 btn.innerText = "Open ✉️";
+                btn.style.background = "#ff4d6d";
             } else {
-                env.classList.add('open', 'move-down');
+                env.classList.add('open');
                 btn.innerText = "Close ✖";
+                btn.style.background = "#444"; // Red box transform to close
             }
         }
 
@@ -457,8 +511,6 @@
 
         function hideError() {
             errorOverlay.style.display = 'none';
-            document.getElementById('bfNameInput').value = "";
-            document.getElementById('secretCodeInput').value = "";
         }
 
         function checkSecretCode() {
@@ -476,10 +528,11 @@
             document.getElementById('loveCard').style.opacity = '0';
             setTimeout(async () => {
                 overlay.style.display = 'flex';
-                // Fake complex loading logic as requested
                 for(let i=1; i<=50; i++) { updateBar(i); await new Promise(r => setTimeout(r, 25)); }
-                await new Promise(r => setTimeout(r, 800));
-                for(let i=51; i<=100; i++) { updateBar(i); await new Promise(r => setTimeout(r, 20)); }
+                await new Promise(r => setTimeout(r, 1000));
+                for(let i=51; i<=90; i++) { updateBar(i); await new Promise(r => setTimeout(r, 15)); }
+                updateBar(50); await new Promise(r => setTimeout(r, 1000));
+                for(let i=51; i<=90; i++) { updateBar(i); await new Promise(r => setTimeout(r, 20)); }
                 await new Promise(r => setTimeout(r, 400));
                 nextSlide(1);
                 overlay.style.opacity = '0';
