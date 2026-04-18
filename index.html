@@ -8,43 +8,9 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
 
         body {
-            background-color: #fce4ec; 
-            overflow: hidden;
-            touch-action: none; 
-        }
-
-        /* NO BUTTON MESSAGE BOX */
-        #no-message-box {
-            position: fixed;
-            top: -200px; 
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1000;
-            transition: top 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .string {
-            width: 2px;
-            height: 60px;
-            background: #ff4d6d;
-            margin: 0 45px;
-            position: relative;
-        }
-
-        .hanging-card {
-            background: white;
-            padding: 12px 20px;
-            border-radius: 12px;
-            box-shadow: 0 8px 20px rgba(255, 77, 109, 0.15);
-            border: 2px solid #ff4d6d;
-            font-weight: bold;
-            color: #ff4d6d;
-            font-size: 16px;
-            white-space: nowrap;
-            margin-top: -2px;
+            background-color: #1a1a1a; 
+            overflow-x: hidden;
+            color: white;
         }
 
         /* MASTER ENTRY LOCK SCREEN */
@@ -52,48 +18,47 @@
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: #fdf2f5;
+            background: #121212;
             z-index: 20000;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            transition: all 0.8s cubic-bezier(0.65, 0, 0.35, 1);
+            transition: all 0.8s ease;
         }
 
         .lock-input-box {
-            background: rgba(255, 240, 245, 0.9);
+            background: #1e1e1e;
             padding: 30px; border-radius: 20px;
             text-align: center; width: 85%; max-width: 320px;
-            border: 1px solid rgba(255, 182, 193, 0.5);
-            box-shadow: 0 0 20px rgba(255, 77, 109, 0.3);
+            border: 2px solid #ff4d6d;
+            box-shadow: 0 0 20px rgba(255, 77, 109, 0.4);
         }
 
-        /* SLIDER & CARDS */
+        /* MAIN SLIDER */
         .slider-container {
-            display: flex; width: 500vw; height: 100vh;
+            display: flex; width: 400vw; height: 100vh;
             transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1);
         }
 
         .slide {
             width: 100vw; height: 100vh;
             display: flex; justify-content: center; align-items: center;
-            background: radial-gradient(circle, #fdf2f5 0%, #fce4ec 100%);
+            background: #1a1a1a;
         }
 
         .glass-card {
-            background: rgba(255, 245, 247, 0.9);
-            backdrop-filter: blur(15px);
+            background: #252525;
             border-radius: 25px; padding: 40px 20px;
             text-align: center; width: 90%; max-width: 350px;
-            box-shadow: 0 8px 32px rgba(255, 182, 193, 0.3);
+            border: 1px solid #333;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        /* LETTER PAGE */
+        /* FINAL PAGE */
         #final-letter-page {
             display: none; opacity: 0;
-            transition: opacity 3s ease;
-            background: #fce4ec;
+            background: #121212;
             width: 100vw; height: 100vh;
             position: fixed; top: 0; left: 0;
             z-index: 5000;
@@ -101,13 +66,15 @@
             align-items: center;
             overflow-y: scroll;
             padding-top: 40px;
+            transition: opacity 1s ease;
         }
 
         .white-paper {
-            background: white; width: 90%; max-width: 350px;
+            background: #1e1e1e; width: 90%; max-width: 350px;
             border-radius: 15px; padding: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             margin-bottom: 40px;
+            border-left: 5px solid #ff4d6d;
         }
 
         /* MEMORIES PHOTO BOXES */
@@ -116,41 +83,45 @@
         .memories-grid {
             width: 90%; max-width: 400px;
             display: flex; flex-direction: column;
-            gap: 50px; padding-bottom: 100px;
+            gap: 60px; padding-bottom: 100px;
         }
 
         .memory-box {
-            width: 180px; height: 240px;
-            background: #fff;
-            border: 5px solid #ff4d6d;
+            width: 220px; height: 300px;
+            background: #000;
+            border: 3px solid #ff4d6d;
             border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(255, 77, 109, 0.3);
+            box-shadow: 0 0 25px rgba(255, 77, 109, 0.5);
         }
 
         .memory-box img {
             width: 100%; height: 100%;
-            object-fit: cover; /* Photo box mein sahi se fit hogi */
+            object-fit: cover;
         }
 
         .box-1 { align-self: flex-start; transform: rotate(-8deg); }
         .box-2 { align-self: flex-end; transform: rotate(8deg); }
         .box-3 { align-self: flex-start; transform: rotate(-5deg); }
 
-        /* BUTTONS */
-        button { padding: 12px 35px; border: none; border-radius: 25px; cursor: pointer; font-weight: bold; }
+        /* BUTTONS & INPUTS */
+        button { padding: 12px 35px; border: none; border-radius: 25px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        input[type="text"] { 
+            padding: 12px; border-radius: 10px; border: 1px solid #ff4d6d; 
+            width: 100%; margin-bottom: 15px; outline: none; text-align: center;
+            background: #252525; color: white;
+        }
         #yesBtn { background-color: #ff4d6d; color: white; }
         #noBtn { background-color: #444; color: #fff; position: absolute; }
-        
-        .special-slide { background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%) !important; flex-direction: column; }
     </style>
 </head>
 <body>
 
     <div id="master-lock-screen">
         <div class="lock-input-box">
-            <p style="margin-bottom:15px; font-weight:bold;">Type your boyfriend name 😤</p>
-            <input type="text" id="bfNameInput" style="padding:10px; margin-bottom:15px; width:80%;">
+            <h2 style="color:#ff4d6d; margin-bottom:15px;">🔒 Locked</h2>
+            <p style="margin-bottom:15px; color:#bbb;">Type your boyfriend name 😤</p>
+            <input type="text" id="bfNameInput" placeholder="Enter name...">
             <button onclick="unlockMaster()" style="background:#ff4d6d; color:white; width:100%;">Unlock</button>
         </div>
     </div>
@@ -158,8 +129,8 @@
     <div class="slider-container" id="mainSlider">
         <section class="slide">
             <div class="glass-card">
-                <h1 style="color: #ff4d6d;">Do you love me!?</h1>
-                <div style="height:100px; position:relative; margin-top:20px;">
+                <h1 style="color: #ff4d6d; margin-bottom:20px;">Do you love me!?</h1>
+                <div style="height:120px; position:relative;">
                     <button id="yesBtn" onclick="nextSlide(1)">Yes 👀</button>
                     <button id="noBtn">No 😒</button>
                 </div>
@@ -168,37 +139,43 @@
 
         <section class="slide">
             <div class="glass-card">
-                <h1>You're special! ✨</h1>
-                <button onclick="nextSlide(2)" style="background:#ff4d6d;color:white;margin-top:20px">Next ➔</button>
+                <h1 style="color: #ff4d6d;">You're special! ✨</h1>
+                <p style="margin: 20px 0; color:#ccc;">Tumhari hansi meri sabse badi khushi hai. ❤️</p>
+                <button onclick="nextSlide(2)" style="background:#ff4d6d;color:white;">Next ➔</button>
             </div>
         </section>
 
-        <section class="slide special-slide">
-            <h1 style="color:white; font-size:30px;">Enter Secret Code</h1>
-            <input type="text" id="secretCodeInput" placeholder="Code..." style="padding:10px; margin:20px;">
-            <button onclick="checkCode()" style="background:white; color:#ff4d6d;">Open Letter 💌</button>
+        <section class="slide">
+            <div class="glass-card">
+                <h1 style="color:#ff4d6d; margin-bottom:20px;">Secret Code 💌</h1>
+                <input type="text" id="secretCodeInput" placeholder="Enter Code (10ml)...">
+                <button onclick="checkCode()" style="background:#ff4d6d; color:white; width:100%;">Open Letter</button>
+            </div>
         </section>
     </div>
 
     <div id="final-letter-page">
         <div class="white-paper">
-            <h2 style="color:#ff4d6d">My Letter ❤️</h2>
-            <p style="margin-top:15px; color:#555; line-height:1.6;">
-                To my special one... Main humesha tumhare saath rahunga. No matter what happens, you are important to me.
+            <h2 style="color:#ff4d6d; margin-bottom:15px;">A Letter From My Heart</h2>
+            <p style="color:#ddd; line-height:1.6; font-size:15px;">
+                To my special one... If you're busy, I'll wait for you. I know sometimes life can be really busy, but I'll be patient because you are important to me. I'll always be here to listen and help you. You're never alone. ❤️
             </p>
         </div>
 
         <div class="memories-container">
-            <h3 style="color:#ff4d6d; margin-bottom:30px;">OUR MEMORIES 💝</h3>
+            <div style="background:#ff4d6d; padding:10px 25px; border-radius:20px; margin-bottom:40px; box-shadow:0 0 15px #ff4d6d;">
+                <h3 style="color:white; letter-spacing:1px;">OUR MEMORIES 💝</h3>
+            </div>
+            
             <div class="memories-grid">
                 <div class="memory-box box-1">
-                    <img src="https://i.ibb.co/67vS0X9b/mask-selfie.jpg" alt="Memory 1">
+                    <img src="https://i.ibb.co/p6zwxfGj/1000092748.jpg" alt="Memory 1">
                 </div>
                 <div class="memory-box box-2">
-                    <img src="https://i.ibb.co/3mS00Ppt/saree-suit.jpg" alt="Memory 2">
+                    <img src="https://i.ibb.co/d4ZPZBQx/1000092747.jpg" alt="Memory 2">
                 </div>
                 <div class="memory-box box-3">
-                    <img src="https://i.ibb.co/N6vS0X9b/bus-selfie.jpg" alt="Memory 3">
+                    <img src="https://i.ibb.co/4ZDFL6Xc/1000092697.jpg" alt="Memory 3">
                 </div>
             </div>
         </div>
@@ -206,10 +183,11 @@
 
     <script>
         function unlockMaster() {
-            const name = document.getElementById('bfNameInput').value.toLowerCase();
+            const name = document.getElementById('bfNameInput').value.toLowerCase().trim();
             if(name === "anurag") {
-                document.getElementById('master-lock-screen').style.display = 'none';
-            } else { alert("Wrong Name! 😤"); }
+                document.getElementById('master-lock-screen').style.opacity = '0';
+                setTimeout(() => document.getElementById('master-lock-screen').style.display = 'none', 800);
+            } else { alert("Wrong Name! Who is he? 🤨😤"); }
         }
 
         function nextSlide(idx) {
@@ -217,19 +195,22 @@
         }
 
         function checkCode() {
-            const code = document.getElementById('secretCodeInput').value;
+            const code = document.getElementById('secretCodeInput').value.trim().toLowerCase();
             if(code === "10ml") {
                 document.getElementById('mainSlider').style.display = 'none';
-                document.getElementById('final-letter-page').style.display = 'flex';
-                setTimeout(() => { document.getElementById('final-letter-page').style.opacity = '1'; }, 50);
+                const finalPage = document.getElementById('final-letter-page');
+                finalPage.style.display = 'flex';
+                setTimeout(() => finalPage.style.opacity = '1', 50);
                 document.body.style.overflowY = "auto";
-            } else { alert("Wrong Code! 😤"); }
+            } else { alert("Wrong Secret Code! 😤"); }
         }
 
         const noBtn = document.getElementById('noBtn');
         noBtn.addEventListener('mouseover', () => {
-            noBtn.style.left = Math.random() * 80 + '%';
-            noBtn.style.top = Math.random() * 80 + '%';
+            const x = Math.random() * (window.innerWidth - 100);
+            const y = Math.random() * (window.innerHeight - 50);
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
         });
     </script>
 </body>
