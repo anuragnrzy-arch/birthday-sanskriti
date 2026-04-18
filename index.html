@@ -200,7 +200,7 @@
         .envelope-wrapper.open .letter-content {
             opacity: 1;
             transform: translateX(-50%) translateY(-280px); 
-            height: 440px;
+            height: 460px; /* Slightly increased to fit image */
             width: 330px;
             z-index: 15;
             pointer-events: auto;
@@ -219,6 +219,16 @@
             color: #444;
             line-height: 1.6;
             padding-right: 5px;
+        }
+
+        /* Cat Image Styling in Letter */
+        .cat-image-sorry {
+            width: 100%;
+            max-width: 180px;
+            display: block;
+            margin: 15px auto 5px auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
         .scroll-box-page2::-webkit-scrollbar { width: 3px; }
@@ -252,8 +262,6 @@
             width: 140px; 
             box-shadow: 0 4px 10px rgba(0,123,255,0.2); 
         }
-
-        /* --- REST OF THE CODE (UNCHANGED) --- */
 
         #loading-overlay {
             position: fixed; top: 0; left: 0;
@@ -456,6 +464,7 @@
                         <div class="scroll-box-page2">
                             I know I’ve made mistakes, and I’m truly sorry for them... I'm not here to make excuses or just say things I won’t follow. I understand where I went wrong and I’m working on becoming a better version of myself not just for you but for me too. I don’t want to repeat the same things again.<br><br>
                             For 1 year, 2 months, and 11 days, we were apart after the breakup. During that time all I had was your pictures. I used to look at them, spend my time with those memories, and miss you more than I can explain. It made me realize your value even more. I won’t just say things now, I’ll prove it through my actions step by step... 🤞🏻✨🍀
+                            <img src="https://i.ibb.co/KpDd1ZF9/1000092801.jpg" class="cat-image-sorry">
                         </div>
                     </div>
                 </div>
