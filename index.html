@@ -189,7 +189,7 @@
         .red-letter-title { color: #ff4d6d; font-size: 18px; font-weight: bold; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
         .scroll-text { color: #555; font-size: 15px; line-height: 1.6; text-align: left; max-height: 350px; overflow-y: auto; padding-right: 5px; }
 
-        /* MEMORIES SECTION STYLES */
+        /* MEMORIES SECTION STYLES - ZIG ZAG LAYOUT */
         .memories-container {
             width: 100%;
             display: flex;
@@ -208,40 +208,39 @@
             font-weight: bold;
             font-size: 18px;
             text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 40px;
             animation: glowPulse 2s infinite alternate;
         }
 
-        .memories-grid {
+        .zig-zag-grid {
             width: 90%;
-            max-width: 400px;
             display: flex;
             flex-direction: column;
-            gap: 60px;
-            padding-bottom: 100px;
+            gap: 40px;
+            padding-bottom: 60px;
         }
 
-        .memory-box {
-            width: 220px;
-            height: 300px;
-            background: #fff;
-            border: 4px solid #ff4d6d;
-            border-radius: 15px;
+        .memory-photo {
+            width: 200px;
+            height: 280px;
+            background: white;
+            padding: 8px;
+            border: 2px solid #ff4d6d;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
             overflow: hidden;
-            box-shadow: 0 8px 25px rgba(255, 77, 109, 0.3);
-            transition: 0.3s;
         }
 
-        .memory-box img {
+        .memory-photo img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            border-radius: 5px;
         }
 
-        /* ZIG ZAG TILTED */
-        .box-1 { align-self: flex-start; transform: rotate(-8deg); }
-        .box-2 { align-self: flex-end; transform: rotate(8deg); }
-        .box-3 { align-self: flex-start; transform: rotate(-5deg); }
+        .pos-1 { align-self: flex-start; transform: rotate(-6deg); }
+        .pos-2 { align-self: flex-end; transform: rotate(6deg); }
+        .pos-3 { align-self: flex-start; transform: rotate(-4deg); }
 
         .extra-blank-space { height: 100px; width: 100%; flex-shrink: 0; }
     </style>
@@ -305,15 +304,15 @@
         <div class="memories-container">
             <div class="memories-title-box">ᴏᴜʀ ᴍᴇᴍᴏʀɪᴇꜱ 💝😌🤞🏻✨</div>
             
-            <div class="memories-grid">
-                <div class="memory-box box-1">
-                    <img src="https://i.ibb.co/PshjNc3G/IMG-20241006-085454-0002.jpg" alt="Memory 1">
+            <div class="zig-zag-grid">
+                <div class="memory-photo pos-1">
+                    <img src="https://i.ibb.co/PshjNc3G/IMG-20241006-085454-0002.jpg" alt="Pic 1">
                 </div>
-                <div class="memory-box box-2">
-                    <img src="https://i.ibb.co/nMp7prDt/IMG-20241006-085358-0646.jpg" alt="Memory 2">
+                <div class="memory-photo pos-2">
+                    <img src="https://i.ibb.co/nMp7prDt/IMG-20241006-085358-0646.jpg" alt="Pic 2">
                 </div>
-                <div class="memory-box box-3">
-                    <img src="https://i.ibb.co/KjQ5gMfY/Screenshot-2026-01-23-11-38-30-89-c1ebbaff44ba152fb7f7c2e1f7129fd1.jpg" alt="Memory 3">
+                <div class="memory-photo pos-3">
+                    <img src="https://i.ibb.co/KjQ5gMfY/Screenshot-2026-01-23-11-38-30-89-c1ebbaff44ba152fb7f7c2e1f7129fd1.jpg" alt="Pic 3">
                 </div>
             </div>
         </div>
