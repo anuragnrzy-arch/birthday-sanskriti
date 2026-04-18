@@ -155,6 +155,7 @@
             box-shadow: 0 15px 35px rgba(0,0,0,0.1);
             z-index: 5;
             transition: transform 0.5s ease;
+            margin-top: -100px; /* Moves envelope up to leave space for buttons below */
         }
 
         /* Flap of the envelope */
@@ -195,9 +196,9 @@
         }
 
         .envelope-wrapper.open .letter-content {
-            top: -220px; /* Moves letter to the center */
-            height: 420px;
-            width: 320px;
+            top: -240px; /* Center positioning */
+            height: 440px;
+            width: 330px;
             opacity: 1;
             z-index: 15;
             pointer-events: auto;
@@ -217,17 +218,20 @@
         .scroll-box-page2::-webkit-scrollbar { width: 3px; }
         .scroll-box-page2::-webkit-scrollbar-thumb { background: #ff4d6d; }
 
-        /* Buttons Section */
+        /* Buttons Section - MOVED TO BOTTOM (Blue/Red Area) */
         .action-btns-page2 {
-            margin-top: 40px;
+            position: absolute;
+            bottom: 40px; /* Positioned at the very bottom */
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            z-index: 20;
+            align-items: center;
+            gap: 12px;
+            z-index: 25;
+            width: 100%;
         }
 
-        #openBtn { background: #ff4d6d; color: white; width: 160px; box-shadow: 0 4px 10px rgba(255, 77, 109, 0.3); }
-        #nextBtn2 { background: #fff; color: #ff4d6d; width: 160px; border: 2.5px solid #ff4d6d; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        #openBtn { background: #ff4d6d; color: white; width: 180px; box-shadow: 0 4px 10px rgba(255, 77, 109, 0.3); }
+        #nextBtn2 { background: #fff; color: #ff4d6d; width: 180px; border: 2.5px solid #ff4d6d; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
 
         /* --- REST OF THE CODE --- */
 
@@ -473,7 +477,6 @@
         const noBtn = document.getElementById('noBtn');
         const noMsgBox = document.getElementById('no-message-box');
 
-        // PAGE 2 LOGIC
         function handleEnvelope() {
             const env = document.getElementById('envelopeBox');
             const btn = document.getElementById('openBtn');
@@ -484,7 +487,7 @@
             } else {
                 env.classList.add('open');
                 btn.innerText = "Close ✖";
-                btn.style.background = "#444"; // Red box transform to close
+                btn.style.background = "#444";
             }
         }
 
