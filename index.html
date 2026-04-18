@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -136,6 +135,79 @@
             border: 1.5px solid rgba(255, 255, 255, 0.8);
         }
 
+        /* NEW ENVELOPE STYLES FOR 2ND PAGE */
+        .envelope-wrapper {
+            position: relative;
+            width: 280px;
+            height: 180px;
+            background: #ff4d6d;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            cursor: pointer;
+            margin-top: 50px;
+            transition: 0.5s;
+        }
+
+        .envelope-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            border-left: 140px solid transparent;
+            border-right: 140px solid transparent;
+            border-top: 100px solid #ff758f;
+            transform-origin: top;
+            transition: 0.5s;
+            z-index: 4;
+        }
+
+        .envelope-wrapper.open::before {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+
+        .envelope-wrapper .letter {
+            position: absolute;
+            bottom: 0; left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            height: 80%;
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            transition: 0.5s;
+            z-index: 2;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .envelope-wrapper.open .letter {
+            bottom: 100px;
+            height: 380px;
+            width: 320px;
+            z-index: 5;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .letter-content {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #444;
+            overflow-y: auto;
+            text-align: left;
+            padding-right: 5px;
+        }
+
+        .letter-content::-webkit-scrollbar { width: 4px; }
+        .letter-content::-webkit-scrollbar-thumb { background: #ff4d6d; border-radius: 10px; }
+
+        .env-btn-container {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+
         #loading-overlay {
             position: fixed; top: 0; left: 0;
             width: 100%; height: 100%; background: #fdf2f5;
@@ -190,7 +262,6 @@
         .red-letter-title { color: #ff4d6d; font-size: 18px; font-weight: bold; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
         .scroll-text { color: #555; font-size: 15px; line-height: 1.6; text-align: left; max-height: 350px; overflow-y: auto; padding-right: 5px; }
 
-        /* MEMORIES SECTION STYLES - ZIG ZAG LAYOUT */
         .memories-container {
             width: 100%;
             display: flex;
@@ -221,7 +292,6 @@
             padding-bottom: 60px;
         }
 
-        /* PHOTO GLOW AND WAVE EFFECT */
         .memory-photo {
             width: 200px;
             height: 280px;
@@ -229,10 +299,8 @@
             padding: 8px;
             border: 2px solid #ff4d6d;
             border-radius: 10px;
-            /* Pink Glow Effect */
             box-shadow: 0 0 15px rgba(255, 77, 109, 0.5), 0 5px 15px rgba(0,0,0,0.2);
             overflow: hidden;
-            /* Wave/Floating Animation */
             animation: waveFloat 4s ease-in-out infinite;
         }
 
@@ -248,7 +316,6 @@
             border-radius: 5px;
         }
 
-        /* Specific Rotations for Wave */
         .pos-1 { align-self: flex-start; --rot: -6deg; --rot-mid: -3deg; }
         .pos-2 { align-self: flex-end; --rot: 6deg; --rot-mid: 3deg; }
         .pos-3 { align-self: flex-start; --rot: -4deg; --rot-mid: -1deg; }
@@ -297,10 +364,8 @@
 
     <div id="final-letter-page">
         <div id="bg-heart-container"></div>
-        
         <div class="letter-love-header">💗 ᴍʏ ʟᴏᴍʟ 💗</div>
         <div class="letter-subtitle">ʏᴏᴜ'ʀᴇ ᴍʏ ᴇᴠᴇʀʏᴛʜɪɴɢ</div>
-        
         <div class="white-paper">
             <div class="red-letter-title">A Letter From My Heart</div>
             <div class="scroll-text">
@@ -314,20 +379,12 @@
 
         <div class="memories-container">
             <div class="memories-title-box">ᴏᴜʀ ᴍᴇᴍᴏʀɪᴇꜱ 💝😌🤞🏻✨</div>
-            
             <div class="zig-zag-grid">
-                <div class="memory-photo pos-1">
-                    <img src="https://i.ibb.co/PshjNc3G/IMG-20241006-085454-0002.jpg" alt="Pic 1">
-                </div>
-                <div class="memory-photo pos-2">
-                    <img src="https://i.ibb.co/nMp7prDt/IMG-20241006-085358-0646.jpg" alt="Pic 2">
-                </div>
-                <div class="memory-photo pos-3">
-                    <img src="https://i.ibb.co/KjQ5gMfY/Screenshot-2026-01-23-11-38-30-89-c1ebbaff44ba152fb7f7c2e1f7129fd1.jpg" alt="Pic 3">
-                </div>
+                <div class="memory-photo pos-1"><img src="https://i.ibb.co/PshjNc3G/IMG-20241006-085454-0002.jpg"></div>
+                <div class="memory-photo pos-2"><img src="https://i.ibb.co/nMp7prDt/IMG-20241006-085358-0646.jpg"></div>
+                <div class="memory-photo pos-3"><img src="https://i.ibb.co/KjQ5gMfY/Screenshot-2026-01-23-11-38-30-89-c1ebbaff44ba152fb7f7c2e1f7129fd1.jpg"></div>
             </div>
         </div>
-
         <div class="extra-blank-space"></div>
     </div>
 
@@ -346,10 +403,19 @@
         </section>
 
         <section class="slide">
-            <div class="glass-card">
-                <h1 style="color: #ff4d6d;">You're special! ✨</h1>
-                <p style="color: #555;">Tumhari hansi meri sabse badi khushi hai. ❤️</p>
-                <button onclick="nextSlide(2)" style="background:#ff4d6d;color:white;margin-top:20px">Next ➔</button>
+            <div class="envelope-wrapper" id="envelope">
+                <div class="letter">
+                    <div class="letter-content">
+                        <strong style="color: #ff4d6d;">My Sona,</strong><br><br>
+                        I know I’ve made mistakes, and I’m truly sorry for them... I'm not here to make excuses or just say things I won’t follow. I understand where I went wrong and I’m working on becoming a better version of myself, not just for you but for me too. I don’t want to repeat the same things again.<br><br>
+                        For 1 year, 2 months, and 11 days, we were apart after the breakup. During that time, all I had was your pictures. I used to look at them, spend my time with those memories, and miss you more than I can explain. It made me realize your value even more.<br><br>
+                        I won’t just say things now, I’ll prove it through my actions step by step... 🤞🏻✨🍀
+                    </div>
+                </div>
+            </div>
+            <div class="env-btn-container">
+                <button onclick="toggleLetter()" id="envActionBtn" style="background:#ff4d6d; color:white;">Open 💌</button>
+                <button onclick="nextSlide(2)" id="envNextBtn" style="background:#444; color:white; display:none;">Next ➔</button>
             </div>
         </section>
 
@@ -382,6 +448,24 @@
         const noBtn = document.getElementById('noBtn');
         const noMsgBox = document.getElementById('no-message-box');
 
+        function toggleLetter() {
+            const env = document.getElementById('envelope');
+            const btn = document.getElementById('envActionBtn');
+            const nextBtn = document.getElementById('envNextBtn');
+            
+            if (!env.classList.contains('open')) {
+                env.classList.add('open');
+                btn.innerText = "Close ✖";
+                btn.style.background = "#444";
+                nextBtn.style.display = "block";
+            } else {
+                env.classList.remove('open');
+                btn.innerText = "Open 💌";
+                btn.style.background = "#ff4d6d";
+                nextBtn.style.display = "none";
+            }
+        }
+
         function unlockMaster() {
             const name = document.getElementById('bfNameInput').value.trim().toLowerCase();
             if(name === "anurag") {
@@ -394,19 +478,14 @@
                     master.style.transform = 'translateY(-100%)';
                     setTimeout(() => master.style.display = 'none', 800);
                 }, 1000);
-            } else if (name === "") {
-                errorText.innerHTML = "System Error:";
-                errorOverlay.style.display = 'flex';
             } else {
-                errorText.innerHTML = "System Error: <br> Invalid Boyfriend Name! 😤<br><span style='color: white; font-size: 18px;'>WHO IS HE!?? 🤨🤨😤</span>";
+                errorText.innerHTML = "System Error: <br> Invalid Boyfriend Name! 😤";
                 errorOverlay.style.display = 'flex';
             }
         }
 
         function hideError() {
             errorOverlay.style.display = 'none';
-            document.getElementById('bfNameInput').value = "";
-            document.getElementById('secretCodeInput').value = "";
         }
 
         function checkSecretCode() {
@@ -424,11 +503,10 @@
             document.getElementById('loveCard').style.opacity = '0';
             setTimeout(async () => {
                 overlay.style.display = 'flex';
-                for(let i=1; i<=50; i++) { updateBar(i); await new Promise(r => setTimeout(r, 25)); }
-                await new Promise(r => setTimeout(r, 1000));
-                for(let i=51; i<=90; i++) { updateBar(i); await new Promise(r => setTimeout(r, 15)); }
-                updateBar(50); await new Promise(r => setTimeout(r, 1000));
-                for(let i=51; i<=90; i++) { updateBar(i); await new Promise(r => setTimeout(r, 20)); }
+                for(let i=1; i<=100; i++) { 
+                    updateBar(i); 
+                    await new Promise(r => setTimeout(r, 20)); 
+                }
                 await new Promise(r => setTimeout(r, 400));
                 nextSlide(1);
                 overlay.style.opacity = '0';
