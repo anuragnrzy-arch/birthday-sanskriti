@@ -135,7 +135,7 @@
             border: 1.5px solid rgba(255, 255, 255, 0.8);
         }
 
-        /* --- PAGE 2: ENVELOPE SYSTEM --- */
+        /* --- PAGE 2: ENVELOPE SYSTEM (FIXED) --- */
         .page2-container {
             display: flex;
             flex-direction: column;
@@ -154,8 +154,8 @@
             border-radius: 0 0 15px 15px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.1);
             z-index: 5;
-            transition: transform 0.5s ease;
-            transform: translateY(40px); 
+            margin-top: 0px; 
+            transform: translateY(-40px);
         }
 
         /* Flap */
@@ -168,12 +168,12 @@
             border-top: 100px solid #ff758f;
             transform-origin: top;
             transition: transform 0.4s ease;
-            z-index: 10;
+            z-index: 10; /* Keeps flap on top initially */
         }
 
         .envelope-wrapper.open::before {
             transform: rotateX(180deg);
-            z-index: 4;
+            z-index: 4; /* Moves behind the letter after opening */
         }
 
         /* Letter Styling */
@@ -181,29 +181,29 @@
             position: absolute;
             top: 10px;
             left: 50%;
-            transform: translateX(-50%);
+            transform: translateX(-50%) translateY(0);
             width: 90%;
-            height: 150px;
+            height: 160px;
             background: white;
             border-radius: 10px;
             padding: 20px;
-            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease, height 0.8s ease, width 0.8s ease;
-            z-index: 6;
+            z-index: 6; /* Behind flap initially */
             opacity: 0;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             overflow: hidden;
             pointer-events: none;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, height 0.6s ease, width 0.6s ease;
         }
 
-        /* Step: Letter animation when envelope is open */
+        /* Step-by-Step Animation Logic */
         .envelope-wrapper.open .letter-content {
             opacity: 1;
-            /* Yahan delay add kiya hai flap ke open hone ke baad ke liye */
+            /* 0.5s delay before moving up and changing size */
             transition-delay: 0.5s; 
-            transform: translateX(-50%) translateY(-280px); 
+            transform: translateX(-50%) translateY(-230px); 
             height: 440px;
             width: 330px;
-            z-index: 15;
+            z-index: 15; /* Moves to front */
             pointer-events: auto;
         }
 
@@ -220,7 +220,6 @@
         .scroll-box-page2::-webkit-scrollbar { width: 3px; }
         .scroll-box-page2::-webkit-scrollbar-thumb { background: #ff4d6d; }
 
-        /* --- BUTTONS SECTION --- */
         .action-btns-page2 {
             position: absolute;
             bottom: 80px; 
@@ -248,8 +247,6 @@
             width: 140px; 
             box-shadow: 0 4px 10px rgba(0,123,255,0.2); 
         }
-
-        /* --- REST OF THE CODE --- */
 
         #loading-overlay {
             position: fixed; top: 0; left: 0;
@@ -545,11 +542,10 @@
             document.getElementById('loveCard').style.opacity = '0';
             setTimeout(async () => {
                 overlay.style.display = 'flex';
-                for(let i=1; i<=50; i++) { updateBar(i); await new Promise(r => setTimeout(r, 25)); }
-                await new Promise(r => setTimeout(r, 1000));
-                for(let i=51; i<=90; i++) { updateBar(i); await new Promise(r => setTimeout(r, 15)); }
-                updateBar(50); await new Promise(r => setTimeout(r, 1000));
-                for(let i=51; i<=90; i++) { updateBar(i); await new Promise(r => setTimeout(r, 20)); }
+                for(let i=1; i<=100; i++) { 
+                    updateBar(i); 
+                    await new Promise(r => setTimeout(r, 30)); 
+                }
                 await new Promise(r => setTimeout(r, 400));
                 nextSlide(1);
                 overlay.style.opacity = '0';
