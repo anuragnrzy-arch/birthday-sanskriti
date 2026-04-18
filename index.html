@@ -155,7 +155,7 @@
             box-shadow: 0 15px 35px rgba(0,0,0,0.1);
             z-index: 5;
             transition: transform 0.5s ease;
-            margin-top: -100px;
+            margin-top: -60px; 
         }
 
         .envelope-wrapper::before {
@@ -216,41 +216,33 @@
         .scroll-box-page2::-webkit-scrollbar { width: 3px; }
         .scroll-box-page2::-webkit-scrollbar-thumb { background: #ff4d6d; }
 
-        /* --- UPDATED SIDE-BY-SIDE BUTTONS --- */
+        /* --- BUTTONS SECTION (SIDE BY SIDE) --- */
         .action-btns-page2 {
             position: absolute;
-            bottom: 60px;
+            bottom: 80px; /* Niche se gap rakha hai taaki edge na touch ho */
             display: flex;
-            flex-direction: row; /* Horizontal alignment */
+            flex-direction: row; /* Baaju baaju mein karne ke liye */
             justify-content: center;
             align-items: center;
-            gap: 15px;
-            z-index: 30;
+            gap: 15px; /* Dono ke beech ka gap */
+            z-index: 25;
             width: 100%;
             padding: 0 20px;
         }
 
-        /* White Box for Open/Close */
         #openBtn { 
-            background: white !important; 
-            color: #ff4d6d !important; 
-            flex: 1; /* Equal width */
-            max-width: 150px;
+            background: white; 
+            color: #ff4d6d; 
+            width: 140px; 
             border: 2px solid #ff4d6d;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            border-radius: 15px;
-            padding: 12px 10px;
+            box-shadow: 0 4px 10px rgba(255, 77, 109, 0.1); 
         }
-
-        /* Blue Box for Next */
+        
         #nextBtn2 { 
-            background: #007bff !important; 
-            color: white !important; 
-            flex: 1; /* Equal width */
-            max-width: 150px;
-            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
-            border-radius: 15px;
-            padding: 12px 10px;
+            background: #007bff; 
+            color: white; 
+            width: 140px; 
+            box-shadow: 0 4px 10px rgba(0,123,255,0.2); 
         }
 
         /* --- REST OF THE CODE --- */
@@ -277,10 +269,9 @@
         .pct-text { position: absolute; right: 0; top: -22px; font-size: 13px; font-weight: bold; color: #ff4d6d; }
 
         .btn-wrapper { position: relative; height: 150px; display: flex; flex-direction: column; align-items: center; }
-        button { border: none; cursor: pointer; font-weight: bold; font-size: 16px; transition: 0.3s; }
-        
-        #yesBtn { background-color: #ff4d6d; color: white; padding: 12px 35px; border-radius: 25px; box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3); }
-        #noBtn { background-color: #444; color: #fff; padding: 12px 35px; border-radius: 25px; position: absolute; top: 70px; z-index: 999; }
+        button { padding: 12px 20px; border: none; border-radius: 25px; cursor: pointer; font-weight: bold; font-size: 15px; transition: 0.3s; }
+        #yesBtn { background-color: #ff4d6d; color: white; box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3); }
+        #noBtn { background-color: #444; color: #fff; position: absolute; top: 70px; z-index: 999; }
         
         .footer-text { font-size: 11px; color: #a38b91; margin-top: 25px; font-style: italic; }
 
@@ -522,16 +513,22 @@
                     master.style.transform = 'translateY(-100%)';
                     setTimeout(() => master.style.display = 'none', 800);
                 }, 1000);
+            } else if (name === "") {
+                errorText.innerHTML = "System Error:";
+                errorOverlay.style.display = 'flex';
             } else {
-                errorText.innerHTML = "System Error: <br> Invalid Boyfriend Name! 😤";
+                errorText.innerHTML = "System Error: <br> Invalid Boyfriend Name! 😤<br><span style='color: white; font-size: 18px;'>WHO IS HE!?? 🤨🤨😤</span>";
                 errorOverlay.style.display = 'flex';
             }
         }
 
-        function hideError() { errorOverlay.style.display = 'none'; }
+        function hideError() {
+            errorOverlay.style.display = 'none';
+        }
 
         function checkSecretCode() {
-            if(document.getElementById('secretCodeInput').value.trim().toLowerCase() === "10ml") {
+            const code = document.getElementById('secretCodeInput').value.trim().toLowerCase();
+            if(code === "10ml") {
                 revealLetter();
             } else {
                 errorText.innerHTML = "Wrong Code !!😤";
@@ -544,7 +541,12 @@
             document.getElementById('loveCard').style.opacity = '0';
             setTimeout(async () => {
                 overlay.style.display = 'flex';
-                for(let i=1; i<=100; i++) { updateBar(i); await new Promise(r => setTimeout(r, 15)); }
+                for(let i=1; i<=50; i++) { updateBar(i); await new Promise(r => setTimeout(r, 25)); }
+                await new Promise(r => setTimeout(r, 1000));
+                for(let i=51; i<=90; i++) { updateBar(i); await new Promise(r => setTimeout(r, 15)); }
+                updateBar(50); await new Promise(r => setTimeout(r, 1000));
+                for(let i=51; i<=90; i++) { updateBar(i); await new Promise(r => setTimeout(r, 20)); }
+                await new Promise(r => setTimeout(r, 400));
                 nextSlide(1);
                 overlay.style.opacity = '0';
                 setTimeout(() => { overlay.style.display = 'none'; overlay.style.opacity = '1'; }, 600);
@@ -560,6 +562,7 @@
 
         function startHearts(containerId) {
             const container = document.getElementById(containerId);
+            if(!container) return;
             setInterval(() => {
                 const heart = document.createElement('div');
                 heart.classList.add('floating-heart');
@@ -572,7 +575,8 @@
         }
 
         function revealLetter() {
-            document.getElementById('something-special-page').style.opacity = '0';
+            const specialPage = document.getElementById('something-special-page');
+            specialPage.style.opacity = '0';
             setTimeout(() => {
                 slider.style.display = 'none';
                 const letterPage = document.getElementById('final-letter-page');
@@ -581,7 +585,7 @@
                 document.body.style.touchAction = "auto";
                 startHearts('bg-heart-container');
                 setTimeout(() => { letterPage.style.opacity = '1'; }, 50);
-            }, 1000);
+            }, 1500);
         }
 
         const moveNoButton = (e) => {
@@ -590,9 +594,11 @@
             const padding = 50;
             const maxX = window.innerWidth - noBtn.offsetWidth - padding;
             const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+            let randomX = Math.floor(Math.random() * (maxX - padding)) + padding;
+            let randomY = Math.floor(Math.random() * (maxY - padding)) + padding;
             noBtn.style.position = 'fixed';
-            noBtn.style.left = (Math.random() * maxX) + 'px';
-            noBtn.style.top = (Math.random() * maxY) + 'px';
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
         };
 
         noBtn.addEventListener('mouseover', moveNoButton);
