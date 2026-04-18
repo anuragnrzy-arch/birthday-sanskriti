@@ -155,9 +155,10 @@
             box-shadow: 0 15px 35px rgba(0,0,0,0.1);
             z-index: 5;
             transition: transform 0.5s ease;
-            margin-top: -60px; 
+            margin-top: 100px; /* Kept lower to give space for animation */
         }
 
+        /* Flap */
         .envelope-wrapper::before {
             content: '';
             position: absolute;
@@ -166,7 +167,7 @@
             border-right: 140px solid transparent;
             border-top: 100px solid #ff758f;
             transform-origin: top;
-            transition: transform 0.5s ease;
+            transition: transform 0.4s ease;
             z-index: 10;
         }
 
@@ -175,17 +176,18 @@
             z-index: 4;
         }
 
+        /* Letter Styling & Pull-out Animation */
         .letter-content {
             position: absolute;
-            top: 10px;
+            top: 5px;
             left: 50%;
             transform: translateX(-50%);
             width: 90%;
-            height: 80%;
+            height: 160px;
             background: white;
             border-radius: 10px;
             padding: 20px;
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease;
             z-index: 6;
             opacity: 0;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
@@ -193,14 +195,20 @@
             pointer-events: none;
         }
 
+        /* Step 1: Letter comes out from top */
         .envelope-wrapper.open .letter-content {
-            top: -240px; 
+            opacity: 1;
+            transform: translateX(-50%) translateY(-280px); /* Pehle upar nikalta hai */
             height: 440px;
             width: 330px;
-            opacity: 1;
             z-index: 15;
             pointer-events: auto;
-            transform: translateX(-50%) translateY(0);
+            /* Step 2: Moves to center after coming out */
+            animation: moveToCenter 1s forwards 0.4s; 
+        }
+
+        @keyframes moveToCenter {
+            to { transform: translateX(-50%) translateY(-220px); }
         }
 
         .scroll-box-page2 {
@@ -219,12 +227,12 @@
         /* --- BUTTONS SECTION (SIDE BY SIDE) --- */
         .action-btns-page2 {
             position: absolute;
-            bottom: 80px; /* Niche se gap rakha hai taaki edge na touch ho */
+            bottom: 80px; 
             display: flex;
-            flex-direction: row; /* Baaju baaju mein karne ke liye */
+            flex-direction: row; 
             justify-content: center;
             align-items: center;
-            gap: 15px; /* Dono ke beech ka gap */
+            gap: 15px; 
             z-index: 25;
             width: 100%;
             padding: 0 20px;
@@ -245,7 +253,7 @@
             box-shadow: 0 4px 10px rgba(0,123,255,0.2); 
         }
 
-        /* --- REST OF THE CODE --- */
+        /* --- REST OF THE CODE (UNCHANGED) --- */
 
         #loading-overlay {
             position: fixed; top: 0; left: 0;
