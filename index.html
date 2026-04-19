@@ -155,7 +155,18 @@
             box-shadow: 0 15px 35px rgba(0,0,0,0.1);
             z-index: 5;
             transition: transform 0.5s ease;
-            transform: translateY(20px); 
+            margin-top: 50px; 
+        }
+
+        /* Front part of envelope to hide the letter inside */
+        .envelope-wrapper::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 100%; height: 100%;
+            background: #ff4d6d;
+            border-radius: 0 0 15px 15px;
+            z-index: 7;
         }
 
         /* Flap */
@@ -167,7 +178,7 @@
             border-right: 140px solid transparent;
             border-top: 100px solid #ff758f;
             transform-origin: top;
-            transition: transform 0.5s ease;
+            transition: transform 0.4s ease;
             z-index: 10;
         }
 
@@ -176,10 +187,10 @@
             z-index: 4;
         }
 
-        /* Letter Styling */
+        /* Letter Styling & Pull-out Animation */
         .letter-content {
             position: absolute;
-            bottom: 10px;
+            top: 10px;
             left: 50%;
             transform: translateX(-50%);
             width: 90%;
@@ -188,27 +199,23 @@
             border-radius: 10px;
             padding: 20px;
             transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 6;
+            z-index: 6; /* Inside initially */
             opacity: 0;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             overflow: hidden;
             pointer-events: none;
         }
 
-        /* Letter Animation: 0.5s delay after flap opens */
+        /* Letter coming out and covering center */
         .envelope-wrapper.open .letter-content {
             opacity: 1;
-            transform: translateX(-50%) translateY(-150px); /* Move UP first */
-            height: 460px;
-            width: 330px;
-            z-index: 15;
+            z-index: 15; /* Becomes top layer */
             pointer-events: auto;
-            transition-delay: 0.5s; 
-            animation: centerLetter 1s forwards 0.8s; /* Moves to cover envelope */
-        }
-
-        @keyframes centerLetter {
-            to { transform: translateX(-50%) translateY(-120px); }
+            /* Move up first then settle in center covering envelope */
+            transform: translateX(-50%) translateY(-100px); 
+            height: 480px; 
+            width: 340px;
+            transition-delay: 0.5s; /* Wait for flap */
         }
 
         .scroll-box-page2 {
@@ -236,38 +243,20 @@
         /* --- BUTTONS SECTION --- */
         .action-btns-page2 {
             position: absolute;
-            bottom: 80px; 
+            bottom: 60px; 
             display: flex;
-            flex-direction: row; 
-            justify-content: center;
-            align-items: center;
             gap: 15px; 
             z-index: 25;
-            width: 100%;
-            padding: 0 20px;
         }
 
-        #openBtn { 
-            background: white; 
-            color: #ff4d6d; 
-            width: 140px; 
-            border: 2px solid #ff4d6d;
-            box-shadow: 0 4px 10px rgba(255, 77, 109, 0.1); 
-        }
-        
-        #nextBtn2 { 
-            background: #007bff; 
-            color: white; 
-            width: 140px; 
-            box-shadow: 0 4px 10px rgba(0,123,255,0.2); 
-        }
+        #openBtn { background: white; color: #ff4d6d; width: 140px; border: 2px solid #ff4d6d; }
+        #nextBtn2 { background: #007bff; color: white; width: 140px; }
 
         #loading-overlay {
             position: fixed; top: 0; left: 0;
             width: 100%; height: 100%; background: #fdf2f5;
             display: none; flex-direction: column;
             justify-content: center; align-items: center; z-index: 10000;
-            transition: opacity 0.5s ease, visibility 0.5s;
         }
 
         .loader-card {
@@ -276,11 +265,10 @@
             border-radius: 25px;
             backdrop-filter: blur(15px); text-align: center;
             box-shadow: 0 8px 32px rgba(255, 182, 193, 0.3);
-            border: 1.5px solid rgba(255, 255, 255, 0.8);
         }
 
         .progress-container { width: 100%; height: 14px; background: #eee; border-radius: 20px; position: relative; margin-top: 10px; }
-        .progress-bar { width: 0%; height: 100%; background: #ff4d6d; border-radius: 20px; transition: width 0.2s ease; }
+        .progress-bar { width: 0%; height: 100%; background: #ff4d6d; border-radius: 20px; }
         .pct-text { position: absolute; right: 0; top: -22px; font-size: 13px; font-weight: bold; color: #ff4d6d; }
 
         .btn-wrapper { position: relative; height: 150px; display: flex; flex-direction: column; align-items: center; }
@@ -293,69 +281,26 @@
         input[type="text"] { 
             padding: 12px; border-radius: 10px; border: 1.5px solid #ffcad4; 
             width: 85%; margin-bottom: 15px; outline: none; text-align: center;
-            background: white;
         }
 
-        #something-special-page { transition: opacity 1.5s ease; }
         .special-slide { background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%) !important; flex-direction: column; position: relative; overflow: hidden; }
         .special-title { color: white; font-size: 40px; font-weight: bold; margin-bottom: 5px; text-shadow: 2px 2px 10px rgba(0,0,0,0.1); z-index: 10; }
         .special-subtitle { color: white; font-size: 22px; font-style: italic; margin-bottom: 40px; opacity: 0.9; z-index: 10; }
         
-        .begin-btn { background: #ff4d6d !important; color: white !important; padding: 15px 45px; border-radius: 35px; font-size: 18px; font-weight: bold; border: none; z-index: 10; box-shadow: 0 5px 20px rgba(255, 77, 109, 0.4); transition: 0.3s; }
+        .begin-btn { background: #ff4d6d !important; color: white !important; padding: 15px 45px; border-radius: 35px; font-size: 18px; font-weight: bold; z-index: 10; box-shadow: 0 5px 20px rgba(255, 77, 109, 0.4); }
 
         .floating-heart { position: absolute; bottom: -50px; color: rgba(255, 77, 109, 0.4); font-size: 20px; animation: floatUp linear infinite; z-index: 1; pointer-events: none; }
         @keyframes floatUp { to { transform: translateY(-110vh) rotate(360deg); opacity: 0; } }
 
-        #final-letter-page { display: none; opacity: 0; transition: opacity 3s ease; background: #fce4ec; width: 100vw; height: 100vh; position: fixed; top: 0; left: 0; z-index: 5000; flex-direction: column; align-items: center; justify-content: flex-start; padding-top: 40px; overflow-y: scroll; overflow-x: hidden; }
-        
+        #final-letter-page { display: none; opacity: 0; transition: opacity 3s ease; background: #fce4ec; width: 100vw; height: 100vh; position: fixed; top: 0; left: 0; z-index: 5000; flex-direction: column; align-items: center; justify-content: flex-start; padding-top: 40px; overflow-y: scroll; }
         #bg-heart-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
-
-        .letter-love-header { color: #ff4d6d; font-size: 28px; font-weight: bold; margin-bottom: 5px; z-index: 10; position: relative; }
-        .letter-subtitle { color: #888; font-size: 16px; margin-bottom: 25px; z-index: 10; position: relative; }
-        .white-paper { background: white; width: 90%; max-width: 350px; border-radius: 15px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 40px; position: relative; flex-shrink: 0; z-index: 10; }
-        .red-letter-title { color: #ff4d6d; font-size: 18px; font-weight: bold; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
-        .scroll-text { color: #555; font-size: 15px; line-height: 1.6; text-align: left; max-height: 350px; overflow-y: auto; padding-right: 5px; }
-
-        .memories-container {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            z-index: 10;
-        }
-
-        .memories-title-box {
-            background: white;
-            padding: 15px 25px;
-            border-radius: 20px;
-            border: 2px solid #ff4d6d;
-            box-shadow: 0 0 20px rgba(255, 77, 109, 0.4);
-            color: #ff4d6d;
-            font-weight: bold;
-            font-size: 18px;
-            text-align: center;
-            margin-bottom: 40px;
-            animation: glowPulse 2s infinite alternate;
-        }
-
-        .zig-zag-grid {
-            width: 90%;
-            display: flex;
-            flex-direction: column;
-            gap: 40px;
-            padding-bottom: 60px;
-        }
+        .letter-love-header { color: #ff4d6d; font-size: 28px; font-weight: bold; margin-bottom: 5px; z-index: 10; }
+        .white-paper { background: white; width: 90%; max-width: 350px; border-radius: 15px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 40px; z-index: 10; }
+        .scroll-text { color: #555; font-size: 15px; line-height: 1.6; text-align: left; max-height: 350px; overflow-y: auto; }
 
         .memory-photo {
-            width: 200px;
-            height: 280px;
-            background: white;
-            padding: 8px;
-            border: 2px solid #ff4d6d;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(255, 77, 109, 0.5), 0 5px 15px rgba(0,0,0,0.2);
-            overflow: hidden;
-            animation: waveFloat 4s ease-in-out infinite;
+            width: 200px; height: 280px; background: white; padding: 8px; border: 2px solid #ff4d6d; border-radius: 10px;
+            box-shadow: 0 0 15px rgba(255, 77, 109, 0.5); overflow: hidden; animation: waveFloat 4s ease-in-out infinite;
         }
 
         @keyframes waveFloat {
@@ -363,27 +308,15 @@
             50% { transform: translateY(-15px) rotate(var(--rot-mid)); }
         }
 
-        .memory-photo img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 5px;
-        }
-
-        .pos-1 { align-self: flex-start; --rot: -6deg; --rot-mid: -3deg; }
-        .pos-2 { align-self: flex-end; --rot: 6deg; --rot-mid: 3deg; }
-        .pos-3 { align-self: flex-start; --rot: -4deg; --rot-mid: -1deg; }
-
-        .extra-blank-space { height: 100px; width: 100%; flex-shrink: 0; }
+        .memory-photo img { width: 100%; height: 100%; object-fit: cover; }
+        .pos-1 { align-self: flex-start; --rot: -6deg; --rot-mid: -3deg; margin-left: 20px; }
+        .pos-2 { align-self: flex-end; --rot: 6deg; --rot-mid: 3deg; margin-right: 20px; }
     </style>
 </head>
 <body>
 
     <div id="no-message-box">
-        <div class="strings-container">
-            <div class="string"></div>
-            <div class="string"></div>
-        </div>
+        <div class="strings-container"><div class="string"></div><div class="string"></div></div>
         <div class="hanging-card">You can't say 'NO' 😁😋</div>
     </div>
 
@@ -408,38 +341,23 @@
         <div class="loader-card">
             <div style="position:relative">
                 <span class="pct-text" id="loadPercent">0%</span>
-                <div class="progress-container">
-                    <div class="progress-bar" id="loadBar"></div>
-                </div>
+                <div class="progress-container"><div class="progress-bar" id="loadBar"></div></div>
             </div>
-            <div style="margin-top:20px; font-weight:bold; color:#ff4d6d; letter-spacing: 1px;">LOADING...</div>
+            <div style="margin-top:20px; font-weight:bold; color:#ff4d6d;">LOADING...</div>
         </div>
     </div>
 
     <div id="final-letter-page">
         <div id="bg-heart-container"></div>
         <div class="letter-love-header">💗 ᴍʏ ʟᴏᴍʟ 💗</div>
-        <div class="letter-subtitle">ʏᴏᴜ'ʀᴇ ᴍʏ ᴇᴠᴇʀʏᴛʜɪɴɢ</div>
         <div class="white-paper">
-            <div class="red-letter-title">A Letter From My Heart</div>
             <div class="scroll-text">
                 <strong>To my special one</strong><br><br>
-                If you're busy, I'll wait for you. I know sometimes life can be really busy and you might not have time to talk to me. That's okay I'll be patient and wait because you are important to me.<br><br>
-                If you're feeling sad or upset, I'll be here to listen to you. You don't have to go through it alone. I want to hear about your feelings and help you feel better.<br><br>
-                If you need help with anything, I'll be there to help you. You can always count on me for support and care.<br><br>
-                No matter what happens, I'll always be here for you. I want you to know that you're never alone, and I will always stand by your side. ❤️
+                If you're busy, I'll wait for you. I know sometimes life can be really busy and you might not have time to talk to me. That's okay I'll be patient. ❤️
             </div>
         </div>
-
-        <div class="memories-container">
-            <div class="memories-title-box">ᴏᴜʀ ᴍᴇᴍᴏʀɪᴇꜱ 💝😌🤞🏻✨</div>
-            <div class="zig-zag-grid">
-                <div class="memory-photo pos-1"><img src="https://i.ibb.co/PshjNc3G/IMG-20241006-085454-0002.jpg"></div>
-                <div class="memory-photo pos-2"><img src="https://i.ibb.co/nMp7prDt/IMG-20241006-085358-0646.jpg"></div>
-                <div class="memory-photo pos-3"><img src="https://i.ibb.co/KjQ5gMfY/Screenshot-2026-01-23-11-38-30-89-c1ebbaff44ba152fb7f7c2e1f7129fd1.jpg"></div>
-            </div>
-        </div>
-        <div class="extra-blank-space"></div>
+        <div class="memory-photo pos-1"><img src="https://i.ibb.co/PshjNc3G/IMG-20241006-085454-0002.jpg"></div>
+        <div style="height:100px;"></div>
     </div>
 
     <div class="slider-container" id="mainSlider">
@@ -447,12 +365,11 @@
             <div class="glass-card" id="loveCard">
                 <div style="font-size:50px">🐱 ❤️</div>
                 <h2 style="color: #ff4d6d;">Sanskriti</h2>
-                <h1 style="margin-bottom:30px; color: #444;">Do you love me!?</h1>
+                <h1 style="margin-bottom:30px;">Do you love me!?</h1>
                 <div class="btn-wrapper">
                     <button id="yesBtn" onclick="triggerLoading()">Yes 👀</button>
                     <button id="noBtn">No 😒</button>
                 </div>
-                <p class="footer-text">Some love stories don't allow "no" 😤</p>
             </div>
         </section>
 
@@ -461,13 +378,11 @@
                 <div class="envelope-wrapper" id="envelopeBox">
                     <div class="letter-content">
                         <div class="scroll-box-page2">
-                            I know I’ve made mistakes, and I’m truly sorry for them... I'm not here to make excuses or just say things I won’t follow. I understand where I went wrong and I’m working on becoming a better version of myself not just for you but for me too. I don’t want to repeat the same things again.<br><br>
-                            For 1 year, 2 months, and 11 days, we were apart after the breakup. During that time all I had was your pictures. I used to look at them, spend my time with those memories, and miss you more than I can explain. It made me realize your value even more. I won’t just say things now, I’ll prove it through my actions step by step... 🤞🏻✨🍀
+                            I know I’ve made mistakes, and I’m truly sorry... 🤞🏻✨🍀
                             <img src="https://i.ibb.co/KpDd1ZF9/1000092801.jpg" class="cat-image-sorry">
                         </div>
                     </div>
                 </div>
-                
                 <div class="action-btns-page2">
                     <button id="openBtn" onclick="handleEnvelope()">Open 💌</button>
                     <button id="nextBtn2" onclick="nextSlide(2)">Next ➔</button>
@@ -478,17 +393,16 @@
         <section class="slide">
             <div class="glass-card">
                 <h1 style="color: #ff4d6d;">A promise... 🌸</h1>
-                <p style="color: #555;">Main humesha tumhare saath rahunga.</p>
+                <p>Main humesha tumhare saath rahunga.</p>
                 <button onclick="nextSlide(3)" style="background:#ff4d6d;color:white;margin-top:20px">Read Letter 💌</button>
             </div>
         </section>
 
         <section class="slide special-slide" id="something-special-page">
             <div id="heart-container"></div>
-            <h1 class="special-title">ꜱᴏᴍᴇᴛʜɪɴɢ ꜱᴘᴇᴄɪᴀʟ </h1>
-            <p class="special-subtitle">ᴀᴡᴀɪᴛꜱ ʏᴏᴜ</p>
-            <div style="z-index: 10; width: 80%; max-width: 300px; display: flex; flex-direction: column; align-items: center;">
-                <input type="text" id="secretCodeInput" placeholder="Enter Code..." style="margin-bottom: 20px;">
+            <h1 class="special-title">ꜱᴏᴍᴇᴛʜɪɴɢ ꜱᴘᴇᴄɪᴀʟ</h1>
+            <div style="z-index: 10; width: 80%; max-width: 300px; text-align:center;">
+                <input type="text" id="secretCodeInput" placeholder="Enter Code...">
                 <button class="begin-btn" onclick="checkSecretCode()">Click to Begin</button>
             </div>
         </section>
@@ -500,7 +414,6 @@
         const pct = document.getElementById('loadPercent');
         const overlay = document.getElementById('loading-overlay');
         const errorOverlay = document.getElementById('error-overlay');
-        const errorText = document.getElementById('error-text-content');
         const noBtn = document.getElementById('noBtn');
         const noMsgBox = document.getElementById('no-message-box');
 
@@ -520,104 +433,64 @@
             const name = document.getElementById('bfNameInput').value.trim().toLowerCase();
             if(name === "anurag") {
                 document.getElementById('mainLockEmoji').innerText = "🔓";
-                document.getElementById('mainLockEmoji').style.transform = "scale(1.4)";
-                document.getElementById('lockBox').style.opacity = '0';
                 setTimeout(() => {
-                    const master = document.getElementById('master-lock-screen');
-                    master.style.opacity = '0';
-                    master.style.transform = 'translateY(-100%)';
-                    setTimeout(() => master.style.display = 'none', 800);
+                    document.getElementById('master-lock-screen').style.display = 'none';
                 }, 1000);
-            } else if (name === "") {
-                errorText.innerHTML = "System Error:";
-                errorOverlay.style.display = 'flex';
             } else {
-                errorText.innerHTML = "System Error: <br> Invalid Boyfriend Name! 😤<br><span style='color: white; font-size: 18px;'>WHO IS HE!?? 🤨🤨😤</span>";
                 errorOverlay.style.display = 'flex';
             }
         }
 
-        function hideError() {
-            errorOverlay.style.display = 'none';
-        }
-
-        function checkSecretCode() {
-            const code = document.getElementById('secretCodeInput').value.trim().toLowerCase();
-            if(code === "10ml") {
-                revealLetter();
-            } else {
-                errorText.innerHTML = "Wrong Code !!😤";
-                errorOverlay.style.display = 'flex';
-            }
-        }
+        function hideError() { errorOverlay.style.display = 'none'; }
 
         async function triggerLoading() {
-            noMsgBox.style.top = '-200px'; 
             document.getElementById('loveCard').style.opacity = '0';
-            setTimeout(async () => {
-                overlay.style.display = 'flex';
-                for(let i=1; i<=50; i++) { updateBar(i); await new Promise(r => setTimeout(r, 25)); }
-                await new Promise(r => setTimeout(r, 1000));
-                for(let i=51; i<=90; i++) { updateBar(i); await new Promise(r => setTimeout(r, 15)); }
-                updateBar(50); await new Promise(r => setTimeout(r, 1000));
-                for(let i=51; i<=90; i++) { updateBar(i); await new Promise(r => setTimeout(r, 20)); }
-                await new Promise(r => setTimeout(r, 400));
-                nextSlide(1);
-                overlay.style.opacity = '0';
-                setTimeout(() => { overlay.style.display = 'none'; overlay.style.opacity = '1'; }, 600);
-            }, 200);
+            overlay.style.display = 'flex';
+            for(let i=1; i<=100; i++) {
+                bar.style.width = i + "%";
+                pct.innerText = i + "%";
+                await new Promise(r => setTimeout(r, 30));
+            }
+            nextSlide(1);
+            overlay.style.display = 'none';
         }
-
-        function updateBar(val) { bar.style.width = val + "%"; pct.innerText = val + "%"; }
 
         function nextSlide(idx) {
             slider.style.transform = `translateX(-${idx * 100}vw)`;
             if(idx === 3) startHearts('heart-container');
         }
 
-        function startHearts(containerId) {
-            const container = document.getElementById(containerId);
-            if(!container) return;
+        function startHearts(id) {
             setInterval(() => {
-                const heart = document.createElement('div');
-                heart.classList.add('floating-heart');
-                heart.innerHTML = '❤️';
-                heart.style.left = Math.random() * 100 + 'vw';
-                heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
-                container.appendChild(heart);
-                setTimeout(() => heart.remove(), 5000);
+                const h = document.createElement('div');
+                h.classList.add('floating-heart');
+                h.innerHTML = '❤️';
+                h.style.left = Math.random() * 100 + 'vw';
+                document.getElementById(id).appendChild(h);
+                setTimeout(() => h.remove(), 5000);
             }, 400);
         }
 
+        function checkSecretCode() {
+            if(document.getElementById('secretCodeInput').value.toLowerCase() === "10ml") revealLetter();
+        }
+
         function revealLetter() {
-            const specialPage = document.getElementById('something-special-page');
-            specialPage.style.opacity = '0';
+            document.getElementById('something-special-page').style.opacity = '0';
             setTimeout(() => {
                 slider.style.display = 'none';
-                const letterPage = document.getElementById('final-letter-page');
-                letterPage.style.display = 'flex';
-                document.body.style.overflowY = "auto";
-                document.body.style.touchAction = "auto";
+                const lp = document.getElementById('final-letter-page');
+                lp.style.display = 'flex';
+                setTimeout(() => lp.style.opacity = '1', 50);
                 startHearts('bg-heart-container');
-                setTimeout(() => { letterPage.style.opacity = '1'; }, 50);
             }, 1500);
         }
 
-        const moveNoButton = (e) => {
-            if(e.type === 'touchstart') e.preventDefault();
-            noMsgBox.style.top = '0px'; 
-            const padding = 50;
-            const maxX = window.innerWidth - noBtn.offsetWidth - padding;
-            const maxY = window.innerHeight - noBtn.offsetHeight - padding;
-            let randomX = Math.floor(Math.random() * (maxX - padding)) + padding;
-            let randomY = Math.floor(Math.random() * (maxY - padding)) + padding;
-            noBtn.style.position = 'fixed';
-            noBtn.style.left = randomX + 'px';
-            noBtn.style.top = randomY + 'px';
-        };
-
-        noBtn.addEventListener('mouseover', moveNoButton);
-        noBtn.addEventListener('touchstart', moveNoButton);
+        noBtn.addEventListener('mouseover', () => {
+            noMsgBox.style.top = '0';
+            noBtn.style.left = Math.random() * 80 + 'vw';
+            noBtn.style.top = Math.random() * 80 + 'vh';
+        });
     </script>
 </body>
 </html>
