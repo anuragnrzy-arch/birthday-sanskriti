@@ -135,7 +135,7 @@
             border: 1.5px solid rgba(255, 255, 255, 0.8);
         }
 
-        /* --- PAGE 2: ENVELOPE SYSTEM --- */
+        /* --- PAGE 2: UPDATED ENVELOPE (INSIDE OUT) --- */
         .page2-container {
             display: flex;
             flex-direction: column;
@@ -154,9 +154,20 @@
             border-radius: 0 0 15px 15px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.1);
             z-index: 5;
-            transition: transform 0.5s ease;
-            margin-top: 0px; 
-            transform: translateY(-40px); 
+            transform: translateY(40px); 
+        }
+
+        /* The Front part of the envelope to cover the letter */
+        .envelope-front {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #ff4d6d;
+            border-radius: 0 0 15px 15px;
+            z-index: 10; /* Above letter */
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
         }
 
         /* Flap */
@@ -169,18 +180,18 @@
             border-top: 100px solid #ff758f;
             transform-origin: top;
             transition: transform 0.4s ease;
-            z-index: 10;
+            z-index: 12; /* Top-most */
         }
 
         .envelope-wrapper.open::before {
             transform: rotateX(180deg);
-            z-index: 4;
+            z-index: 4; /* Behind the letter when open */
         }
 
-        /* Letter Styling & Pull-out Animation */
+        /* Letter Styling & Inside-out Animation */
         .letter-content {
             position: absolute;
-            top: 5px;
+            bottom: 10px; /* Starts inside */
             left: 50%;
             transform: translateX(-50%);
             width: 90%;
@@ -188,27 +199,23 @@
             background: white;
             border-radius: 10px;
             padding: 20px;
-            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease;
-            z-index: 6;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 6; /* Behind the envelope-front */
             opacity: 0;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             overflow: hidden;
             pointer-events: none;
         }
 
-        /* Step 1: Letter comes out from top */
+        /* Animation: Slide out from inside */
         .envelope-wrapper.open .letter-content {
             opacity: 1;
-            transform: translateX(-50%) translateY(-280px); 
-            height: 460px; /* Slightly increased to fit image */
+            bottom: 100px; /* Slides UP out of the envelope */
+            height: 460px;
             width: 330px;
-            z-index: 15;
+            z-index: 15; /* Now it comes in front */
             pointer-events: auto;
-            animation: moveToCenter 1s forwards 0.4s; 
-        }
-
-        @keyframes moveToCenter {
-            to { transform: translateX(-50%) translateY(-220px); }
+            transform: translateX(-50%) translateY(-150px);
         }
 
         .scroll-box-page2 {
@@ -221,7 +228,6 @@
             padding-right: 5px;
         }
 
-        /* Cat Image Styling in Letter */
         .cat-image-sorry {
             width: 100%;
             max-width: 180px;
@@ -234,7 +240,7 @@
         .scroll-box-page2::-webkit-scrollbar { width: 3px; }
         .scroll-box-page2::-webkit-scrollbar-thumb { background: #ff4d6d; }
 
-        /* --- BUTTONS SECTION (SIDE BY SIDE) --- */
+        /* --- BUTTONS SECTION --- */
         .action-btns-page2 {
             position: absolute;
             bottom: 80px; 
@@ -460,7 +466,7 @@
         <section class="slide">
             <div class="page2-container">
                 <div class="envelope-wrapper" id="envelopeBox">
-                    <div class="letter-content">
+                    <div class="envelope-front"></div> <div class="letter-content">
                         <div class="scroll-box-page2">
                             I know I’ve made mistakes, and I’m truly sorry for them... I'm not here to make excuses or just say things I won’t follow. I understand where I went wrong and I’m working on becoming a better version of myself not just for you but for me too. I don’t want to repeat the same things again.<br><br>
                             For 1 year, 2 months, and 11 days, we were apart after the breakup. During that time all I had was your pictures. I used to look at them, spend my time with those memories, and miss you more than I can explain. It made me realize your value even more. I won’t just say things now, I’ll prove it through my actions step by step... 🤞🏻✨🍀
@@ -557,11 +563,7 @@
             document.getElementById('loveCard').style.opacity = '0';
             setTimeout(async () => {
                 overlay.style.display = 'flex';
-                for(let i=1; i<=50; i++) { updateBar(i); await new Promise(r => setTimeout(r, 25)); }
-                await new Promise(r => setTimeout(r, 1000));
-                for(let i=51; i<=90; i++) { updateBar(i); await new Promise(r => setTimeout(r, 15)); }
-                updateBar(50); await new Promise(r => setTimeout(r, 1000));
-                for(let i=51; i<=90; i++) { updateBar(i); await new Promise(r => setTimeout(r, 20)); }
+                for(let i=1; i<=100; i++) { updateBar(i); await new Promise(r => setTimeout(r, 20)); }
                 await new Promise(r => setTimeout(r, 400));
                 nextSlide(1);
                 overlay.style.opacity = '0';
