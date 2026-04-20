@@ -155,9 +155,11 @@
             box-shadow: 0 15px 35px rgba(0,0,0,0.1);
             z-index: 5;
             transition: transform 0.5s ease;
-            transform: translateY(50px); 
+            margin-top: 0px; 
+            transform: translateY(-40px); 
         }
 
+        /* Flap */
         .envelope-wrapper::before {
             content: '';
             position: absolute;
@@ -175,9 +177,10 @@
             z-index: 4;
         }
 
+        /* Letter Styling & Pull-out Animation */
         .letter-content {
             position: absolute;
-            top: 10px;
+            top: 5px;
             left: 50%;
             transform: translateX(-50%);
             width: 90%;
@@ -185,29 +188,27 @@
             background: white;
             border-radius: 10px;
             padding: 20px;
-            z-index: 2; /* Initially inside envelope */
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease;
+            z-index: 6;
             opacity: 0;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             overflow: hidden;
             pointer-events: none;
-            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, height 0.8s ease, width 0.8s ease;
         }
 
-        /* Pull-out and Center Animation */
+        /* Step 1: Letter comes out from top */
         .envelope-wrapper.open .letter-content {
             opacity: 1;
-            transform: translateX(-50%) translateY(-250px); /* Moves up first */
-            height: 480px; 
-            width: 340px;
-            z-index: 15; /* Comes on top of everything */
+            transform: translateX(-50%) translateY(-280px); 
+            height: 460px; /* Slightly increased to fit image */
+            width: 330px;
+            z-index: 15;
             pointer-events: auto;
-            animation: centerLetter 1s forwards 0.5s; /* Starts after flap opens */
+            animation: moveToCenter 1s forwards 0.4s; 
         }
 
-        @keyframes centerLetter {
-            to {
-                transform: translateX(-50%) translateY(-180px);
-            }
+        @keyframes moveToCenter {
+            to { transform: translateX(-50%) translateY(-220px); }
         }
 
         .scroll-box-page2 {
@@ -220,6 +221,7 @@
             padding-right: 5px;
         }
 
+        /* Cat Image Styling in Letter */
         .cat-image-sorry {
             width: 100%;
             max-width: 180px;
@@ -232,33 +234,49 @@
         .scroll-box-page2::-webkit-scrollbar { width: 3px; }
         .scroll-box-page2::-webkit-scrollbar-thumb { background: #ff4d6d; }
 
-        /* --- BUTTONS SECTION --- */
+        /* --- BUTTONS SECTION (SIDE BY SIDE) --- */
         .action-btns-page2 {
             position: absolute;
-            bottom: 50px; 
+            bottom: 80px; 
             display: flex;
+            flex-direction: row; 
             justify-content: center;
+            align-items: center;
             gap: 15px; 
             z-index: 25;
             width: 100%;
+            padding: 0 20px;
         }
 
-        #openBtn { background: white; color: #ff4d6d; width: 140px; border: 2px solid #ff4d6d; }
-        #nextBtn2 { background: #007bff; color: white; width: 140px; }
+        #openBtn { 
+            background: white; 
+            color: #ff4d6d; 
+            width: 140px; 
+            border: 2px solid #ff4d6d;
+            box-shadow: 0 4px 10px rgba(255, 77, 109, 0.1); 
+        }
+        
+        #nextBtn2 { 
+            background: #007bff; 
+            color: white; 
+            width: 140px; 
+            box-shadow: 0 4px 10px rgba(0,123,255,0.2); 
+        }
 
-        /* --- NO CHANGE BELOW FOR OTHER PAGES --- */
         #loading-overlay {
             position: fixed; top: 0; left: 0;
             width: 100%; height: 100%; background: #fdf2f5;
             display: none; flex-direction: column;
             justify-content: center; align-items: center; z-index: 10000;
-            transition: opacity 0.5s ease;
+            transition: opacity 0.5s ease, visibility 0.5s;
         }
 
         .loader-card {
             width: 85%; max-width: 320px; padding: 40px 20px;
             background: rgba(255, 245, 247, 0.9);
-            border-radius: 25px; backdrop-filter: blur(15px); text-align: center;
+            border-radius: 25px;
+            backdrop-filter: blur(15px); text-align: center;
+            box-shadow: 0 8px 32px rgba(255, 182, 193, 0.3);
             border: 1.5px solid rgba(255, 255, 255, 0.8);
         }
 
@@ -276,30 +294,88 @@
         input[type="text"] { 
             padding: 12px; border-radius: 10px; border: 1.5px solid #ffcad4; 
             width: 85%; margin-bottom: 15px; outline: none; text-align: center;
+            background: white;
         }
 
         #something-special-page { transition: opacity 1.5s ease; }
         .special-slide { background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%) !important; flex-direction: column; position: relative; overflow: hidden; }
-        .special-title { color: white; font-size: 40px; font-weight: bold; margin-bottom: 5px; z-index: 10; }
+        .special-title { color: white; font-size: 40px; font-weight: bold; margin-bottom: 5px; text-shadow: 2px 2px 10px rgba(0,0,0,0.1); z-index: 10; }
         .special-subtitle { color: white; font-size: 22px; font-style: italic; margin-bottom: 40px; opacity: 0.9; z-index: 10; }
-        .begin-btn { background: #ff4d6d !important; color: white !important; padding: 15px 45px; border-radius: 35px; font-size: 18px; font-weight: bold; z-index: 10; }
+        
+        .begin-btn { background: #ff4d6d !important; color: white !important; padding: 15px 45px; border-radius: 35px; font-size: 18px; font-weight: bold; border: none; z-index: 10; box-shadow: 0 5px 20px rgba(255, 77, 109, 0.4); transition: 0.3s; }
 
         .floating-heart { position: absolute; bottom: -50px; color: rgba(255, 77, 109, 0.4); font-size: 20px; animation: floatUp linear infinite; z-index: 1; pointer-events: none; }
         @keyframes floatUp { to { transform: translateY(-110vh) rotate(360deg); opacity: 0; } }
 
-        #final-letter-page { display: none; opacity: 0; transition: opacity 3s ease; background: #fce4ec; width: 100vw; height: 100vh; position: fixed; top: 0; left: 0; z-index: 5000; flex-direction: column; align-items: center; padding-top: 40px; overflow-y: scroll; }
+        #final-letter-page { display: none; opacity: 0; transition: opacity 3s ease; background: #fce4ec; width: 100vw; height: 100vh; position: fixed; top: 0; left: 0; z-index: 5000; flex-direction: column; align-items: center; justify-content: flex-start; padding-top: 40px; overflow-y: scroll; overflow-x: hidden; }
+        
         #bg-heart-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
-        .letter-love-header { color: #ff4d6d; font-size: 28px; font-weight: bold; margin-bottom: 5px; z-index: 10; }
-        .white-paper { background: white; width: 90%; max-width: 350px; border-radius: 15px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 40px; z-index: 10; }
-        .scroll-text { color: #555; font-size: 15px; line-height: 1.6; text-align: left; max-height: 350px; overflow-y: auto; }
-        .memories-container { width: 100%; display: flex; flex-direction: column; align-items: center; z-index: 10; }
-        .memories-title-box { background: white; padding: 15px 25px; border-radius: 20px; border: 2px solid #ff4d6d; color: #ff4d6d; font-weight: bold; margin-bottom: 40px; }
-        .zig-zag-grid { width: 90%; display: flex; flex-direction: column; gap: 40px; padding-bottom: 60px; }
-        .memory-photo { width: 200px; height: 280px; background: white; padding: 8px; border: 2px solid #ff4d6d; border-radius: 10px; }
-        .memory-photo img { width: 100%; height: 100%; object-fit: cover; border-radius: 5px; }
-        .pos-1 { align-self: flex-start; transform: rotate(-6deg); }
-        .pos-2 { align-self: flex-end; transform: rotate(6deg); }
-        .pos-3 { align-self: flex-start; transform: rotate(-4deg); }
+
+        .letter-love-header { color: #ff4d6d; font-size: 28px; font-weight: bold; margin-bottom: 5px; z-index: 10; position: relative; }
+        .letter-subtitle { color: #888; font-size: 16px; margin-bottom: 25px; z-index: 10; position: relative; }
+        .white-paper { background: white; width: 90%; max-width: 350px; border-radius: 15px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 40px; position: relative; flex-shrink: 0; z-index: 10; }
+        .red-letter-title { color: #ff4d6d; font-size: 18px; font-weight: bold; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        .scroll-text { color: #555; font-size: 15px; line-height: 1.6; text-align: left; max-height: 350px; overflow-y: auto; padding-right: 5px; }
+
+        .memories-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .memories-title-box {
+            background: white;
+            padding: 15px 25px;
+            border-radius: 20px;
+            border: 2px solid #ff4d6d;
+            box-shadow: 0 0 20px rgba(255, 77, 109, 0.4);
+            color: #ff4d6d;
+            font-weight: bold;
+            font-size: 18px;
+            text-align: center;
+            margin-bottom: 40px;
+            animation: glowPulse 2s infinite alternate;
+        }
+
+        .zig-zag-grid {
+            width: 90%;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            padding-bottom: 60px;
+        }
+
+        .memory-photo {
+            width: 200px;
+            height: 280px;
+            background: white;
+            padding: 8px;
+            border: 2px solid #ff4d6d;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(255, 77, 109, 0.5), 0 5px 15px rgba(0,0,0,0.2);
+            overflow: hidden;
+            animation: waveFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes waveFloat {
+            0%, 100% { transform: translateY(0) rotate(var(--rot)); }
+            50% { transform: translateY(-15px) rotate(var(--rot-mid)); }
+        }
+
+        .memory-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .pos-1 { align-self: flex-start; --rot: -6deg; --rot-mid: -3deg; }
+        .pos-2 { align-self: flex-end; --rot: 6deg; --rot-mid: 3deg; }
+        .pos-3 { align-self: flex-start; --rot: -4deg; --rot-mid: -1deg; }
+
+        .extra-blank-space { height: 100px; width: 100%; flex-shrink: 0; }
     </style>
 </head>
 <body>
@@ -344,11 +420,14 @@
     <div id="final-letter-page">
         <div id="bg-heart-container"></div>
         <div class="letter-love-header">💗 ᴍʏ ʟᴏᴍʟ 💗</div>
+        <div class="letter-subtitle">ʏᴏᴜ'ʀᴇ ᴍʏ ᴇᴠᴇʀʏᴛʜɪɴɢ</div>
         <div class="white-paper">
+            <div class="red-letter-title">A Letter From My Heart</div>
             <div class="scroll-text">
                 <strong>To my special one</strong><br><br>
                 If you're busy, I'll wait for you. I know sometimes life can be really busy and you might not have time to talk to me. That's okay I'll be patient and wait because you are important to me.<br><br>
                 If you're feeling sad or upset, I'll be here to listen to you. You don't have to go through it alone. I want to hear about your feelings and help you feel better.<br><br>
+                If you need help with anything, I'll be there to help you. You can always count on me for support and care.<br><br>
                 No matter what happens, I'll always be here for you. I want you to know that you're never alone, and I will always stand by your side. ❤️
             </div>
         </div>
@@ -361,6 +440,7 @@
                 <div class="memory-photo pos-3"><img src="https://i.ibb.co/KjQ5gMfY/Screenshot-2026-01-23-11-38-30-89-c1ebbaff44ba152fb7f7c2e1f7129fd1.jpg"></div>
             </div>
         </div>
+        <div class="extra-blank-space"></div>
     </div>
 
     <div class="slider-container" id="mainSlider">
@@ -373,6 +453,7 @@
                     <button id="yesBtn" onclick="triggerLoading()">Yes 👀</button>
                     <button id="noBtn">No 😒</button>
                 </div>
+                <p class="footer-text">Some love stories don't allow "no" 😤</p>
             </div>
         </section>
 
@@ -381,8 +462,8 @@
                 <div class="envelope-wrapper" id="envelopeBox">
                     <div class="letter-content">
                         <div class="scroll-box-page2">
-                            I know I’ve made mistakes, and I’m truly sorry for them... I'm not here to make excuses or just say things I won’t follow. I understand where I went wrong and I’m working on becoming a better version of myself not just for you but for me too.<br><br>
-                            For 1 year, 2 months, and 11 days, we were apart after the breakup. During that time all I had was your pictures. I used to look at them and miss you more than I can explain. I won’t just say things now, I’ll prove it through my actions step by step... 🤞🏻✨🍀
+                            I know I’ve made mistakes, and I’m truly sorry for them... I'm not here to make excuses or just say things I won’t follow. I understand where I went wrong and I’m working on becoming a better version of myself not just for you but for me too. I don’t want to repeat the same things again.<br><br>
+                            For 1 year, 2 months, and 11 days, we were apart after the breakup. During that time all I had was your pictures. I used to look at them, spend my time with those memories, and miss you more than I can explain. It made me realize your value even more. I won’t just say things now, I’ll prove it through my actions step by step... 🤞🏻✨🍀
                             <img src="https://i.ibb.co/KpDd1ZF9/1000092801.jpg" class="cat-image-sorry">
                         </div>
                     </div>
@@ -407,8 +488,8 @@
             <div id="heart-container"></div>
             <h1 class="special-title">ꜱᴏᴍᴇᴛʜɪɴɢ ꜱᴘᴇᴄɪᴀʟ </h1>
             <p class="special-subtitle">ᴀᴡᴀɪᴛꜱ ʏᴏᴜ</p>
-            <div style="z-index: 10; display: flex; flex-direction: column; align-items: center;">
-                <input type="text" id="secretCodeInput" placeholder="Enter Code...">
+            <div style="z-index: 10; width: 80%; max-width: 300px; display: flex; flex-direction: column; align-items: center;">
+                <input type="text" id="secretCodeInput" placeholder="Enter Code..." style="margin-bottom: 20px;">
                 <button class="begin-btn" onclick="checkSecretCode()">Click to Begin</button>
             </div>
         </section>
@@ -440,20 +521,30 @@
             const name = document.getElementById('bfNameInput').value.trim().toLowerCase();
             if(name === "anurag") {
                 document.getElementById('mainLockEmoji').innerText = "🔓";
+                document.getElementById('mainLockEmoji').style.transform = "scale(1.4)";
                 document.getElementById('lockBox').style.opacity = '0';
                 setTimeout(() => {
-                    document.getElementById('master-lock-screen').style.display = 'none';
+                    const master = document.getElementById('master-lock-screen');
+                    master.style.opacity = '0';
+                    master.style.transform = 'translateY(-100%)';
+                    setTimeout(() => master.style.display = 'none', 800);
                 }, 1000);
+            } else if (name === "") {
+                errorText.innerHTML = "System Error:";
+                errorOverlay.style.display = 'flex';
             } else {
-                errorText.innerHTML = "WHO IS HE!?? 🤨🤨😤";
+                errorText.innerHTML = "System Error: <br> Invalid Boyfriend Name! 😤<br><span style='color: white; font-size: 18px;'>WHO IS HE!?? 🤨🤨😤</span>";
                 errorOverlay.style.display = 'flex';
             }
         }
 
-        function hideError() { errorOverlay.style.display = 'none'; }
+        function hideError() {
+            errorOverlay.style.display = 'none';
+        }
 
         function checkSecretCode() {
-            if(document.getElementById('secretCodeInput').value.trim().toLowerCase() === "10ml") {
+            const code = document.getElementById('secretCodeInput').value.trim().toLowerCase();
+            if(code === "10ml") {
                 revealLetter();
             } else {
                 errorText.innerHTML = "Wrong Code !!😤";
@@ -462,16 +553,19 @@
         }
 
         async function triggerLoading() {
+            noMsgBox.style.top = '-200px'; 
             document.getElementById('loveCard').style.opacity = '0';
             setTimeout(async () => {
                 overlay.style.display = 'flex';
-                for(let i=1; i<=100; i++) { 
-                    updateBar(i); 
-                    await new Promise(r => setTimeout(r, 30)); 
-                    if(i===50) await new Promise(r => setTimeout(r, 800));
-                }
+                for(let i=1; i<=50; i++) { updateBar(i); await new Promise(r => setTimeout(r, 25)); }
+                await new Promise(r => setTimeout(r, 1000));
+                for(let i=51; i<=90; i++) { updateBar(i); await new Promise(r => setTimeout(r, 15)); }
+                updateBar(50); await new Promise(r => setTimeout(r, 1000));
+                for(let i=51; i<=90; i++) { updateBar(i); await new Promise(r => setTimeout(r, 20)); }
+                await new Promise(r => setTimeout(r, 400));
                 nextSlide(1);
-                overlay.style.display = 'none';
+                overlay.style.opacity = '0';
+                setTimeout(() => { overlay.style.display = 'none'; overlay.style.opacity = '1'; }, 600);
             }, 200);
         }
 
@@ -484,34 +578,45 @@
 
         function startHearts(containerId) {
             const container = document.getElementById(containerId);
+            if(!container) return;
             setInterval(() => {
                 const heart = document.createElement('div');
                 heart.classList.add('floating-heart');
                 heart.innerHTML = '❤️';
                 heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
                 container.appendChild(heart);
                 setTimeout(() => heart.remove(), 5000);
             }, 400);
         }
 
         function revealLetter() {
-            document.getElementById('something-special-page').style.opacity = '0';
+            const specialPage = document.getElementById('something-special-page');
+            specialPage.style.opacity = '0';
             setTimeout(() => {
                 slider.style.display = 'none';
                 const letterPage = document.getElementById('final-letter-page');
                 letterPage.style.display = 'flex';
                 document.body.style.overflowY = "auto";
-                setTimeout(() => { letterPage.style.opacity = '1'; }, 50);
+                document.body.style.touchAction = "auto";
                 startHearts('bg-heart-container');
+                setTimeout(() => { letterPage.style.opacity = '1'; }, 50);
             }, 1500);
         }
 
-        const moveNoButton = () => {
+        const moveNoButton = (e) => {
+            if(e.type === 'touchstart') e.preventDefault();
             noMsgBox.style.top = '0px'; 
+            const padding = 50;
+            const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+            const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+            let randomX = Math.floor(Math.random() * (maxX - padding)) + padding;
+            let randomY = Math.floor(Math.random() * (maxY - padding)) + padding;
             noBtn.style.position = 'fixed';
-            noBtn.style.left = Math.random() * (window.innerWidth - 100) + 'px';
-            noBtn.style.top = Math.random() * (window.innerHeight - 50) + 'px';
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
         };
+
         noBtn.addEventListener('mouseover', moveNoButton);
         noBtn.addEventListener('touchstart', moveNoButton);
     </script>
