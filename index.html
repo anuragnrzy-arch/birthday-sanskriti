@@ -154,7 +154,6 @@
             border-radius: 0 0 15px 15px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.1);
             z-index: 5;
-            transition: transform 0.5s ease;
             margin-top: 0px; 
             transform: translateY(-40px); 
         }
@@ -168,7 +167,7 @@
             border-right: 140px solid transparent;
             border-top: 100px solid #ff758f;
             transform-origin: top;
-            transition: transform 0.4s ease;
+            transition: transform 0.5s ease;
             z-index: 10;
         }
 
@@ -180,35 +179,31 @@
         /* Letter Styling & Pull-out Animation */
         .letter-content {
             position: absolute;
-            top: 5px;
+            top: 10px;
             left: 50%;
-            transform: translateX(-50%);
-            width: 90%;
+            transform: translateX(-50%) translateY(0);
+            width: 260px; /* Chota size initially */
             height: 160px;
             background: white;
             border-radius: 10px;
             padding: 20px;
-            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease;
-            z-index: 6;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 6; /* Under the front flap but above the back */
             opacity: 0;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             overflow: hidden;
             pointer-events: none;
         }
 
-        /* Step 1: Letter comes out from top */
+        /* Letter comes out and then expands */
         .envelope-wrapper.open .letter-content {
             opacity: 1;
-            transform: translateX(-50%) translateY(-280px); 
-            height: 460px; /* Slightly increased to fit image */
-            width: 330px;
-            z-index: 15;
+            transform: translateX(-50%) translateY(-240px); /* Slides up */
+            width: 330px; /* Large size */
+            height: 460px; /* Large size */
+            z-index: 15; /* Comes in front of everything */
             pointer-events: auto;
-            animation: moveToCenter 1s forwards 0.4s; 
-        }
-
-        @keyframes moveToCenter {
-            to { transform: translateX(-50%) translateY(-220px); }
+            transition-delay: 0.6s; /* Waits for flap to open */
         }
 
         .scroll-box-page2 {
@@ -234,7 +229,7 @@
         .scroll-box-page2::-webkit-scrollbar { width: 3px; }
         .scroll-box-page2::-webkit-scrollbar-thumb { background: #ff4d6d; }
 
-        /* --- BUTTONS SECTION (SIDE BY SIDE) --- */
+        /* --- BUTTONS SECTION --- */
         .action-btns-page2 {
             position: absolute;
             bottom: 80px; 
@@ -314,35 +309,7 @@
         .letter-love-header { color: #ff4d6d; font-size: 28px; font-weight: bold; margin-bottom: 5px; z-index: 10; position: relative; }
         .letter-subtitle { color: #888; font-size: 16px; margin-bottom: 25px; z-index: 10; position: relative; }
         .white-paper { background: white; width: 90%; max-width: 350px; border-radius: 15px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 40px; position: relative; flex-shrink: 0; z-index: 10; }
-        
-        /* Music Toggle Header Styling */
-        .red-letter-title { 
-            color: #ff4d6d; 
-            font-size: 18px; 
-            font-weight: bold; 
-            margin-bottom: 15px; 
-            border-bottom: 1px solid #eee; 
-            padding-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .music-btn {
-            background: #ff4d6d;
-            color: white;
-            border-radius: 50%;
-            width: 35px;
-            height: 35px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-            cursor: pointer;
-            box-shadow: 0 3px 10px rgba(255, 77, 109, 0.3);
-            border: none;
-        }
-
+        .red-letter-title { color: #ff4d6d; font-size: 18px; font-weight: bold; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
         .scroll-text { color: #555; font-size: 15px; line-height: 1.6; text-align: left; max-height: 350px; overflow-y: auto; padding-right: 5px; }
 
         .memories-container {
@@ -408,10 +375,6 @@
 </head>
 <body>
 
-    <audio id="mySong">
-        <source src="Zack Tabudlo - Pano (Lyric Video).mp3" type="audio/mpeg">
-    </audio>
-
     <div id="no-message-box">
         <div class="strings-container">
             <div class="string"></div>
@@ -454,10 +417,7 @@
         <div class="letter-love-header">💗 ᴍʏ ʟᴏᴍʟ 💗</div>
         <div class="letter-subtitle">ʏᴏᴜ'ʀᴇ ᴍʏ ᴇᴠᴇʀʏᴛʜɪɴɢ</div>
         <div class="white-paper">
-            <div class="red-letter-title">
-                A Letter From My Heart
-                <button class="music-btn" id="musicToggleBtn" onclick="toggleMusic()">🎵</button>
-            </div>
+            <div class="red-letter-title">A Letter From My Heart</div>
             <div class="scroll-text">
                 <strong>To my special one</strong><br><br>
                 If you're busy, I'll wait for you. I know sometimes life can be really busy and you might not have time to talk to me. That's okay I'll be patient and wait because you are important to me.<br><br>
@@ -539,19 +499,6 @@
         const errorText = document.getElementById('error-text-content');
         const noBtn = document.getElementById('noBtn');
         const noMsgBox = document.getElementById('no-message-box');
-        const mySong = document.getElementById('mySong');
-
-        // MUSIC PLAY/PAUSE FUNCTION
-        function toggleMusic() {
-            const btn = document.getElementById('musicToggleBtn');
-            if (mySong.paused) {
-                mySong.play();
-                btn.innerText = "⏸️";
-            } else {
-                mySong.pause();
-                btn.innerText = "🎵";
-            }
-        }
 
         function handleEnvelope() {
             const env = document.getElementById('envelopeBox');
@@ -649,10 +596,6 @@
                 document.body.style.touchAction = "auto";
                 startHearts('bg-heart-container');
                 setTimeout(() => { letterPage.style.opacity = '1'; }, 50);
-                
-                // AUTO PLAY ON REVEAL (Note: Browsers might block this, so manual button is safer)
-                mySong.play().catch(e => console.log("Manual interaction needed for audio."));
-                document.getElementById('musicToggleBtn').innerText = "⏸️";
             }, 1500);
         }
 
