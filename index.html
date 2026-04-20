@@ -231,7 +231,7 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
-        .scroll-box-page2::-webkit-scrollbar { width: 3px; }
+        .scroll-box-page2::-webkit-backdrop-filter { width: 3px; }
         .scroll-box-page2::-webkit-scrollbar-thumb { background: #ff4d6d; }
 
         /* --- BUTTONS SECTION (SIDE BY SIDE) --- */
@@ -314,8 +314,11 @@
         .letter-love-header { color: #ff4d6d; font-size: 28px; font-weight: bold; margin-bottom: 5px; z-index: 10; position: relative; }
         .letter-subtitle { color: #888; font-size: 16px; margin-bottom: 25px; z-index: 10; position: relative; }
         .white-paper { background: white; width: 90%; max-width: 350px; border-radius: 15px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 40px; position: relative; flex-shrink: 0; z-index: 10; }
-        .red-letter-title { color: #ff4d6d; font-size: 18px; font-weight: bold; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        .red-letter-title { color: #ff4d6d; font-size: 18px; font-weight: bold; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
         .scroll-text { color: #555; font-size: 15px; line-height: 1.6; text-align: left; max-height: 350px; overflow-y: auto; padding-right: 5px; }
+
+        .music-toggle { cursor: pointer; font-size: 20px; animation: musicPulse 1.5s infinite; }
+        @keyframes musicPulse { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
 
         .memories-container {
             width: 100%;
@@ -422,7 +425,10 @@
         <div class="letter-love-header">💗 ᴍʏ ʟᴏᴍʟ 💗</div>
         <div class="letter-subtitle">ʏᴏᴜ'ʀᴇ ᴍʏ ᴇᴠᴇʀʏᴛʜɪɴɢ</div>
         <div class="white-paper">
-            <div class="red-letter-title">A Letter From My Heart</div>
+            <div class="red-letter-title">
+                A Letter From My Heart
+                <span class="music-toggle" onclick="toggleMusic()">🎵</span>
+            </div>
             <div class="scroll-text">
                 <strong>To my special one</strong><br><br>
                 If you're busy, I'll wait for you. I know sometimes life can be really busy and you might not have time to talk to me. That's okay I'll be patient and wait because you are important to me.<br><br>
@@ -442,6 +448,10 @@
         </div>
         <div class="extra-blank-space"></div>
     </div>
+
+    <audio id="mySong" loop>
+        <source src="https://files.catbox.moe/p5v48s.mp3" type="audio/mpeg">
+    </audio>
 
     <div class="slider-container" id="mainSlider">
         <section class="slide">
@@ -504,6 +514,15 @@
         const errorText = document.getElementById('error-text-content');
         const noBtn = document.getElementById('noBtn');
         const noMsgBox = document.getElementById('no-message-box');
+        const song = document.getElementById('mySong');
+
+        function toggleMusic() {
+            if (song.paused) {
+                song.play();
+            } else {
+                song.pause();
+            }
+        }
 
         function handleEnvelope() {
             const env = document.getElementById('envelopeBox');
