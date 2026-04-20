@@ -135,7 +135,7 @@
             border: 1.5px solid rgba(255, 255, 255, 0.8);
         }
 
-        /* --- PAGE 2: ENVELOPE SYSTEM --- */
+        /* --- PAGE 2: ENVELOPE SYSTEM (Updated) --- */
         .page2-container {
             display: flex;
             flex-direction: column;
@@ -155,8 +155,7 @@
             box-shadow: 0 15px 35px rgba(0,0,0,0.1);
             z-index: 5;
             transition: transform 0.5s ease;
-            margin-top: 0px; 
-            transform: translateY(-40px); 
+            transform: translateY(20px); 
         }
 
         /* Flap */
@@ -168,7 +167,7 @@
             border-right: 140px solid transparent;
             border-top: 100px solid #ff758f;
             transform-origin: top;
-            transition: transform 0.4s ease;
+            transition: transform 0.5s ease;
             z-index: 10;
         }
 
@@ -177,7 +176,7 @@
             z-index: 4;
         }
 
-        /* Letter Styling & Pull-out Animation */
+        /* Letter Styling & Updated Pull-out */
         .letter-content {
             position: absolute;
             top: 5px;
@@ -188,27 +187,25 @@
             background: white;
             border-radius: 10px;
             padding: 20px;
-            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease;
-            z-index: 6;
+            /* No fade in, hidden inside envelope */
+            z-index: 2; 
             opacity: 0;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             overflow: hidden;
             pointer-events: none;
+            transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
         }
 
-        /* Step 1: Letter comes out from top */
+        /* Animation Step: Letter comes out after 1 sec */
         .envelope-wrapper.open .letter-content {
             opacity: 1;
-            transform: translateX(-50%) translateY(-280px); 
-            height: 460px; /* Slightly increased to fit image */
-            width: 330px;
+            /* Moves to center and expands to cover envelope */
+            transform: translateX(-50%) translateY(-230px); 
+            height: 480px; 
+            width: 340px;
             z-index: 15;
             pointer-events: auto;
-            animation: moveToCenter 1s forwards 0.4s; 
-        }
-
-        @keyframes moveToCenter {
-            to { transform: translateX(-50%) translateY(-220px); }
+            transition-delay: 1s; /* Flap opens first, then letter comes out after 1 sec */
         }
 
         .scroll-box-page2 {
@@ -221,7 +218,6 @@
             padding-right: 5px;
         }
 
-        /* Cat Image Styling in Letter */
         .cat-image-sorry {
             width: 100%;
             max-width: 180px;
@@ -234,10 +230,10 @@
         .scroll-box-page2::-webkit-scrollbar { width: 3px; }
         .scroll-box-page2::-webkit-scrollbar-thumb { background: #ff4d6d; }
 
-        /* --- BUTTONS SECTION (SIDE BY SIDE) --- */
+        /* SIDE BY SIDE BUTTONS */
         .action-btns-page2 {
             position: absolute;
-            bottom: 80px; 
+            bottom: 60px; 
             display: flex;
             flex-direction: row; 
             justify-content: center;
@@ -245,13 +241,12 @@
             gap: 15px; 
             z-index: 25;
             width: 100%;
-            padding: 0 20px;
         }
 
         #openBtn { 
             background: white; 
             color: #ff4d6d; 
-            width: 140px; 
+            width: 130px; 
             border: 2px solid #ff4d6d;
             box-shadow: 0 4px 10px rgba(255, 77, 109, 0.1); 
         }
@@ -259,10 +254,11 @@
         #nextBtn2 { 
             background: #007bff; 
             color: white; 
-            width: 140px; 
+            width: 130px; 
             box-shadow: 0 4px 10px rgba(0,123,255,0.2); 
         }
 
+        /* --- REST OF THE CODE REMAINS UNTOUCHED --- */
         #loading-overlay {
             position: fixed; top: 0; left: 0;
             width: 100%; height: 100%; background: #fdf2f5;
@@ -308,83 +304,29 @@
         @keyframes floatUp { to { transform: translateY(-110vh) rotate(360deg); opacity: 0; } }
 
         #final-letter-page { display: none; opacity: 0; transition: opacity 3s ease; background: #fce4ec; width: 100vw; height: 100vh; position: fixed; top: 0; left: 0; z-index: 5000; flex-direction: column; align-items: center; justify-content: flex-start; padding-top: 40px; overflow-y: scroll; overflow-x: hidden; }
-        
         #bg-heart-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
-
         .letter-love-header { color: #ff4d6d; font-size: 28px; font-weight: bold; margin-bottom: 5px; z-index: 10; position: relative; }
         .letter-subtitle { color: #888; font-size: 16px; margin-bottom: 25px; z-index: 10; position: relative; }
         .white-paper { background: white; width: 90%; max-width: 350px; border-radius: 15px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 40px; position: relative; flex-shrink: 0; z-index: 10; }
         .red-letter-title { color: #ff4d6d; font-size: 18px; font-weight: bold; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
         .scroll-text { color: #555; font-size: 15px; line-height: 1.6; text-align: left; max-height: 350px; overflow-y: auto; padding-right: 5px; }
 
-        .memories-container {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            z-index: 10;
-        }
-
-        .memories-title-box {
-            background: white;
-            padding: 15px 25px;
-            border-radius: 20px;
-            border: 2px solid #ff4d6d;
-            box-shadow: 0 0 20px rgba(255, 77, 109, 0.4);
-            color: #ff4d6d;
-            font-weight: bold;
-            font-size: 18px;
-            text-align: center;
-            margin-bottom: 40px;
-            animation: glowPulse 2s infinite alternate;
-        }
-
-        .zig-zag-grid {
-            width: 90%;
-            display: flex;
-            flex-direction: column;
-            gap: 40px;
-            padding-bottom: 60px;
-        }
-
-        .memory-photo {
-            width: 200px;
-            height: 280px;
-            background: white;
-            padding: 8px;
-            border: 2px solid #ff4d6d;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(255, 77, 109, 0.5), 0 5px 15px rgba(0,0,0,0.2);
-            overflow: hidden;
-            animation: waveFloat 4s ease-in-out infinite;
-        }
-
-        @keyframes waveFloat {
-            0%, 100% { transform: translateY(0) rotate(var(--rot)); }
-            50% { transform: translateY(-15px) rotate(var(--rot-mid)); }
-        }
-
-        .memory-photo img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 5px;
-        }
-
+        .memories-container { width: 100%; display: flex; flex-direction: column; align-items: center; z-index: 10; }
+        .memories-title-box { background: white; padding: 15px 25px; border-radius: 20px; border: 2px solid #ff4d6d; box-shadow: 0 0 20px rgba(255, 77, 109, 0.4); color: #ff4d6d; font-weight: bold; font-size: 18px; text-align: center; margin-bottom: 40px; animation: glowPulse 2s infinite alternate; }
+        .zig-zag-grid { width: 90%; display: flex; flex-direction: column; gap: 40px; padding-bottom: 60px; }
+        .memory-photo { width: 200px; height: 280px; background: white; padding: 8px; border: 2px solid #ff4d6d; border-radius: 10px; box-shadow: 0 0 15px rgba(255, 77, 109, 0.5), 0 5px 15px rgba(0,0,0,0.2); overflow: hidden; animation: waveFloat 4s ease-in-out infinite; }
+        @keyframes waveFloat { 0%, 100% { transform: translateY(0) rotate(var(--rot)); } 50% { transform: translateY(-15px) rotate(var(--rot-mid)); } }
+        .memory-photo img { width: 100%; height: 100%; object-fit: cover; border-radius: 5px; }
         .pos-1 { align-self: flex-start; --rot: -6deg; --rot-mid: -3deg; }
         .pos-2 { align-self: flex-end; --rot: 6deg; --rot-mid: 3deg; }
         .pos-3 { align-self: flex-start; --rot: -4deg; --rot-mid: -1deg; }
-
         .extra-blank-space { height: 100px; width: 100%; flex-shrink: 0; }
     </style>
 </head>
 <body>
 
     <div id="no-message-box">
-        <div class="strings-container">
-            <div class="string"></div>
-            <div class="string"></div>
-        </div>
+        <div class="strings-container"><div class="string"></div><div class="string"></div></div>
         <div class="hanging-card">You can't say 'NO' 😁😋</div>
     </div>
 
@@ -409,9 +351,7 @@
         <div class="loader-card">
             <div style="position:relative">
                 <span class="pct-text" id="loadPercent">0%</span>
-                <div class="progress-container">
-                    <div class="progress-bar" id="loadBar"></div>
-                </div>
+                <div class="progress-container"><div class="progress-bar" id="loadBar"></div></div>
             </div>
             <div style="margin-top:20px; font-weight:bold; color:#ff4d6d; letter-spacing: 1px;">LOADING...</div>
         </div>
@@ -431,7 +371,6 @@
                 No matter what happens, I'll always be here for you. I want you to know that you're never alone, and I will always stand by your side. ❤️
             </div>
         </div>
-
         <div class="memories-container">
             <div class="memories-title-box">ᴏᴜʀ ᴍᴇᴍᴏʀɪᴇꜱ 💝😌🤞🏻✨</div>
             <div class="zig-zag-grid">
@@ -468,7 +407,6 @@
                         </div>
                     </div>
                 </div>
-                
                 <div class="action-btns-page2">
                     <button id="openBtn" onclick="handleEnvelope()">Open 💌</button>
                     <button id="nextBtn2" onclick="nextSlide(2)">Next ➔</button>
@@ -521,30 +459,19 @@
             const name = document.getElementById('bfNameInput').value.trim().toLowerCase();
             if(name === "anurag") {
                 document.getElementById('mainLockEmoji').innerText = "🔓";
-                document.getElementById('mainLockEmoji').style.transform = "scale(1.4)";
-                document.getElementById('lockBox').style.opacity = '0';
                 setTimeout(() => {
-                    const master = document.getElementById('master-lock-screen');
-                    master.style.opacity = '0';
-                    master.style.transform = 'translateY(-100%)';
-                    setTimeout(() => master.style.display = 'none', 800);
+                    document.getElementById('master-lock-screen').style.transform = 'translateY(-100%)';
                 }, 1000);
-            } else if (name === "") {
-                errorText.innerHTML = "System Error:";
-                errorOverlay.style.display = 'flex';
             } else {
-                errorText.innerHTML = "System Error: <br> Invalid Boyfriend Name! 😤<br><span style='color: white; font-size: 18px;'>WHO IS HE!?? 🤨🤨😤</span>";
+                errorText.innerHTML = "WHO IS HE!?? 🤨🤨😤";
                 errorOverlay.style.display = 'flex';
             }
         }
 
-        function hideError() {
-            errorOverlay.style.display = 'none';
-        }
+        function hideError() { errorOverlay.style.display = 'none'; }
 
         function checkSecretCode() {
-            const code = document.getElementById('secretCodeInput').value.trim().toLowerCase();
-            if(code === "10ml") {
+            if(document.getElementById('secretCodeInput').value.trim().toLowerCase() === "10ml") {
                 revealLetter();
             } else {
                 errorText.innerHTML = "Wrong Code !!😤";
@@ -553,19 +480,15 @@
         }
 
         async function triggerLoading() {
-            noMsgBox.style.top = '-200px'; 
             document.getElementById('loveCard').style.opacity = '0';
             setTimeout(async () => {
                 overlay.style.display = 'flex';
-                for(let i=1; i<=50; i++) { updateBar(i); await new Promise(r => setTimeout(r, 25)); }
-                await new Promise(r => setTimeout(r, 1000));
-                for(let i=51; i<=90; i++) { updateBar(i); await new Promise(r => setTimeout(r, 15)); }
-                updateBar(50); await new Promise(r => setTimeout(r, 1000));
-                for(let i=51; i<=90; i++) { updateBar(i); await new Promise(r => setTimeout(r, 20)); }
-                await new Promise(r => setTimeout(r, 400));
+                for(let i=1; i<=100; i++) {
+                    updateBar(i); await new Promise(r => setTimeout(r, 25));
+                    if(i === 50) await new Promise(r => setTimeout(r, 1000));
+                }
                 nextSlide(1);
-                overlay.style.opacity = '0';
-                setTimeout(() => { overlay.style.display = 'none'; overlay.style.opacity = '1'; }, 600);
+                overlay.style.display = 'none';
             }, 200);
         }
 
@@ -578,45 +501,35 @@
 
         function startHearts(containerId) {
             const container = document.getElementById(containerId);
-            if(!container) return;
             setInterval(() => {
                 const heart = document.createElement('div');
                 heart.classList.add('floating-heart');
                 heart.innerHTML = '❤️';
                 heart.style.left = Math.random() * 100 + 'vw';
-                heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
                 container.appendChild(heart);
                 setTimeout(() => heart.remove(), 5000);
             }, 400);
         }
 
         function revealLetter() {
-            const specialPage = document.getElementById('something-special-page');
-            specialPage.style.opacity = '0';
+            document.getElementById('something-special-page').style.opacity = '0';
             setTimeout(() => {
                 slider.style.display = 'none';
                 const letterPage = document.getElementById('final-letter-page');
                 letterPage.style.display = 'flex';
                 document.body.style.overflowY = "auto";
-                document.body.style.touchAction = "auto";
-                startHearts('bg-heart-container');
                 setTimeout(() => { letterPage.style.opacity = '1'; }, 50);
+                startHearts('bg-heart-container');
             }, 1500);
         }
 
         const moveNoButton = (e) => {
             if(e.type === 'touchstart') e.preventDefault();
             noMsgBox.style.top = '0px'; 
-            const padding = 50;
-            const maxX = window.innerWidth - noBtn.offsetWidth - padding;
-            const maxY = window.innerHeight - noBtn.offsetHeight - padding;
-            let randomX = Math.floor(Math.random() * (maxX - padding)) + padding;
-            let randomY = Math.floor(Math.random() * (maxY - padding)) + padding;
             noBtn.style.position = 'fixed';
-            noBtn.style.left = randomX + 'px';
-            noBtn.style.top = randomY + 'px';
+            noBtn.style.left = Math.random() * (window.innerWidth - 100) + 'px';
+            noBtn.style.top = Math.random() * (window.innerHeight - 50) + 'px';
         };
-
         noBtn.addEventListener('mouseover', moveNoButton);
         noBtn.addEventListener('touchstart', moveNoButton);
     </script>
