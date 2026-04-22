@@ -22,12 +22,11 @@
         .lock-input-box { background: rgba(255, 240, 245, 0.9); padding: 30px; border-radius: 20px; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); text-align: center; width: 85%; max-width: 320px; border: 1px solid rgba(255, 182, 193, 0.5); box-shadow: 0 0 20px rgba(255, 77, 109, 0.3), 0 0 40px rgba(255, 77, 109, 0.1); animation: glowPulse 2s infinite alternate; }
         @keyframes glowPulse { from { box-shadow: 0 0 15px rgba(255, 77, 109, 0.2), 0 0 30px rgba(255, 77, 109, 0.1); } to { box-shadow: 0 0 30px rgba(255, 77, 109, 0.5), 0 0 50px rgba(255, 77, 109, 0.3); } }
         
-        /* NEW SLIDER WIDTH FOR 5 PAGES */
+        /* Updated slider width for new page */
         .slider-container { display: flex; width: 600vw; height: 100vh; transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1); }
+        
         .slide { width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; background: radial-gradient(circle, #fdf2f5 0%, #fce4ec 100%); }
         .glass-card { background: rgba(255, 245, 247, 0.9); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border-radius: 25px; padding: 40px 20px; text-align: center; width: 90%; max-width: 350px; transition: opacity 0.4s ease; box-shadow: 0 8px 32px rgba(255, 182, 193, 0.3); border: 1.5px solid rgba(255, 255, 255, 0.8); }
-        
-        /* [PURANA ENVELOPE CSS] */
         .page2-container { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; height: 100%; position: relative; }
         .envelope-wrapper { position: relative; width: 280px; height: 180px; background: #ff4d6d; border-radius: 0 0 15px 15px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); z-index: 5; margin-top: 0px; transform: translateY(-40px); }
         .envelope-wrapper::before { content: ''; position: absolute; top: 0; left: 0; border-left: 140px solid transparent; border-right: 140px solid transparent; border-top: 100px solid #ff758f; transform-origin: top; transition: transform 0.5s ease; z-index: 10; }
@@ -43,15 +42,16 @@
         .reveal-title { font-family: 'Brush Script MT', cursive, sans-serif; color: #ff4d6d; font-size: 32px; margin-bottom: 30px; text-align: center; text-shadow: 0 0 10px rgba(255, 77, 109, 0.5); }
         .main-reveal-box { background: rgba(0, 0, 0, 0.2); padding: 20px; border-radius: 20px; width: 90%; max-width: 320px; display: flex; flex-direction: column; gap: 15px; box-shadow: 0 0 20px rgba(255, 77, 109, 0.3); }
         .rectangle-box { background: rgba(255, 255, 255, 0.1); min-height: 60px; border-radius: 15px; display: flex; justify-content: center; align-items: center; color: white; font-size: 18px; padding: 10px; text-align: center; border: 1px solid rgba(255, 255, 255, 0.2); cursor: pointer; transition: transform 0.2s; }
+        .rectangle-box:active { transform: scale(0.98); }
         .see-more-btn { background: #ff4d6d; color: white; padding: 12px 30px; border-radius: 25px; border: none; font-weight: bold; margin-top: 30px; cursor: pointer; box-shadow: 0 0 15px rgba(255, 77, 109, 0.6); transition: 0.3s; }
+        .see-more-btn:active { transform: scale(0.95); }
 
-        /* --- NEW PAGE 4: LITTLE NOTE SECTION --- */
-        .note-page-container { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; height: 100%; }
-        .note-title { font-family: 'Brush Script MT', cursive, sans-serif; color: #ff4d6d; font-size: 32px; margin-bottom: 30px; }
-        .note-box { background: rgba(255, 255, 255, 0.9); border: 2px solid #ff4d6d; border-radius: 20px; width: 280px; padding: 30px 20px; text-align: center; box-shadow: 0 10px 25px rgba(255, 77, 109, 0.2); display: flex; flex-direction: column; align-items: center; gap: 15px; }
-        .heart-logo { font-size: 50px; color: #ff4d6d; filter: drop-shadow(0 0 5px rgba(255, 77, 109, 0.3)); }
-        .tap-open-btn { background: #ff4d6d; color: white; padding: 10px 25px; border-radius: 20px; border: none; font-weight: bold; cursor: pointer; transition: 0.3s; }
-        #nextBtnNote { background: #007bff; color: white; width: 140px; margin-top: 20px; box-shadow: 0 4px 10px rgba(0,123,255,0.2); }
+        /* --- NEW PAGE: LITTLE NOTE --- */
+        .note-title { font-family: 'Brush Script MT', cursive, sans-serif; color: #ff4d6d; font-size: 34px; margin-bottom: 25px; text-align: center; }
+        .note-box { background: white; width: 280px; height: 180px; border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 10px 25px rgba(255, 77, 109, 0.2); border: 2px solid #ff4d6d; position: relative; cursor: pointer; }
+        .note-heart { font-size: 50px; color: #ff4d6d; margin-bottom: 10px; }
+        .tap-open-text { color: #ff4d6d; font-weight: bold; font-size: 16px; }
+        .next-btn-note { background: #007bff; color: white; padding: 12px 40px; border-radius: 25px; border: none; font-weight: bold; margin-top: 40px; cursor: pointer; box-shadow: 0 4px 15px rgba(0,123,255,0.3); }
 
         /* [BAAKI CSS SAME HAI] */
         .action-btns-page2 { position: absolute; bottom: 80px; display: flex; flex-direction: row; justify-content: center; align-items: center; gap: 15px; z-index: 25; width: 100%; padding: 0 20px; }
@@ -155,36 +155,36 @@
                 <p class="footer-text">Some love stories don't allow "no" 😤</p>
             </div>
         </section>
-        
+
         <section class="slide">
             <div class="page2-container">
                 <div class="envelope-wrapper" id="envelopeBox">
                     <div class="letter-content"><div class="scroll-box-page2">I know I’ve made mistakes, and I’m truly sorry for them... I'm not here to make excuses or just say things I won’t follow. I understand where I went wrong and I’m working on becoming a better version of myself not just for you but for me too. I don’t want to repeat the same things again.<br><br>For 1 year, 2 months, and 11 days, we were apart after the breakup. During that time all I had was your pictures. I used to look at them, spend my time with those memories, and miss you more than I can explain. It made me realize your value even more. I won’t just say things now, I’ll prove it through my actions step by step... 🤞🏻✨🍀<img src="https://i.ibb.co/KpDd1ZF9/1000092801.jpg" class="cat-image-sorry"></div></div>
                 </div>
-                <div class="action-btns-page2"><button id="openBtn" onclick="handleEnvelope()">Open 💌</button><button id="nextBtn2" onclick="nextSlide(1)">Next ➔</button></div>
+                <div class="action-btns-page2"><button id="openBtn" onclick="handleEnvelope()">Open 💌</button><button id="nextBtn2" onclick="nextSlide(2)">Next ➔</button></div>
             </div>
         </section>
 
-        <section class="slide" id="revealSlide">
-            <div class="page2-container" id="revealContent">
+        <section class="slide">
+            <div class="page2-container">
                 <h1 class="reveal-title">Tap each one to reveal</h1>
                 <div class="main-reveal-box">
                     <div class="rectangle-box" onclick="revealText(this, 'ʏᴏᴜ’ʀᴇ ᴍʏ ᴋɪɴᴅ ᴏꜰ ᴄᴀʟᴍ.')">♡</div>
                     <div class="rectangle-box" onclick="revealText(this, 'ᴀɴᴅ ꜱᴜᴅᴅᴇɴʟʏ, ᴀʟʟ ᴛʜᴇ ʟᴏᴠᴇ ꜱᴏɴɢꜱ ᴡᴇʀᴇ ᴀʙᴏᴜᴛ ʏᴏᴜ.')">♡</div>
                     <div class="rectangle-box" onclick="revealText(this, 'ꜱᴏᴍᴇʜᴏᴡ, ɪᴛ’ꜱ ᴀʟᴡᴀʏꜱ ʏᴏᴜ.')">♡</div>
                 </div>
-                <button class="see-more-btn" onclick="vanishAndNext()">See more —></button>
+                <button class="see-more-btn" onclick="nextSlide(3)">See more —></button>
             </div>
         </section>
 
         <section class="slide">
-            <div class="note-page-container">
+            <div class="page2-container">
                 <h1 class="note-title">ᴀ ʟɪᴛᴛʟᴇ ɴᴏᴛᴇ ꜰᴏʀ ᴜ</h1>
                 <div class="note-box">
-                    <div class="heart-logo">❤️</div>
-                    <button class="tap-open-btn">ᴛᴀᴘ ᴛᴏ ᴏᴘᴇɴ</button>
+                    <div class="note-heart">❤️</div>
+                    <div class="tap-open-text">ᴛᴀᴘ ᴛᴏ ᴏᴘᴇɴ</div>
                 </div>
-                <button id="nextBtnNote" onclick="nextSlide(4)">Next ➔</button>
+                <button class="next-btn-note" onclick="nextSlide(4)">Next ➔</button>
             </div>
         </section>
 
@@ -197,32 +197,39 @@
     </div>
 
     <script>
-        function vanishAndNext() {
-            const content = document.getElementById('revealContent');
-            content.style.transition = "opacity 1s ease";
-            content.style.opacity = "0";
-            setTimeout(() => {
-                nextSlide(3);
-            }, 1000);
-        }
-
+        /* REVEAL TEXT */
         function revealText(element, text) {
             element.style.fontSize = "16px";
             element.style.fontWeight = "bold";
             element.innerText = text;
         }
 
+        /* [SAARA PURANA JAVASCRIPT CODE SAME HAI] */
         const slider = document.getElementById('mainSlider'); const bar = document.getElementById('loadBar'); const pct = document.getElementById('loadPercent'); const overlay = document.getElementById('loading-overlay'); const errorOverlay = document.getElementById('error-overlay'); const errorText = document.getElementById('error-text-content'); const noBtn = document.getElementById('noBtn'); const noMsgBox = document.getElementById('no-message-box');
+        
         function handleEnvelope() { const env = document.getElementById('envelopeBox'); const btn = document.getElementById('openBtn'); if(env.classList.contains('open')) { env.classList.remove('open'); btn.innerText = "Open 💌"; } else { env.classList.add('open'); btn.innerText = "Close ✖"; } }
+        
         function unlockMaster() { const name = document.getElementById('bfNameInput').value.trim().toLowerCase(); if(name === "anurag") { document.getElementById('mainLockEmoji').innerText = "🔓"; document.getElementById('mainLockEmoji').style.transform = "scale(1.4)"; document.getElementById('lockBox').style.opacity = '0'; setTimeout(() => { const master = document.getElementById('master-lock-screen'); master.style.opacity = '0'; master.style.transform = 'translateY(-100%)'; setTimeout(() => master.style.display = 'none', 800); }, 1000); } else if (name === "") { errorText.innerHTML = "System Error:"; errorOverlay.style.display = 'flex'; } else { errorText.innerHTML = "System Error: <br> Invalid Boyfriend Name! 😤<br><span style='color: white; font-size: 18px;'>WHO IS HE!?? 🤨🤨😤</span>"; errorOverlay.style.display = 'flex'; } }
+        
         function hideError() { errorOverlay.style.display = 'none'; }
+        
         function checkSecretCode() { const code = document.getElementById('secretCodeInput').value.trim().toLowerCase(); if(code === "10ml") { revealLetter(); } else { errorText.innerHTML = "Wrong Code !!😤"; errorOverlay.style.display = 'flex'; } }
+        
         async function triggerLoading() { noMsgBox.style.top = '-200px'; document.getElementById('loveCard').style.opacity = '0'; setTimeout(async () => { overlay.style.display = 'flex'; for(let i=1; i<=50; i++) { updateBar(i); await new Promise(r => setTimeout(r, 25)); } await new Promise(r => setTimeout(r, 1000)); for(let i=51; i<=90; i++) { updateBar(i); await new Promise(r => setTimeout(r, 15)); } updateBar(50); await new Promise(r => setTimeout(r, 1000)); for(let i=51; i<=90; i++) { updateBar(i); await new Promise(r => setTimeout(r, 20)); } await new Promise(r => setTimeout(r, 400)); nextSlide(1); overlay.style.opacity = '0'; setTimeout(() => { overlay.style.display = 'none'; overlay.style.opacity = '1'; }, 600); }, 200); }
+        
         function updateBar(val) { bar.style.width = val + "%"; pct.innerText = val + "%"; }
-        function nextSlide(idx) { slider.style.transform = `translateX(-${idx * 100}vw)`; if(idx === 4) startHearts('heart-container'); }
+        
+        function nextSlide(idx) { 
+            slider.style.transform = `translateX(-${idx * 100}vw)`; 
+            if(idx === 4) startHearts('heart-container'); 
+        }
+        
         function startHearts(containerId) { const container = document.getElementById(containerId); if(!container) return; setInterval(() => { const heart = document.createElement('div'); heart.classList.add('floating-heart'); heart.innerHTML = '❤️'; heart.style.left = Math.random() * 100 + 'vw'; heart.style.animationDuration = (Math.random() * 3 + 2) + 's'; container.appendChild(heart); setTimeout(() => heart.remove(), 5000); }, 400); }
+        
         function revealLetter() { const specialPage = document.getElementById('something-special-page'); specialPage.style.opacity = '0'; setTimeout(() => { slider.style.display = 'none'; const letterPage = document.getElementById('final-letter-page'); letterPage.style.display = 'flex'; document.body.style.overflowY = "auto"; document.body.style.touchAction = "auto"; startHearts('bg-heart-container'); setTimeout(() => { letterPage.style.opacity = '1'; }, 50); }, 1500); }
+        
         const moveNoButton = (e) => { if(e.type === 'touchstart') e.preventDefault(); noMsgBox.style.top = '0px'; const padding = 50; const maxX = window.innerWidth - noBtn.offsetWidth - padding; const maxY = window.innerHeight - noBtn.offsetHeight - padding; let randomX = Math.floor(Math.random() * (maxX - padding)) + padding; let randomY = Math.floor(Math.random() * (maxY - padding)) + padding; noBtn.style.position = 'fixed'; noBtn.style.left = randomX + 'px'; noBtn.style.top = randomY + 'px'; };
+        
         noBtn.addEventListener('mouseover', moveNoButton); noBtn.addEventListener('touchstart', moveNoButton);
     </script>
 </body>
