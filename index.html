@@ -7,6 +7,7 @@
     <style>
         * { 
             margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; 
+            /* Isse tap karne par blue box nahi aayega */
             -webkit-tap-highlight-color: transparent; 
             user-select: none;
         }
@@ -51,6 +52,7 @@
             transition: transform 0.2s; position: relative; overflow: hidden;
         }
         
+        /* New Fade-in Animations */
         .fade-left { animation: fadeLeft 1s forwards; }
         .fade-right { animation: fadeRight 1s forwards; }
         .fade-middle { animation: fadeIn 1s forwards; }
@@ -70,16 +72,7 @@
 
         .see-more-btn { background: #ff4d6d; color: white; padding: 12px 30px; border-radius: 25px; border: none; font-weight: bold; margin-top: 30px; cursor: pointer; box-shadow: 0 0 15px rgba(255, 77, 109, 0.6); transition: 0.3s; }
         
-        /* GLOW ADDED HERE ONLY */
-        .note-title { 
-            font-family: 'Brush Script MT', cursive, sans-serif; 
-            color: #ff4d6d; 
-            font-size: 34px; 
-            margin-bottom: 25px; 
-            text-align: center;
-            text-shadow: 0 0 15px rgba(255, 77, 109, 0.4), 0 0 5px rgba(255, 182, 193, 0.3);
-        }
-        
+        .note-title { font-family: 'Brush Script MT', cursive, sans-serif; color: #ff4d6d; font-size: 34px; margin-bottom: 25px; text-align: center; }
         .note-box { background: #ffecf2; width: 280px; height: 180px; border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 0 20px rgba(255, 182, 193, 0.6); border: 2px solid rgba(255, 255, 255, 0.8); position: relative; cursor: pointer; }
         .pink-circle { width: 70px; height: 70px; background: #ff4d6d; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-bottom: 12px; box-shadow: 0 4px 10px rgba(255, 77, 109, 0.3); }
         .white-heart { font-size: 35px; color: white; }
@@ -232,17 +225,22 @@
     </div>
 
     <script>
+        /* REVEAL TEXT WITH CUSTOM FADE */
         function revealText(element, text, direction) {
-            if (element.innerText === text) return;
+            if (element.innerText === text) return; // Already revealed
+            
             element.style.fontSize = "16px";
             element.style.fontWeight = "bold";
             element.innerText = text;
+
+            // Remove old classes and add new animation class
             element.classList.remove('fade-left', 'fade-right', 'fade-middle');
             if(direction === 'left') element.classList.add('fade-left');
             else if(direction === 'right') element.classList.add('fade-right');
             else if(direction === 'middle') element.classList.add('fade-middle');
         }
 
+        /* [LOADING PAGE & OTHER LOGIC PRESERVED] */
         const slider = document.getElementById('mainSlider'); const bar = document.getElementById('loadBar'); const pct = document.getElementById('loadPercent'); const overlay = document.getElementById('loading-overlay'); const errorOverlay = document.getElementById('error-overlay'); const errorText = document.getElementById('error-text-content'); const noBtn = document.getElementById('noBtn'); const noMsgBox = document.getElementById('no-message-box');
         
         function handleEnvelope() { const env = document.getElementById('envelopeBox'); const btn = document.getElementById('openBtn'); if(env.classList.contains('open')) { env.classList.remove('open'); btn.innerText = "Open 💌"; } else { env.classList.add('open'); btn.innerText = "Close ✖"; } }
