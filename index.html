@@ -7,7 +7,6 @@
     <style>
         * { 
             margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; 
-            /* Isse tap karne par blue box nahi aayega */
             -webkit-tap-highlight-color: transparent; 
             user-select: none;
         }
@@ -52,26 +51,17 @@
             transition: transform 0.2s; position: relative; overflow: hidden;
         }
         
-        /* New Fade-in Animations */
         .fade-left { animation: fadeLeft 1s forwards; }
         .fade-right { animation: fadeRight 1s forwards; }
         .fade-middle { animation: fadeIn 1s forwards; }
 
-        @keyframes fadeLeft {
-            from { opacity: 0; transform: translateX(-20px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-        @keyframes fadeRight {
-            from { opacity: 0; transform: translateX(20px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
+        @keyframes fadeLeft { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes fadeRight { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         .see-more-btn { background: #ff4d6d; color: white; padding: 12px 30px; border-radius: 25px; border: none; font-weight: bold; margin-top: 30px; cursor: pointer; box-shadow: 0 0 15px rgba(255, 77, 109, 0.6); transition: 0.3s; }
         
+        /* NOTE BOX & SPOTIFY MODAL CSS */
         .note-title { font-family: 'Brush Script MT', cursive, sans-serif; color: #ff4d6d; font-size: 34px; margin-bottom: 25px; text-align: center; }
         .note-box { background: #ffecf2; width: 280px; height: 180px; border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 0 20px rgba(255, 182, 193, 0.6); border: 2px solid rgba(255, 255, 255, 0.8); position: relative; cursor: pointer; }
         .pink-circle { width: 70px; height: 70px; background: #ff4d6d; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-bottom: 12px; box-shadow: 0 4px 10px rgba(255, 77, 109, 0.3); }
@@ -79,6 +69,19 @@
         .tap-open-text { color: #ff4d6d; font-weight: bold; font-size: 16px; letter-spacing: 1px; }
         .next-btn-note { background: #007bff; color: white; padding: 12px 40px; border-radius: 25px; border: none; font-weight: bold; margin-top: 40px; cursor: pointer; box-shadow: 0 4px 15px rgba(0,123,255,0.3); }
 
+        /* Spotify Modal Styles */
+        #spotify-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 50000; display: none; justify-content: center; align-items: center; }
+        .spotify-container { background: #121212; width: 90%; max-width: 340px; border-radius: 20px; padding: 25px; color: white; text-align: left; position: relative; }
+        .close-spotify { position: absolute; top: 15px; right: 15px; font-size: 24px; color: #999; cursor: pointer; }
+        .spotify-img { width: 100%; aspect-ratio: 1; border-radius: 12px; object-fit: cover; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .song-title { font-size: 22px; font-weight: bold; margin-bottom: 5px; }
+        .artist-name { color: #b3b3b3; font-size: 14px; margin-bottom: 20px; }
+        .lyrics-box { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; height: 100px; overflow-y: auto; font-size: 15px; line-height: 1.6; color: #e0e0e0; margin-bottom: 20px; font-style: italic; border-left: 3px solid #1DB954; }
+        .spotify-controls { display: flex; justify-content: center; align-items: center; gap: 30px; margin-top: 10px; }
+        .play-pause-btn { width: 60px; height: 60px; background: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: black; font-size: 24px; cursor: pointer; }
+        .spotify-brand { display: flex; align-items: center; justify-content: center; gap: 5px; color: #1DB954; font-size: 12px; font-weight: bold; margin-top: 20px; letter-spacing: 1px; }
+
+        /* Rest of your preservation... */
         .action-btns-page2 { position: absolute; bottom: 80px; display: flex; flex-direction: row; justify-content: center; align-items: center; gap: 15px; z-index: 25; width: 100%; padding: 0 20px; }
         #openBtn { background: white; color: #ff4d6d; width: 140px; border: 2px solid #ff4d6d; box-shadow: 0 4px 10px rgba(255, 77, 109, 0.1); }
         #nextBtn2 { background: #007bff; color: white; width: 140px; box-shadow: 0 4px 10px rgba(0,123,255,0.2); }
@@ -93,7 +96,6 @@
         #noBtn { background-color: #444; color: #fff; position: absolute; top: 70px; z-index: 999; }
         .footer-text { font-size: 11px; color: #a38b91; margin-top: 25px; font-style: italic; }
         input[type="text"] { padding: 12px; border-radius: 10px; border: 1.5px solid #ffcad4; width: 85%; margin-bottom: 15px; outline: none; text-align: center; background: white; }
-        #something-special-page { transition: opacity 1.5s ease; }
         .special-slide { background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%) !important; flex-direction: column; position: relative; overflow: hidden; }
         .special-title { color: white; font-size: 40px; font-weight: bold; margin-bottom: 5px; text-shadow: 2px 2px 10px rgba(0,0,0,0.1); z-index: 10; }
         .special-subtitle { color: white; font-size: 22px; font-style: italic; margin-bottom: 40px; opacity: 0.9; z-index: 10; }
@@ -144,6 +146,36 @@
             <div style="position:relative"><span class="pct-text" id="loadPercent">0%</span><div class="progress-container"><div class="progress-bar" id="loadBar"></div></div></div>
             <div style="margin-top:20px; font-weight:bold; color:#ff4d6d; letter-spacing: 1px;">LOADING...</div>
         </div>
+    </div>
+
+    <div id="spotify-modal">
+        <div class="spotify-container">
+            <span class="close-spotify" onclick="closeSpotify()">×</span>
+            <img src="https://i.ibb.co/nMp7prDt/IMG-20241006-085358-0646.jpg" class="spotify-img">
+            <div class="song-title">10,000 Hours</div>
+            <div class="artist-name">Dan + Shay, Justin Bieber</div>
+            
+            <div class="lyrics-box">
+                I'd spend ten thousand hours and ten thousand more<br>
+                Oh, if that's what it takes to learn that sweet heart of yours<br>
+                And I might never get there, but I'm gonna try<br>
+                If it's ten thousand hours or the rest of my life...
+            </div>
+
+            <div class="spotify-controls">
+                <div style="font-size: 20px; color: #b3b3b3;">⏮</div>
+                <div class="play-pause-btn" id="playBtn" onclick="togglePlay()">▶</div>
+                <div style="font-size: 20px; color: #b3b3b3;">⏭</div>
+            </div>
+            
+            <div class="spotify-brand">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.494 17.308c-.216.354-.675.467-1.028.251-2.857-1.745-6.452-2.141-10.687-1.173-.406.092-.814-.162-.907-.568-.093-.406.162-.813.568-.906 4.636-1.061 8.6-1.597 11.803 1.357.354.217.467.676.251 1.039zm1.468-3.262c-.272.44-.849.578-1.288.307-3.269-2.009-8.253-2.593-12.119-1.417-.492.149-1.011-.131-1.16-.622-.15-.492.131-1.011.622-1.16 4.417-1.34 9.905-.688 13.639 1.604.439.271.578.848.306 1.288zm.127-3.398c-3.921-2.329-10.375-2.544-14.133-1.403-.6.182-1.234-.158-1.416-.758-.182-.6.158-1.234.758-1.416 4.316-1.31 11.451-1.055 15.961 1.621.539.319.718 1.015.399 1.554-.319.539-1.015.719-1.569.402z"/></svg>
+                SPOTIFY
+            </div>
+        </div>
+        <audio id="myAudio" loop>
+            <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        </audio>
     </div>
 
     <div id="final-letter-page">
@@ -206,7 +238,7 @@
         <section class="slide">
             <div class="page2-container">
                 <h1 class="note-title">𝓐 𝓛𝓲𝓽𝓽𝓵𝓮 𝓷𝓸𝓽𝓮 𝓯𝓸𝓻 𝔂𝓸𝓾</h1>
-                <div class="note-box">
+                <div class="note-box" onclick="openSpotify()">
                     <div class="pink-circle">
                         <div class="white-heart">🤍</div>
                     </div>
@@ -225,22 +257,37 @@
     </div>
 
     <script>
-        /* REVEAL TEXT WITH CUSTOM FADE */
-        function revealText(element, text, direction) {
-            if (element.innerText === text) return; // Already revealed
-            
-            element.style.fontSize = "16px";
-            element.style.fontWeight = "bold";
-            element.innerText = text;
+        /* SPOTIFY LOGIC */
+        function openSpotify() { 
+            document.getElementById('spotify-modal').style.display = 'flex'; 
+        }
+        function closeSpotify() { 
+            document.getElementById('spotify-modal').style.display = 'none'; 
+            document.getElementById('myAudio').pause();
+            document.getElementById('playBtn').innerText = "▶";
+        }
+        function togglePlay() {
+            const audio = document.getElementById('myAudio');
+            const btn = document.getElementById('playBtn');
+            if (audio.paused) {
+                audio.play();
+                btn.innerText = "⏸";
+            } else {
+                audio.pause();
+                btn.innerText = "▶";
+            }
+        }
 
-            // Remove old classes and add new animation class
+        /* PRESERVED LOGIC - NO CHANGES HERE */
+        function revealText(element, text, direction) {
+            if (element.innerText === text) return;
+            element.style.fontSize = "16px"; element.style.fontWeight = "bold"; element.innerText = text;
             element.classList.remove('fade-left', 'fade-right', 'fade-middle');
             if(direction === 'left') element.classList.add('fade-left');
             else if(direction === 'right') element.classList.add('fade-right');
             else if(direction === 'middle') element.classList.add('fade-middle');
         }
 
-        /* [LOADING PAGE & OTHER LOGIC PRESERVED] */
         const slider = document.getElementById('mainSlider'); const bar = document.getElementById('loadBar'); const pct = document.getElementById('loadPercent'); const overlay = document.getElementById('loading-overlay'); const errorOverlay = document.getElementById('error-overlay'); const errorText = document.getElementById('error-text-content'); const noBtn = document.getElementById('noBtn'); const noMsgBox = document.getElementById('no-message-box');
         
         function handleEnvelope() { const env = document.getElementById('envelopeBox'); const btn = document.getElementById('openBtn'); if(env.classList.contains('open')) { env.classList.remove('open'); btn.innerText = "Open 💌"; } else { env.classList.add('open'); btn.innerText = "Close ✖"; } }
@@ -254,15 +301,12 @@
         async function triggerLoading() { noMsgBox.style.top = '-200px'; document.getElementById('loveCard').style.opacity = '0'; setTimeout(async () => { overlay.style.display = 'flex'; for(let i=1; i<=50; i++) { updateBar(i); await new Promise(r => setTimeout(r, 25)); } await new Promise(r => setTimeout(r, 1000)); for(let i=51; i<=90; i++) { updateBar(i); await new Promise(r => setTimeout(r, 15)); } updateBar(50); await new Promise(r => setTimeout(r, 1000)); for(let i=51; i<=90; i++) { updateBar(i); await new Promise(r => setTimeout(r, 20)); } await new Promise(r => setTimeout(r, 400)); nextSlide(1); overlay.style.opacity = '0'; setTimeout(() => { overlay.style.display = 'none'; overlay.style.opacity = '1'; }, 600); }, 200); }
         
         function updateBar(val) { bar.style.width = val + "%"; pct.innerText = val + "%"; }
-        
         function nextSlide(idx) { slider.style.transform = `translateX(-${idx * 100}vw)`; if(idx === 4) startHearts('heart-container'); }
-        
         function startHearts(containerId) { const container = document.getElementById(containerId); if(!container) return; setInterval(() => { const heart = document.createElement('div'); heart.classList.add('floating-heart'); heart.innerHTML = '❤️'; heart.style.left = Math.random() * 100 + 'vw'; heart.style.animationDuration = (Math.random() * 3 + 2) + 's'; container.appendChild(heart); setTimeout(() => heart.remove(), 5000); }, 400); }
         
         function revealLetter() { const specialPage = document.getElementById('something-special-page'); specialPage.style.opacity = '0'; setTimeout(() => { slider.style.display = 'none'; const letterPage = document.getElementById('final-letter-page'); letterPage.style.display = 'flex'; document.body.style.overflowY = "auto"; document.body.style.touchAction = "auto"; startHearts('bg-heart-container'); setTimeout(() => { letterPage.style.opacity = '1'; }, 50); }, 1500); }
         
         const moveNoButton = (e) => { if(e.type === 'touchstart') e.preventDefault(); noMsgBox.style.top = '0px'; const padding = 50; const maxX = window.innerWidth - noBtn.offsetWidth - padding; const maxY = window.innerHeight - noBtn.offsetHeight - padding; let randomX = Math.floor(Math.random() * (maxX - padding)) + padding; let randomY = Math.floor(Math.random() * (maxY - padding)) + padding; noBtn.style.position = 'fixed'; noBtn.style.left = randomX + 'px'; noBtn.style.top = randomY + 'px'; };
-        
         noBtn.addEventListener('mouseover', moveNoButton); noBtn.addEventListener('touchstart', moveNoButton);
     </script>
 </body>
