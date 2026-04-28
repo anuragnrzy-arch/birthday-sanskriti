@@ -11,272 +11,310 @@
             user-select: none;
         }
         body { background-color: #fce4ec; overflow: hidden; touch-action: none; }
-
-        /* --- SPOTIFY STYLE SECTION --- */
+        
+        /* --- SPOTIFY PLAYER STYLING --- */
         .spotify-card {
             width: 100%;
             height: 100%;
-            background: #121212; /* Dark Spotify Theme */
+            background: #121212;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            padding: 30px 20px;
+            padding: 20px;
             position: relative;
             color: white;
         }
 
-        .close-btn {
-            position: absolute;
-            top: 20px;
-            right: 20px;
+        .spotify-top-bar {
+            display: flex;
+            justify-content: flex-end;
+            padding-bottom: 10px;
+        }
+
+        .spotify-cross {
             font-size: 24px;
             color: #b3b3b3;
             cursor: pointer;
-            z-index: 100;
         }
 
-        .spotify-photo {
-            width: 90%;
-            max-width: 300px;
+        .spotify-album-art {
+            width: 100%;
             aspect-ratio: 1/1;
-            border-radius: 15px; /* Rounded corners as per pic */
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+            margin-bottom: 25px;
+        }
+
+        .spotify-album-art img {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
-            margin-top: 40px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        .playing-tag {
-            position: absolute;
-            top: 55px;
-            right: 35px;
-            background: rgba(0, 0, 0, 0.6);
-            color: #1DB954;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 10px;
-            font-weight: bold;
-            letter-spacing: 1px;
-            border: 1px solid #1DB954;
+        .spotify-info {
+            margin-bottom: 20px;
         }
 
-        .song-details {
-            width: 90%;
-            margin-top: 25px;
-            text-align: left;
-        }
-
-        .song-title {
+        .spotify-song-title {
             font-size: 24px;
-            font-weight: bold;
-            color: white;
-            margin-bottom: 5px;
+            font-weight: 800;
+            margin-bottom: 4px;
+            letter-spacing: -0.5px;
         }
 
-        .artist-name {
+        .spotify-artist {
             font-size: 16px;
             color: #b3b3b3;
         }
 
-        .progress-container-spotify {
-            width: 90%;
-            margin-top: 20px;
+        .spotify-progress-container {
+            width: 100%;
+            margin-bottom: 20px;
         }
 
-        .progress-bar-bg {
-            width: 100%;
+        .spotify-bar-bg {
             height: 4px;
-            background: #4f4f4f;
+            width: 100%;
+            background: #4d4d4d;
             border-radius: 2px;
             position: relative;
         }
 
-        .progress-fill {
-            width: 35%; /* Hardcoded progress for UI look */
+        .spotify-bar-fill {
             height: 100%;
-            background: #1DB954;
+            width: 35%; /* Initial progress */
+            background: #1db954;
             border-radius: 2px;
         }
 
-        .time-info {
+        .spotify-time {
             display: flex;
             justify-content: space-between;
-            font-size: 11px;
+            font-size: 12px;
             color: #b3b3b3;
             margin-top: 8px;
         }
 
-        /* --- LYRICS SECTION --- */
-        .lyrics-box {
-            width: 90%;
-            height: 100px;
-            margin-top: 20px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
+        /* --- SCROLLABLE LYRICS BOX --- */
+        .spotify-lyrics-box {
+            background: #222326;
+            border-radius: 15px;
+            padding: 20px;
+            height: 140px;
             overflow: hidden;
-            padding: 15px;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            mask-image: linear-gradient(transparent, black 20%, black 80%, transparent);
+            margin-bottom: 25px;
+            position: relative;
         }
 
-        #lyrics-scroller {
-            transition: transform 0.5s ease;
+        .lyrics-wrapper {
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: center;
         }
 
         .lyric-line {
-            font-size: 16px;
-            color: #b3b3b3;
-            margin-bottom: 15px;
-            font-weight: 500;
+            font-size: 18px;
+            font-weight: 700;
+            color: #666;
+            margin: 15px 0;
+            transition: color 0.3s, transform 0.3s;
         }
 
         .lyric-line.active {
-            color: white;
-            font-weight: bold;
+            color: #fff;
             transform: scale(1.05);
         }
 
-        /* --- CONTROLS --- */
         .spotify-controls {
             display: flex;
-            align-items: center;
             justify-content: center;
-            gap: 30px;
-            margin-top: 20px;
-            width: 100%;
+            align-items: center;
+            gap: 40px;
+            margin-top: auto;
+            padding-bottom: 20px;
         }
 
-        .control-icon {
-            font-size: 25px;
-            color: white;
-            cursor: pointer;
-        }
-
+        .control-icon { font-size: 24px; color: #fff; }
         .play-pause-btn {
-            width: 60px;
-            height: 60px;
-            background: white;
+            width: 65px;
+            height: 65px;
+            background: #fff;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
             color: black;
-            font-size: 24px;
+            font-size: 28px;
+            cursor: pointer;
         }
 
-        /* --- ALL OTHER ORIGINAL CSS PRESERVED --- */
-        #no-message-box { position: fixed; top: -200px; left: 50%; transform: translateX(-50%); z-index: 1000; transition: top 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: flex; flex-direction: column; align-items: center; }
+        .spotify-footer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: #1db954;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        /* Original styles preserved below */
+        #no-message-box { position: fixed; top: -200px; left: 50%; transform: translateX(-50%); z-index: 1000; transition: top 0.8s; display: flex; flex-direction: column; align-items: center; }
         .string { width: 2px; height: 60px; background: #ff4d6d; margin: 0 45px; position: relative; }
-        .hanging-card { background: white; padding: 12px 20px; border-radius: 12px; border: 2px solid #ff4d6d; font-weight: bold; color: #ff4d6d; }
+        .hanging-card { background: white; padding: 12px 20px; border-radius: 12px; border: 2px solid #ff4d6d; color: #ff4d6d; font-weight: bold; }
         #master-lock-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fdf2f5; z-index: 20000; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-        .slider-container { display: flex; width: 600vw; height: 100vh; transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1); }
-        .slide { width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; background: radial-gradient(circle, #fdf2f5 0%, #fce4ec 100%); }
-        input[type="text"] { padding: 12px; border-radius: 10px; border: 1.5px solid #ffcad4; width: 85%; margin-bottom: 15px; text-align: center; }
-        .begin-btn { background: #ff4d6d; color: white; padding: 12px 30px; border-radius: 25px; border: none; font-weight: bold; }
+        .slider-container { display: flex; width: 600vw; height: 100vh; transition: transform 0.8s ease; }
+        .slide { width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; }
+        #loading-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fdf2f5; display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 10000; }
+        .progress-bar { width: 0%; height: 100%; background: #ff4d6d; border-radius: 20px; transition: width 0.2s; }
+        #final-letter-page { display: none; opacity: 0; transition: opacity 2s; background: #fce4ec; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 5000; overflow-y: auto; padding: 20px; }
     </style>
 </head>
 <body>
-
+    <div id="no-message-box"><div class="string"></div><div class="hanging-card">You can't say 'NO' 😁😋</div></div>
+    
     <div id="master-lock-screen">
-        <div class="lock-icon" id="mainLockEmoji">🔒</div>
-        <div style="background:white; padding:30px; border-radius:20px; text-align:center; width:80%;">
-            <p style="margin-bottom:15px; font-weight:bold;">Type your boyfriend name 😤</p>
+        <div class="lock-icon" id="mainLockEmoji" style="font-size:80px">🔒</div>
+        <div class="lock-input-box">
+            <p>Type your boyfriend name 😤</p>
             <input type="text" id="bfNameInput" placeholder="Enter name...">
-            <button onclick="unlockMaster()" style="background:#ff4d6d; color:white; width:100%; padding:10px; border-radius:10px; border:none;">Unlock</button>
+            <button onclick="unlockMaster()" style="background:#ff4d6d; color:white; width:100%; border:none; padding:10px; border-radius:10px;">Unlock</button>
+        </div>
+    </div>
+
+    <div id="loading-overlay">
+        <div style="width:80%; background:#eee; height:10px; border-radius:10px; overflow:hidden;"><div id="loadBar" class="progress-bar"></div></div>
+        <p id="loadPercent">0%</p>
+    </div>
+
+    <div id="final-letter-page">
+        <div class="spotify-card">
+            <div class="spotify-top-bar">
+                <span class="spotify-cross" onclick="location.reload()">✕</span>
+            </div>
+            
+            <div class="spotify-album-art">
+                <img src="https://i.ibb.co/6PZ8kYJ/1000096620.jpg" alt="Album Art">
+            </div>
+
+            <div class="spotify-info">
+                <div class="spotify-song-title">10,000 Hours</div>
+                <div class="spotify-artist">Dan + Shay, Justin Bieber</div>
+            </div>
+
+            <div class="spotify-progress-container">
+                <div class="spotify-bar-bg"><div class="spotify-bar-fill" id="trackFill"></div></div>
+                <div class="spotify-time"><span>0:02</span><span>3:44</span></div>
+            </div>
+
+            <div class="spotify-lyrics-box">
+                <div class="lyrics-wrapper" id="lyricsWrap">
+                    <div class="lyric-line active">Do you love the rain, does it make you dance</div>
+                    <div class="lyric-line">Are you the outdoors or the party type</div>
+                    <div class="lyric-line">I wanna know everything about you</div>
+                    <div class="lyric-line">I'd spend ten thousand hours</div>
+                    <div class="lyric-line">And ten thousand more...</div>
+                </div>
+            </div>
+
+            <div class="spotify-controls">
+                <span class="control-icon">⏮</span>
+                <div class="play-pause-btn" onclick="toggleSpotify()">▶</div>
+                <span class="control-icon">⏭</span>
+            </div>
+
+            <div class="spotify-footer">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg" width="18">
+                Spotify
+            </div>
+            
+            <input type="text" id="secretCodeInput" placeholder="Code..." style="margin-top:20px; opacity:0.3; width:100px; align-self:center;">
+            <button onclick="checkSecretCode()" style="background:transparent; color:#333; border:none; font-size:10px;">Check</button>
         </div>
     </div>
 
     <div class="slider-container" id="mainSlider">
         <section class="slide">
             <div style="text-align:center;">
-                <h1 style="color: #ff4d6d; margin-bottom:20px;">Do you love me!?</h1>
-                <button onclick="nextSlide(1)" style="padding:15px 40px; background:#ff4d6d; color:white; border-radius:25px; border:none;">Yes 👀</button>
+                <h1 style="color:#ff4d6d">Do you love me!?</h1>
+                <button onclick="triggerLoading()" style="padding:15px 40px; background:#ff4d6d; border:none; color:white; border-radius:20px; margin-top:20px;">Yes 👀</button>
+                <button id="noBtn" style="margin-top:20px; background:#444; color:white; border:none; padding:10px; border-radius:10px;">No 😒</button>
             </div>
         </section>
-
-        <section class="slide">
-            <div class="spotify-card">
-                <div class="close-btn" onclick="nextSlide(0)">✕</div>
-                <div class="playing-tag">● PLAYING</div>
-                
-                <img src="https://i.ibb.co/KpDd1ZF9/1000092801.jpg" class="spotify-photo">
-
-                <div class="song-details">
-                    <div class="song-title">10,000 Hours</div>
-                    <div class="artist-name">Dan + Shay, Justin Bieber</div>
-                </div>
-
-                <div class="progress-container-spotify">
-                    <div class="progress-bar-bg"><div class="progress-fill"></div></div>
-                    <div class="time-info"><span>0:02</span><span>3:44</span></div>
-                </div>
-
-                <div class="lyrics-box">
-                    <div id="lyrics-scroller">
-                        <div class="lyric-line active">Do you love the rain, does it make you dance</div>
-                        <div class="lyric-line">Are you the outdoors or the party type</div>
-                        <div class="lyric-line">I wanna know everything about you</div>
-                        <div class="lyric-line">I'd spend ten thousand hours</div>
-                        <div class="lyric-line">And ten thousand more...</div>
-                    </div>
-                </div>
-
-                <div class="spotify-controls">
-                    <div class="control-icon">⏮</div>
-                    <div class="play-pause-btn" onclick="togglePlay()">⏸</div>
-                    <div class="control-icon">⏭</div>
-                </div>
-
-                <div style="margin-top: 30px;">
-                    <input type="text" id="secretCodeInput" placeholder="Enter Code (10ml)..." style="background:#222; color:white; border:none;">
-                    <button class="begin-btn" onclick="checkSecretCode()">Begin Journey</button>
-                </div>
-            </div>
+        
+        <section class="slide">Slide 2 (Letter)</section>
+        <section class="slide">Slide 3 (Reveal)</section>
+        <section class="slide">Slide 4 (Note)</section>
+        
+        <section class="slide" style="background:linear-gradient(to bottom, #a18cd1, #fbc2eb)">
+             <h1 style="color:white">Enter Secret Code</h1>
+             <input type="text" id="finalSlideCode" placeholder="Code here...">
+             <button onclick="checkFinalCode()" style="background:#ff4d6d; color:white; border:none; padding:15px 30px; border-radius:20px;">Begin</button>
         </section>
     </div>
 
     <script>
-        let isPlaying = true;
-        let lyricIndex = 0;
-        const lines = document.querySelectorAll('.lyric-line');
-        const scroller = document.getElementById('lyrics-scroller');
-
-        // Automatic Lyrics Logic
-        setInterval(() => {
-            if(isPlaying) {
-                lines.forEach(l => l.classList.remove('active'));
-                lyricIndex = (lyricIndex + 1) % lines.length;
-                lines[lyricIndex].classList.add('active');
-                scroller.style.transform = `translateY(-${lyricIndex * 35}px)`;
-            }
-        }, 3500);
-
-        function togglePlay() {
-            isPlaying = !isPlaying;
-            document.querySelector('.play-pause-btn').innerText = isPlaying ? "⏸" : "▶";
-        }
+        const slider = document.getElementById('mainSlider');
+        let currentLyric = 0;
+        let playing = false;
 
         function unlockMaster() {
             const name = document.getElementById('bfNameInput').value.trim().toLowerCase();
             if(name === "anurag") {
                 document.getElementById('master-lock-screen').style.display = 'none';
-            } else {
-                alert("Wrong Name! 😤");
-            }
+            } else { alert("WHO IS HE!?? 🤨"); }
         }
 
-        function nextSlide(idx) {
-            document.getElementById('mainSlider').style.transform = `translateX(-${idx * 100}vw)`;
+        async function triggerLoading() {
+            document.getElementById('loading-overlay').style.display = 'flex';
+            let p = 0;
+            const int = setInterval(() => {
+                p += 5;
+                document.getElementById('loadBar').style.width = p + "%";
+                document.getElementById('loadPercent').innerText = p + "%";
+                if(p >= 100) {
+                    clearInterval(int);
+                    document.getElementById('loading-overlay').style.display = 'none';
+                    nextSlide(1);
+                }
+            }, 100);
         }
 
-        function checkSecretCode() {
-            const code = document.getElementById('secretCodeInput').value.trim().toLowerCase();
+        function nextSlide(idx) { slider.style.transform = `translateX(-${idx * 100}vw)`; }
+
+        function checkFinalCode() {
+            const code = document.getElementById('finalSlideCode').value.trim().toLowerCase();
             if(code === "10ml") {
-                alert("Journey Started! ❤️");
-            } else {
-                alert("Wrong Code !!😤");
+                document.getElementById('final-letter-page').style.display = 'block';
+                setTimeout(() => document.getElementById('final-letter-page').style.opacity = '1', 100);
             }
+        }
+
+        // Spotify Control Logic
+        function toggleSpotify() {
+            playing = !playing;
+            const btn = document.querySelector('.play-pause-btn');
+            btn.innerText = playing ? "⏸" : "▶";
+            if(playing) startLyrics();
+        }
+
+        function startLyrics() {
+            const lines = document.querySelectorAll('.lyric-line');
+            const wrapper = document.getElementById('lyricsWrap');
+            const fill = document.getElementById('trackFill');
+            
+            setInterval(() => {
+                if(!playing) return;
+                lines.forEach(l => l.classList.remove('active'));
+                currentLyric = (currentLyric + 1) % lines.length;
+                lines[currentLyric].classList.add('active');
+                wrapper.style.transform = `translateY(-${currentLyric * 45}px)`;
+                
+                // Animate progress bar slightly
+                let currentWidth = parseInt(fill.style.width || 35);
+                fill.style.width = ((currentWidth + 1) % 100) + "%";
+            }, 3000);
         }
     </script>
 </body>
