@@ -5,91 +5,106 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>For Sanskriti</title>
     <style>
-        /* [EXISTING STYLES PRESERVED] */
         * { 
             margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; 
             -webkit-tap-highlight-color: transparent; 
             user-select: none;
         }
         body { background-color: #fce4ec; overflow: hidden; touch-action: none; }
+        
+        /* PRESERVED STYLES - DO NOT CHANGE */
         #no-message-box { position: fixed; top: -200px; left: 50%; transform: translateX(-50%); z-index: 1000; transition: top 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: flex; flex-direction: column; align-items: center; }
         .string { width: 2px; height: 60px; background: #ff4d6d; margin: 0 45px; position: relative; }
+        .string::before { content: ''; position: absolute; top: -10px; left: -2px; width: 6px; height: 6px; background: #ff4d6d; border-radius: 50%; }
         .strings-container { display: flex; justify-content: center; width: 100%; }
         .hanging-card { background: white; padding: 12px 20px; border-radius: 12px; box-shadow: 0 8px 20px rgba(255, 77, 109, 0.15); border: 2px solid #ff4d6d; font-weight: bold; color: #ff4d6d; font-size: 16px; white-space: nowrap; margin-top: -2px; }
         #master-lock-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fdf2f5; z-index: 20000; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: all 0.8s cubic-bezier(0.65, 0, 0.35, 1); }
-        .lock-input-box { background: rgba(255, 240, 245, 0.9); padding: 30px; border-radius: 20px; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); text-align: center; width: 85%; max-width: 320px; border: 1px solid rgba(255, 182, 193, 0.5); box-shadow: 0 0 20px rgba(255, 77, 109, 0.3); }
+        #error-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.2); z-index: 30000; display: none; justify-content: center; align-items: center; }
+        .error-popup { background: white; padding: 25px; border-radius: 15px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.1); width: 280px; border: 2px solid #ff4d6d; animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .error-msg { color: #333; font-weight: bold; margin-bottom: 20px; font-size: 16px; line-height: 1.4; }
+        .lock-icon { font-size: 80px; margin-bottom: 20px; transition: transform 1s ease; }
+        .lock-input-box { background: rgba(255, 240, 245, 0.9); padding: 30px; border-radius: 20px; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); text-align: center; width: 85%; max-width: 320px; border: 1px solid rgba(255, 182, 193, 0.5); box-shadow: 0 0 20px rgba(255, 77, 109, 0.3), 0 0 40px rgba(255, 77, 109, 0.1); animation: glowPulse 2s infinite alternate; }
+        @keyframes glowPulse { from { box-shadow: 0 0 15px rgba(255, 77, 109, 0.2), 0 0 30px rgba(255, 77, 109, 0.1); } to { box-shadow: 0 0 30px rgba(255, 77, 109, 0.5), 0 0 50px rgba(255, 77, 109, 0.3); } }
         
         .slider-container { display: flex; width: 600vw; height: 100vh; transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1); }
         .slide { width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; background: radial-gradient(circle, #fdf2f5 0%, #fce4ec 100%); }
+        .glass-card { background: rgba(255, 245, 247, 0.9); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border-radius: 25px; padding: 40px 20px; text-align: center; width: 90%; max-width: 350px; transition: opacity 0.4s ease; box-shadow: 0 8px 32px rgba(255, 182, 193, 0.3); border: 1.5px solid rgba(255, 255, 255, 0.8); }
         .page2-container { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; height: 100%; position: relative; }
         
-        /* [SPOTIFY UI STYLES] */
-        #spotify-modal {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #121212; z-index: 10000; display: none;
-            flex-direction: column; align-items: center; padding: 40px 20px;
-            color: white; overflow-y: auto;
+        /* NEW SPOTIFY STYLES (Replacement for 4th page) */
+        .spotify-container { 
+            width: 90%; max-width: 340px; background: #121212; border-radius: 20px; 
+            padding: 20px; display: none; flex-direction: column; color: white;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
         }
-        .spotify-card { width: 100%; max-width: 340px; }
-        .album-art { 
-            width: 100%; aspect-ratio: 1/1; background: #333; 
-            border-radius: 15px; margin-bottom: 30px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            background-image: url('https://via.placeholder.com/300'); /* Add your pic link here later */
-            background-size: cover;
+        .album-art { width: 100%; aspect-ratio: 1; background: #333; border-radius: 12px; margin-bottom: 20px; object-fit: cover; }
+        .song-info { margin-bottom: 20px; }
+        .song-name { font-size: 22px; font-weight: bold; }
+        .artist-name { color: #b3b3b3; font-size: 14px; margin-top: 5px; }
+        .progress-area { width: 100%; margin-bottom: 20px; }
+        .spotify-bar { width: 100%; height: 4px; background: #4f4f4f; border-radius: 2px; position: relative; }
+        .spotify-progress { width: 30%; height: 100%; background: #1db954; border-radius: 2px; }
+        .time-stamps { display: flex; justify-content: space-between; font-size: 11px; color: #b3b3b3; margin-top: 8px; }
+        .lyrics-box { 
+            background: rgba(255,255,255,0.05); border-radius: 12px; padding: 15px; 
+            height: 120px; overflow-y: auto; margin-bottom: 20px; font-size: 15px;
+            line-height: 1.6; font-weight: 500; color: #fff; text-align: left;
         }
-        .song-info { margin-bottom: 25px; }
-        .song-title { font-size: 24px; font-weight: bold; margin-bottom: 5px; }
-        .artist-name { color: #b3b3b3; font-size: 16px; }
-        .progress-container-sp { width: 100%; height: 4px; background: #4f4f4f; border-radius: 2px; margin: 20px 0 10px 0; position: relative; }
-        .progress-fill { width: 30%; height: 100%; background: #1db954; border-radius: 2px; }
-        .time-info { display: flex; justify-content: space-between; font-size: 12px; color: #b3b3b3; }
-        .lyrics-container { 
-            background: #242424; border-radius: 15px; padding: 20px; 
-            margin-top: 30px; width: 100%; max-height: 200px; overflow-y: auto;
-        }
-        .lyrics-text { font-size: 18px; font-weight: bold; line-height: 1.6; color: #b3b3b3; }
-        .lyrics-active { color: white; }
-        .controls { display: flex; justify-content: center; align-items: center; gap: 30px; margin-top: 20px; }
-        .play-btn { width: 60px; height: 60px; background: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: black; font-size: 24px; }
-        .close-sp { position: absolute; top: 20px; right: 20px; font-size: 24px; color: #b3b3b3; cursor: pointer; }
+        .controls { display: flex; justify-content: center; align-items: center; gap: 30px; font-size: 24px; }
+        .play-btn { width: 55px; height: 55px; background: white; color: black; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 20px; }
 
-        /* [OTHER CSS - PRESERVED] */
-        .note-box { background: #ffecf2; width: 280px; height: 180px; border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 0 20px rgba(255, 182, 193, 0.6); border: 2px solid rgba(255, 255, 255, 0.8); cursor: pointer; }
+        /* PRESERVED ANIMATIONS AND OTHER UI */
+        .note-title { font-family: 'Brush Script MT', cursive, sans-serif; color: #ff4d6d; font-size: 34px; margin-bottom: 25px; text-align: center; }
+        .note-box { background: #ffecf2; width: 280px; height: 180px; border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 0 20px rgba(255, 182, 193, 0.6); border: 2px solid rgba(255, 255, 255, 0.8); position: relative; cursor: pointer; }
         .pink-circle { width: 70px; height: 70px; background: #ff4d6d; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-bottom: 12px; }
         .white-heart { font-size: 35px; color: white; }
-        .tap-open-text { color: #ff4d6d; font-weight: bold; font-size: 16px; }
+        .tap-open-text { color: #ff4d6d; font-weight: bold; font-size: 16px; letter-spacing: 1px; }
+        
+        /* REST OF THE CODE REMAINS UNTOUCHED */
+        .envelope-wrapper { position: relative; width: 280px; height: 180px; background: #ff4d6d; border-radius: 0 0 15px 15px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); z-index: 5; margin-top: 0px; transform: translateY(-40px); }
+        .envelope-wrapper::before { content: ''; position: absolute; top: 0; left: 0; border-left: 140px solid transparent; border-right: 140px solid transparent; border-top: 100px solid #ff758f; transform-origin: top; transition: transform 0.5s ease; z-index: 10; }
+        .envelope-wrapper.open::before { transform: rotateX(180deg); z-index: 4; }
+        .letter-content { position: absolute; top: 10px; left: 50%; transform: translateX(-50%) translateY(0); width: 260px; height: 160px; background: white; border-radius: 10px; padding: 20px; transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); z-index: 6; opacity: 0; pointer-events: none; }
+        .envelope-wrapper.open .letter-content { opacity: 1; transform: translateX(-50%) translateY(-240px); width: 330px; height: 460px; z-index: 15; pointer-events: auto; transition-delay: 0.6s; }
+        .scroll-box-page2 { height: 100%; overflow-y: auto; text-align: left; font-size: 14px; color: #444; line-height: 1.6; }
+        .cat-image-sorry { width: 100%; max-width: 180px; display: block; margin: 15px auto; border-radius: 10px; }
+        .reveal-title { font-family: 'Brush Script MT', cursive, sans-serif; color: #ff4d6d; font-size: 32px; margin-bottom: 30px; text-align: center; }
+        .main-reveal-box { background: rgba(0, 0, 0, 0.2); padding: 20px; border-radius: 20px; width: 90%; max-width: 320px; display: flex; flex-direction: column; gap: 15px; }
+        .rectangle-box { background: rgba(255, 255, 255, 0.1); min-height: 60px; border-radius: 15px; display: flex; justify-content: center; align-items: center; color: white; border: 1px solid rgba(255, 255, 255, 0.2); cursor: pointer; text-align: center; padding: 10px; }
+        .see-more-btn { background: #ff4d6d; color: white; padding: 12px 30px; border-radius: 25px; border: none; font-weight: bold; margin-top: 30px; cursor: pointer; }
+        .action-btns-page2 { position: absolute; bottom: 80px; display: flex; gap: 15px; width: 100%; justify-content: center; }
+        button { padding: 12px 20px; border-radius: 25px; cursor: pointer; font-weight: bold; transition: 0.3s; border: none; }
+        #yesBtn { background-color: #ff4d6d; color: white; }
+        #noBtn { background-color: #444; color: #fff; position: absolute; top: 70px; z-index: 999; }
+        input[type="text"] { padding: 12px; border-radius: 10px; border: 1.5px solid #ffcad4; width: 85%; margin-bottom: 15px; outline: none; text-align: center; }
+        .special-slide { background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%) !important; flex-direction: column; position: relative; }
+        .special-title { color: white; font-size: 40px; margin-bottom: 5px; }
+        .special-subtitle { color: white; font-size: 22px; font-style: italic; margin-bottom: 40px; }
+        .begin-btn { background: #ff4d6d !important; color: white !important; padding: 15px 45px; border-radius: 35px; font-size: 18px; }
+        #final-letter-page { display: none; opacity: 0; background: #fce4ec; width: 100vw; height: 100vh; position: fixed; top: 0; left: 0; z-index: 5000; flex-direction: column; align-items: center; padding-top: 40px; overflow-y: scroll; }
+        .white-paper { background: white; width: 90%; border-radius: 15px; padding: 25px; margin-bottom: 40px; }
+        .memory-photo { width: 200px; height: 280px; background: white; padding: 8px; border: 2px solid #ff4d6d; border-radius: 10px; margin-bottom: 20px; }
+        .memory-photo img { width: 100%; height: 100%; object-fit: cover; }
+        @keyframes fadeLeft { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes fadeRight { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .fade-left { animation: fadeLeft 1s forwards; }
+        .fade-right { animation: fadeRight 1s forwards; }
+        .fade-middle { animation: fadeIn 1s forwards; }
     </style>
 </head>
 <body>
-
-    <div id="spotify-modal">
-        <span class="close-sp" onclick="closeSpotify()">✕</span>
-        <div class="spotify-card">
-            <div class="album-art"></div>
-            <div class="song-info">
-                <div class="song-title">10,000 Hours</div>
-                <div class="artist-name">Dan + Shay, Justin Bieber</div>
-            </div>
-            <div class="progress-container-sp">
-                <div class="progress-fill"></div>
-            </div>
-            <div class="time-info">
-                <span>0:06</span>
-                <span>3:44</span>
-            </div>
-            <div class="controls">
-                <span style="font-size: 30px;">⏮</span>
-                <div class="play-btn">⏸</div>
-                <span style="font-size: 30px;">⏭</span>
-            </div>
-            <div class="lyrics-container">
-                <div class="lyrics-text">
-                    I'd spend 10,000 hours and 10,000 more<br>
-                    <span class="lyrics-active">Oh, if that's what it takes to learn that sweet heart of yours</span><br>
-                    And I might never get there, but I'm gonna try...
-                </div>
-            </div>
+    <div id="no-message-box">
+        <div class="strings-container"><div class="string"></div><div class="string"></div></div>
+        <div class="hanging-card">You can't say 'NO' 😁😋</div>
+    </div>
+    
+    <div id="error-overlay">
+        <div class="error-popup">
+            <div style="font-size: 40px; margin-bottom: 10px;">⚠️</div>
+            <div class="error-msg" id="error-text-content">System Error:</div>
+            <button onclick="hideError()" style="background: #ff4d6d; color: white; width: 100%;">Try Again</button>
         </div>
     </div>
 
@@ -102,52 +117,167 @@
         </div>
     </div>
 
+    <div id="loading-overlay" style="position:fixed; top:0; left:0; width:100%; height:100%; background:#fdf2f5; display:none; flex-direction:column; justify-content:center; align-items:center; z-index:10000;">
+        <div style="width:85%; max-width:320px; padding:40px 20px; background:rgba(255,245,247,0.9); border-radius:25px; text-align:center;">
+            <div style="position:relative"><span id="loadPercent" style="position:absolute; right:0; top:-22px; font-size:13px; font-weight:bold; color:#ff4d6d;">0%</span><div style="width:100%; height:14px; background:#eee; border-radius:20px;"><div id="loadBar" style="width:0%; height:100%; background:#ff4d6d; border-radius:20px; transition:width 0.2s;"></div></div></div>
+            <div style="margin-top:20px; font-weight:bold; color:#ff4d6d;">LOADING...</div>
+        </div>
+    </div>
+
     <div class="slider-container" id="mainSlider">
         <section class="slide">
-            <div class="page2-container">
-                <h2 style="color: #ff4d6d; margin-bottom: 20px;">Sanskriti</h2>
-                <button onclick="nextSlide(1)" style="background:#ff4d6d; color:white;">Go to Next Page</button>
+            <div class="glass-card" id="loveCard">
+                <div style="font-size:50px">🐱 ❤️</div>
+                <h2 style="color: #ff4d6d;">Sanskriti</h2>
+                <h1 style="margin-bottom:30px; color: #444;">Do you love me!?</h1>
+                <div class="btn-wrapper" style="position:relative; height:150px;"><button id="yesBtn" onclick="triggerLoading()">Yes 👀</button><button id="noBtn">No 😒</button></div>
             </div>
         </section>
-        
-        <section class="slide">Slide 2 Content</section>
-        <section class="slide">Slide 3 Content</section>
 
         <section class="slide">
             <div class="page2-container">
-                <h1 style="font-family: 'Brush Script MT', cursive; color: #ff4d6d; font-size: 34px; margin-bottom: 25px;">A Little note for you</h1>
-                <div class="note-box" onclick="openSpotify()">
-                    <div class="pink-circle"><div class="white-heart">🤍</div></div>
-                    <div class="tap-open-text">ᴛᴀᴘ ᴛᴏ ᴏᴘᴇɴ</div>
+                <div class="envelope-wrapper" id="envelopeBox">
+                    <div class="letter-content"><div class="scroll-box-page2">I know I’ve made mistakes... [Rest of your text] <img src="https://i.ibb.co/KpDd1ZF9/1000092801.jpg" class="cat-image-sorry"></div></div>
                 </div>
-                <button onclick="nextSlide(4)" style="margin-top: 40px; background:#007bff; color:white; padding:10px 30px; border-radius:20px;">Next ➔</button>
+                <div class="action-btns-page2"><button id="openBtn" style="background:white; color:#ff4d6d; border:2px solid #ff4d6d;" onclick="handleEnvelope()">Open 💌</button><button id="nextBtn2" style="background:#007bff; color:white;" onclick="nextSlide(2)">Next ➔</button></div>
             </div>
         </section>
 
-        <section class="slide" id="something-special-page">Final Page</section>
+        <section class="slide">
+            <div class="page2-container">
+                <h1 class="reveal-title">Tap each one to reveal</h1>
+                <div class="main-reveal-box">
+                    <div class="rectangle-box" onclick="revealText(this, 'ʏᴏᴜ’ʀᴇ ᴍʏ ᴋɪɴᴅ ᴏꜰ ᴄᴀʟᴍ.', 'left')">♡</div>
+                    <div class="rectangle-box" onclick="revealText(this, 'ᴀɴᴅ ꜱᴜᴅᴅᴇɴʟʏ, ᴀʟʟ ᴛʜᴇ ʟᴏᴠᴇ ꜱᴏɴɢꜱ ᴡᴇʀᴇ ᴀʙᴏᴜᴛ ʏᴏᴜ.', 'right')">♡</div>
+                    <div class="rectangle-box" onclick="revealText(this, 'ꜱᴏᴍᴇʜᴏᴡ, ɪᴛ’ꜱ ᴀʟᴡᴀʏꜱ ʏᴏᴜ.', 'middle')">♡</div>
+                </div>
+                <button class="see-more-btn" onclick="nextSlide(3)">See more —></button>
+            </div>
+        </section>
+
+        <section class="slide">
+            <div class="page2-container">
+                <div id="initialNoteSection" style="display: flex; flex-direction: column; align-items: center;">
+                    <h1 class="note-title">𝓐 𝓛𝓲𝓽𝓽𝓵𝓮 𝓷𝓸𝓽𝓮 𝓯𝓸𝓻 𝔂𝓸𝓾</h1>
+                    <div class="note-box" onclick="openSpotifyPlayer()">
+                        <div class="pink-circle"><div class="white-heart">🤍</div></div>
+                        <div class="tap-open-text">ᴛᴀᴘ ᴛᴏ ᴏᴘᴇɴ</div>
+                    </div>
+                </div>
+
+                <div class="spotify-container" id="spotifyPlayer">
+                    <img src="" id="spotifyImg" class="album-art" alt="Photo"> <div class="song-info">
+                        <div class="song-name">10,000 Hours</div>
+                        <div class="artist-name">Dan + Shay, Justin Bieber</div>
+                    </div>
+                    <div class="progress-area">
+                        <div class="spotify-bar"><div class="spotify-progress"></div></div>
+                        <div class="time-stamps"><span>0:06</span><span>3:44</span></div>
+                    </div>
+                    <div class="lyrics-box">
+                        I'd spend 10,000 hours and 10,000 more<br>
+                        Oh, if that's what it takes to learn that sweet heart of yours<br>
+                        And I might never get there, but I'm gonna try<br>
+                        If it's 10,000 hours or the rest of my life...<br><br>
+                        I'm gonna love you (ooh, ooh-ooh, ooh-ooh)<br>
+                        I'm gonna love you, ooh (ooh, ooh-ooh, ooh-ooh)
+                    </div>
+                    <div class="controls">
+                        <span>⏮</span> <div class="play-btn">II</div> <span>⏭</span>
+                    </div>
+                </div>
+                
+                <button id="spotifyNextBtn" style="background: #007bff; color: white; padding: 12px 40px; border-radius: 25px; border: none; font-weight: bold; margin-top: 30px; cursor: pointer; display: none;" onclick="nextSlide(4)">Next ➔</button>
+            </div>
+        </section>
+
+        <section class="slide special-slide" id="something-special-page">
+            <h1 class="special-title">ꜱᴏᴍᴇᴛʜɪɴɢ ꜱᴘᴇᴄɪᴀʟ </h1>
+            <p class="special-subtitle">ᴀᴡᴀɪᴛꜱ ʏᴏᴜ</p>
+            <input type="text" id="secretCodeInput" placeholder="Enter Code...">
+            <button class="begin-btn" onclick="checkSecretCode()">Click to Begin</button>
+        </section>
+    </div>
+
+    <div id="final-letter-page">
+        <div class="white-paper">
+            <div class="scroll-text">To my special one... [Rest of your letter]</div>
+        </div>
+        <div class="memories-container">
+            <div class="memory-photo"><img src="https://i.ibb.co/PshjNc3G/IMG-20241006-085454-0002.jpg"></div>
+            <div class="memory-photo"><img src="https://i.ibb.co/nMp7prDt/IMG-20241006-085358-0646.jpg"></div>
+        </div>
     </div>
 
     <script>
-        function openSpotify() {
-            document.getElementById('spotify-modal').style.display = 'flex';
+        // NEW FUNCTION FOR SPOTIFY
+        function openSpotifyPlayer() {
+            document.getElementById('initialNoteSection').style.display = 'none';
+            const player = document.getElementById('spotifyPlayer');
+            player.style.display = 'flex';
+            document.getElementById('spotifyNextBtn').style.display = 'block';
         }
 
-        function closeSpotify() {
-            document.getElementById('spotify-modal').style.display = 'none';
+        // PRESERVED LOGIC - DO NOT CHANGE
+        const slider = document.getElementById('mainSlider'); 
+        const bar = document.getElementById('loadBar'); 
+        const pct = document.getElementById('loadPercent'); 
+        const overlay = document.getElementById('loading-overlay');
+        const errorOverlay = document.getElementById('error-overlay');
+        const errorText = document.getElementById('error-text-content');
+        const noBtn = document.getElementById('noBtn'); 
+        const noMsgBox = document.getElementById('no-message-box');
+
+        function nextSlide(idx) { slider.style.transform = `translateX(-${idx * 100}vw)`; }
+        
+        function handleEnvelope() { 
+            const env = document.getElementById('envelopeBox'); 
+            const btn = document.getElementById('openBtn'); 
+            if(env.classList.contains('open')) { env.classList.remove('open'); btn.innerText = "Open 💌"; } 
+            else { env.classList.add('open'); btn.innerText = "Close ✖"; } 
         }
 
-        function unlockMaster() {
-            const name = document.getElementById('bfNameInput').value.trim().toLowerCase();
-            if(name === "anurag") {
-                document.getElementById('master-lock-screen').style.display = 'none';
+        function revealText(element, text, direction) {
+            element.innerText = text;
+            element.classList.add(direction === 'left' ? 'fade-left' : direction === 'right' ? 'fade-right' : 'fade-middle');
+        }
+
+        function unlockMaster() { 
+            const name = document.getElementById('bfNameInput').value.trim().toLowerCase(); 
+            if(name === "anurag") { 
+                document.getElementById('master-lock-screen').style.display = 'none'; 
+            } else { 
+                errorText.innerHTML = "Invalid Name! 😤"; 
+                errorOverlay.style.display = 'flex'; 
+            } 
+        }
+
+        function hideError() { errorOverlay.style.display = 'none'; }
+        
+        async function triggerLoading() { 
+            overlay.style.display = 'flex'; 
+            for(let i=0; i<=100; i++) { 
+                bar.style.width = i + "%"; pct.innerText = i + "%"; 
+                await new Promise(r => setTimeout(r, 20)); 
             }
+            nextSlide(1); overlay.style.display = 'none'; 
         }
 
-        function nextSlide(idx) {
-            document.getElementById('mainSlider').style.transform = `translateX(-${idx * 100}vw)`;
+        function checkSecretCode() { 
+            if(document.getElementById('secretCodeInput').value.trim().toLowerCase() === "10ml") { 
+                document.getElementById('mainSlider').style.display = 'none';
+                const lp = document.getElementById('final-letter-page');
+                lp.style.display = 'flex'; lp.style.opacity = '1';
+            } else { alert("Wrong Code!"); }
         }
 
-        /* Yahan baki logic jo aapne diya tha wo rahega */
+        const moveNoButton = (e) => { 
+            noMsgBox.style.top = '0px';
+            noBtn.style.position = 'fixed'; 
+            noBtn.style.left = Math.random() * 70 + '%'; 
+            noBtn.style.top = Math.random() * 70 + '%'; 
+        };
+        noBtn.addEventListener('mouseover', moveNoButton);
     </script>
 </body>
 </html>
