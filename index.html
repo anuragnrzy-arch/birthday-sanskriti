@@ -5,265 +5,77 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>For Sanskriti</title>
     <style>
+        /* Core Styling */
         * { 
             margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; 
-            /* Isse tap karne par blue box nahi aayega */
             -webkit-tap-highlight-color: transparent; 
             user-select: none;
         }
         body { background-color: #fce4ec; overflow: hidden; touch-action: none; }
-        #no-message-box { position: fixed; top: -200px; left: 50%; transform: translateX(-50%); z-index: 1000; transition: top 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: flex; flex-direction: column; align-items: center; }
-        .string { width: 2px; height: 60px; background: #ff4d6d; margin: 0 45px; position: relative; }
-        .string::before { content: ''; position: absolute; top: -10px; left: -2px; width: 6px; height: 6px; background: #ff4d6d; border-radius: 50%; }
-        .strings-container { display: flex; justify-content: center; width: 100%; }
-        .hanging-card { background: white; padding: 12px 20px; border-radius: 12px; box-shadow: 0 8px 20px rgba(255, 77, 109, 0.15); border: 2px solid #ff4d6d; font-weight: bold; color: #ff4d6d; font-size: 16px; white-space: nowrap; margin-top: -2px; }
-        #master-lock-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fdf2f5; z-index: 20000; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: all 0.8s cubic-bezier(0.65, 0, 0.35, 1); }
-        #error-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.2); z-index: 30000; display: none; justify-content: center; align-items: center; }
-        .error-popup { background: white; padding: 25px; border-radius: 15px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.1); width: 280px; border: 2px solid #ff4d6d; animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-        .error-msg { color: #333; font-weight: bold; margin-bottom: 20px; font-size: 16px; line-height: 1.4; }
-        .lock-icon { font-size: 80px; margin-bottom: 20px; transition: transform 1s ease; }
-        .lock-input-box { background: rgba(255, 240, 245, 0.9); padding: 30px; border-radius: 20px; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); text-align: center; width: 85%; max-width: 320px; border: 1px solid rgba(255, 182, 193, 0.5); box-shadow: 0 0 20px rgba(255, 77, 109, 0.3), 0 0 40px rgba(255, 77, 109, 0.1); animation: glowPulse 2s infinite alternate; }
-        @keyframes glowPulse { from { box-shadow: 0 0 15px rgba(255, 77, 109, 0.2), 0 0 30px rgba(255, 77, 109, 0.1); } to { box-shadow: 0 0 30px rgba(255, 77, 109, 0.5), 0 0 50px rgba(255, 77, 109, 0.3); } }
         
+        /* Spotify Player Styling */
+        #sp-overlay { display: none; position: fixed; inset: 0; z-index: 50000; align-items: center; justify-content: center; }
+        #sp-overlay.sp-on { display: flex; }
+        .sp-card { position:relative; z-index:10; width:330px; background:rgba(14,5,10,0.82); backdrop-filter:blur(30px); border-radius:26px; padding:22px 20px 26px; color: white; text-align: center; }
+        .sp-title { font-size:1.18rem; font-weight:700; margin-bottom:2px; }
+        .sp-artist { font-size:0.78rem; color:rgba(255,255,255,0.48); margin-bottom:13px; }
+        
+        /* Layout & Animations */
         .slider-container { display: flex; width: 600vw; height: 100vh; transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1); }
-        
         .slide { width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; background: radial-gradient(circle, #fdf2f5 0%, #fce4ec 100%); }
-        .glass-card { background: rgba(255, 245, 247, 0.9); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border-radius: 25px; padding: 40px 20px; text-align: center; width: 90%; max-width: 350px; transition: opacity 0.4s ease; box-shadow: 0 8px 32px rgba(255, 182, 193, 0.3); border: 1.5px solid rgba(255, 255, 255, 0.8); }
-        .page2-container { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; height: 100%; position: relative; }
-        .envelope-wrapper { position: relative; width: 280px; height: 180px; background: #ff4d6d; border-radius: 0 0 15px 15px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); z-index: 5; margin-top: 0px; transform: translateY(-40px); }
-        .envelope-wrapper::before { content: ''; position: absolute; top: 0; left: 0; border-left: 140px solid transparent; border-right: 140px solid transparent; border-top: 100px solid #ff758f; transform-origin: top; transition: transform 0.5s ease; z-index: 10; }
-        .envelope-wrapper.open::before { transform: rotateX(180deg); z-index: 4; }
-        .letter-content { position: absolute; top: 10px; left: 50%; transform: translateX(-50%) translateY(0); width: 260px; height: 160px; background: white; border-radius: 10px; padding: 20px; transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); z-index: 6; opacity: 0; box-shadow: 0 5px 15px rgba(0,0,0,0.1); overflow: hidden; pointer-events: none; }
-        .envelope-wrapper.open .letter-content { opacity: 1; transform: translateX(-50%) translateY(-240px); width: 330px; height: 460px; z-index: 15; pointer-events: auto; transition-delay: 0.6s; }
-        .scroll-box-page2 { height: 100%; overflow-y: auto; text-align: left; font-size: 14px; color: #444; line-height: 1.6; padding-right: 5px; }
-        .cat-image-sorry { width: 100%; max-width: 180px; display: block; margin: 15px auto 5px auto; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .scroll-box-page2::-webkit-scrollbar { width: 3px; }
-        .scroll-box-page2::-webkit-scrollbar-thumb { background: #ff4d6d; }
-
-        .reveal-title { font-family: 'Brush Script MT', cursive, sans-serif; color: #ff4d6d; font-size: 32px; margin-bottom: 30px; text-align: center; text-shadow: 0 0 10px rgba(255, 77, 109, 0.5); }
-        .main-reveal-box { background: rgba(0, 0, 0, 0.2); padding: 20px; border-radius: 20px; width: 90%; max-width: 320px; display: flex; flex-direction: column; gap: 15px; box-shadow: 0 0 20px rgba(255, 77, 109, 0.3); }
+        .glass-card { background: rgba(255, 245, 247, 0.9); backdrop-filter: blur(15px); border-radius: 25px; padding: 40px 20px; text-align: center; width: 90%; max-width: 350px; }
         
-        .rectangle-box { 
-            background: rgba(255, 255, 255, 0.1); min-height: 60px; border-radius: 15px; 
-            display: flex; justify-content: center; align-items: center; color: white; 
-            font-size: 18px; padding: 10px; text-align: center; 
-            border: 1px solid rgba(255, 255, 255, 0.2); cursor: pointer; 
-            transition: transform 0.2s; position: relative; overflow: hidden;
-        }
-        
-        /* New Fade-in Animations */
-        .fade-left { animation: fadeLeft 1s forwards; }
-        .fade-right { animation: fadeRight 1s forwards; }
-        .fade-middle { animation: fadeIn 1s forwards; }
-
-        @keyframes fadeLeft {
-            from { opacity: 0; transform: translateX(-20px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-        @keyframes fadeRight {
-            from { opacity: 0; transform: translateX(20px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .see-more-btn { background: #ff4d6d; color: white; padding: 12px 30px; border-radius: 25px; border: none; font-weight: bold; margin-top: 30px; cursor: pointer; box-shadow: 0 0 15px rgba(255, 77, 109, 0.6); transition: 0.3s; }
-        
-        .note-title { font-family: 'Brush Script MT', cursive, sans-serif; color: #ff4d6d; font-size: 34px; margin-bottom: 25px; text-align: center; }
-        .note-box { background: #ffecf2; width: 280px; height: 180px; border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 0 20px rgba(255, 182, 193, 0.6); border: 2px solid rgba(255, 255, 255, 0.8); position: relative; cursor: pointer; }
-        .pink-circle { width: 70px; height: 70px; background: #ff4d6d; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-bottom: 12px; box-shadow: 0 4px 10px rgba(255, 77, 109, 0.3); }
-        .white-heart { font-size: 35px; color: white; }
-        .tap-open-text { color: #ff4d6d; font-weight: bold; font-size: 16px; letter-spacing: 1px; }
-        .next-btn-note { background: #007bff; color: white; padding: 12px 40px; border-radius: 25px; border: none; font-weight: bold; margin-top: 40px; cursor: pointer; box-shadow: 0 4px 15px rgba(0,123,255,0.3); }
-
-        .action-btns-page2 { position: absolute; bottom: 80px; display: flex; flex-direction: row; justify-content: center; align-items: center; gap: 15px; z-index: 25; width: 100%; padding: 0 20px; }
-        #openBtn { background: white; color: #ff4d6d; width: 140px; border: 2px solid #ff4d6d; box-shadow: 0 4px 10px rgba(255, 77, 109, 0.1); }
-        #nextBtn2 { background: #007bff; color: white; width: 140px; box-shadow: 0 4px 10px rgba(0,123,255,0.2); }
-        #loading-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fdf2f5; display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 10000; }
-        .loader-card { width: 85%; max-width: 320px; padding: 40px 20px; background: rgba(255, 245, 247, 0.9); border-radius: 25px; backdrop-filter: blur(15px); text-align: center; box-shadow: 0 8px 32px rgba(255, 182, 193, 0.3); border: 1.5px solid rgba(255, 255, 255, 0.8); }
-        .progress-container { width: 100%; height: 14px; background: #eee; border-radius: 20px; position: relative; margin-top: 10px; }
-        .progress-bar { width: 0%; height: 100%; background: #ff4d6d; border-radius: 20px; transition: width 0.2s ease; }
-        .pct-text { position: absolute; right: 0; top: -22px; font-size: 13px; font-weight: bold; color: #ff4d6d; }
-        .btn-wrapper { position: relative; height: 150px; display: flex; flex-direction: column; align-items: center; }
-        button { padding: 12px 20px; border: none; border-radius: 25px; cursor: pointer; font-weight: bold; font-size: 15px; transition: 0.3s; }
-        #yesBtn { background-color: #ff4d6d; color: white; box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3); }
-        #noBtn { background-color: #444; color: #fff; position: absolute; top: 70px; z-index: 999; }
-        .footer-text { font-size: 11px; color: #a38b91; margin-top: 25px; font-style: italic; }
-        input[type="text"] { padding: 12px; border-radius: 10px; border: 1.5px solid #ffcad4; width: 85%; margin-bottom: 15px; outline: none; text-align: center; background: white; }
-        #something-special-page { transition: opacity 1.5s ease; }
-        .special-slide { background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%) !important; flex-direction: column; position: relative; overflow: hidden; }
-        .special-title { color: white; font-size: 40px; font-weight: bold; margin-bottom: 5px; text-shadow: 2px 2px 10px rgba(0,0,0,0.1); z-index: 10; }
-        .special-subtitle { color: white; font-size: 22px; font-style: italic; margin-bottom: 40px; opacity: 0.9; z-index: 10; }
-        .begin-btn { background: #ff4d6d !important; color: white !important; padding: 15px 45px; border-radius: 35px; font-size: 18px; font-weight: bold; border: none; z-index: 10; box-shadow: 0 5px 20px rgba(255, 77, 109, 0.4); }
-        .floating-heart { position: absolute; bottom: -50px; color: rgba(255, 77, 109, 0.4); font-size: 20px; animation: floatUp linear infinite; z-index: 1; pointer-events: none; }
-        @keyframes floatUp { to { transform: translateY(-110vh) rotate(360deg); opacity: 0; } }
-        #final-letter-page { display: none; opacity: 0; transition: opacity 3s ease; background: #fce4ec; width: 100vw; height: 100vh; position: fixed; top: 0; left: 0; z-index: 5000; flex-direction: column; align-items: center; justify-content: flex-start; padding-top: 40px; overflow-y: scroll; overflow-x: hidden; }
-        #bg-heart-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
-        .letter-love-header { color: #ff4d6d; font-size: 28px; font-weight: bold; margin-bottom: 5px; z-index: 10; position: relative; }
-        .letter-subtitle { color: #888; font-size: 16px; margin-bottom: 25px; z-index: 10; position: relative; }
-        .white-paper { background: white; width: 90%; max-width: 350px; border-radius: 15px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 40px; position: relative; flex-shrink: 0; z-index: 10; }
-        .red-letter-title { color: #ff4d6d; font-size: 18px; font-weight: bold; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
-        .scroll-text { color: #555; font-size: 15px; line-height: 1.6; text-align: left; max-height: 350px; overflow-y: auto; padding-right: 5px; }
-        .memories-container { width: 100%; display: flex; flex-direction: column; align-items: center; z-index: 10; }
-        .memories-title-box { background: white; padding: 15px 25px; border-radius: 20px; border: 2px solid #ff4d6d; box-shadow: 0 0 20px rgba(255, 77, 109, 0.4); color: #ff4d6d; font-weight: bold; font-size: 18px; text-align: center; margin-bottom: 40px; animation: glowPulse 2s infinite alternate; }
-        .zig-zag-grid { width: 90%; display: flex; flex-direction: column; gap: 40px; padding-bottom: 60px; }
-        .memory-photo { width: 200px; height: 280px; background: white; padding: 8px; border: 2px solid #ff4d6d; border-radius: 10px; box-shadow: 0 0 15px rgba(255, 77, 109, 0.5), 0 5px 15px rgba(0,0,0,0.2); overflow: hidden; animation: waveFloat 4s ease-in-out infinite; }
-        @keyframes waveFloat { 0%, 100% { transform: translateY(0) rotate(var(--rot)); } 50% { transform: translateY(-15px) rotate(var(--rot-mid)); } }
-        .memory-photo img { width: 100%; height: 100%; object-fit: cover; border-radius: 5px; }
-        .pos-1 { align-self: flex-start; --rot: -6deg; --rot-mid: -3deg; }
-        .pos-2 { align-self: flex-end; --rot: 6deg; --rot-mid: 3deg; }
-        .pos-3 { align-self: flex-start; --rot: -4deg; --rot-mid: -1deg; }
-        .extra-blank-space { height: 100px; width: 100%; flex-shrink: 0; }
+        /* Letter & Memories */
+        .white-paper { background: white; width: 90%; max-width: 350px; border-radius: 15px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 40px; }
+        .memory-photo { width: 200px; height: 280px; background: white; padding: 8px; border: 2px solid #ff4d6d; border-radius: 10px; margin-bottom: 20px; }
     </style>
 </head>
 <body>
-    <div id="no-message-box">
-        <div class="strings-container"><div class="string"></div><div class="string"></div></div>
-        <div class="hanging-card">You can't say 'NO' 😁😋</div>
-    </div>
-    <div id="error-overlay">
-        <div class="error-popup">
-            <div style="font-size: 40px; margin-bottom: 10px;">⚠️</div>
-            <div class="error-msg" id="error-text-content">System Error:</div>
-            <button onclick="hideError()" style="background: #ff4d6d; color: white; width: 100%;">Try Again</button>
-        </div>
-    </div>
-    <div id="master-lock-screen">
-        <div class="lock-icon" id="mainLockEmoji">🔒</div>
-        <div class="lock-input-box" id="lockBox">
-            <p style="margin-bottom:15px; font-weight:bold; color:#444;">Type your boyfriend name 😤</p>
-            <input type="text" id="bfNameInput" placeholder="Enter name...">
-            <button onclick="unlockMaster()" style="background:#ff4d6d; color:white; width:100%;">Unlock</button>
-        </div>
-    </div>
-    <div id="loading-overlay">
-        <div class="loader-card">
-            <div style="position:relative"><span class="pct-text" id="loadPercent">0%</span><div class="progress-container"><div class="progress-bar" id="loadBar"></div></div></div>
-            <div style="margin-top:20px; font-weight:bold; color:#ff4d6d; letter-spacing: 1px;">LOADING...</div>
-        </div>
-    </div>
 
-    <div id="final-letter-page">
-        <div id="bg-heart-container"></div>
-        <div class="letter-love-header">💗 ᴍʏ ʟᴏᴍʟ 💗</div>
-        <div class="letter-subtitle">ʏᴏᴜ'ʀᴇ ᴍʏ ᴇᴠᴇʀʏᴛʜɪɴɢ</div>
-        <div class="white-paper">
-            <div class="red-letter-title">A Letter From My Heart</div>
-            <div class="scroll-text">
-                <strong>To my special one</strong><br><br>
-                If you're busy, I'll wait for you. I know sometimes life can be really busy and you might not have time to talk to me. That's okay I'll be patient and wait because you are important to me.<br><br>
-                If you're feeling sad or upset, I'll be here to listen to you. You don't have to go through it alone. I want to hear about your feelings and help you feel better.<br><br>
-                If you need help with anything, I'll be there to help you. You can always count on me for support and care.<br><br>
-                No matter what happens, I'll always be here for you. I want you to know that you're never alone, and I will always stand by your side. ❤️
+    <div id="sp-overlay">
+        <div class="sp-card">
+            <button onclick="spClose()" style="position:absolute; top:10px; right:10px; background:none; color:white; border:none; cursor:pointer;">✕</button>
+            <div class="sp-title">10,000 Hours</div>
+            <div class="sp-artist">Dan + Shay, Justin Bieber</div>
+            <div id="spLyr" style="height:80px; overflow:hidden; margin: 20px 0;">
+                <div class="sp-line on">I'd spend 10,000 hours and 10,000 more</div>
+                <div class="sp-line">Oh, if that's what it takes to learn that sweet heart of yours</div>
             </div>
         </div>
-        <div class="memories-container">
-            <div class="memories-title-box">ᴏᴜʀ ᴍᴇᴍᴏʀɪᴇꜱ 💝😌🤞🏻✨</div>
-            <div class="zig-zag-grid">
-                <div class="memory-photo pos-1"><img src="https://i.ibb.co/PshjNc3G/IMG-20241006-085454-0002.jpg"></div>
-                <div class="memory-photo pos-2"><img src="https://i.ibb.co/nMp7prDt/IMG-20241006-085358-0646.jpg"></div>
-                <div class="memory-photo pos-3"><img src="https://i.ibb.co/KjQ5gMfY/Screenshot-2026-01-23-11-38-30-89-c1ebbaff44ba152fb7f7c2e1f7129fd1.jpg"></div>
-            </div>
-        </div>
-        <div class="extra-blank-space"></div>
     </div>
 
     <div class="slider-container" id="mainSlider">
         <section class="slide">
-            <div class="glass-card" id="loveCard">
+            <div class="glass-card">
                 <div style="font-size:50px">🐱 ❤️</div>
                 <h2 style="color: #ff4d6d;">Sanskriti</h2>
-                <h1 style="margin-bottom:30px; color: #444;">Do you love me!?</h1>
-                <div class="btn-wrapper"><button id="yesBtn" onclick="triggerLoading()">Yes 👀</button><button id="noBtn">No 😒</button></div>
-                <p class="footer-text">Some love stories don't allow "no" 😤</p>
+                <h1>Do you love me!?</h1>
+                <button id="yesBtn" onclick="nextSlide(1)" style="background:#ff4d6d; color:white; padding:10px 30px; border-radius:20px; border:none; margin-top:20px;">Yes 👀</button>
             </div>
         </section>
 
         <section class="slide">
             <div class="page2-container">
-                <div class="envelope-wrapper" id="envelopeBox">
-                    <div class="letter-content"><div class="scroll-box-page2">I know I’ve made mistakes, and I’m truly sorry for them... I'm not here to make excuses or just say things I won’t follow. I understand where I went wrong and I’m working on becoming a better version of myself not just for you but for me too. I don’t want to repeat the same things again.<br><br>For 1 year, 2 months, and 11 days, we were apart after the breakup. During that time all I had was your pictures. I used to look at them, spend my time with those memories, and miss you more than I can explain. It made me realize your value even more. I won’t just say things now, I’ll prove it through my actions step by step... 🤞🏻✨🍀<img src="https://i.ibb.co/KpDd1ZF9/1000092801.jpg" class="cat-image-sorry"></div></div>
+                <h1 style="color:#ff4d6d; font-family:'Brush Script MT'; font-size:34px;">𝓐 𝓛𝓲𝓽𝓽𝓵𝓮 𝓷𝓸𝓽𝓮 𝓯𝓸𝓻 𝔂𝓸𝓾</h1>
+                <div class="note-box" onclick="spOpen()" style="cursor:pointer; background:#ffecf2; padding:30px; border-radius:20px; text-align:center;">
+                    <div style="font-size:35px; color:#ff4d6d;">🤍</div>
+                    <p style="font-weight:bold; color:#ff4d6d;">TAP TO OPEN</p>
                 </div>
-                <div class="action-btns-page2"><button id="openBtn" onclick="handleEnvelope()">Open 💌</button><button id="nextBtn2" onclick="nextSlide(2)">Next ➔</button></div>
             </div>
-        </section>
-
-        <section class="slide">
-            <div class="page2-container">
-                <h1 class="reveal-title">Tap each one to reveal</h1>
-                <div class="main-reveal-box">
-                    <div class="rectangle-box" onclick="revealText(this, 'ʏᴏᴜ’ʀᴇ ᴍʏ ᴋɪɴᴅ ᴏꜰ ᴄᴀʟᴍ.', 'left')">♡</div>
-                    <div class="rectangle-box" onclick="revealText(this, 'ᴀɴᴅ ꜱᴜᴅᴅᴇɴʟʏ, ᴀʟʟ ᴛʜᴇ ʟᴏᴠᴇ ꜱᴏɴɢꜱ ᴡᴇʀᴇ ᴀʙᴏᴜᴛ ʏᴏᴜ.', 'right')">♡</div>
-                    <div class="rectangle-box" onclick="revealText(this, 'ꜱᴏᴍᴇʜᴏᴡ, ɪᴛ’ꜱ ᴀʟᴡᴀʏꜱ ʏᴏᴜ.', 'middle')">♡</div>
-                </div>
-                <button class="see-more-btn" onclick="nextSlide(3)">See more —></button>
-            </div>
-        </section>
-
-        <section class="slide">
-            <div class="page2-container">
-                <h1 class="note-title">𝓐 𝓛𝓲𝓽𝓽𝓵𝓮 𝓷𝓸𝓽𝓮 𝓯𝓸𝓻 𝔂𝓸𝓾</h1>
-                <div class="note-box">
-                    <div class="pink-circle">
-                        <div class="white-heart">🤍</div>
-                    </div>
-                    <div class="tap-open-text">ᴛᴀᴘ ᴛᴏ ᴏᴘᴇɴ</div>
-                </div>
-                <button class="next-btn-note" onclick="nextSlide(4)">Next ➔</button>
-            </div>
-        </section>
-
-        <section class="slide special-slide" id="something-special-page">
-            <div id="heart-container"></div>
-            <h1 class="special-title">ꜱᴏᴍᴇᴛʜɪɴɢ ꜱᴘᴇᴄɪᴀʟ </h1>
-            <p class="special-subtitle">ᴀᴡᴀɪᴛꜱ ʏᴏᴜ</p>
-            <div style="z-index: 10; width: 80%; max-width: 300px; display: flex; flex-direction: column; align-items: center;"><input type="text" id="secretCodeInput" placeholder="Enter Code..." style="margin-bottom: 20px;"><button class="begin-btn" onclick="checkSecretCode()">Click to Begin</button></div>
         </section>
     </div>
 
     <script>
-        /* REVEAL TEXT WITH CUSTOM FADE */
-        function revealText(element, text, direction) {
-            if (element.innerText === text) return; // Already revealed
-            
-            element.style.fontSize = "16px";
-            element.style.fontWeight = "bold";
-            element.innerText = text;
-
-            // Remove old classes and add new animation class
-            element.classList.remove('fade-left', 'fade-right', 'fade-middle');
-            if(direction === 'left') element.classList.add('fade-left');
-            else if(direction === 'right') element.classList.add('fade-right');
-            else if(direction === 'middle') element.classList.add('fade-middle');
+        /* Function to open Spotify */
+        function spOpen() {
+            document.getElementById('sp-overlay').classList.add('sp-on');
         }
-
-        /* [LOADING PAGE & OTHER LOGIC PRESERVED] */
-        const slider = document.getElementById('mainSlider'); const bar = document.getElementById('loadBar'); const pct = document.getElementById('loadPercent'); const overlay = document.getElementById('loading-overlay'); const errorOverlay = document.getElementById('error-overlay'); const errorText = document.getElementById('error-text-content'); const noBtn = document.getElementById('noBtn'); const noMsgBox = document.getElementById('no-message-box');
-        
-        function handleEnvelope() { const env = document.getElementById('envelopeBox'); const btn = document.getElementById('openBtn'); if(env.classList.contains('open')) { env.classList.remove('open'); btn.innerText = "Open 💌"; } else { env.classList.add('open'); btn.innerText = "Close ✖"; } }
-        
-        function unlockMaster() { const name = document.getElementById('bfNameInput').value.trim().toLowerCase(); if(name === "anurag") { document.getElementById('mainLockEmoji').innerText = "🔓"; document.getElementById('mainLockEmoji').style.transform = "scale(1.4)"; document.getElementById('lockBox').style.opacity = '0'; setTimeout(() => { const master = document.getElementById('master-lock-screen'); master.style.opacity = '0'; master.style.transform = 'translateY(-100%)'; setTimeout(() => master.style.display = 'none', 800); }, 1000); } else if (name === "") { errorText.innerHTML = "System Error:"; errorOverlay.style.display = 'flex'; } else { errorText.innerHTML = "System Error: <br> Invalid Boyfriend Name! 😤<br><span style='color: white; font-size: 18px;'>WHO IS HE!?? 🤨🤨😤</span>"; errorOverlay.style.display = 'flex'; } }
-        
-        function hideError() { errorOverlay.style.display = 'none'; }
-        
-        function checkSecretCode() { const code = document.getElementById('secretCodeInput').value.trim().toLowerCase(); if(code === "10ml") { revealLetter(); } else { errorText.innerHTML = "Wrong Code !!😤"; errorOverlay.style.display = 'flex'; } }
-        
-        async function triggerLoading() { noMsgBox.style.top = '-200px'; document.getElementById('loveCard').style.opacity = '0'; setTimeout(async () => { overlay.style.display = 'flex'; for(let i=1; i<=50; i++) { updateBar(i); await new Promise(r => setTimeout(r, 25)); } await new Promise(r => setTimeout(r, 1000)); for(let i=51; i<=90; i++) { updateBar(i); await new Promise(r => setTimeout(r, 15)); } updateBar(50); await new Promise(r => setTimeout(r, 1000)); for(let i=51; i<=90; i++) { updateBar(i); await new Promise(r => setTimeout(r, 20)); } await new Promise(r => setTimeout(r, 400)); nextSlide(1); overlay.style.opacity = '0'; setTimeout(() => { overlay.style.display = 'none'; overlay.style.opacity = '1'; }, 600); }, 200); }
-        
-        function updateBar(val) { bar.style.width = val + "%"; pct.innerText = val + "%"; }
-        
-        function nextSlide(idx) { slider.style.transform = `translateX(-${idx * 100}vw)`; if(idx === 4) startHearts('heart-container'); }
-        
-        function startHearts(containerId) { const container = document.getElementById(containerId); if(!container) return; setInterval(() => { const heart = document.createElement('div'); heart.classList.add('floating-heart'); heart.innerHTML = '❤️'; heart.style.left = Math.random() * 100 + 'vw'; heart.style.animationDuration = (Math.random() * 3 + 2) + 's'; container.appendChild(heart); setTimeout(() => heart.remove(), 5000); }, 400); }
-        
-        function revealLetter() { const specialPage = document.getElementById('something-special-page'); specialPage.style.opacity = '0'; setTimeout(() => { slider.style.display = 'none'; const letterPage = document.getElementById('final-letter-page'); letterPage.style.display = 'flex'; document.body.style.overflowY = "auto"; document.body.style.touchAction = "auto"; startHearts('bg-heart-container'); setTimeout(() => { letterPage.style.opacity = '1'; }, 50); }, 1500); }
-        
-        const moveNoButton = (e) => { if(e.type === 'touchstart') e.preventDefault(); noMsgBox.style.top = '0px'; const padding = 50; const maxX = window.innerWidth - noBtn.offsetWidth - padding; const maxY = window.innerHeight - noBtn.offsetHeight - padding; let randomX = Math.floor(Math.random() * (maxX - padding)) + padding; let randomY = Math.floor(Math.random() * (maxY - padding)) + padding; noBtn.style.position = 'fixed'; noBtn.style.left = randomX + 'px'; noBtn.style.top = randomY + 'px'; };
-        
-        noBtn.addEventListener('mouseover', moveNoButton); noBtn.addEventListener('touchstart', moveNoButton);
+        function spClose() {
+            document.getElementById('sp-overlay').classList.remove('sp-on');
+        }
+        function nextSlide(index) {
+            document.getElementById('mainSlider').style.transform = `translateX(-${index * 100}vw)`;
+        }
     </script>
 </body>
 </html>
