@@ -7,7 +7,6 @@
     <style>
         * { 
             margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; 
-            /* Isse tap karne par blue box nahi aayega */
             -webkit-tap-highlight-color: transparent; 
             user-select: none;
         }
@@ -52,7 +51,6 @@
             transition: transform 0.2s; position: relative; overflow: hidden;
         }
         
-        /* New Fade-in Animations */
         .fade-left { animation: fadeLeft 1s forwards; }
         .fade-right { animation: fadeRight 1s forwards; }
         .fade-middle { animation: fadeIn 1s forwards; }
@@ -151,8 +149,7 @@
         <div class="letter-love-header">💗 𝐌𝐘 𝐋𝐎𝐌𝐋 💗</div>
         <div class="letter-subtitle">ʏᴏᴜ'ʀᴇ ᴍʏ ᴇᴠᴇʀʏᴛʜɪɴɢ</div>
         <div class="white-paper">
-            <div class="red-letter-title">𝐓𝐨 𝐦𝐲 𝐬𝐩𝐞𝐜𝐢𝐚𝐥 𝐨𝐧𝐞 🫶🏻💕
-</div>
+            <div class="red-letter-title">𝐓𝐨 𝐦𝐲 𝐬𝐩𝐞𝐜𝐢𝐚𝐥 𝐨𝐧𝐞 🫶🏻💕</div>
             <div class="scroll-text">
                 Today it's 9th may 2026 nd 4 yrs back 9th may 2022 we came into relationship nd ya ami jani that 9th er 2,3 days por you got to know that I said yes but you decided on 9th ryt day 9th chilo that pice of paper e likhe diyechilis that u like me so it was 9th may 2022 nd every month of 9th is special for me😌💝.Thank you very very much sanskriti for coming into my life💐🌟...Tbh amar mood jokhon bhalo thakto na that time jokhon tor songe thaktam I used to feel really good automatically whenever I used to look at you your smile I don't know why but if feel something different inside like a small happiness you know ryt that butterflies type feeling...😌🦋✨ I don't really know how to explain it, but being with you always felt different those 2 classes 9th nd 10th er modhe like peace...I wish you could see yourself the way I see you.<br><br>
                 I still miss those days like that children's day I got to spend time with you nd sitting near the window inside the class nd talking with you everytime nd never feel bored it was one of the best moment 😌💖...Nd amar ekhonou mone ache😤that u wrote on my hand "I live every day by seeing you" that stayed with me. Nd one of the best thing hocche everything is related to "9"😌💗<br><br>
@@ -224,22 +221,17 @@
     </div>
 
     <script>
-        /* REVEAL TEXT WITH CUSTOM FADE */
         function revealText(element, text, direction) {
-            if (element.innerText === text) return; // Already revealed
-            
+            if (element.innerText === text) return;
             element.style.fontSize = "16px";
             element.style.fontWeight = "bold";
             element.innerText = text;
-
-            // Remove old classes and add new animation class
             element.classList.remove('fade-left', 'fade-right', 'fade-middle');
             if(direction === 'left') element.classList.add('fade-left');
             else if(direction === 'right') element.classList.add('fade-right');
             else if(direction === 'middle') element.classList.add('fade-middle');
         }
 
-        /* [LOADING PAGE & OTHER LOGIC PRESERVED] */
         const slider = document.getElementById('mainSlider'); const bar = document.getElementById('loadBar'); const pct = document.getElementById('loadPercent'); const overlay = document.getElementById('loading-overlay'); const errorOverlay = document.getElementById('error-overlay'); const errorText = document.getElementById('error-text-content'); const noBtn = document.getElementById('noBtn'); const noMsgBox = document.getElementById('no-message-box');
         
         function handleEnvelope() { const env = document.getElementById('envelopeBox'); const btn = document.getElementById('openBtn'); if(env.classList.contains('open')) { env.classList.remove('open'); btn.innerText = "Open 💌"; } else { env.classList.add('open'); btn.innerText = "Close ✖"; } }
@@ -250,7 +242,38 @@
         
         function checkSecretCode() { const code = document.getElementById('secretCodeInput').value.trim().toLowerCase(); if(code === "10ml") { revealLetter(); } else { errorText.innerHTML = "Wrong Code !!😤"; errorOverlay.style.display = 'flex'; } }
         
-        async function triggerLoading() { noMsgBox.style.top = '-200px'; document.getElementById('loveCard').style.opacity = '0'; setTimeout(async () => { overlay.style.display = 'flex'; for(let i=1; i<=50; i++) { updateBar(i); await new Promise(r => setTimeout(r, 25)); } await new Promise(r => setTimeout(r, 1000)); for(let i=51; i<=90; i++) { updateBar(i); await new Promise(r => setTimeout(r, 15)); } updateBar(50); await new Promise(r => setTimeout(r, 1000)); for(let i=51; i<=90; i++) { updateBar(i); await new Promise(r => setTimeout(r, 20)); } await new Promise(r => setTimeout(r, 400)); nextSlide(1); overlay.style.opacity = '0'; setTimeout(() => { overlay.style.display = 'none'; overlay.style.opacity = '1'; }, 600); }, 200); }
+        /* UPDATED LOADING LOGIC AS PER YOUR REQUEST */
+        async function triggerLoading() { 
+            noMsgBox.style.top = '-200px'; 
+            document.getElementById('loveCard').style.opacity = '0'; 
+            setTimeout(async () => { 
+                overlay.style.display = 'flex'; 
+                
+                // 1. Load to 60%
+                for(let i=1; i<=60; i++) { 
+                    updateBar(i); 
+                    await new Promise(r => setTimeout(r, 25)); 
+                } 
+                
+                // 2. Wait for 1 second at 60%
+                await new Promise(r => setTimeout(r, 1000)); 
+                
+                // 3. Load from 61% to 90%
+                for(let i=61; i<=90; i++) { 
+                    updateBar(i); 
+                    await new Promise(r => setTimeout(r, 20)); 
+                } 
+                
+                // 4. Slight delay and slide to next page
+                await new Promise(r => setTimeout(r, 400)); 
+                nextSlide(1); 
+                overlay.style.opacity = '0'; 
+                setTimeout(() => { 
+                    overlay.style.display = 'none'; 
+                    overlay.style.opacity = '1'; 
+                }, 600); 
+            }, 200); 
+        }
         
         function updateBar(val) { bar.style.width = val + "%"; pct.innerText = val + "%"; }
         
