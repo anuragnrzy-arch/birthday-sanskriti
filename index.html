@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="color-scheme" content="dark">
     <title>For Sanskriti</title>
     <style>
         * { 
@@ -11,25 +10,24 @@
             -webkit-tap-highlight-color: transparent; 
             user-select: none;
         }
-        html { background: #1a0a0e !important; color-scheme: dark !important; }
-        body { background-color: #1a0a0e !important; overflow: hidden; touch-action: none; }
-        @media (prefers-color-scheme: light) { html, body { background: #1a0a0e !important; } }
+        html { background-color: #fce4ec; }
+        body { background-color: #fce4ec; overflow: hidden; touch-action: none; }
         #no-message-box { position: fixed; top: -200px; left: 50%; transform: translateX(-50%); z-index: 1000; transition: top 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: flex; flex-direction: column; align-items: center; }
         .string { width: 2px; height: 60px; background: #ff4d6d; margin: 0 45px; position: relative; }
         .string::before { content: ''; position: absolute; top: -10px; left: -2px; width: 6px; height: 6px; background: #ff4d6d; border-radius: 50%; }
         .strings-container { display: flex; justify-content: center; width: 100%; }
         .hanging-card { background: white; padding: 12px 20px; border-radius: 12px; box-shadow: 0 8px 20px rgba(255, 77, 109, 0.15); border: 2px solid #ff4d6d; font-weight: bold; color: #ff4d6d; font-size: 16px; white-space: nowrap; margin-top: -2px; }
-        #master-lock-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #1a0a0e; z-index: 20000; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: all 0.8s cubic-bezier(0.65, 0, 0.35, 1); }
+        #master-lock-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fdf2f5 !important; z-index: 20000; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: all 0.8s cubic-bezier(0.65, 0, 0.35, 1); }
         #error-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.2); z-index: 30000; display: none; justify-content: center; align-items: center; }
         .error-popup { background: white; padding: 25px; border-radius: 15px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.1); width: 280px; border: 2px solid #ff4d6d; animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
         .error-msg { color: #333; font-weight: bold; margin-bottom: 20px; font-size: 16px; line-height: 1.4; }
         .lock-icon { font-size: 80px; margin-bottom: 20px; transition: transform 1s ease; }
-        .lock-input-box { background: rgba(25, 10, 15, 0.95); padding: 30px; border-radius: 20px; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); text-align: center; width: 85%; max-width: 320px; border: 1px solid rgba(255, 182, 193, 0.5); box-shadow: 0 0 20px rgba(255, 77, 109, 0.3), 0 0 40px rgba(255, 77, 109, 0.1); animation: glowPulse 2s infinite alternate; }
+        .lock-input-box { background: rgba(255, 240, 245, 0.9); padding: 30px; border-radius: 20px; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); text-align: center; width: 85%; max-width: 320px; border: 1px solid rgba(255, 182, 193, 0.5); box-shadow: 0 0 20px rgba(255, 77, 109, 0.3), 0 0 40px rgba(255, 77, 109, 0.1); animation: glowPulse 2s infinite alternate; }
         @keyframes glowPulse { from { box-shadow: 0 0 15px rgba(255, 77, 109, 0.2), 0 0 30px rgba(255, 77, 109, 0.1); } to { box-shadow: 0 0 30px rgba(255, 77, 109, 0.5), 0 0 50px rgba(255, 77, 109, 0.3); } }
         .slider-container { display: flex; width: 600vw; height: 100vh; transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1); }
-        .slide { width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; background: radial-gradient(circle, #2a0d14 0%, #1a0a0e 100%) !important; }
-        .glass-card { background: rgba(30, 10, 15, 0.95) !important; backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border-radius: 25px; padding: 40px 20px; text-align: center; width: 90%; max-width: 350px; transition: opacity 0.4s ease; box-shadow: 0 8px 32px rgba(255, 77, 109, 0.25); border: 1.5px solid rgba(255, 77, 109, 0.2); }
+        .slide { width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; background: radial-gradient(circle, #fdf2f5 0%, #fce4ec 100%) !important; }
+        .glass-card { background: rgba(255, 245, 247, 0.95) !important; backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border-radius: 25px; padding: 40px 20px; text-align: center; width: 90%; max-width: 350px; transition: opacity 0.4s ease; box-shadow: 0 8px 32px rgba(255, 182, 193, 0.3); border: 1.5px solid rgba(255, 255, 255, 0.8); }
         .page2-container { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; height: 100%; position: relative; }
         .envelope-wrapper { position: relative; width: 280px; height: 180px; background: #ff4d6d; border-radius: 0 0 15px 15px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); z-index: 5; margin-top: 0px; transform: translateY(-40px); }
         .envelope-wrapper::before { content: ''; position: absolute; top: 0; left: 0; border-left: 140px solid transparent; border-right: 140px solid transparent; border-top: 100px solid #ff758f; transform-origin: top; transition: transform 0.5s ease; z-index: 10; }
@@ -51,7 +49,7 @@
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         .see-more-btn { background: #ff4d6d; color: white; padding: 12px 30px; border-radius: 25px; border: none; font-weight: bold; margin-top: 30px; cursor: pointer; box-shadow: 0 0 15px rgba(255, 77, 109, 0.6); transition: 0.3s; }
         .note-title { font-family: 'Brush Script MT', cursive, sans-serif; color: #ff4d6d; font-size: 34px; margin-bottom: 25px; text-align: center; }
-        .note-box { background: rgba(40,10,20,0.9); width: 280px; height: 180px; border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 0 20px rgba(255, 182, 193, 0.6); border: 2px solid rgba(255, 255, 255, 0.8); position: relative; cursor: pointer; }
+        .note-box { background: #ffecf2; width: 280px; height: 180px; border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 0 20px rgba(255, 182, 193, 0.6); border: 2px solid rgba(255, 255, 255, 0.8); position: relative; cursor: pointer; }
         .pink-circle { width: 70px; height: 70px; background: #ff4d6d; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-bottom: 12px; box-shadow: 0 4px 10px rgba(255, 77, 109, 0.3); }
         .white-heart { font-size: 35px; color: white; }
         .tap-open-text { color: #ff4d6d; font-weight: bold; font-size: 16px; letter-spacing: 1px; }
@@ -59,8 +57,8 @@
         .action-btns-page2 { position: absolute; bottom: 80px; display: flex; flex-direction: row; justify-content: center; align-items: center; gap: 15px; z-index: 25; width: 100%; padding: 0 20px; }
         #openBtn { background: white; color: #ff4d6d; width: 140px; border: 2px solid #ff4d6d; box-shadow: 0 4px 10px rgba(255, 77, 109, 0.1); }
         #nextBtn2 { background: #007bff; color: white; width: 140px; box-shadow: 0 4px 10px rgba(0,123,255,0.2); }
-        #loading-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #1a0a0e; display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 10000; }
-        .loader-card { width: 85%; max-width: 320px; padding: 40px 20px; background: rgba(25, 10, 15, 0.95); border-radius: 25px; backdrop-filter: blur(15px); text-align: center; box-shadow: 0 8px 32px rgba(255, 182, 193, 0.3); border: 1.5px solid rgba(255, 255, 255, 0.8); }
+        #loading-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fdf2f5; display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 10000; }
+        .loader-card { width: 85%; max-width: 320px; padding: 40px 20px; background: rgba(255, 245, 247, 0.9); border-radius: 25px; backdrop-filter: blur(15px); text-align: center; box-shadow: 0 8px 32px rgba(255, 182, 193, 0.3); border: 1.5px solid rgba(255, 255, 255, 0.8); }
         .progress-container { width: 100%; height: 14px; background: #eee; border-radius: 20px; position: relative; margin-top: 10px; }
         .progress-bar { width: 0%; height: 100%; background: #ff4d6d; border-radius: 20px; transition: width 0.2s ease; }
         .pct-text { position: absolute; right: 0; top: -22px; font-size: 13px; font-weight: bold; color: #ff4d6d; }
@@ -69,7 +67,7 @@
         #yesBtn { background-color: #ff4d6d; color: white; box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3); }
         #noBtn { background-color: #444; color: #fff; position: absolute; top: 70px; z-index: 999; }
         .footer-text { font-size: 11px; color: #a38b91; margin-top: 25px; font-style: italic; }
-        input[type="text"] { padding: 12px; border-radius: 10px; border: 1.5px solid #ff4d6d; width: 85%; margin-bottom: 15px; outline: none; text-align: center; background: rgba(40,15,20,0.9); color: #fff; }
+        input[type="text"] { padding: 12px; border-radius: 10px; border: 1.5px solid #ffcad4; width: 85%; margin-bottom: 15px; outline: none; text-align: center; background: white; }
         #something-special-page { transition: opacity 1.5s ease; }
         .special-slide { background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%) !important; flex-direction: column; position: relative; overflow: hidden; }
         .special-title { color: white; font-size: 40px; font-weight: bold; margin-bottom: 5px; text-shadow: 2px 2px 10px rgba(0,0,0,0.1); z-index: 10; }
@@ -77,15 +75,15 @@
         .begin-btn { background: #ff4d6d !important; color: white !important; padding: 15px 45px; border-radius: 35px; font-size: 18px; font-weight: bold; border: none; z-index: 10; box-shadow: 0 5px 20px rgba(255, 77, 109, 0.4); }
         .floating-heart { position: absolute; bottom: -50px; color: rgba(255, 77, 109, 0.4); font-size: 20px; animation: floatUp linear infinite; z-index: 1; pointer-events: none; }
         @keyframes floatUp { to { transform: translateY(-110vh) rotate(360deg); opacity: 0; } }
-        #final-letter-page { display: none; opacity: 0; transition: opacity 3s ease; background: #1a0a0e; width: 100vw; height: 100vh; position: fixed; top: 0; left: 0; z-index: 5000; flex-direction: column; align-items: center; justify-content: flex-start; padding-top: 40px; overflow-y: scroll; overflow-x: hidden; }
+        #final-letter-page { display: none; opacity: 0; transition: opacity 3s ease; background: #fce4ec; width: 100vw; height: 100vh; position: fixed; top: 0; left: 0; z-index: 5000; flex-direction: column; align-items: center; justify-content: flex-start; padding-top: 40px; overflow-y: scroll; overflow-x: hidden; }
         #bg-heart-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
         .letter-love-header { color: #ff4d6d; font-size: 28px; font-weight: bold; margin-bottom: 5px; z-index: 10; position: relative; }
         .letter-subtitle { color: #888; font-size: 16px; margin-bottom: 25px; z-index: 10; position: relative; }
-        .white-paper { background: rgba(30,10,15,0.95); width: 90%; max-width: 350px; border-radius: 15px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 40px; position: relative; flex-shrink: 0; z-index: 10; }
+        .white-paper { background: white; width: 90%; max-width: 350px; border-radius: 15px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 40px; position: relative; flex-shrink: 0; z-index: 10; }
         .red-letter-title { color: #ff4d6d; font-size: 18px; font-weight: bold; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
-        .scroll-text { color: #ddd; font-size: 15px; line-height: 1.6; text-align: left; max-height: 350px; overflow-y: auto; padding-right: 5px; }
+        .scroll-text { color: #555; font-size: 15px; line-height: 1.6; text-align: left; max-height: 350px; overflow-y: auto; padding-right: 5px; }
         .memories-container { width: 100%; display: flex; flex-direction: column; align-items: center; z-index: 10; }
-        .memories-title-box { background: rgba(30,10,15,0.95); padding: 15px 25px; border-radius: 20px; border: 2px solid #ff4d6d; box-shadow: 0 0 20px rgba(255, 77, 109, 0.4); color: #ff4d6d; font-weight: bold; font-size: 18px; text-align: center; margin-bottom: 40px; animation: glowPulse 2s infinite alternate; }
+        .memories-title-box { background: white; padding: 15px 25px; border-radius: 20px; border: 2px solid #ff4d6d; box-shadow: 0 0 20px rgba(255, 77, 109, 0.4); color: #ff4d6d; font-weight: bold; font-size: 18px; text-align: center; margin-bottom: 40px; animation: glowPulse 2s infinite alternate; }
         .zig-zag-grid { width: 90%; display: flex; flex-direction: column; gap: 40px; padding-bottom: 60px; }
         .memory-photo { width: 200px; height: 280px; background: white; padding: 8px; border: 2px solid #ff4d6d; border-radius: 10px; box-shadow: 0 0 15px rgba(255, 77, 109, 0.5), 0 5px 15px rgba(0,0,0,0.2); overflow: hidden; animation: waveFloat 4s ease-in-out infinite; }
         @keyframes waveFloat { 0%, 100% { transform: translateY(0) rotate(var(--rot)); } 50% { transform: translateY(-15px) rotate(var(--rot-mid)); } }
@@ -147,7 +145,7 @@
     <div id="master-lock-screen">
         <div class="lock-icon" id="mainLockEmoji">🔒</div>
         <div class="lock-input-box" id="lockBox">
-            <p style="margin-bottom:15px; font-weight:bold; color:#fff;">Type your boyfriend name 😤</p>
+            <p style="margin-bottom:15px; font-weight:bold; color:#444;">Type your boyfriend name 😤</p>
             <input type="text" id="bfNameInput" placeholder="Enter name...">
             <button onclick="unlockMaster()" style="background:#ff4d6d; color:white; width:100%;">Unlock</button>
         </div>
@@ -166,7 +164,7 @@
         <div class="white-paper">
             <div class="red-letter-title">A Letter From My Heart</div>
             <div class="scroll-text">
-                <strong style="color:#ff4d6d;">To my special one</strong><br><br>
+                <strong>To my special one</strong><br><br>
                 If you're busy, I'll wait for you. I know sometimes life can be really busy and you might not have time to talk to me. That's okay I'll be patient and wait because you are important to me.<br><br>
                 If you're feeling sad or upset, I'll be here to listen to you. You don't have to go through it alone. I want to hear about your feelings and help you feel better.<br><br>
                 If you need help with anything, I'll be there to help you. You can always count on me for support and care.<br><br>
@@ -229,7 +227,7 @@
             <div class="glass-card" id="loveCard">
                 <div style="font-size:50px">🐱 ❤️</div>
                 <h2 style="color: #ff4d6d;">Sanskriti</h2>
-                <h1 style="margin-bottom:30px; color: #fff;">Do you love me!?</h1>
+                <h1 style="margin-bottom:30px; color: #444;">Do you love me!?</h1>
                 <div class="btn-wrapper"><button id="yesBtn" onclick="triggerLoading()">Yes 👀</button><button id="noBtn">No 😒</button></div>
                 <p class="footer-text">Some love stories don't allow "no" 😤</p>
             </div>
