@@ -115,6 +115,204 @@
         .pos-2 { align-self: flex-end; --rot: 6deg; --rot-mid: 3deg; }
         .pos-3 { align-self: flex-start; --rot: -4deg; --rot-mid: -1deg; }
         .extra-blank-space { height: 100px; width: 100%; flex-shrink: 0; }
+
+        /* ============ SPOTIFY POPUP STYLES ============ */
+        #spotify-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 25000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        .spotify-card {
+            width: 92%;
+            max-width: 380px;
+            background: linear-gradient(180deg, #2a1a20 0%, #1a0e13 100%);
+            border-radius: 25px;
+            padding: 18px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+            position: relative;
+            transform: scale(0.85);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        #spotify-overlay.show { display: flex; opacity: 1; }
+        #spotify-overlay.show .spotify-card { transform: scale(1); }
+        .spotify-close {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            background: rgba(0,0,0,0.5);
+            color: #fff;
+            width: 28px; height: 28px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 16px;
+            cursor: pointer;
+            z-index: 5;
+            border: none;
+        }
+        .album-art-wrap {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1.15 / 1;
+            border-radius: 18px;
+            overflow: hidden;
+            margin-bottom: 18px;
+        }
+        .album-art-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .playing-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(0,0,0,0.55);
+            color: #1ed760;
+            font-size: 11px;
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .playing-badge::before {
+            content: '';
+            width: 7px; height: 7px;
+            background: #1ed760;
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulse 1.2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+        .song-title {
+            color: #fff;
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            font-family: 'Brush Script MT', cursive, sans-serif;
+            font-weight: normal;
+            font-size: 26px;
+        }
+        .song-artist {
+            color: #b3b3b3;
+            font-size: 14px;
+            margin-bottom: 14px;
+            font-family: 'Brush Script MT', cursive, sans-serif;
+            font-style: italic;
+            font-size: 16px;
+        }
+        .progress-track {
+            width: 100%;
+            height: 3px;
+            background: #404040;
+            border-radius: 3px;
+            position: relative;
+            margin-bottom: 6px;
+            cursor: pointer;
+        }
+        .progress-fill {
+            height: 100%;
+            background: #fff;
+            border-radius: 3px;
+            width: 2%;
+            position: relative;
+            transition: width 0.3s linear;
+        }
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            right: -5px;
+            top: -3px;
+            width: 9px; height: 9px;
+            background: #fff;
+            border-radius: 50%;
+        }
+        .time-row {
+            display: flex;
+            justify-content: space-between;
+            color: #b3b3b3;
+            font-size: 12px;
+            margin-bottom: 14px;
+        }
+        .lyrics-box {
+            background: rgba(255,255,255,0.04);
+            border-radius: 14px;
+            padding: 16px 14px;
+            text-align: center;
+            color: #d4d4d4;
+            font-size: 13.5px;
+            line-height: 1.7;
+            margin-bottom: 18px;
+            font-family: 'Brush Script MT', cursive, sans-serif;
+            font-size: 15px;
+        }
+        .lyrics-active {
+            color: #fff;
+            font-weight: 600;
+        }
+        .controls-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 35px;
+            margin-bottom: 16px;
+        }
+        .ctrl-btn {
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 22px;
+            cursor: pointer;
+            padding: 0;
+        }
+        .play-btn-main {
+            width: 56px; height: 56px;
+            background: #fff;
+            color: #000;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 22px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        .spotify-footer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            color: #1ed760;
+            font-size: 13px;
+            font-weight: bold;
+        }
+        .spotify-footer-icon {
+            width: 16px; height: 16px;
+            background: #1ed760;
+            border-radius: 50%;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            color: #000;
+            font-size: 11px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -142,6 +340,41 @@
             <div style="position:relative"><span class="pct-text" id="loadPercent">0%</span><div class="progress-container"><div class="progress-bar" id="loadBar"></div></div></div>
             <div style="margin-top:20px; font-weight:bold; color:#ff4d6d; letter-spacing: 1px;">LOADING...</div>
         </div>
+    </div>
+
+    <!-- ============ SPOTIFY POPUP ============ -->
+    <div id="spotify-overlay">
+        <div class="spotify-card">
+            <button class="spotify-close" onclick="closeSpotify()">✕</button>
+            <div class="album-art-wrap">
+                <img src="https://www.genspark.ai/api/files/s/cW23e144" alt="Us">
+                <div class="playing-badge">PLAYING</div>
+            </div>
+            <div class="song-title">10,000 Hours</div>
+            <div class="song-artist">Dan + Shay, Justin Bieber</div>
+            <div class="progress-track" id="progressTrack">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="time-row">
+                <span id="currentTime">0:00</span>
+                <span>3:44</span>
+            </div>
+            <div class="lyrics-box">
+                <div>I'd spend 10,000 hours and 10,000 more</div>
+                <div class="lyrics-active">Oh, if that's what it takes to learn that sweet</div>
+                <div>heart of yours</div>
+            </div>
+            <div class="controls-row">
+                <button class="ctrl-btn">⏮</button>
+                <button class="play-btn-main" id="playPauseBtn" onclick="togglePlay()">⏸</button>
+                <button class="ctrl-btn">⏭</button>
+            </div>
+            <div class="spotify-footer">
+                <span class="spotify-footer-icon">♫</span>
+                <span>SPOTIFY</span>
+            </div>
+        </div>
+        <audio id="songAudio" src="https://www.genspark.ai/api/files/s/i0guPB5t" loop></audio>
     </div>
 
     <div id="final-letter-page">
@@ -181,7 +414,7 @@
         <section class="slide">
             <div class="page2-container">
                 <div class="envelope-wrapper" id="envelopeBox">
-                    <div class="letter-content"><div class="scroll-box-page2"> Sanskriti I know that ami onek mistakes korechi in the past😓... and for that I’m truly sorry for those mistakes... I'm not here to make excuses now or just say things that I won’t follow. I understand that where I went wrong and I’m working on becoming a better version of myself not just for you but for me too. I don’t want to repeat the same things again nd ami r korbona ogula.<br><br>For 1 year, 2 months, and 11 days, we were apart after the breakup. During that time all I had was your pictures and everyday u kn ami khali tor pics dekhtam before morning afternoon evening nd before sleep also spend my time with those memories and aro beshi miss kortam toke. It made me realize your value even more. I won’t just say things now, I’ll prove it through my actions step by step... 🤞🏻✨🍀<img src="https://i.ibb.co/KpDd1ZF9/1000092801.jpg" class="cat-image-sorry"></div></div>
+                    <div class="letter-content"><div class="scroll-box-page2"> Sanskriti I know that ami onek mistakes korechi in the past😓... and for that I'm truly sorry for those mistakes... I'm not here to make excuses now or just say things that I won't follow. I understand that where I went wrong and I'm working on becoming a better version of myself not just for you but for me too. I don't want to repeat the same things again nd ami r korbona ogula.<br><br>For 1 year, 2 months, and 11 days, we were apart after the breakup. During that time all I had was your pictures and everyday u kn ami khali tor pics dekhtam before morning afternoon evening nd before sleep also spend my time with those memories and aro beshi miss kortam toke. It made me realize your value even more. I won't just say things now, I'll prove it through my actions step by step... 🤞🏻✨🍀<img src="https://i.ibb.co/KpDd1ZF9/1000092801.jpg" class="cat-image-sorry"></div></div>
                 </div>
                 <div class="action-btns-page2"><button id="openBtn" onclick="handleEnvelope()">Open 💌</button><button id="nextBtn2" onclick="nextSlide(2)">Next ➔</button></div>
             </div>
@@ -202,7 +435,7 @@
         <section class="slide">
             <div class="page2-container">
                 <h1 class="note-title">𝓐 𝓛𝓲𝓽𝓽𝓵𝓮 𝓷𝓸𝓽𝓮 𝓯𝓸𝓻 𝔂𝓸𝓾</h1>
-                <div class="note-box">
+                <div class="note-box" onclick="openSpotify()">
                     <div class="pink-circle">
                         <div class="white-heart">🤍</div>
                     </div>
@@ -232,60 +465,169 @@
             else if(direction === 'middle') element.classList.add('fade-middle');
         }
 
-        const slider = document.getElementById('mainSlider'); const bar = document.getElementById('loadBar'); const pct = document.getElementById('loadPercent'); const overlay = document.getElementById('loading-overlay'); const errorOverlay = document.getElementById('error-overlay'); const errorText = document.getElementById('error-text-content'); const noBtn = document.getElementById('noBtn'); const noMsgBox = document.getElementById('no-message-box');
+        const slider = document.getElementById('mainSlider'); 
+        const bar = document.getElementById('loadBar'); 
+        const pct = document.getElementById('loadPercent'); 
+        const overlay = document.getElementById('loading-overlay'); 
+        const errorOverlay = document.getElementById('error-overlay'); 
+        const errorText = document.getElementById('error-text-content'); 
+        const noBtn = document.getElementById('noBtn'); 
+        const noMsgBox = document.getElementById('no-message-box');
         
-        function handleEnvelope() { const env = document.getElementById('envelopeBox'); const btn = document.getElementById('openBtn'); if(env.classList.contains('open')) { env.classList.remove('open'); btn.innerText = "Open 💌"; } else { env.classList.add('open'); btn.innerText = "Close ✖"; } }
+        function handleEnvelope() { 
+            const env = document.getElementById('envelopeBox'); 
+            const btn = document.getElementById('openBtn'); 
+            if(env.classList.contains('open')) { env.classList.remove('open'); btn.innerText = "Open 💌"; } 
+            else { env.classList.add('open'); btn.innerText = "Close ✖"; } 
+        }
         
-        function unlockMaster() { const name = document.getElementById('bfNameInput').value.trim().toLowerCase(); if(name === "anurag") { document.getElementById('mainLockEmoji').innerText = "🔓"; document.getElementById('mainLockEmoji').style.transform = "scale(1.4)"; document.getElementById('lockBox').style.opacity = '0'; setTimeout(() => { const master = document.getElementById('master-lock-screen'); master.style.opacity = '0'; master.style.transform = 'translateY(-100%)'; setTimeout(() => master.style.display = 'none', 800); }, 1000); } else if (name === "") { errorText.innerHTML = "System Error:"; errorOverlay.style.display = 'flex'; } else { errorText.innerHTML = "System Error: <br> Invalid Boyfriend Name! 😤<br><span style='color: white; font-size: 18px;'>WHO IS HE!?? 🤨🤨😤</span>"; errorOverlay.style.display = 'flex'; } }
+        function unlockMaster() { 
+            const name = document.getElementById('bfNameInput').value.trim().toLowerCase(); 
+            if(name === "anurag") { 
+                document.getElementById('mainLockEmoji').innerText = "🔓"; 
+                document.getElementById('mainLockEmoji').style.transform = "scale(1.4)"; 
+                document.getElementById('lockBox').style.opacity = '0'; 
+                setTimeout(() => { 
+                    const master = document.getElementById('master-lock-screen'); 
+                    master.style.opacity = '0'; 
+                    master.style.transform = 'translateY(-100%)'; 
+                    setTimeout(() => master.style.display = 'none', 800); 
+                }, 1000); 
+            } else if (name === "") { 
+                errorText.innerHTML = "System Error:"; 
+                errorOverlay.style.display = 'flex'; 
+            } else { 
+                errorText.innerHTML = "System Error: <br> Invalid Boyfriend Name! 😤<br><span style='color: white; font-size: 18px;'>WHO IS HE!?? 🤨🤨😤</span>"; 
+                errorOverlay.style.display = 'flex'; 
+            } 
+        }
         
         function hideError() { errorOverlay.style.display = 'none'; }
         
-        function checkSecretCode() { const code = document.getElementById('secretCodeInput').value.trim().toLowerCase(); if(code === "10ml") { revealLetter(); } else { errorText.innerHTML = "Wrong Code !!😤"; errorOverlay.style.display = 'flex'; } }
+        function checkSecretCode() { 
+            const code = document.getElementById('secretCodeInput').value.trim().toLowerCase(); 
+            if(code === "10ml") { revealLetter(); } 
+            else { errorText.innerHTML = "Wrong Code !!😤"; errorOverlay.style.display = 'flex'; } 
+        }
         
-        /* UPDATED LOADING LOGIC AS PER YOUR REQUEST */
         async function triggerLoading() { 
             noMsgBox.style.top = '-200px'; 
             document.getElementById('loveCard').style.opacity = '0'; 
             setTimeout(async () => { 
                 overlay.style.display = 'flex'; 
-                
-                // 1. Load to 60%
-                for(let i=1; i<=60; i++) { 
-                    updateBar(i); 
-                    await new Promise(r => setTimeout(r, 25)); 
-                } 
-                
-                // 2. Wait for 1 second at 60%
+                for(let i=1; i<=60; i++) { updateBar(i); await new Promise(r => setTimeout(r, 25)); } 
                 await new Promise(r => setTimeout(r, 1000)); 
-                
-                // 3. Load from 61% to 90%
-                for(let i=61; i<=90; i++) { 
-                    updateBar(i); 
-                    await new Promise(r => setTimeout(r, 20)); 
-                } 
-                
-                // 4. Slight delay and slide to next page
+                for(let i=61; i<=90; i++) { updateBar(i); await new Promise(r => setTimeout(r, 20)); } 
                 await new Promise(r => setTimeout(r, 400)); 
                 nextSlide(1); 
                 overlay.style.opacity = '0'; 
-                setTimeout(() => { 
-                    overlay.style.display = 'none'; 
-                    overlay.style.opacity = '1'; 
-                }, 600); 
+                setTimeout(() => { overlay.style.display = 'none'; overlay.style.opacity = '1'; }, 600); 
             }, 200); 
         }
         
         function updateBar(val) { bar.style.width = val + "%"; pct.innerText = val + "%"; }
         
-        function nextSlide(idx) { slider.style.transform = `translateX(-${idx * 100}vw)`; if(idx === 4) startHearts('heart-container'); }
+        function nextSlide(idx) { 
+            slider.style.transform = `translateX(-${idx * 100}vw)`; 
+            if(idx === 4) startHearts('heart-container'); 
+        }
         
-        function startHearts(containerId) { const container = document.getElementById(containerId); if(!container) return; setInterval(() => { const heart = document.createElement('div'); heart.classList.add('floating-heart'); heart.innerHTML = '❤️'; heart.style.left = Math.random() * 100 + 'vw'; heart.style.animationDuration = (Math.random() * 3 + 2) + 's'; container.appendChild(heart); setTimeout(() => heart.remove(), 5000); }, 400); }
+        function startHearts(containerId) { 
+            const container = document.getElementById(containerId); 
+            if(!container) return; 
+            setInterval(() => { 
+                const heart = document.createElement('div'); 
+                heart.classList.add('floating-heart'); 
+                heart.innerHTML = '❤️'; 
+                heart.style.left = Math.random() * 100 + 'vw'; 
+                heart.style.animationDuration = (Math.random() * 3 + 2) + 's'; 
+                container.appendChild(heart); 
+                setTimeout(() => heart.remove(), 5000); 
+            }, 400); 
+        }
         
-        function revealLetter() { const specialPage = document.getElementById('something-special-page'); specialPage.style.opacity = '0'; setTimeout(() => { slider.style.display = 'none'; const letterPage = document.getElementById('final-letter-page'); letterPage.style.display = 'flex'; document.body.style.overflowY = "auto"; document.body.style.touchAction = "auto"; startHearts('bg-heart-container'); setTimeout(() => { letterPage.style.opacity = '1'; }, 50); }, 1500); }
+        function revealLetter() { 
+            const specialPage = document.getElementById('something-special-page'); 
+            specialPage.style.opacity = '0'; 
+            setTimeout(() => { 
+                slider.style.display = 'none'; 
+                const letterPage = document.getElementById('final-letter-page'); 
+                letterPage.style.display = 'flex'; 
+                document.body.style.overflowY = "auto"; 
+                document.body.style.touchAction = "auto"; 
+                startHearts('bg-heart-container'); 
+                setTimeout(() => { letterPage.style.opacity = '1'; }, 50); 
+            }, 1500); 
+        }
         
-        const moveNoButton = (e) => { if(e.type === 'touchstart') e.preventDefault(); noMsgBox.style.top = '0px'; const padding = 50; const maxX = window.innerWidth - noBtn.offsetWidth - padding; const maxY = window.innerHeight - noBtn.offsetHeight - padding; let randomX = Math.floor(Math.random() * (maxX - padding)) + padding; let randomY = Math.floor(Math.random() * (maxY - padding)) + padding; noBtn.style.position = 'fixed'; noBtn.style.left = randomX + 'px'; noBtn.style.top = randomY + 'px'; };
+        const moveNoButton = (e) => { 
+            if(e.type === 'touchstart') e.preventDefault(); 
+            noMsgBox.style.top = '0px'; 
+            const padding = 50; 
+            const maxX = window.innerWidth - noBtn.offsetWidth - padding; 
+            const maxY = window.innerHeight - noBtn.offsetHeight - padding; 
+            let randomX = Math.floor(Math.random() * (maxX - padding)) + padding; 
+            let randomY = Math.floor(Math.random() * (maxY - padding)) + padding; 
+            noBtn.style.position = 'fixed'; 
+            noBtn.style.left = randomX + 'px'; 
+            noBtn.style.top = randomY + 'px'; 
+        };
         
-        noBtn.addEventListener('mouseover', moveNoButton); noBtn.addEventListener('touchstart', moveNoButton);
+        noBtn.addEventListener('mouseover', moveNoButton); 
+        noBtn.addEventListener('touchstart', moveNoButton);
+
+        /* ============ SPOTIFY POPUP LOGIC ============ */
+        const spotifyOverlay = document.getElementById('spotify-overlay');
+        const songAudio = document.getElementById('songAudio');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const progressFill = document.getElementById('progressFill');
+        const progressTrack = document.getElementById('progressTrack');
+        const currentTimeEl = document.getElementById('currentTime');
+        const TOTAL_DURATION = 224; // 3:44 in seconds
+
+        function openSpotify() {
+            spotifyOverlay.style.display = 'flex';
+            setTimeout(() => spotifyOverlay.classList.add('show'), 10);
+            songAudio.currentTime = 0;
+            songAudio.play().catch(e => console.log('Autoplay blocked:', e));
+            playPauseBtn.innerText = '⏸';
+        }
+
+        function closeSpotify() {
+            spotifyOverlay.classList.remove('show');
+            songAudio.pause();
+            songAudio.currentTime = 0;
+            setTimeout(() => spotifyOverlay.style.display = 'none', 400);
+        }
+
+        function togglePlay() {
+            if(songAudio.paused) {
+                songAudio.play();
+                playPauseBtn.innerText = '⏸';
+            } else {
+                songAudio.pause();
+                playPauseBtn.innerText = '▶';
+            }
+        }
+
+        function formatTime(sec) {
+            const m = Math.floor(sec / 60);
+            const s = Math.floor(sec % 60);
+            return m + ':' + (s < 10 ? '0' + s : s);
+        }
+
+        songAudio.addEventListener('timeupdate', () => {
+            const cur = songAudio.currentTime;
+            const pctVal = (cur / TOTAL_DURATION) * 100;
+            progressFill.style.width = Math.min(pctVal, 100) + '%';
+            currentTimeEl.innerText = formatTime(cur);
+        });
+
+        progressTrack.addEventListener('click', (e) => {
+            const rect = progressTrack.getBoundingClientRect();
+            const clickPct = (e.clientX - rect.left) / rect.width;
+            songAudio.currentTime = clickPct * songAudio.duration;
+        });
     </script>
 </body>
 </html>
